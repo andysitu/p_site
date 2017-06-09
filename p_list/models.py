@@ -6,5 +6,3 @@ class TestModel(models.Model):
 	"""
 
 	num_times = models.IntegerField()
-
-	

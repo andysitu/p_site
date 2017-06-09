@@ -20,9 +20,17 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from . import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^rcv/', include('rcv.urls')),
+    url(r'^p_list/', include('p_list.urls')),
+    url(r'^$', views.index),
+    url(r'^index/$', views.index, name="index"),
+]
+
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+<ul>
+{% for rcv in rcv_list %}
+    <li><a href="{% url 'p_list:download_rcv' rcv %}">{{ rcv }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
