@@ -6,3 +6,7 @@ class TestModel(models.Model):
 	"""
 
 	num_times = models.IntegerField()
+
+class RCV(models.Model):
+    rcvfile = models.FileField(upload_to='rcv/')
+    filename = models.CharField(max_length=10, default="")
