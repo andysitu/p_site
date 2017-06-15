@@ -2,6 +2,8 @@
 
 {% block content %}
 
+<a href="{% url 'p_list:upload' %}">Upload</a>
+
 <ul>
 {% for rcv in rcv_list %}
     <li><a href="{% url 'p_list:download_rcv' rcv %}">{{ rcv }}</li>

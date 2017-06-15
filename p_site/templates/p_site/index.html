@@ -1,6 +1,5 @@
 {% extends 'base_generic.html' %}
 
-
 {% block title %}
 Index
 {% endblock %}
@@ -8,6 +7,9 @@ Index
 
 {% block content %}
 
-<a href="{% url 'p_list:index' %}">p_list</a>
+<ul>
+    <li><a href="{% url 'p_list:index' %}">RCV List</a></li>
+</ul>
+
 
 {% endblock %}
