@@ -27,7 +27,7 @@ DEBUG = True
 
 from socket import gethostname
 
-ALLOWED_HOSTS = ['192.168.20.74', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.20.74', '127.0.0.1', '192.168.20.97']
 
 
 # Application definition
@@ -122,4 +122,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "/p_lust/static")
+]
+
 LOGIN_REDIRECT_URL = '/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
