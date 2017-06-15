@@ -22,6 +22,8 @@
       <div class="col-sm-2">
       {% block sidebar %}
       <ul class="sidebar-nav">
+          <a href={% url 'index' %}><img src="{% static 'img/mini-logo.gif' %}" alt="logo"/></a>
+
           <li><a href="{% url 'index' %}">Home</a></li>
           {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
