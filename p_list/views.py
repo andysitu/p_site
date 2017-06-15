@@ -8,7 +8,7 @@ import os
 
 
 def index(request):
-    path=".\\rcv_pdf"
+    path="./media/rcv/"
     rcv_list = os.listdir(path)
     path_name = os.path.abspath(path)
 
@@ -19,6 +19,9 @@ def index(request):
     )
 
 def download_rcv(request, rcv_name):
-    filepath = 'C:\\Users\\A\\Documents\\GitHub\\p_site\\rcv_pdf' + '\\' + rcv_name
+    filepath = './media/rcv/' + rcv_name
+
+    return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
+
 
     return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
