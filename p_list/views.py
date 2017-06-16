@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.files import File
 
 from django.contrib.auth.decorators import login_required
 from django.views.static import serve
@@ -53,14 +54,25 @@ def upload_file(request):
         'p_list/upload.html',
         context={'rcvs': rcvs, 'rcvform': rcvform,})
 
+@login_required
 def check_files_to_model(request):
-    path="./media/rcv/"
+    path="./unproc_rcv/"
     rcv_list = os.listdir(path)
-    path_name = os.path.abspath(path)
 
+    # print(os.getcwd())
 
-    rcv_string = ''
-    rcv_list = RCV.objects.all()
-    for rcv in rcv_list:
-        rcv_string += rcv.filename
-    return HttpResponse(rcv_string)
+    for rcv_name in rcv_list:
+        with open(path + rcv_name, 'rb') as localfile:
+        # print("LOCAL:", localfile)
+            result = RCV.objects.filter(filename=rcv_name)
+            if not result:
+                djangoFile = File(localfile)
+                rcv = RCV(filename=rcv_name)
+                rcv.rcvfile.save(rcv_name, djangoFile)
+                # rcv.save()
+
+    # rcv_string = ''
+    # rcv_list = RCV.objects.all()
+    # for rcv in rcv_list:
+    #     rcv_string += rcv.filename
+    return HttpResponse("")
