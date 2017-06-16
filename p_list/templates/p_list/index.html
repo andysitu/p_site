@@ -1,13 +1,20 @@
 {% extends 'base_generic.html' %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"
+{% endblock %}
+
 {% block content %}
 
 <a href="{% url 'p_list:upload' %}">Upload</a>
 
 <ul>
 {% for rcv in rcv_list %}
-    <li><a href="{% url 'p_list:download_rcv' rcv %}">{{ rcv }}</li>
+    <li><a href="{% url 'p_list:download_rcv' rcv %}" class="rcv" id="{{ rcv }}-link">{{ rcv }}</a> <a href='test' class='add-link-hide' id="{{ rcv }}-test">test</a></li>
 {% endfor %}
 </ul>
+
 
 {% endblock %}
