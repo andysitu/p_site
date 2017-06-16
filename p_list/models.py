@@ -9,4 +9,4 @@ class TestModel(models.Model):
 
 class RCV(models.Model):
     rcvfile = models.FileField(upload_to='rcv/')
-    filename = models.CharField(max_length=10, default="")
+    filename = models.CharField(max_length=50, default="")
