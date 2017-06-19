@@ -23,7 +23,7 @@ function getCookie(name) {
 
 
 
-function clicK_delete_link_response(e) {
+function click_add_link_response(e) {
     httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState == XMLHttpRequest.DONE) {
@@ -57,7 +57,7 @@ function hoovering_rcv(e) {
     add_link_div.classList.add('add-link-unhide');
 
     for (var i = 0; i < add_link_div.children.length; i++) {
-        add_link_div.children[i].addEventListener('click', clicK_delete_link_response);
+        add_link_div.children[i].addEventListener('click', click_add_link_response);
     }
 
     var li_parent_ele = link_ele.parentElement;
