@@ -1,8 +1,8 @@
-var elements = document.getElementsByClassName("rcv")
-var elements_length = elements.length
+var elements = document.getElementsByClassName("rcv");
+var elements_length = elements.length;
 
 function ready_func() {
-    console.log("READY")
+    console.log("READY");
 }
 
 function getCookie(name) {
@@ -22,14 +22,13 @@ function getCookie(name) {
 }
 
 
-
 function click_add_link_response(e) {
     httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState == XMLHttpRequest.DONE) {
             if (httpRequest.status == 200) {
                 if (httpRequest.responseText == "0") {
-                    write_message("You need to login")
+                    write_message("You need to login");
                 } else {
                     console.log(httpRequest.responseText);
                 }
@@ -39,8 +38,8 @@ function click_add_link_response(e) {
     if (e.target.classList.contains("add-link-delete")) {
         httpRequest.open('POST', './delete/', true);
         httpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        httpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-        httpRequest.send()
+        httpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        httpRequest.send();
     } else {
 
     }
@@ -72,6 +71,6 @@ for (var i = 0; i < elements_length; i++) {
 };
 
 function write_message(msg) {
-    msg_box = document.getElementById("message-box")
-    msg_box.textContent = msg
+    msg_box = document.getElementById("message-box");
+    msg_box.textContent = msg;
 }
