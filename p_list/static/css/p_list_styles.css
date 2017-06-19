@@ -1,0 +1,11 @@
+.add-link-hide {
+    display: none;
+}
+
+.add-link-unhide {
+    display: inline-block;
+}
+
+.rcv-link {
+    display: inline-block;
+}
