@@ -10,3 +10,6 @@ class TestModel(models.Model):
 class RCV(models.Model):
     rcvfile = models.FileField(upload_to='rcv/')
     filename = models.CharField(max_length=50, default="")
+
+    def __str__(self):
+        return self.filename
