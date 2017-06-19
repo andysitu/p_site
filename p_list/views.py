@@ -18,14 +18,12 @@ def test(request):
     return HttpResponse("HELLO")
 
 def index(request):
-    path="./media/rcv/"
-    rcv_list = os.listdir(path)
-    path_name = os.path.abspath(path)
+    rcv_list = RCV.objects.all()
 
     return render(
         request,
         'p_list/index.html',
-        context = {"rcv_list": rcv_list, "path_name": path_name}
+        context = {"rcv_list": rcv_list,}
     )
 
 def download_rcv(request, rcv_name):
