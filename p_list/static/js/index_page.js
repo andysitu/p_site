@@ -28,19 +28,28 @@ function click_add_link_response(e) {
     result = rcv_regex.exec(ele_id)
     rcv_filename = result[1]
 
+    var command = '';
+
     xmlhttpRequest = new XMLHttpRequest();
     xmlhttpRequest.onreadystatechange = function(event) {
         if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
             if (xmlhttpRequest.status == 200) {
-                if (xmlhttpRequest.responseText == "0") {
+                var responseText = xmlhttpRequest.responseText
+                if (responseText == "0") {
                     write_message("You need to login");
                 } else {
-                    console.log(xmlhttpRequest.responseText);
+                    switch(command) {
+                        case "delete":
+                            delete_rcv_link(responseText);
+                            break;
+                    }
                 }
             }
         }
     };
+
     if (e.target.classList.contains("add-link-delete")) {
+        command = "delete";
 
         var formData = new FormData();
         formData.append('command', "delete");
