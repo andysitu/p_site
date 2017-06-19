@@ -55,3 +55,7 @@ function clicky(e) {
 for (var i = 0; i < elements_length; i++) {
     elements[i].addEventListener('mouseenter', clicky);
 };
+function write_message(msg) {
+    msg_box = document.getElementById("message-box")
+    msg_box.textContent = msg
+}
