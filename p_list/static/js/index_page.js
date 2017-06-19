@@ -41,11 +41,16 @@ function click_add_link_response(e) {
         }
     };
     if (e.target.classList.contains("add-link-delete")) {
+
+        var formData = new FormData();
+        formData.append('command', "delete");
+        formData.append('rcv_filename', rcv_filename);
+
         xmlhttpRequest.open('POST', './delete/', true);
         xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         xmlhttpRequest.setRequestHeader('X-Requested-With', 'xmlhttpRequestRequest');
-        xmlhttpRequest.setRequestHeader('POST', 'test');
-        xmlhttpRequest.send();
+
+        xmlhttpRequest.send(formData);
     } else {
 
     }
