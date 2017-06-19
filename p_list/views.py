@@ -83,6 +83,8 @@ def delete(request):
         command = form.cleaned_data['command']
         rcv_filename = form.cleaned_data['rcv_filename']
     if request.user.is_authenticated:
+        rcv_instance = RCV.objects.filter(filename=rcv_filename)
+        rcv_instance.delete()
         message = rcv_filename
     else:
         message = 0
