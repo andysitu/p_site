@@ -23,23 +23,25 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function() {
-        if (httpRequest.readyState == XMLHttpRequest.DONE) {
-            if (httpRequest.status == 200) {
-                if (httpRequest.responseText == "0") {
+    xmlhttpRequest = new XMLHttpRequest();
+    xmlhttpRequest.onreadystatechange = function(a) {
+        if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
+            if (xmlhttpRequest.status == 200) {
+                console.log("test para: ", a)
+                if (xmlhttpRequest.responseText == "0") {
                     write_message("You need to login");
                 } else {
-                    console.log(httpRequest.responseText);
+                    console.log(xmlhttpRequest.responseText);
                 }
             }
         }
     };
     if (e.target.classList.contains("add-link-delete")) {
-        httpRequest.open('POST', './delete/', true);
-        httpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        httpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        httpRequest.send();
+        xmlhttpRequest.open('POST', './delete/', true);
+        xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        xmlhttpRequest.setRequestHeader('X-Requested-With', 'xmlhttpRequestRequest');
+        xmlhttpRequest.setRequestHeader('POST', 'test');
+        xmlhttpRequest.send();
     } else {
 
     }
