@@ -24,7 +24,7 @@ function getCookie(name) {
 
 function click_add_link_response(e) {
     xmlhttpRequest = new XMLHttpRequest();
-    xmlhttpRequest.onreadystatechange = function(a) {
+    xmlhttpRequest.onreadystatechange = function(event) {
         if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
             if (xmlhttpRequest.status == 200) {
                 if (xmlhttpRequest.responseText == "0") {
