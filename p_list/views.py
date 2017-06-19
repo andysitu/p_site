@@ -77,11 +77,10 @@ def check_files_to_model(request):
     #     rcv_string += rcv.filename
     return HttpResponse("")
 
-@login_required
 def delete(request):
-    print(request.is_ajax)
-    if request.is_ajax():
+    print(request)
+    if request.user.is_authenticated:
         message = "READY AJAX"
     else:
-        message = "NOT AJAX"
+        message = 0
     return HttpResponse(message)
