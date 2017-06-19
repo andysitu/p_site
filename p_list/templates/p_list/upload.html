@@ -1,5 +1,11 @@
 {% extends 'base_generic.html' %}
 
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/p_list_styles.css' %}">
+{% endblock %}
+
 {% block content %}
 
 {% if rcvs %}
