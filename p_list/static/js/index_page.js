@@ -70,10 +70,14 @@ function delete_rcv_link(rcv) {
 
 
 function hoovering_rcv(e) {
-    var link_ele = e.target;
-    var rcv = link_ele.text;
+    var li_ele = e.target;
+    li_id = e.target.id;
+    var rcv_regex = /(.+)-.+/;
+    ele_id = e.target.id;
+    result = rcv_regex.exec(ele_id);
+    rcv_filename = result[1];
 
-    var add_link_div = document.getElementById(rcv + '-add-links-div');
+    var add_link_div = document.getElementById(rcv_filename + '-add-links-div');
     add_link_div.classList.remove('add-link-hide');
     add_link_div.classList.add('add-link-unhide');
 
@@ -81,8 +85,7 @@ function hoovering_rcv(e) {
         add_link_div.children[i].addEventListener('click', click_add_link_response);
     }
 
-    var li_parent_ele = link_ele.parentElement;
-    li_parent_ele.addEventListener('mouseleave', function(f) {
+    li_ele.addEventListener('mouseleave', function(f) {
         add_link_div.classList.remove('add-link-unhide');
         add_link_div.classList.add('add-link-hide');
     });
@@ -95,7 +98,7 @@ function write_message(msg) {
 
 
 function run_on_load() {
-    var elements = document.getElementsByClassName("rcv");
+    var elements = document.getElementsByClassName("rcv-li");
     var elements_length = elements.length;
 
     for (var i = 0; i < elements_length; i++) {
