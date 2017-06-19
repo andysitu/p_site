@@ -27,7 +27,6 @@ function click_add_link_response(e) {
     xmlhttpRequest.onreadystatechange = function(a) {
         if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
             if (xmlhttpRequest.status == 200) {
-                console.log("test para: ", a)
                 if (xmlhttpRequest.responseText == "0") {
                     write_message("You need to login");
                 } else {
