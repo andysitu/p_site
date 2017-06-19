@@ -10,7 +10,7 @@ from .models import RCV
 
 import os
 
-from .forms import UploadRCV
+from .forms import UploadRCV, XMLRequestForm
 
 from .models import RCV
 
@@ -78,9 +78,12 @@ def check_files_to_model(request):
     return HttpResponse("")
 
 def delete(request):
-    print(request)
+    form = XMLRequestForm(request.POST)
+    if form.is_valid():
+        command = form.cleaned_data['command']
+        rcv_filename = form.cleaned_data['rcv_filename']
     if request.user.is_authenticated:
-        message = "READY AJAX"
+        message = rcv_filename
     else:
         message = 0
     return HttpResponse(message)
