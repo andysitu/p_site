@@ -23,6 +23,11 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
+    var rcv_regex = /(.+)-.+/;
+    ele_id = e.target.id
+    result = rcv_regex.exec(ele_id)
+    rcv_filename = result[1]
+
     xmlhttpRequest = new XMLHttpRequest();
     xmlhttpRequest.onreadystatechange = function(event) {
         if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
