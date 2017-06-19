@@ -52,6 +52,11 @@ function click_add_link_response(e) {
     
 }
 
+function delete_rcv_link(rcv) {
+    li_element = document.getElementById(rcv + '-li');
+    li_element.parentNode.removeChild(li_element);
+}
+
 
 function hoovering_rcv(e) {
     var link_ele = e.target;
