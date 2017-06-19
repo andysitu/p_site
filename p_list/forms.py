@@ -6,3 +6,7 @@ class UploadRCV(forms.Form):
         label="Select an RCV PDF File",
         help_text=''
     )
+
+class XMLRequestForm(forms.Form):
+    command = forms.CharField()
+    rcv_filename = forms.CharField()
