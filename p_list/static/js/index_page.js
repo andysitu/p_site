@@ -1,6 +1,3 @@
-var elements = document.getElementsByClassName("rcv");
-var elements_length = elements.length;
-
 function ready_func() {
     console.log("READY");
 }
@@ -91,11 +88,19 @@ function hoovering_rcv(e) {
     });
 };
 
-for (var i = 0; i < elements_length; i++) {
-    elements[i].addEventListener('mouseenter', hoovering_rcv);
-};
-
 function write_message(msg) {
     msg_box = document.getElementById("message-box");
     msg_box.textContent = msg;
 }
+
+
+function run_on_load() {
+    var elements = document.getElementsByClassName("rcv");
+    var elements_length = elements.length;
+
+    for (var i = 0; i < elements_length; i++) {
+        elements[i].addEventListener('mouseenter', hoovering_rcv);
+    };
+}
+
+document.addEventListener("DOMContentLoaded", run_on_load)
