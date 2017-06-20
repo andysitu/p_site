@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/p_list_styles.css' %}">
+{% endblock %}
+
+{% block sidebar_links %}
+<li><a href="{% url 'p_list:all_index' %}">All RCV's</a></li>
+<li><a href="{% url 'p_list:upload' %}">Upload RCV's</a></li>
+{% endblock %}
+
+{% block home_link %}
+<li><a href="{% url 'p_list:index' %}">RCV Home</a>
+{% endblock %}

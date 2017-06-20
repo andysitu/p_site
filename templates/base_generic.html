@@ -25,7 +25,10 @@
       <ul class="sidebar-nav">
           <a href={% url 'index' %}><img src="{% static 'img/mini-logo.gif' %}" alt="logo"/></a>
 
-          <li><a href="{% url 'index' %}">Home</a></li>
+          {% block home_link %}
+            <li><a href="{% url 'index' %}">Home</a></li>
+          {% endblock %}
+          {% block sidebar_links %} {% endblock %}
           {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
             <li><a href="{% url 'logout' %}?next={% url 'index' %}">Logout</a></li>
