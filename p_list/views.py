@@ -19,9 +19,7 @@ def index(request, year=None, month=None,):
     rcv_list = None
     year_list = None
     month_list = None
-    if year==None and month==None:
-        rcv_list = RCV.objects.all()
-    elif year == None:
+    if year == None:
         year_list = []
         query_list = RCV.objects.dates('date', 'year')
         for d in query_list:
@@ -39,7 +37,11 @@ def index(request, year=None, month=None,):
         'p_list/index.html',
         context = { "rcv_list": rcv_list, 
                     "year_list": year_list, 
-                    "month_list": month_list,}
+                    "month_list": month_list,
+                    "year_url": year,
+                    "month_url": month}
+    )
+
     )
 
 def download_rcv(request, rcv_name):
