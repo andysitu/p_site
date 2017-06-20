@@ -15,13 +15,31 @@ from .forms import UploadRCV, XMLRequestForm
 def test(request):
     return HttpResponse("HELLO")
 
-def index(request):
-    rcv_list = RCV.objects.all()
+def index(request, year=None, month=None,):
+    rcv_list = None
+    year_list = None
+    month_list = None
+    if year==None and month==None:
+        rcv_list = RCV.objects.all()
+    elif year == None:
+        year_list = []
+        query_list = RCV.objects.dates('date', 'year')
+        for d in query_list:
+            year_list.append(d.year)
+    elif month == None:
+        month_list = []
+        query_list = RCV.objects.dates('date', 'month')
+        for d in query_list:
+            month_list.append(d.month)
+    else:
+        rcv_list = RCV.objects.filter(date__year=year, date__month=month)
 
     return render(
         request,
         'p_list/index.html',
-        context = {"rcv_list": rcv_list,}
+        context = { "rcv_list": rcv_list, 
+                    "year_list": year_list, 
+                    "month_list": month_list,}
     )
 
 def download_rcv(request, rcv_name):
