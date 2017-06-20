@@ -42,6 +42,12 @@ def index(request, year=None, month=None,):
                     "month_url": month}
     )
 
+def all_index(request):
+    rcv_list = RCV.objects.all()
+    return render(
+        request,
+        'p_list/index.html',
+        context = { "rcv_list": rcv_list,}
     )
 
 def download_rcv(request, rcv_name):
