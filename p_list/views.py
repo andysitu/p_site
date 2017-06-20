@@ -37,8 +37,11 @@ def upload_file(request):
         rcvform = UploadRCV(request.POST, request.FILES)
         if rcvform.is_valid():
             # form hands request.FILES
-            rcv = RCV(rcvfile=request.FILES["rcvfile"], filename=request.FILES['rcvfile'].name)
-            rcv.save()
+            for file in request.FILES.getlist('rcvfile'):
+                filename = file.name
+
+                rcv = RCV(rcvfile=file, filename=filename, date=d)
+                rcv.save()
             # rcvform.save()
 
             return HttpResponseRedirect(reverse('p_list:upload'))
@@ -50,7 +53,8 @@ def upload_file(request):
     return render(
         request,
         'p_list/upload.html',
-        context={'rcvs': rcvs, 'rcvform': rcvform,})
+        context={'rcvs': rcvs, 'rcvform': rcvform,}
+    )
 
 @login_required
 def check_files_to_model(request):
