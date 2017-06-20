@@ -19,14 +19,4 @@
     <p><input type="submit" value="Upload" /></p>
 </form>
 
-{% if rcvs %}
-    <ul>
-    {% for rcv in rcvs %}
-        <li><a href="{{ rcv.rcvfile.url }}">{{ rcv.filename }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No documents.</p>
-{% endif %}
-
 {% endblock %}
