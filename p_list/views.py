@@ -8,11 +8,9 @@ from django.views.static import serve
 from django.urls import reverse
 from .models import RCV
 
-import os
+import os, re, datetime
 
 from .forms import UploadRCV, XMLRequestForm
-
-from .models import RCV
 
 def test(request):
     return HttpResponse("HELLO")
@@ -39,6 +37,16 @@ def upload_file(request):
             # form hands request.FILES
             for file in request.FILES.getlist('rcvfile'):
                 filename = file.name
+
+                pattern = re.compile('(?P<year>\d\d)(?P<month>\d\d)(?P<day>\d\d)')
+
+                re_result = pattern.search(filename)
+                print(re_result)
+                year = int("20" + re_result.group("year"))
+                month = int(re_result.group("month"))
+                day = int(re_result.group("day"))
+
+                d = datetime.date(year, month, day)
 
                 rcv = RCV(rcvfile=file, filename=filename, date=d)
                 rcv.save()
