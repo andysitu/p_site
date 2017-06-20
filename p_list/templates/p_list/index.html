@@ -12,16 +12,29 @@
 
 
 <ul>
-{% for rcv in rcv_list %}
-    <li id="{{rcv}}-li" class="rcv-li">
-        <a href="{% url 'p_list:download_rcv' rcv %}" id="{{ rcv }}-link">{{ rcv }}</a>
-        <div class=add-link-hide id={{rcv}}-add-links-div>
-            <a id="{{ rcv }}-delete" class="add-link-delete">delete</a>
-        </div>
-    </li>
-{% endfor %}
+{% if rcv_list %}
+    {% for rcv in rcv_list %}
+        <li id="{{rcv}}-li" class="rcv-li">
+            <a href="{% url 'p_list:download_rcv' rcv %}" id="{{ rcv }}-link">{{ rcv }}</a>
+            <div class=add-link-hide id={{rcv}}-add-links-div>
+                <a id="{{ rcv }}-delete" class="add-link-delete">delete</a>
+            </div>
+        </li>
+    {% endfor %}
+
+    <script src="{% static 'js/index_page.js' %}"></script>
+{% elif year_list %}
+    {% for year in year_list %}
+        <li>{{ year }}</li>
+    {% endfor %}
+{% elif month_list %}
+    {% for month in month_list %}
+        <li>{{ month }}</li>
+    {% endfor %}
+
+{% endif %}
 </ul>
 
-<script src="{% static 'js/index_page.js' %}"></script>
+
 
 {% endblock %}

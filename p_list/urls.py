@@ -4,7 +4,9 @@ from . import views
 
 app_name = "p_list"
 urlpatterns = [
-	url(r'^$', views.index, name="index"),
+    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.index, name="index-month"),
+    url(r'^(?P<year>\d{4})/$', views.index, name="index-year"),
+	url(r'^all/$', views.index, name="index-all"),
     url(r'^download_rcv/(?P<rcv_name>.+$)', views.download_rcv, name="download_rcv"),
     url(r'^upload_file/$', views.upload_file, name="upload"),
     url(r'check_files_to_model/$',  views.check_files_to_model, name='check_files_to_model'),
