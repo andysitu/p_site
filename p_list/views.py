@@ -12,8 +12,16 @@ import os, re, datetime
 
 from .forms import UploadRCV, XMLRequestForm
 
+from django.utils.translation import gettext_lazy
+from django.utils import translation
+
+
 def test(request):
-    return HttpResponse("HELLO")
+    user_language = 'zh-cn'
+    translation.activate(user_language)
+    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+    output = gettext_lazy("Hello")
+    return HttpResponse(output)
 
 def index(request, year=None, month=None,):
     rcv_list = None
