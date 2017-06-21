@@ -39,13 +39,33 @@
        {% endblock %}
       </div>
 
-      <div id="set-lang-div" class="top top-default pull-right">
-        <a>中文</a> <a>Eng</a>
-      </div>
 
       <div class="col-sm-10">
-      <div id="message-box"></div>
+      <div id="set-lang-div">
+        
+        {% csrf_token %}
+        {% get_current_language as LANGUAGE_CODE %}
 
+        {% if LANGUAGE_CODE == 'zh-cn' %}
+        
+        <form method="POST" action="{% url 'set_language' 'en' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            中文 <input class="change-lang-but" type="submit" value="Eng"/>
+        </form>
+
+        {% else %}
+
+        <form method="POST" action="{% url 'set_language' 'zh-cn' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input class="change-lang-but" type="submit" value="中文" /> Eng
+        </form>
+
+        {% endif %}
+
+      </div>
+      <div id="message-box"></div>
       
       {% block content %}{% endblock %}
       </div>
