@@ -13,5 +13,17 @@
 #set-lang-div {
     position: absolute;
     top: 0;
-    right: 5;
+    right: 0;
+    float: right;
+}
+
+.change-lang-but {
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+.change-lang-but:focus {
+  outline: none;
 }
