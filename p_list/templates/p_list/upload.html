@@ -1,5 +1,7 @@
 {% extends 'p_list/p_list_base.html' %}
 
+{% load i18n %}
+
 {% block head %}
     {% load static %}
 
@@ -16,7 +18,7 @@
         {{ rcvform.rcvfile.errors }}
         {{ rcvform.rcvfile }}
     </p>
-    <p><input type="submit" value="Upload" /></p>
+    <p><input type="submit" value="{% trans 'Upload' %}" /></p>
 </form>
 
 {% endblock %}

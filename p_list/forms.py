@@ -1,11 +1,12 @@
 from django import forms
+from django.utils.translation import gettext_lazy
 
 class UploadRCV(forms.Form):
     # title = forms.CharField(max_length=50)
     rcvfile = forms.FileField(
-        label="Select an RCV PDF File",
+        label=gettext_lazy("Select an RCV PDF File"),
         help_text='',
-        widget=forms.ClearableFileInput(attrs={'multiple': True}),
+        widget=forms.ClearableFileInput(attrs={'multiple': True}),\
     )
 
 class XMLRequestForm(forms.Form):

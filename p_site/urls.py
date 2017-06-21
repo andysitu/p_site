@@ -23,10 +23,12 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
     url(r'^rcv_list/', include('p_list.urls')),
     url(r'^$', views.index),
     url(r'^index/$', views.index, name="index"),
+    url(r'^set_language/(?P<language>.+)/$', views.setlanguage, name="set_language"),
 ]
 
 urlpatterns += [

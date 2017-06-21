@@ -1,16 +1,19 @@
 {% extends 'base_generic.html' %}
 
+{% load i18n %}
+
 {% block head %}
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/p_list_styles.css' %}">
 {% endblock %}
 
-{% block sidebar_links %}
-<li><a href="{% url 'p_list:all_index' %}">All RCV's</a></li>
-<li><a href="{% url 'p_list:upload' %}">Upload RCV's</a></li>
+{% block home_link %}
+<li><a href="{% url 'p_list:index' %}">RCV {% trans "Home" %}</a>
 {% endblock %}
 
-{% block home_link %}
-<li><a href="{% url 'p_list:index' %}">RCV Home</a>
+{% block sidebar_links %}
+<li><a href="{% url 'p_list:all_index' %}">{% trans "All" %} RCV's</a></li>
+<li><a href="{% url 'p_list:upload' %}">{% trans "Upload" %} RCV's</a></li>
 {% endblock %}
+
