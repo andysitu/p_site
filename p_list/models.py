@@ -10,7 +10,9 @@ class TestModel(models.Model):
 	num_times = models.IntegerField()
 
 class RCV(models.Model):
-    rcvfile = models.FileField(upload_to='rcv/')
+    rcvfile = models.FileField(
+        upload_to='rcv/',
+    )
     filename = models.CharField(max_length=50, default="")
     date = models.DateField(default=django.utils.timezone.now)
 
