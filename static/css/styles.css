@@ -9,3 +9,9 @@
     width:100%;
     height: 40px;
 }
+
+#set-lang-div {
+    position: absolute;
+    top: 0;
+    right: 5;
+}
