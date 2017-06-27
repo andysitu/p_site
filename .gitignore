@@ -54,4 +54,4 @@ unproc_rcv
 p_list/__pycache__
 p_list/migrations
 rcv/__pycache__
-rcv_pdf
+rcv_pdfp_site/pass_store.py

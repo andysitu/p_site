@@ -28,7 +28,12 @@ DEBUG = True
 
 from socket import gethostname
 
-ALLOWED_HOSTS = ['192.168.20.74', '127.0.0.1', '192.168.20.97']
+ALLOWED_HOSTS = ['192.168.20.74',
+                 '127.0.0.1',
+                 '192.168.20.97',
+                 '192.168.20.113',
+                 '192.168.120.200',
+                 ]
 
 
 # Application definition
