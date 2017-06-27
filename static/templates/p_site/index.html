@@ -1,0 +1,17 @@
+{% extends 'base_generic.html' %}
+
+{% load i18n %}
+
+{% block title %}
+Index
+{% endblock %}
+
+
+{% block content %}
+
+<ul class="list-unstyled">
+    <li><a href="{% url 'p_list:index' %}">{% trans "RCV List" %}</a></li>
+</ul>
+
+
+{% endblock %}
