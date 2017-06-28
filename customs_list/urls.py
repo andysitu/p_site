@@ -4,4 +4,5 @@ from . import views
 
 app_name = "customs_list"
 urlpatterns = [
-    url(r'^test/$', views.test),]
+    url(r'^test/$', views.test),
+]
