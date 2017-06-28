@@ -1,8 +1,8 @@
 {% extends 'customs_list/customs_list_base.html' %}
 
-{% load i18n %}
-
 {% block content %}
+
+{% load i18n %}
 
 {% load static %}
 
@@ -14,6 +14,7 @@
 </ul>
 
 {% else %}
+    {% trans "No customs declaration notes have been uploaded." %}
 {% endif %}
 <!--<ul class="list-unstyled">-->
 <!--{% if rcv_list %}-->

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-28 13:59-0700\n"
+"POT-Creation-Date: 2017-06-28 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgid "Select an Customs Declaration PDF File"
 msgstr ""
 
 #: customs_list/templates/customs_list/customs_list_base.html:13
-#: p_list/templates/p_list/p_list_base.html:17
-#: p_list/templates/p_list/upload.html:21
-#: static/templates/p_list/p_list_base.html:17
-#: static/templates/p_list/upload.html:21
-msgid "Upload"
+msgid "Upload Customs Declaration"
+msgstr ""
+
+#: customs_list/templates/customs_list/view_files.html:17
+msgid "No customs declaration notes have been uploaded."
 msgstr ""
 
 #: p_list/forms.py:7 static/forms.py:7
@@ -56,6 +56,13 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+#: p_list/templates/p_list/p_list_base.html:17
+#: p_list/templates/p_list/upload.html:21
+#: static/templates/p_list/p_list_base.html:17
+#: static/templates/p_list/upload.html:21
+msgid "Upload"
+msgstr ""
+
 #: p_list/views.py:23
 msgid "Hello"
 msgstr "Hello"
@@ -66,6 +73,10 @@ msgstr ""
 
 #: p_site/settings.py:141 static/settings.py:139
 msgid "Chinese"
+msgstr ""
+
+#: p_site/templates/p_site/index.html:14
+msgid "Customs Declaration List"
 msgstr ""
 
 #: templates/base_generic.html:38

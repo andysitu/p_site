@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-28 13:59-0700\n"
+"POT-Creation-Date: 2017-06-28 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: customs_list/forms.py:6
-#, fuzzy
-#| msgid "Select an RCV PDF File"
 msgid "Select an Customs Declaration PDF File"
-msgstr "选择RCV PDF文件"
+msgstr "选择CUSTOMS DECLARATION PDF文件"
 
 #: customs_list/templates/customs_list/customs_list_base.html:13
-#: p_list/templates/p_list/p_list_base.html:17
-#: p_list/templates/p_list/upload.html:21
-#: static/templates/p_list/p_list_base.html:17
-#: static/templates/p_list/upload.html:21
-msgid "Upload"
-msgstr "上载"
+msgid "Upload Customs Declaration"
+msgstr "选择CUSTOMS DECLARATION"
+
+#: customs_list/templates/customs_list/view_files.html:17
+msgid "No customs declaration notes have been uploaded."
+msgstr "沒有 CUSTOMS DECLARATION PDF"
 
 #: p_list/forms.py:7 static/forms.py:7
 msgid "Select an RCV PDF File"
@@ -58,6 +56,13 @@ msgstr "家"
 msgid "All"
 msgstr "所有"
 
+#: p_list/templates/p_list/p_list_base.html:17
+#: p_list/templates/p_list/upload.html:21
+#: static/templates/p_list/p_list_base.html:17
+#: static/templates/p_list/upload.html:21
+msgid "Upload"
+msgstr "上载"
+
 #: p_list/views.py:23
 msgid "Hello"
 msgstr "你好"
@@ -69,6 +74,10 @@ msgstr "英文"
 #: p_site/settings.py:141 static/settings.py:139
 msgid "Chinese"
 msgstr "中文"
+
+#: p_site/templates/p_site/index.html:14
+msgid "Customs Declaration List"
+msgstr "选择CUSTOMS DECLARATION PDF文件"
 
 #: templates/base_generic.html:38
 msgid "User"
