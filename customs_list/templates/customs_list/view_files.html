@@ -6,6 +6,15 @@
 
 {% load static %}
 
+{% if customs_list %}
+<ul>
+    {% for customs_decl in customs_list %}
+    <li>{{ customs_decl }}</li>
+    {% endfor %}
+</ul>
+
+{% else %}
+{% endif %}
 <!--<ul class="list-unstyled">-->
 <!--{% if rcv_list %}-->
     <!--{{ rcv_list_word }}-->
