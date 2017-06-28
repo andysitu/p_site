@@ -41,13 +41,14 @@ ALLOWED_HOSTS = ['192.168.20.74',
 # Application definition
 
 INSTALLED_APPS = [
+    'p_list.apps.P_listConfig',
+    'customs_list.apps.CustomsListConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'p_list.apps.P_listConfig',
 ]
 
 MIDDLEWARE = [
