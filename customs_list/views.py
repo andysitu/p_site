@@ -5,3 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def test(request):
     return HttpResponse("HELLO")
+
+def upload(request):
+    return render(
+        request,
+        'customs_list/upload.html',
+    )

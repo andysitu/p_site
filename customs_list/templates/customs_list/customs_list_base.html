@@ -1,0 +1,15 @@
+{% extends 'base_generic.html' %}
+
+{% load i18n %}
+
+{% block head %}
+    {% load static %}
+{% endblock %}
+
+{% block home_link %}
+{% endblock %}
+
+{% block sidebar_links %}
+<li><a href="{% url 'customs_list:upload' %}">{% trans "Upload" %} RCV's</a></li>
+{% endblock %}
+
