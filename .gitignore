@@ -57,3 +57,5 @@ rcv/__pycache__
 rcv_pdf
 p_site/pass_store.py
 p_site/pass_store.py
+media
+**/migrations
