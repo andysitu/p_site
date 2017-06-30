@@ -34,21 +34,26 @@ def upload(request):
                     customs_number = re_results[0]
                     filename = re_results[0] + '.pdf'
 
-                    pdfWriter = PyPDF2.PdfFileWriter()
-                    pdfWriter.addPage(pageObj)
-                    pdfOutputFile = open("media/" + filename, 'wb')
-                    pdf_file = pdfWriter.write(pdfOutputFile)
+                    query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
+                    if len(query_list) == 0:
+                        pdfWriter = PyPDF2.PdfFileWriter()
+                        pdfWriter.addPage(pageObj)
+                        pdfOutputFile = open("media/" + filename, 'wb')
+                        pdf_file = pdfWriter.write(pdfOutputFile)
 
-                    reopen_file = open('media/' + filename, 'rb')
-                    django_file = File(reopen_file)
-                    customs_declaration = CustomsDeclaration(customs_file=django_file,
-                                                              customs_number=customs_number,
-                                                              filename=filename)
-                    customs_declaration.save()
+                        reopen_file = open('media/' + filename, 'rb')
+                        django_file = File(reopen_file)
+                        customs_declaration = CustomsDeclaration(customs_file=django_file,
+                                                                  customs_number=customs_number,
+                                                                  filename=filename)
+                        customs_declaration.save()
 
-                    os.remove(os.path.join(settings.MEDIA_ROOT, filename))
+                        os.remove(os.path.join(settings.MEDIA_ROOT, filename))
 
-                    pdfOutputFile.close()
+                        pdfOutputFile.close()
+                    else:
+                        # DISPLAY ERROR MESSAGE THAT FILE ALREADY EXISTS THROUGH JS
+                        pass
 
     else:
         uploadform = UploadCustomsDeclaration()
