@@ -66,7 +66,7 @@ def download_rcv(request, rcv_name):
 @login_required
 def upload_file(request):
     if request.method == 'POST':
-        rcvform = UploadRCV(request.POST, request.FILES)
+        rcvform = UploadRCV(request.POST, request.FILES,)
         if rcvform.is_valid():
             # form hands request.FILES
             for file in request.FILES.getlist('rcvfile'):
@@ -74,8 +74,6 @@ def upload_file(request):
 
                 pattern = re.compile('(?P<year>\d\d)(?P<month>\d\d)(?P<day>\d\d)')
 
-                re_result = pattern.search(filename)
-                print(re_result)
                 year = int("20" + re_result.group("year"))
                 month = int(re_result.group("month"))
                 day = int(re_result.group("day"))

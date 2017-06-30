@@ -9,9 +9,16 @@
 
 {% block content %}
 
-<form action="" method="post" enctype="multipart/form-data"></form>
+<form action="{% url 'customs_list:upload' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
+    <p>{{ rcvform.non_field_errors }}</p>
+    <p>{{ rcvform.rcvfile.label_tag }} {{ rcvform.rcvfile.help_text }}</p>
+    <p>
+        {{ rcvform.rcvfile.errors }}
     {{ uploadform.customs_file }}
+    </p>
+
+    <p><input type="submit" value="{% trans 'Upload' %}" /></p>
+</form>
 
 {% endblock %}
