@@ -9,8 +9,8 @@ from django.core.files import File
 from django.conf import settings
 from django.utils.encoding import smart_str
 
-def test(request):
-    return HttpResponse("HELLO")
+def test(request, file_name):
+    return HttpResponse(file_name)
 
 @login_required
 def upload(request):
@@ -69,9 +69,9 @@ def upload(request):
 def download_customs_pdf(request, file_name):
     customs_model = CustomsDeclaration.objects.get(filename=file_name)
     path_to_file = customs_model.customs_file.url
-    response=HttpResponse(content_type='application/force-download')
+    response=HttpResponse(customs_model.customs_file, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
-    response['X-Accel-Redirect'] = smart_str(path_to_file)
+    # response['X-Accel-Redirect'] = smart_str(path_to_file)
     return response
 
 def list_all(request):
