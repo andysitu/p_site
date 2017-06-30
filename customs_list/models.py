@@ -1,7 +1,7 @@
 from django.db import models
 import django
 
-class CustomsDeclaraction(models.Model):
+class CustomsDeclaration(models.Model):
     customs_file = models.FileField(
         upload_to='customs_delcaraction/'
     )
@@ -11,4 +11,4 @@ class CustomsDeclaraction(models.Model):
     upload_date = models.DateField(default=django.utils.timezone.now)
 
     def __str__(self):
-        return self.customs_number
+        return self.filename

@@ -9,7 +9,7 @@
 {% if customs_list %}
 <ul>
     {% for customs_decl in customs_list %}
-    <li>{{ customs_decl }}</li>
+    <li><a href="{% url 'customs_list:download' customs_decl %}">{{ customs_decl }}</a></li>
     {% endfor %}
 </ul>
 

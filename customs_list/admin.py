@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import CustomsDeclaraction
+from .models import CustomsDeclaration
 
-admin.site.register(CustomsDeclaraction)
+admin.site.register(CustomsDeclaration)

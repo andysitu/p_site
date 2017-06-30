@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import CustomsDeclaraction
+from .models import CustomsDeclaration
 from .forms import UploadCustomsDeclaration
 from django.contrib.auth.decorators import login_required
 import re, os
@@ -41,7 +41,7 @@ def upload(request):
 
                     reopen_file = open('media/' + filename, 'rb')
                     django_file = File(reopen_file)
-                    customs_declaration = CustomsDeclaraction(customs_file=django_file,
+                    customs_declaration = CustomsDeclaration(customs_file=django_file,
                                                               customs_number=customs_number,
                                                               filename=filename)
                     customs_declaration.save()
@@ -61,8 +61,16 @@ def upload(request):
     )
 
 
+def download_customs_pdf(request, file_name):
+    customs_model = CustomsDeclaration.objects.get(filename=file_name)
+    path_to_file = customs_model.customs_file.url
+    response=HttpResponse(content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
+    response['X-Accel-Redirect'] = smart_str(path_to_file)
+    return response
+
 def list_all(request):
-    customs_all_list = CustomsDeclaraction.objects.all()
+    customs_all_list = CustomsDeclaration.objects.all()
     return render(
         request,
         'customs_list/view_files.html',
