@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^index$', views.list_all, name="index"),
     url(r'^$', views.list_all, name="index-blank"),
     url(r'^download/(?P<file_name>[\w\d\s\.]+)$', views.download_customs_pdf, name="download"),
+    url(r'^view/(?P<file_name>[\w\d\s\.]+)$', views.view_customs_pdf, name="view"),
 ]

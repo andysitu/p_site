@@ -70,9 +70,7 @@ def upload(request):
         }
     )
 
-from django.views.static import serve
-
-def download_customs_pdf(request, file_name):
+def download_customs_pdf(request, file_name, view_pdf=False):
     cus_file_save_folder = customs_file_save_location()
 
     customs_model = CustomsDeclaration.objects.get(filename=file_name)
@@ -83,9 +81,15 @@ def download_customs_pdf(request, file_name):
     response = HttpResponse()
     response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name))
     response['Content-Type'] = 'application/pdf'
-    response['Content-Disposition'] = 'attachment; filename=%s' % file_name
+    if view_pdf:
+        response['Content-Disposition'] = 'inline; filename=%s' % file_name
+    else:
+        response['Content-Disposition'] = 'attachment; filename=%s' % file_name
     response['X-Accel-Redirect'] = "/media/" +  cus_file_save_folder + '/' + file_name
     return response
+
+def view_customs_pdf(request, file_name):
+    return download_customs_pdf(request, file_name, view_pdf=True)
 
 def list_all(request):
     customs_all_list = CustomsDeclaration.objects.all()
