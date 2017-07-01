@@ -12,6 +12,9 @@ from django.utils.encoding import smart_str
 def test(request, file_name):
     return HttpResponse(file_name)
 
+def customs_file_save_location():
+    return 'customs_declaration'
+
 @login_required
 def upload(request):
     if request.method == 'POST':
@@ -25,6 +28,7 @@ def upload(request):
                 pdfReader = PyPDF2.PdfFileReader(file)
 
                 for pageNum in range(0, pdfReader.numPages):
+                    cus_file_save_folder = customs_file_save_location()
                     pageObj = pdfReader.getPage(pageNum)
                     text = pageObj.extractText()
                     re_results = re.findall(num_regex, text)
@@ -38,7 +42,7 @@ def upload(request):
                     if len(query_list) == 0:
                         pdfWriter = PyPDF2.PdfFileWriter()
                         pdfWriter.addPage(pageObj)
-                        pdfOutputFile = open("media/" + filename, 'wb')
+                        pdfOutputFile = open(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, filename), 'wb')
                         pdfWriter.write(pdfOutputFile)
 
                         # reopen_file = open('media/' + filename, 'rb')
@@ -69,16 +73,18 @@ def upload(request):
 from django.views.static import serve
 
 def download_customs_pdf(request, file_name):
+    cus_file_save_folder = customs_file_save_location()
+
     customs_model = CustomsDeclaration.objects.get(filename=file_name)
-    # path_to_file = os.path.join(settings.MEDIA_ROOT, file_name)
-    path_to_file = '/media/' + file_name
-    # with open(os.path.join(settings.MEDIA_ROOT, file_name), 'rb') as pdf:
+    path_to_file = os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name)
+    # path_to_file = '/media/' + file_name
+    # with open(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name), 'rb') as pdf:
     #     response=HttpResponse(pdf.read(), content_type='application/pdf')
     response = HttpResponse()
-    response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, file_name))
+    response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name))
     response['Content-Type'] = 'application/pdf'
     response['Content-Disposition'] = 'attachment; filename=%s' % file_name
-    response['X-Accel-Redirect'] = '/media/' + file_name
+    response['X-Accel-Redirect'] = "/media/" +  cus_file_save_folder + '/' + file_name
     return response
 
 def list_all(request):
