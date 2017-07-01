@@ -21,7 +21,7 @@ def upload(request):
 #
 #
             for file in request.FILES.getlist('customs_file'):
-                print(type(file))
+
                 pdfReader = PyPDF2.PdfFileReader(file)
 
                 for pageNum in range(0, pdfReader.numPages):
@@ -34,21 +34,22 @@ def upload(request):
                     customs_number = re_results[0]
                     filename = re_results[0] + '.pdf'
 
-                    query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
+                    query_list = CustomsDeclaration.objects.filter(filename=filename)
                     if len(query_list) == 0:
                         pdfWriter = PyPDF2.PdfFileWriter()
                         pdfWriter.addPage(pageObj)
                         pdfOutputFile = open("media/" + filename, 'wb')
-                        pdf_file = pdfWriter.write(pdfOutputFile)
+                        pdfWriter.write(pdfOutputFile)
 
-                        reopen_file = open('media/' + filename, 'rb')
-                        django_file = File(reopen_file)
-                        customs_declaration = CustomsDeclaration(customs_file=django_file,
-                                                                  customs_number=customs_number,
-                                                                  filename=filename)
+                        # reopen_file = open('media/' + filename, 'rb')
+                        # djangofile = File(reopen_file)
+                        customs_declaration = CustomsDeclaration(filename=filename,
+                                                                 customs_number=customs_number,
+                                                                 )
                         customs_declaration.save()
+                        # reopen_file.close()
 
-                        os.remove(os.path.join(settings.MEDIA_ROOT, filename))
+                        # os.remove(os.path.join(settings.MEDIA_ROOT, filename))
 
                         pdfOutputFile.close()
                     else:
@@ -65,13 +66,19 @@ def upload(request):
         }
     )
 
+from django.views.static import serve
 
 def download_customs_pdf(request, file_name):
     customs_model = CustomsDeclaration.objects.get(filename=file_name)
-    path_to_file = customs_model.customs_file.url
-    response=HttpResponse(customs_model.customs_file, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
-    # response['X-Accel-Redirect'] = smart_str(path_to_file)
+    # path_to_file = os.path.join(settings.MEDIA_ROOT, file_name)
+    path_to_file = '/media/' + file_name
+    # with open(os.path.join(settings.MEDIA_ROOT, file_name), 'rb') as pdf:
+    #     response=HttpResponse(pdf.read(), content_type='application/pdf')
+    response = HttpResponse()
+    response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, file_name))
+    response['Content-Type'] = 'application/pdf'
+    response['Content-Disposition'] = 'attachment; filename=%s' % file_name
+    response['X-Accel-Redirect'] = '/media/' + file_name
     return response
 
 def list_all(request):

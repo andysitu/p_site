@@ -1,0 +1,20 @@
+[0;1;32m●[0m gunicorn.service - gunicorn daemon
+   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (running)[0m since Fri 2017-06-30 18:21:53 PDT; 2min 26s ago
+ Main PID: 2074 (gunicorn)
+   CGroup: /system.slice/gunicorn.service
+           ├─2074 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           ├─2077 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           ├─2078 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           └─2079 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+
+Jun 30 18:21:58 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:58 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:58 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:58 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:58 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:58 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:58 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:58 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:59 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:59 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:59 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:59 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:59 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:59 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:21:59 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:21:59 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:22:14 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:22:14 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+Jun 30 18:24:15 a-XUbuntu-VirtualBox gunicorn[2074]: b'' - - [30/Jun/2017:18:24:15 -0700] "GET /customs_list/download/FT017788057TW.pdf HTTP/1.0" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
