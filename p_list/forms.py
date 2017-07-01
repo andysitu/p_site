@@ -2,7 +2,6 @@ from django import forms
 from django.utils.translation import gettext_lazy
 
 class UploadRCV(forms.Form):
-    title = forms.CharField(max_length=50)
     rcvfile = forms.FileField(
         label=gettext_lazy("Select an RCV PDF File"),
         help_text='',
