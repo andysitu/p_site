@@ -73,6 +73,7 @@ def upload_file(request):
                 filename = file.name
 
                 pattern = re.compile('(?P<year>\d\d)(?P<month>\d\d)(?P<day>\d\d)')
+                re_result = pattern.search(filename)
 
                 year = int("20" + re_result.group("year"))
                 month = int(re_result.group("month"))
