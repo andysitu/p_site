@@ -1,11 +1,11 @@
-.add-link-hide {
+.customs-add-link-hide {
     display: none;
 }
 
-.add-link-unhide {
+.customs-add-link-unhide {
     display: inline-block;
 }
 
-.rcv-link {
+customs-li {
     display: inline-block;
 }

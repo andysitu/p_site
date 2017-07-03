@@ -70,10 +70,9 @@ function delete_rcv_link(rcv) {
 
 
 function hoovering_rcv(e) {
-    var li_ele = e.target;
-    li_id = e.target.id;
+    var li_ele = e.target,
+        ele_id = e.target.id;
     var rcv_regex = /(.+)-.+/;
-    ele_id = e.target.id;
     result = rcv_regex.exec(ele_id);
     rcv_filename = result[1];
 
@@ -85,7 +84,7 @@ function hoovering_rcv(e) {
         add_link_div.children[i].addEventListener('click', click_add_link_response);
     }
 
-    li_ele.addEventListener('mouseleave', function(f) {
+    li_ele.addEventListener('mouseleave', function(e) {
         add_link_div.classList.remove('add-link-unhide');
         add_link_div.classList.add('add-link-hide');
     });

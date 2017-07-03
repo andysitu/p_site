@@ -69,7 +69,7 @@ ROOT_URLCONF = 'p_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', 'p_site/templates'],
+        'DIRS': ['./templates', 'p_site/templates', 'customs_list/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,6 +151,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "p_site/static"),
     os.path.join(BASE_DIR, "p_list/static"),
+    os.path.join(BASE_DIR, "customs_list/static"),
 ]
 
 LOGIN_REDIRECT_URL = '/'

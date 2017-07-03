@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import CustomsDeclaration
-from .forms import UploadCustomsDeclaration
+from .forms import UploadCustomsDeclaration, XMLRequestForm
 from django.contrib.auth.decorators import login_required
 import re, os
 import PyPDF2
@@ -101,5 +101,15 @@ def list_all(request):
         }
     )
 
-def delete(request, file_name):
-    return HttpResponse("NEED TO DELETE " + file_name)
+def delete(request):
+    form = XMLRequestForm(request.POST)
+    if form.is_valid():
+        command = form.cleaned_data['command']
+        filename = form.cleaned_data['filename']
+    if request.user.is_authenticated:
+        custdecl_inst = CustomsDeclaration.objects.filter(filename=filename)
+        custdecl_inst.delete()
+        message = filename
+    else:
+        return HttpResponseRedirect(reverse('login'))
+    return HttpResponse(message)

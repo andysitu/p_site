@@ -6,14 +6,17 @@
 
 {% load static %}
 
+<link rel="stylesheet" href="{% static 'css/customs_view_styles.css' %}">
+<script src="{% static 'js/customs-decl-view.js' %}"></script>
+
 {% if customs_list %}
 <ul>
     {% for customs_decl in customs_list %}
-    <li>
+    <li id="{{ customs_decl }}-li" class="customs-li">
         <a href="{% url 'customs_list:download' customs_decl %}">{{ customs_decl }}</a>
-        <div id="{{ customs_decl.filename }}-add_links-div">
+        <div class="customs-add-link-hide" id="{{ customs_decl }}-cust-add-link-div">
             <a href="{% url 'customs_list:view' customs_decl %}" target="_new">view</a>
-            <a href="{% url 'customs_list:delete' customs_decl %}">delete</a>
+            <a href="" id="{{ customs_decl }}-delete-link" class="cust-add-link-delete">delete</a>
         </div>
 
     </li>

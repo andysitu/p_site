@@ -7,3 +7,7 @@ class UploadCustomsDeclaration(forms.Form):
         help_text='',
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
     )
+
+class XMLRequestForm(forms.Form):
+    command = forms.CharField()
+    filename = forms.CharField()
