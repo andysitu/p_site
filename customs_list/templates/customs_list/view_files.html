@@ -13,6 +13,7 @@
         <a href="{% url 'customs_list:download' customs_decl %}">{{ customs_decl }}</a>
         <div id="{{ customs_decl.filename }}-add_links-div">
             <a href="{% url 'customs_list:view' customs_decl %}" target="_new">view</a>
+            <a href="{% url "customs_list:delete" %}>delete</a>
         </div>
 
     </li>

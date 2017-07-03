@@ -15,4 +15,3 @@ def setlanguage(request, language):
         request.session[translation.LANGUAGE_SESSION_KEY] = user_language
     next = request.POST.get('next', '/')
     return HttpResponseRedirect(next)
-
