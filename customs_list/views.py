@@ -53,8 +53,6 @@ def upload(request):
                         customs_declaration.save()
                         # reopen_file.close()
 
-                        # os.remove(os.path.join(settings.MEDIA_ROOT, filename))
-
                         pdfOutputFile.close()
                     else:
                         # DISPLAY ERROR MESSAGE THAT FILE ALREADY EXISTS THROUGH JS
@@ -103,13 +101,14 @@ def list_all(request):
 
 def delete(request):
     form = XMLRequestForm(request.POST)
+    message = ''
     if form.is_valid():
         command = form.cleaned_data['command']
         filename = form.cleaned_data['filename']
-    if request.user.is_authenticated:
-        custdecl_inst = CustomsDeclaration.objects.filter(filename=filename)
-        custdecl_inst.delete()
-        message = filename
-    else:
-        return HttpResponseRedirect(reverse('login'))
+        if request.user.is_authenticated:
+            custdecl_inst = CustomsDeclaration.objects.get(filename=filename)
+            custdecl_inst.delete()
+            message = filename
+        else:
+            return HttpResponseRedirect(reverse('login'))
     return HttpResponse(message)

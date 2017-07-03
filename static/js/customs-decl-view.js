@@ -1,17 +1,67 @@
 function run_on_load() {
-    click_add_link_response()
+    var elements = document.getElementsByClassName('customs-li')
+    var ele_length = elements.length
+
+    var i = 0
+
+    for (i=0 ; i < ele_length; i++) {
+        elements[i].addEventListener("mouseenter", hoovering_customs_link)
+    }
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';'),
+            i;
+        for (i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim()
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            }
+        }
+    }
+
+    return cookieValue
 }
 
 
 document.addEventListener("DOMContentLoaded", run_on_load);
 
-function click_add_link_response() {
-    var elements = document.getElementsByClassName('customs-li');
-    var ele_len = elements.length;
+function click_add_link_response(e) {
+    if (e.target.classList.contains('cust-add-link-delete')) {
+        xmlhttpRequest = new XMLHttpRequest();
+        xmlhttpRequest.onreadystatechange = function(event) {
+            if (xmlhttpRequest.readyState = XMLHttpRequest.DONE) {
+                if (xmlhttpRequest.status == 200) {
+                    var responseText = xmlhttpRequest.responseText;
+                    if (responseText == "0") {
+                        console.log("LOGIN REQUIRED");
+                    } else {
+                        console.log(responseText)
+                    }
+                }
+            }
+        }
 
-    var i = 0;
-    for (i=0; i< ele_len; i++) {
-        elements[i].addEventListener("mouseenter", hoovering_customs_link);
+        var cust_regex = /(.+)-delete-link/;
+        cust_ele_id = e.target.id;
+        regex_result = cust_regex.exec(cust_ele_id);
+        filename = regex_result[1]
+
+        var command = "delete";
+
+        var formData = new FormData();
+        formData.append('command', 'delete');
+        formData.append('filename', filename);
+
+        xmlhttpRequest.open('POST', './delete/', true);
+        xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        xmlhttpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        xmlhttpRequest.send(formData);
+    } else {
+
     }
 }
 

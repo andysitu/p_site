@@ -16,7 +16,7 @@ class RCV(models.Model):
         upload_to='rcv/',
     )
     filename = models.CharField(max_length=50, default="")
-    date = models.DateField(default=django.utils.timezone.now, auto_now=True)
+    date = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.filename

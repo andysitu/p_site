@@ -1,5 +1,5 @@
 from django.db import models
-import django
+import django, os
 
 class CustomsDeclaration(models.Model):
     customs_number = models.CharField(max_length=13, default="")
@@ -8,3 +8,7 @@ class CustomsDeclaration(models.Model):
 
     def __str__(self):
         return self.filename
+
+    def delete(self):
+        super(CustomsDeclaration, self).delete()
+        os.remove(os.path.join(settings.MEDIA_ROOT, "customs_declaration", filename))
