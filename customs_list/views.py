@@ -100,3 +100,6 @@ def list_all(request):
             'customs_list': customs_all_list,
         }
     )
+
+def delete(request, file_name):
+    return HttpResponse("NEED TO DELETE " + file_name)
