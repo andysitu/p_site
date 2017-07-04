@@ -77,6 +77,7 @@ function hoovering_rcv(e) {
     rcv_filename = result[1];
 
     var add_link_div = document.getElementById(rcv_filename + '-add-links-div');
+    console.log("TEST", add_link_div)
     add_link_div.classList.remove('add-link-hide');
     add_link_div.classList.add('add-link-unhide');
 

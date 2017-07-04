@@ -28,6 +28,12 @@ function getCookie(name) {
 
 document.addEventListener("DOMContentLoaded", run_on_load);
 
+function delete_customs_link(filename) {
+    console.log("DELETING", filename)
+    customs_element = document.getElementById(filename + '-li');
+    customs_element.parentNode.removeChild(customs_element)
+}
+
 function click_add_link_response(e) {
     if (e.target.classList.contains('cust-add-link-delete')) {
         xmlhttpRequest = new XMLHttpRequest();
@@ -38,8 +44,10 @@ function click_add_link_response(e) {
                     if (responseText == "0") {
                         console.log("LOGIN REQUIRED");
                     } else {
-                        console.log(responseText)
+                        // responseText is filename
+                        delete_customs_link(responseText)
                     }
+
                 }
             }
         }
@@ -80,7 +88,7 @@ function hoovering_customs_link(e) {
 
     var child_link_length = add_link_div.children.length
     for (i=0; i < child_link_length; i++) {
-        add_link_div.children[i].addEventListener("click", click_add_link_response);
+        add_link_div.children[i].addEventListener("click", click_add_link_response, false);
     }
 
     li_element.addEventListener("mouseleave", function(e) {

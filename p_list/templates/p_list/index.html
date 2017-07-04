@@ -16,7 +16,7 @@
     {% for rcv in rcv_list %}
     <li id="{{rcv}}-li" class="rcv-li">
         <a href="{% url 'p_list:download_rcv' rcv %}" id="{{ rcv }}-link" target="blank">{{ rcv }}</a>
-        <div class=add-link-hide id=""{{ rcv }}-add-links-div">
+        <div class=add-link-hide id="{{ rcv }}-add-links-div">
             <a id="{{ rcv }}-delete" class="add-link-delete">delete</a>
         </div>
     </li>

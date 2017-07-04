@@ -52,6 +52,9 @@ function click_add_link_response(e) {
         formData.append('command', "delete");
         formData.append('rcv_filename', rcv_filename);
 
+        var base = document.querySelector('base');
+        var baseUrl = base && base.href || '';
+
         xmlhttpRequest.open('POST', './delete/', true);
         xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         xmlhttpRequest.setRequestHeader('X-Requested-With', 'xmlhttpRequestRequest');
