@@ -9,12 +9,15 @@ from django.urls import reverse
 from .models import RCV
 
 import os, re, datetime
+from django.conf import settings
 
 from .forms import UploadRCV, XMLRequestForm
 
 from django.utils.translation import gettext
 from django.utils import translation
 
+def get_rcv_foldername():
+    return 'rcv'
 
 def test(request):
     user_language = 'zh-cn'
@@ -58,10 +61,21 @@ def all_index(request):
         context = { "rcv_list": rcv_list,}
     )
 
-def download_rcv(request, rcv_name):
-    filepath = './media/rcv/' + rcv_name
+def download_rcv(request, rcv_filename, view_pdf=False):
+    rcv_foldername = get_rcv_foldername()
 
-    return serve(request, os.path.basename(filepath), os.path.dirname(filepath))
+    response = HttpResponse()
+    response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, rcv_foldername, rcv_filename))
+    response['Content-Type'] = 'application/pdf'
+    if view_pdf:
+        response['Content-Disposition'] = 'inline; filename=%s' % rcv_filename
+    else:
+        response['Content-Disposition'] = 'attachment; filename=%s' % rcv_filename
+    response['X-Accel-Redirect'] = "/media/" + rcv_foldername + '/' + rcv_filename
+    return response
+
+def view_rcv(request, rcv_filename):
+    return download_rcv(request, rcv_filename, view_pdf=True)
 
 @login_required
 def upload_file(request):

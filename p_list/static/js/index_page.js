@@ -20,7 +20,7 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /(.+)-.+/;
+    var rcv_regex = /([\w\d]+-\d+.pdf)-.+/;
     ele_id = e.target.id
     result = rcv_regex.exec(ele_id)
     rcv_filename = result[1]
@@ -77,7 +77,6 @@ function hoovering_rcv(e) {
     rcv_filename = result[1];
 
     var add_link_div = document.getElementById(rcv_filename + '-add-links-div');
-    console.log("TEST", add_link_div)
     add_link_div.classList.remove('add-link-hide');
     add_link_div.classList.add('add-link-unhide');
 

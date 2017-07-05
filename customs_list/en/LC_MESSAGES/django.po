@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 12:23-0700\n"
+"POT-Creation-Date: 2017-07-05 10:03-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,79 +19,78 @@ msgstr ""
 
 #: customs_list/forms.py:6
 msgid "Select an Customs Declaration PDF File"
-msgstr "选择CUSTOMS DECLARATION PDF文件"
+msgstr ""
 
 #: customs_list/templates/customs_list/customs_list_base.html:14
 msgid "Upload Customs Declaration"
-msgstr "选择CUSTOMS DECLARATION"
+msgstr ""
 
 #: customs_list/templates/customs_list/upload.html:21
 #: p_list/templates/p_list/p_list_base.html:17
 #: p_list/templates/p_list/upload.html:21
 msgid "Upload"
-msgstr "上载"
+msgstr ""
 
 #: customs_list/templates/customs_list/view_files.html:18
-#: p_list/templates/p_list/index.html:20
 msgid "download"
-msgstr "下载"
+msgstr ""
 
 #: customs_list/templates/customs_list/view_files.html:19
 msgid "delete"
-msgstr "删除"
+msgstr ""
 
 #: customs_list/templates/customs_list/view_files.html:27
 msgid "No customs declaration notes have been uploaded."
-msgstr "沒有 CUSTOMS DECLARATION PDF"
+msgstr ""
 
 #: p_list/forms.py:6
 msgid "Select an RCV PDF File"
-msgstr "选择RCV PDF文件"
+msgstr ""
 
 #: p_list/templates/p_list/index.html:9 p_site/templates/p_site/index.html:13
 msgid "RCV List"
-msgstr "RCV 列表"
+msgstr ""
 
 #: p_list/templates/p_list/index.html:10
 msgid "Year"
-msgstr "年"
+msgstr ""
 
 #: p_list/templates/p_list/index.html:11
 msgid "Month"
-msgstr "月"
+msgstr ""
 
 #: p_list/templates/p_list/p_list_base.html:12 templates/base_generic.html:34
 msgid "Home"
-msgstr "家"
+msgstr ""
 
 #: p_list/templates/p_list/p_list_base.html:16
 msgid "All"
-msgstr "所有"
+msgstr ""
 
-#: p_list/views.py:26
+#: p_list/views.py:23
 msgid "Hello"
-msgstr "你好"
+msgstr "Hello"
 
 #: p_site/settings.py:139
 msgid "English"
-msgstr "英文"
+msgstr ""
 
 #: p_site/settings.py:140
 msgid "Chinese"
-msgstr "中文"
+msgstr ""
 
 #: p_site/templates/p_site/index.html:14
 msgid "Customs Declaration List"
-msgstr "选择CUSTOMS DECLARATION PDF文件"
+msgstr ""
 
 #: templates/base_generic.html:38
 msgid "User"
-msgstr "用户"
+msgstr ""
 
 #: templates/base_generic.html:39
 msgid "Logout"
-msgstr "登出"
+msgstr ""
 
 #: templates/base_generic.html:41
 msgid "Login"
-msgstr "登录"
+msgstr ""

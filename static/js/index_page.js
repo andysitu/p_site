@@ -20,9 +20,10 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /(.+)-.+/;
+    var rcv_regex = /([\w\d]+-\d+.pdf)-.+/;
     ele_id = e.target.id
     result = rcv_regex.exec(ele_id)
+    console.log(ele_id)
     rcv_filename = result[1]
 
     var command = '';
@@ -51,9 +52,6 @@ function click_add_link_response(e) {
         var formData = new FormData();
         formData.append('command', "delete");
         formData.append('rcv_filename', rcv_filename);
-
-        var base = document.querySelector('base');
-        var baseUrl = base && base.href || '';
 
         xmlhttpRequest.open('POST', './delete/', true);
         xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
