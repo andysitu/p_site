@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-28 16:10-0700\n"
+"POT-Creation-Date: 2017-07-05 10:03-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,57 +21,61 @@ msgstr ""
 msgid "Select an Customs Declaration PDF File"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
-#: customs_list/templates/customs_list/customs_list_base.html:13
+#: customs_list/templates/customs_list/customs_list_base.html:14
 msgid "Upload Customs Declaration"
 msgstr "选择CUSTOMS DECLARATION"
 
-#: customs_list/templates/customs_list/view_files.html:17
+#: customs_list/templates/customs_list/upload.html:21
+#: p_list/templates/p_list/p_list_base.html:17
+#: p_list/templates/p_list/upload.html:21
+msgid "Upload"
+msgstr "上载"
+
+#: customs_list/templates/customs_list/view_files.html:18
+msgid "download"
+msgstr "下载"
+
+#: customs_list/templates/customs_list/view_files.html:19
+msgid "delete"
+msgstr "删除"
+
+#: customs_list/templates/customs_list/view_files.html:27
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_list/forms.py:7 static/forms.py:7
+#: p_list/forms.py:6
 msgid "Select an RCV PDF File"
 msgstr "选择RCV PDF文件"
 
 #: p_list/templates/p_list/index.html:9 p_site/templates/p_site/index.html:13
-#: static/templates/p_list/index.html:9 static/templates/p_site/index.html:13
 msgid "RCV List"
 msgstr "RCV 列表"
 
-#: p_list/templates/p_list/index.html:10 static/templates/p_list/index.html:10
+#: p_list/templates/p_list/index.html:10
 msgid "Year"
 msgstr "年"
 
-#: p_list/templates/p_list/index.html:11 static/templates/p_list/index.html:11
+#: p_list/templates/p_list/index.html:11
 msgid "Month"
 msgstr "月"
 
-#: p_list/templates/p_list/p_list_base.html:12
-#: static/templates/p_list/p_list_base.html:12 templates/base_generic.html:34
+#: p_list/templates/p_list/p_list_base.html:12 templates/base_generic.html:34
 msgid "Home"
 msgstr "家"
 
 #: p_list/templates/p_list/p_list_base.html:16
-#: static/templates/p_list/p_list_base.html:16
 msgid "All"
 msgstr "所有"
-
-#: p_list/templates/p_list/p_list_base.html:17
-#: p_list/templates/p_list/upload.html:21
-#: static/templates/p_list/p_list_base.html:17
-#: static/templates/p_list/upload.html:21
-msgid "Upload"
-msgstr "上载"
 
 #: p_list/views.py:23
 msgid "Hello"
 msgstr "你好"
 
-#: p_site/settings.py:140 static/settings.py:138
+#: p_site/settings.py:139
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:141 static/settings.py:139
+#: p_site/settings.py:140
 msgid "Chinese"
 msgstr "中文"
 

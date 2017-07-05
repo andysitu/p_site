@@ -15,8 +15,8 @@
     <li id="{{ customs_decl }}-li" class="customs-li">
         <a href="{% url 'customs_list:view' customs_decl %}" target="_new">{{ customs_decl }}</a>
         <div class="customs-add-link-hide" id="{{ customs_decl }}-cust-add-link-div">
-            <a href="{% url 'customs_list:download' customs_decl %}">Download</a>
-            <a id="{{ customs_decl }}-delete-link" class="cust-add-link-delete">delete</a>
+            <a href="{% url 'customs_list:download' customs_decl %}">{% trans "download" %}</a>
+            <a id="{{ customs_decl }}-delete-link" class="cust-add-link-delete">{% trans "delete" %}</a>
         </div>
 
     </li>
