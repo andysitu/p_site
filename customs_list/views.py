@@ -37,18 +37,18 @@ def upload(request):
                     customs_number = ''
 
                     # Search for Customs Declaration Number
-                    cust_decl_re_results = re.findall(cust_decl_regex, text)
+                    cust_decl_re_results = re.search(cust_decl_regex, text)
 
                     if cust_decl_re_results != None:
-                        customs_number = cust_decl_re_results[0]
+                        customs_number = cust_decl_re_results.group(0).replace(' ', '')
                         correct_name = True
                     else:
                         customs_number = '00' + str(random.randint(1, 99999999999999))
 
-                    query_list = CustomsDeclaration.objects.filter(filename=filename)
+                    query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
 
-                    if len(query_list) == 0 and correct_name:
-                        continue
+                    # if len(query_list) == 0 and correct_name:
+                    #     continue
 
 
                     pdfWriter = PyPDF2.PdfFileWriter()
