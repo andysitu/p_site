@@ -40,7 +40,6 @@ ALLOWED_HOSTS = [ '127.0.0.1',
 # Application definition
 
 INSTALLED_APPS = [
-    'p_list.apps.P_listConfig',
     'customs_list.apps.CustomsListConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -148,7 +147,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, "p_site/static"),
-    # os.path.join(BASE_DIR, "p_list/static"),
     # os.path.join(BASE_DIR, "customs_list/static"),
 ]
 

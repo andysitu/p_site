@@ -26,7 +26,6 @@ app_name = "p_site"
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
-    url(r'^rcv_list/', include('p_list.urls')),
     url(r'^customs_list/', include('customs_list.urls')),
     url(r'^$', views.index),
     url(r'^index/$', views.index, name="index"),
