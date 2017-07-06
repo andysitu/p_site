@@ -6,6 +6,7 @@ class CustomsDeclaration(models.Model):
     customs_number = models.CharField(max_length=13, default="")
     filename = models.CharField(max_length=50, default="")
     upload_date = models.DateField(default=django.utils.timezone.now)
+    correct_name = models.BooleanField(default=False)
 
     def __str__(self):
         return self.filename
