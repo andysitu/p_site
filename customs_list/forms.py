@@ -11,3 +11,6 @@ class UploadCustomsDeclaration(forms.Form):
 class XMLRequestForm(forms.Form):
     command = forms.CharField()
     filename = forms.CharField()
+
+class EditCustomsDeclarationForm(forms.Form):
+    customs_number = forms.CharField()

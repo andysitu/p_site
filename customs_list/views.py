@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import CustomsDeclaration, RCV
 from .forms import UploadCustomsDeclaration, XMLRequestForm
@@ -8,6 +8,10 @@ import PyPDF2
 from django.core.files import File
 from django.conf import settings
 from django.utils.encoding import smart_str
+
+from django.core.urlresolvers import reverse
+
+from .forms import EditCustomsDeclarationForm
 
 def test(request, file_name):
     return HttpResponse(file_name)
@@ -139,3 +143,32 @@ def delete(request):
         else:
             return HttpResponseRedirect(reverse('login'))
     return HttpResponse(message)
+
+def edit_cust_dec(request, filename):
+    queryset = CustomsDeclaration.objects.filter(filename=filename)
+
+    cust_dec_inst = get_object_or_404(queryset)
+
+    if request.method == 'POST':
+        cust_dec_editform = EditCustomsDeclarationForm(request.POST)
+        if cust_dec_editform.is_valid():
+
+            customs_number = cust_dec_editform.cleaned_data["customs_number"]
+            customs_query = CustomsDeclaration.objects.filter(customs_number=customs_number)
+            if len(customs_query) != 0:
+                cust_dec_inst.delete()
+                return HttpResponseRedirect(reverse('customs_list:view_all'))
+
+            cust_dec_inst.edit(
+                customs_number=customs_number,
+                               )
+            return HttpResponseRedirect(reverse('customs_list:view_all'))
+    else:
+        cust_dec_editform = EditCustomsDeclarationForm()
+
+    return render(request,
+                  'customs_list/cust_dec_edit.html',
+                  context={
+                      'filename': filename,
+                      "form": cust_dec_editform},
+                  )

@@ -11,6 +11,17 @@ class CustomsDeclaration(models.Model):
     def __str__(self):
         return self.filename
 
+    def edit(self, customs_number):
+        filename = customs_number + ".pdf"
+        old_path = os.path.join(settings.MEDIA_ROOT, "customs_declaration", self.filename)
+        new_path = os.path.join(settings.MEDIA_ROOT, "customs_declaration", filename)
+
+        os.rename(old_path, new_path)
+        self.filename = filename
+        self.customs_number = customs_number
+        self.save()
+
+
     def delete(self):
         super(CustomsDeclaration, self).delete()
         os.remove(os.path.join(settings.MEDIA_ROOT, "customs_declaration", self.filename))
