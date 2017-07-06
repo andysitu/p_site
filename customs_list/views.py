@@ -121,7 +121,7 @@ def view_customs_pdf(request, file_name):
     return download_customs_pdf(request, file_name, view_pdf=True)
 
 def list_all(request):
-    customs_all_list = CustomsDeclaration.objects.all()
+    customs_all_list = CustomsDeclaration.objects.order_by('filename')
     return render(
         request,
         'customs_list/view_files.html',
