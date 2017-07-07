@@ -15,6 +15,6 @@ urlpatterns = [
     url(r'edit/(?P<filename>[\w\d\s\.]+)$', views.edit_cust_dec, name="edit"),
     url(r'^view_by_date/$', views.list_date, name="view_by_date"),
     url(r'^view_by_date/(?P<year>\d{4})/$', views.list_date, name="view_by_date"),
-    url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{2})/$', views.list_date, name="view_by_date"),
-    url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$', views.list_date, name="view_by_date"),
+    url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.list_date, name="view_by_date"),
+    url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', views.list_date, name="view_by_date"),
 ]
