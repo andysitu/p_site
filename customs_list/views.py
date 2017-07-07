@@ -130,6 +130,54 @@ def list_all(request):
         }
     )
 
+def list_date(request, year=None, month=None, day=None):
+    customs_list = None
+    day_list = None
+    year_list = None
+    month_list = None
+    if year != None and month != None and day != None:
+        customs_list = CustomsDeclaration.objects.filter(upload_date__year=year,
+                                                         upload_date__month=month,
+                                                         upload_date__day=day,)
+        return render(
+            request,
+            'customs_list/view_files.html',
+            context={
+                'customs_list': customs_list,
+                # SET YEAR AND MONTH
+            }
+        )
+    else:
+        if year == None:
+            year_list = []
+            query_list = CustomsDeclaration.objects.dates("upload_date", "year")
+            for q in query_list:
+                year_list.append(q.year)
+        elif month == None:
+            month_list = []
+            query_list = CustomsDeclaration.objects.filter(upload_date__year=year).dates("upload_date", "month")
+            for q in query_list:
+                month_list.append(q.month)
+        else:
+            day_list = []
+            query_list = CustomsDeclaration.objects.filter(upload_date__year=year, upload_date__month=month).dates("upload_date", "day")
+            for q in query_list:
+                day_list.append(q.day)
+
+        return render(
+            request,
+            'customs_list/view_dates.html',
+            context={
+                'year_list': year_list,
+                'month_list': month_list,
+                'day_list': day_list,
+                'day': day,
+                'year': year,
+                'month': month,
+            }
+        )
+
+
 def delete(request):
     form = XMLRequestForm(request.POST)
     message = ''
