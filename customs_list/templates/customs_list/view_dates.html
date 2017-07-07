@@ -1,0 +1,21 @@
+{% extends 'customs_list/customs_list_base.html' %}
+
+{% load i18n %}
+
+<ul>
+{% block content %}
+{% if year_list %}
+    {% for year in year_list %}
+        <li>{{ year }}</li>
+    {% endfor %}
+{% elif month_list %}
+    {% for month in month_list %}
+        <li>{{ month }}</li>
+    {% endfor %}
+{% elif day_list %}
+    {% for day in day_list %}
+        <li>{{ day }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
