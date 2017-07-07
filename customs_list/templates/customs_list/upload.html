@@ -15,7 +15,8 @@
     <p>{{ rcvform.rcvfile.label_tag }} {{ rcvform.rcvfile.help_text }}</p>
     <p>
         {{ rcvform.rcvfile.errors }}
-    {{ uploadform.customs_file }}
+
+    {{ uploadform }}
     </p>
 
     <p><input type="submit" value="{% trans 'Upload' %}" /></p>

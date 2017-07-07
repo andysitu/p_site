@@ -29,6 +29,9 @@ def upload(request):
             cust_decl_regex = re.compile('\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d')
             rcv_regex = re.compile('RCV\d{6}-\d{4}')
 
+            upload_date = uploadform.cleaned_data["upload_date"]
+
+
             for file in request.FILES.getlist('customs_file'):
 
                 pdfReader = PyPDF2.PdfFileReader(file)
@@ -67,7 +70,8 @@ def upload(request):
                     # djangofile = File(reopen_file)
                     customs_declaration = CustomsDeclaration(filename=filename,
                                                              customs_number=customs_number,
-                                                             correct_name=correct_name
+                                                             correct_name=correct_name,
+                                                             upload_date=upload_date,
                                                              )
                     customs_declaration.save()
                     # reopen_file.close()
@@ -203,6 +207,8 @@ def edit_cust_dec(request, filename):
 
             customs_number = cust_dec_editform.cleaned_data["customs_number"]
             customs_query = CustomsDeclaration.objects.filter(customs_number=customs_number)
+
+            # Means that the PDF with the name already exists
             if len(customs_query) != 0:
                 cust_dec_inst.delete()
                 return HttpResponseRedirect(reverse('customs_list:view_all'))
@@ -212,6 +218,7 @@ def edit_cust_dec(request, filename):
                                )
             return HttpResponseRedirect(reverse('customs_list:view_all'))
     else:
+        # upload_date = cust_dec_inst.upload_date
         cust_dec_editform = EditCustomsDeclarationForm()
 
     return render(request,
