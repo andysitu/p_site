@@ -6,15 +6,15 @@
 {% block content %}
 {% if year_list %}
     {% for year in year_list %}
-        <li>{{ year }}</li>
+    <li><a href="{% url 'customs_list:view_by_date' year %}">{{ year }}</a></li>
     {% endfor %}
 {% elif month_list %}
     {% for month in month_list %}
-        <li>{{ month }}</li>
+    <li><a href="{% url 'customs_list:view_by_date' year month %}">{{ month }}</a></li>
     {% endfor %}
 {% elif day_list %}
     {% for day in day_list %}
-        <li>{{ day }}</li>
+    <li><a href="{% url 'customs_list:view_by_date' year month day %}">{{ day }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}
