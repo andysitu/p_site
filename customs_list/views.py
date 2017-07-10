@@ -31,7 +31,6 @@ def upload(request):
 
             upload_date = uploadform.cleaned_data["upload_date"]
 
-
             for file in request.FILES.getlist('customs_file'):
 
                 pdfReader = PyPDF2.PdfFileReader(file)
@@ -52,11 +51,7 @@ def upload(request):
                     else:
                         customs_number = '00' + str(random.randint(1, 99999999999999))
 
-                    query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
-
-                    # if len(query_list) == 0 and correct_name:
-                    #     continue
-
+                    # query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
 
                     pdfWriter = PyPDF2.PdfFileWriter()
                     pdfWriter.addPage(pageObj)
@@ -65,34 +60,14 @@ def upload(request):
 
                     pdfOutputFile = open(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, filename), 'wb')
                     pdfWriter.write(pdfOutputFile)
-
-                    # reopen_file = open('media/' + filename, 'rb')
-                    # djangofile = File(reopen_file)
                     customs_declaration = CustomsDeclaration(filename=filename,
                                                              customs_number=customs_number,
                                                              correct_name=correct_name,
                                                              upload_date=upload_date,
                                                              )
                     customs_declaration.save()
-                    # reopen_file.close()
-
 
                     pdfOutputFile.close()
-                    # else:
-                    #     rcv_folder = rcv_file_save_location()
-                    #
-                    #     rcv_re_results = re.find(rcv_regex, text)
-                    #     if rcv_re_results != None:
-                    #         rcv_number = rcv_re_results[0] + '.pdf'
-                    #         rcv_query = RCV.objects.filter(filename=filename)
-                    #         if len(rcv_query) == 0:
-                    #             pdfWriter = PyPDF2.PdfFileWriter()
-                    #             pdfWriter.addPage(pageObj)
-                    #             pdfOutputFile = open(os.path.join(settings.MEDIA_ROOT, rcv_folder, rcv_filename), 'wb')
-                    #             pdfWriter.write(pdfOutputFile)
-                    #             rcv_instance = RCV(rcv_number=rcv_number)
-                    #         else:
-                    #             pass
     else:
         uploadform = UploadCustomsDeclaration()
     return render(
