@@ -50,6 +50,7 @@ def upload(request):
 
                     if cust_decl_re_results != None:
                         customs_number = cust_decl_re_results.group(0).replace(' ', '')
+                        customs_number = '1100000' + customs_number[-5:]
                         correct_name = True
                     else:
                         customs_number = '00' + str(random.randint(1, 99999999999999))
