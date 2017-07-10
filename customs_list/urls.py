@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^view_by_date/(?P<year>\d{4})/$', views.list_date, name="view_by_date"),
     url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.list_date, name="view_by_date"),
     url(r'^view_by_date/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', views.list_date, name="view_by_date"),
-
     url(r'^download_zip_file_date/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', views.download_zip_date_file, name="download_zip_by_date"),
+    url(r'^edit_list/$', views.edit_list, name="edit_list"),
 ]

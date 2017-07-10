@@ -100,7 +100,6 @@ def download_zip_date_file(request, year, month, day):
     response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
     return response
 
-
 def download_customs_pdf(request, file_name, view_pdf=False):
     cus_file_save_folder = customs_file_save_location()
 
@@ -181,6 +180,15 @@ def list_date(request, year=None, month=None, day=None):
             }
         )
 
+def edit_list(request):
+    customs_edit_list = CustomsDeclaration.objects.filter(correct_name=False)
+    return render(
+        request,
+        'customs_list/view_files.html',
+        context={
+            'customs_list': customs_edit_list,
+        }
+    )
 
 def delete(request):
     form = XMLRequestForm(request.POST)
