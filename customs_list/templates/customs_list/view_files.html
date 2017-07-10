@@ -11,6 +11,8 @@
 
 {% if year and month and day %}
 
+<p><a href="{% url 'customs_list:download_zip_by_date' year month day %}">{% trans "Download All Pdf Files" %}</a></p>
+
 <p>
 {% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a>
 {% trans "Month:" %} <a href="{% url 'customs_list:view_by_date' year %}">{{ month }}</a>

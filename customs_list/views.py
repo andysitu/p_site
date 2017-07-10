@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse
 from .models import CustomsDeclaration, RCV
 from .forms import UploadCustomsDeclaration, XMLRequestForm
 from django.contrib.auth.decorators import login_required
 import re, os, random
+import zipfile, io
 import PyPDF2
 from django.core.files import File
 from django.conf import settings
@@ -18,6 +19,8 @@ def test(request, file_name):
 
 def customs_file_save_location():
     return 'customs_declaration'
+def custom_zip_file_folder_name():
+    return 'zip_files'
 def rcv_file_save_location():
     return 'rcv'
 
@@ -30,13 +33,13 @@ def upload(request):
             rcv_regex = re.compile('RCV\d{6}-\d{4}')
 
             upload_date = uploadform.cleaned_data["upload_date"]
+            cus_file_save_folder = customs_file_save_location()
 
             for file in request.FILES.getlist('customs_file'):
 
                 pdfReader = PyPDF2.PdfFileReader(file)
 
                 for pageNum in range(0, pdfReader.numPages):
-                    cus_file_save_folder = customs_file_save_location()
                     pageObj = pdfReader.getPage(pageNum)
                     text = pageObj.extractText()
                     correct_name = False
@@ -51,7 +54,7 @@ def upload(request):
                     else:
                         customs_number = '00' + str(random.randint(1, 99999999999999))
 
-                    # query_list = CustomsDeclaration.objects.filter(customs_number=customs_number)
+
 
                     pdfWriter = PyPDF2.PdfFileWriter()
                     pdfWriter.addPage(pageObj)
@@ -77,6 +80,26 @@ def upload(request):
             "uploadform": uploadform,
         }
     )
+
+def download_zip_date_file(request, year, month, day):
+    customs_list = CustomsDeclaration.objects.filter(upload_date__year=year,
+                                                           upload_date__month=month,
+                                                           upload_date__day=day,)
+    zip_filename = year + '_' + month + '_' + day + '.zip'
+    cus_file_save_folder = customs_file_save_location()
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, 'w') as zf:
+
+        for c in customs_list:
+            filename = c.filename
+            pdf_path = os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, filename)
+            zf.write(pdf_path, filename)
+
+    response = HttpResponse(buffer.getvalue())
+    response['mimetype'] = "application/x-zip-compressed"
+    response['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+    return response
+
 
 def download_customs_pdf(request, file_name, view_pdf=False):
     cus_file_save_folder = customs_file_save_location()
