@@ -29,7 +29,6 @@ function getCookie(name) {
 document.addEventListener("DOMContentLoaded", run_on_load);
 
 function delete_customs_link(filename) {
-    console.log("DELETING", filename)
     customs_element = document.getElementById(filename + '-li');
     customs_element.parentNode.removeChild(customs_element)
 }
@@ -38,7 +37,7 @@ function click_add_link_response(e) {
     if (e.target.classList.contains('cust-add-link-delete')) {
         xmlhttpRequest = new XMLHttpRequest();
         xmlhttpRequest.onreadystatechange = function(event) {
-            if (xmlhttpRequest.readyState = XMLHttpRequest.DONE) {
+            if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
                 if (xmlhttpRequest.status == 200) {
                     var responseText = xmlhttpRequest.responseText;
                     if (responseText == "0") {
@@ -50,7 +49,7 @@ function click_add_link_response(e) {
 
                 }
             }
-        }
+        };
 
         var cust_regex = /(.+)-delete-link/;
         cust_ele_id = e.target.id;
@@ -69,7 +68,6 @@ function click_add_link_response(e) {
 
         xmlhttpRequest.send(formData);
     } else {
-
     }
 }
 

@@ -202,7 +202,7 @@ def delete(request):
             custdecl_inst.delete()
             message = filename
         else:
-            return HttpResponseRedirect(reverse('login'))
+            message = 0
     return HttpResponse(message)
 
 def edit_cust_dec(request, filename):
