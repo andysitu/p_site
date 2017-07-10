@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 13:56-0700\n"
+"POT-Creation-Date: 2017-07-10 16:09-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,10 @@ msgstr "选择CUSTOMS DECLARATION"
 #: customs_list/templates/customs_list/customs_list_base.html:15
 msgid "View All PDFS"
 msgstr "查看所有pdf"
+
+#: customs_list/templates/customs_list/customs_list_base.html:16
+msgid "View To-Edit Files"
+msgstr "文件名不正确"
 
 #: customs_list/templates/customs_list/upload.html:22
 #: p_list/templates/p_list/p_list_base.html:17
