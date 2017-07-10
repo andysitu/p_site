@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 16:17-0700\n"
+"POT-Creation-Date: 2017-07-10 13:34-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: customs_list/forms.py:6
+#: customs_list/forms.py:9
 msgid "Select an Customs Declaration PDF File"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
@@ -25,25 +25,82 @@ msgstr "选择CUSTOMS DECLARATION PDF文件"
 msgid "Upload Customs Declaration"
 msgstr "选择CUSTOMS DECLARATION"
 
-#: customs_list/templates/customs_list/upload.html:21
+#: customs_list/templates/customs_list/customs_list_base.html:15
+msgid "View All PDFS"
+msgstr "查看所有pdf"
+
+#: customs_list/templates/customs_list/upload.html:22
+#: p_list/templates/p_list/p_list_base.html:17
+#: p_list/templates/p_list/upload.html:21
 msgid "Upload"
 msgstr "上载"
 
+#: customs_list/templates/customs_list/view_dates.html:7
+#: customs_list/templates/customs_list/view_files.html:17
+#, fuzzy
+#| msgid "Year"
+msgid "Year:"
+msgstr "年"
+
+#: customs_list/templates/customs_list/view_dates.html:8
 #: customs_list/templates/customs_list/view_files.html:18
+#, fuzzy
+#| msgid "Month"
+msgid "Month:"
+msgstr "月"
+
+#: customs_list/templates/customs_list/view_dates.html:9
+#: customs_list/templates/customs_list/view_files.html:19
+msgid "Day:"
+msgstr ""
+
+#: customs_list/templates/customs_list/view_files.html:14
+msgid "Download All Pdf Files"
+msgstr "下载pdf文件"
+
+#: customs_list/templates/customs_list/view_files.html:30
 msgid "download"
 msgstr "下载"
 
-#: customs_list/templates/customs_list/view_files.html:19
+#: customs_list/templates/customs_list/view_files.html:31
 msgid "edit"
 msgstr "编辑"
 
-#: customs_list/templates/customs_list/view_files.html:20
+#: customs_list/templates/customs_list/view_files.html:32
 msgid "delete"
 msgstr "删除"
 
-#: customs_list/templates/customs_list/view_files.html:28
+#: customs_list/templates/customs_list/view_files.html:40
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
+
+#: p_list/forms.py:6
+msgid "Select an RCV PDF File"
+msgstr "选择RCV PDF文件"
+
+#: p_list/templates/p_list/index.html:9
+msgid "RCV List"
+msgstr "RCV 列表"
+
+#: p_list/templates/p_list/index.html:10
+msgid "Year"
+msgstr "年"
+
+#: p_list/templates/p_list/index.html:11
+msgid "Month"
+msgstr "月"
+
+#: p_list/templates/p_list/p_list_base.html:12 templates/base_generic.html:34
+msgid "Home"
+msgstr "家"
+
+#: p_list/templates/p_list/p_list_base.html:16
+msgid "All"
+msgstr "所有"
+
+#: p_list/views.py:26
+msgid "Hello"
+msgstr "你好"
 
 #: p_site/settings.py:138
 msgid "English"
@@ -57,10 +114,6 @@ msgstr "中文"
 msgid "Customs Declaration List"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
-#: templates/base_generic.html:34
-msgid "Home"
-msgstr "家"
-
 #: templates/base_generic.html:38
 msgid "User"
 msgstr "用户"
@@ -72,21 +125,3 @@ msgstr "登出"
 #: templates/base_generic.html:41
 msgid "Login"
 msgstr "登录"
-
-#~ msgid "Select an RCV PDF File"
-#~ msgstr "选择RCV PDF文件"
-
-#~ msgid "RCV List"
-#~ msgstr "RCV 列表"
-
-#~ msgid "Year"
-#~ msgstr "年"
-
-#~ msgid "Month"
-#~ msgstr "月"
-
-#~ msgid "All"
-#~ msgstr "所有"
-
-#~ msgid "Hello"
-#~ msgstr "你好"
