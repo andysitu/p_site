@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 13:34-0700\n"
+"POT-Creation-Date: 2017-07-10 13:56-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,10 @@ msgstr ""
 #: customs_list/forms.py:9
 msgid "Select an Customs Declaration PDF File"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
+
+#: customs_list/forms.py:16
+msgid "Upload Date"
+msgstr "上传日期"
 
 #: customs_list/templates/customs_list/customs_list_base.html:14
 msgid "Upload Customs Declaration"
@@ -36,23 +40,25 @@ msgid "Upload"
 msgstr "上载"
 
 #: customs_list/templates/customs_list/view_dates.html:7
+#: customs_list/templates/customs_list/view_dates.html:12
+#: customs_list/templates/customs_list/view_dates.html:19
+#: customs_list/templates/customs_list/view_dates.html:27
 #: customs_list/templates/customs_list/view_files.html:17
-#, fuzzy
-#| msgid "Year"
 msgid "Year:"
-msgstr "年"
+msgstr "年:"
 
 #: customs_list/templates/customs_list/view_dates.html:8
+#: customs_list/templates/customs_list/view_dates.html:20
+#: customs_list/templates/customs_list/view_dates.html:27
 #: customs_list/templates/customs_list/view_files.html:18
-#, fuzzy
-#| msgid "Month"
 msgid "Month:"
-msgstr "月"
+msgstr "月:"
 
 #: customs_list/templates/customs_list/view_dates.html:9
+#: customs_list/templates/customs_list/view_dates.html:28
 #: customs_list/templates/customs_list/view_files.html:19
 msgid "Day:"
-msgstr ""
+msgstr "天:"
 
 #: customs_list/templates/customs_list/view_files.html:14
 msgid "Download All Pdf Files"
@@ -84,11 +90,11 @@ msgstr "RCV 列表"
 
 #: p_list/templates/p_list/index.html:10
 msgid "Year"
-msgstr "年"
+msgstr "年:"
 
 #: p_list/templates/p_list/index.html:11
 msgid "Month"
-msgstr "月"
+msgstr "月:"
 
 #: p_list/templates/p_list/p_list_base.html:12 templates/base_generic.html:34
 msgid "Home"

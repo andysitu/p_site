@@ -9,23 +9,23 @@
 {% trans "Day:" as day_trans %}
 
 {% if year_list %}
-    <p>{% trans year_trans %}</p>
+    <p>{% trans "Year:" %}</p>
     <ul>
     {% for year in year_list %}
     <li><a href="{% url 'customs_list:view_by_date' year %}">{{ year }}</a></li>
     {% endfor %}
     </ul>
 {% elif month_list %}
-    <p>{% trans year_trans %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a></p>
-    <p>{% trans month_trans %}</p>
+    <p>{% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a></p>
+    <p>{% trans "Month:" %}</p>
     <ul>
     {% for month in month_list %}
     <li><a href="{% url 'customs_list:view_by_date' year month %}">{{ month }}</a></li>
     {% endfor %}
     </ul>
 {% elif day_list %}
-    <p>{% trans year_trans %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a> {% trans month_trans %} <a href="{% url 'customs_list:view_by_date' year %}">{{ month }}</a></p>
-    <p>{% trans day_trans %}</p>
+    <p>{% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a> {% trans "Month:" %} <a href="{% url 'customs_list:view_by_date' year %}">{{ month }}</a></p>
+    <p>{% trans "Day:" %}</p>
     <ul>
     {% for day in day_list %}
     <li><a href="{% url 'customs_list:view_by_date' year month day %}">{{ day }}</a></li>

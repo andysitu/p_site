@@ -12,7 +12,8 @@ class UploadCustomsDeclaration(forms.Form):
     )
 
     upload_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}),
-                                  initial=datetime.date.today)
+                                  initial=datetime.date.today,
+                                  label=gettext_lazy("Upload Date"))
 
 class XMLRequestForm(forms.Form):
     command = forms.CharField()
