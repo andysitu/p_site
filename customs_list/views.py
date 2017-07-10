@@ -140,7 +140,7 @@ def list_date(request, year=None, month=None, day=None):
     if year != None and month != None and day != None:
         customs_list = CustomsDeclaration.objects.filter(upload_date__year=year,
                                                          upload_date__month=month,
-                                                         upload_date__day=day,)
+                                                         upload_date__day=day,).order_by('filename')
         return render(
             request,
             'customs_list/view_files.html',
