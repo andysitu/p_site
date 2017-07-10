@@ -9,6 +9,16 @@
 <link rel="stylesheet" href="{% static 'css/customs_view_styles.css' %}">
 <script src="{% static 'js/customs-decl-view.js' %}"></script>
 
+{% if year and month and day %}
+
+<p>
+{% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a>
+{% trans "Month:" %} <a href="{% url 'customs_list:view_by_date' year %}">{{ month }}</a>
+{% trans "Day:" %} <a href="{% url 'customs_list:view_by_date' year month %}">{{ day }}</a>
+</p>
+
+{% endif %}
+
 {% if customs_list %}
 <ul>
     {% for customs_decl in customs_list %}

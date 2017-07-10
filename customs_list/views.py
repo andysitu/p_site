@@ -148,7 +148,9 @@ def list_date(request, year=None, month=None, day=None):
             'customs_list/view_files.html',
             context={
                 'customs_list': customs_list,
-                # SET YEAR AND MONTH
+                'year': year,
+                'day': day,
+                'month': month,
             }
         )
     else:
