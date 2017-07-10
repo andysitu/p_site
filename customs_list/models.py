@@ -1,5 +1,5 @@
 from django.db import models
-import django, os
+import django, os, re
 from django.conf import settings
 
 class CustomsDeclaration(models.Model):
@@ -19,6 +19,10 @@ class CustomsDeclaration(models.Model):
         os.rename(old_path, new_path)
         self.filename = filename
         self.customs_number = customs_number
+
+        customs_regex = re.compile('1100000\d{5}')
+        if re.match(customs_regex, customs_number):
+            self.correct_name = True
         self.save()
 
 
