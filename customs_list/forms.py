@@ -2,6 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy
 from .models import CustomsDeclaration
 import datetime
+# from django.forms.widgets import HiddenInput
 
 class UploadCustomsDeclaration(forms.Form):
     customs_file = forms.FileField(
@@ -18,7 +19,7 @@ class XMLRequestForm(forms.Form):
     filename = forms.CharField()
 
 class EditCustomsDeclarationForm(forms.Form):
-    customs_number = forms.CharField()
+    customs_number = forms.CharField(initial='1100000',)
 
     # class Meta:
     #     model = CustomsDeclaration

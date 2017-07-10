@@ -208,17 +208,21 @@ def edit_cust_dec(request, filename):
             customs_number = cust_dec_editform.cleaned_data["customs_number"]
             customs_query = CustomsDeclaration.objects.filter(customs_number=customs_number)
 
+            prev_url = request.session["prev_url"]
+
             # Means that the PDF with the name already exists
             if len(customs_query) != 0:
                 cust_dec_inst.delete()
-                return HttpResponseRedirect(reverse('customs_list:view_all'))
+                return HttpResponseRedirect(prev_url)
 
             cust_dec_inst.edit(
                 customs_number=customs_number,
                                )
-            return HttpResponseRedirect(reverse('customs_list:view_all'))
+            return HttpResponseRedirect(prev_url)
     else:
         # upload_date = cust_dec_inst.upload_date
+        prev_url = request.META.get('HTTP_REFERER')
+        request.session["prev_url"] = prev_url
         cust_dec_editform = EditCustomsDeclarationForm()
 
     return render(request,
