@@ -135,8 +135,7 @@ def list_all(request):
 def list_date(request, year=None, month=None, day=None):
     customs_list = None
     day_list = None
-    year_list = None
-    month_list = None
+    year_dic = None
     if year != None and month != None and day != None:
         customs_list = CustomsDeclaration.objects.filter(upload_date__year=year,
                                                          upload_date__month=month,
@@ -152,16 +151,16 @@ def list_date(request, year=None, month=None, day=None):
             }
         )
     else:
-        if year == None:
-            year_list = []
-            query_list = CustomsDeclaration.objects.dates("upload_date", "year")
-            for q in query_list:
-                year_list.append(q.year)
-        elif month == None:
-            month_list = []
-            query_list = CustomsDeclaration.objects.filter(upload_date__year=year).dates("upload_date", "month")
-            for q in query_list:
-                month_list.append(q.month)
+        if year == None or month==None:
+            year_dic = {}
+            year_query_list = CustomsDeclaration.objects.dates("upload_date", "year")
+            for y in year_query_list:
+                cur_year = y.year
+                month_query_list = CustomsDeclaration.objects.filter(upload_date__year=cur_year).dates("upload_date", "month")
+                month_list = []
+                for q in month_query_list:
+                    month_list.append(q.month)
+                year_dic[cur_year] = month_list
         else:
             day_list = []
             query_list = CustomsDeclaration.objects.filter(upload_date__year=year, upload_date__month=month).dates("upload_date", "day")
@@ -172,8 +171,7 @@ def list_date(request, year=None, month=None, day=None):
             request,
             'customs_list/view_dates.html',
             context={
-                'year_list': year_list,
-                'month_list': month_list,
+                'year_dic': year_dic,
                 'day_list': day_list,
                 'day': day,
                 'year': year,

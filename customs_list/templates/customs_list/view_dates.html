@@ -8,19 +8,16 @@
 {% trans "Month:" as month_trans %}
 {% trans "Day:" as day_trans %}
 
-{% if year_list %}
-    <p>{% trans "Year:" %}</p>
+{% if year_dic %}
+
     <ul>
-    {% for year in year_list %}
-    <li><a href="{% url 'customs_list:view_by_date' year %}">{{ year }}</a></li>
-    {% endfor %}
-    </ul>
-{% elif month_list %}
-    <p>{% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' %}">{{ year }}</a></p>
-    <p>{% trans "Month:" %}</p>
-    <ul>
-    {% for month in month_list %}
-    <li><a href="{% url 'customs_list:view_by_date' year month %}">{{ month }}</a></li>
+    {% for year, month_list in year_dic.items %}
+        <p>{% trans "Year:" %} <a href="{% url 'customs_list:view_by_date' year %}">{{ year }}</a>
+        <p>{% trans "Month:" %}</p></p>
+        {% for month in month_list %}
+            <li><a href="{% url 'customs_list:view_by_date' year month %}">{{ month }}</a></li>
+        {% endfor %}
+
     {% endfor %}
     </ul>
 {% elif day_list %}
