@@ -104,11 +104,7 @@ def download_zip_date_file(request, year, month, day):
 def download_customs_pdf(request, file_name, view_pdf=False):
     cus_file_save_folder = customs_file_save_location()
 
-    customs_model = CustomsDeclaration.objects.get(filename=file_name)
     path_to_file = os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name)
-    # path_to_file = '/media/' + file_name
-    # with open(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name), 'rb') as pdf:
-    #     response=HttpResponse(pdf.read(), content_type='application/pdf')
     response = HttpResponse()
     response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, cus_file_save_folder, file_name))
     response['Content-Type'] = 'application/pdf'
