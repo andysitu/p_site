@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 import django
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 
 class TestModel(models.Model):
@@ -20,3 +22,7 @@ class RCV(models.Model):
 
     def __str__(self):
         return self.filename
+
+@receiver(pre_delete, sender=RCV)
+def delete_rcvfile(sender, instance, **kwargs):
+    instance.rcvfile.delete(False)

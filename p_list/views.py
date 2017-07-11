@@ -63,6 +63,7 @@ def all_index(request):
 
 def download_rcv(request, rcv_filename, view_pdf=False):
     rcv_foldername = get_rcv_foldername()
+    file_path = os.path.join(settings.MEDIA_ROOT, rcv_foldername, rcv_filename)
 
     response = HttpResponse()
     response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, rcv_foldername, rcv_filename))

@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [ '127.0.0.1',
 
 INSTALLED_APPS = [
     'customs_list.apps.CustomsListConfig',
+    'p_list.apps.P_listConfig',
     'warehouse_map.apps.WarehouseMapConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,6 +140,8 @@ LANGUAGES = [
     ('en', gettext_lazy('English')),
     ('zh-cn', gettext_lazy('Chinese')),
 ]
+
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
