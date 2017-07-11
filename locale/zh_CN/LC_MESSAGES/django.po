@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-10 16:09-0700\n"
+"POT-Creation-Date: 2017-07-10 17:11-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,11 @@ msgid "Upload Date"
 msgstr "上传日期"
 
 #: customs_list/templates/customs_list/customs_list_base.html:14
-msgid "Upload Customs Declaration"
-msgstr "选择CUSTOMS DECLARATION"
+#: customs_list/templates/customs_list/upload.html:22
+#: p_list/templates/p_list/p_list_base.html:17
+#: p_list/templates/p_list/upload.html:21
+msgid "Upload"
+msgstr "上载"
 
 #: customs_list/templates/customs_list/customs_list_base.html:15
 msgid "View All PDFS"
@@ -37,29 +40,22 @@ msgstr "查看所有pdf"
 msgid "View To-Edit Files"
 msgstr "文件名不正确"
 
-#: customs_list/templates/customs_list/upload.html:22
-#: p_list/templates/p_list/p_list_base.html:17
-#: p_list/templates/p_list/upload.html:21
-msgid "Upload"
-msgstr "上载"
-
 #: customs_list/templates/customs_list/view_dates.html:7
-#: customs_list/templates/customs_list/view_dates.html:12
-#: customs_list/templates/customs_list/view_dates.html:19
-#: customs_list/templates/customs_list/view_dates.html:27
+#: customs_list/templates/customs_list/view_dates.html:15
+#: customs_list/templates/customs_list/view_dates.html:24
 #: customs_list/templates/customs_list/view_files.html:17
 msgid "Year:"
 msgstr "年:"
 
 #: customs_list/templates/customs_list/view_dates.html:8
-#: customs_list/templates/customs_list/view_dates.html:20
-#: customs_list/templates/customs_list/view_dates.html:27
+#: customs_list/templates/customs_list/view_dates.html:16
+#: customs_list/templates/customs_list/view_dates.html:24
 #: customs_list/templates/customs_list/view_files.html:18
 msgid "Month:"
 msgstr "月:"
 
 #: customs_list/templates/customs_list/view_dates.html:9
-#: customs_list/templates/customs_list/view_dates.html:28
+#: customs_list/templates/customs_list/view_dates.html:25
 #: customs_list/templates/customs_list/view_files.html:19
 msgid "Day:"
 msgstr "天:"
@@ -112,11 +108,11 @@ msgstr "所有"
 msgid "Hello"
 msgstr "你好"
 
-#: p_site/settings.py:138
+#: p_site/settings.py:139
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:139
+#: p_site/settings.py:140
 msgid "Chinese"
 msgstr "中文"
 
@@ -135,3 +131,6 @@ msgstr "登出"
 #: templates/base_generic.html:41
 msgid "Login"
 msgstr "登录"
+
+#~ msgid "Upload Customs Declaration"
+#~ msgstr "选择CUSTOMS DECLARATION"
