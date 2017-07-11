@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [ '127.0.0.1',
 
 INSTALLED_APPS = [
     'customs_list.apps.CustomsListConfig',
+    'warehouse_map.apps.WarehouseMapConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
