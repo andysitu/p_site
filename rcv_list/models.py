@@ -10,9 +10,8 @@ rcv_foldername = 'rcv'
 class RCV(models.Model):
     rcv_number = models.CharField(max_length=20, default='')
     filename = models.CharField(max_length=50, default="")
-    date = models.DateField(auto_now=True)
+    rcv_date = models.DateField(default=django.utils.timezone.now)
     correct_name = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.filename
@@ -42,6 +41,6 @@ class RCV(models.Model):
             day = int(re_results.group(4))
 
             d = datetime.date(year, month, day)
-            self.date = d
+            self.upload_date = d
             self.correct_name = True
         self.save()

@@ -33,16 +33,16 @@ def index(request, year=None, month=None,):
     month_list = None
     if year == None:
         year_list = []
-        query_list = RCV.objects.dates('date', 'year')
+        query_list = RCV.objects.dates('rcv_date', 'year')
         for d in query_list:
             year_list.append(d.year)
     elif month == None:
         month_list = []
-        query_list = RCV.objects.dates('date', 'month')
+        query_list = RCV.objects.dates('rcv_date', 'month')
         for d in query_list:
             month_list.append(d.month)
     else:
-        rcv_list = RCV.objects.filter(date__year=year, date__month=month)
+        rcv_list = RCV.objects.filter(rcv_date=year, rcv_date__month=month)
 
     return render(
         request,
@@ -99,7 +99,7 @@ def upload_file(request):
 
                 d = datetime.date(year, month, day)
 
-                rcv = RCV(rcvfile=file, filename=filename, date=d)
+                rcv = RCV(rcvfile=file, filename=filename, rcv_date=d)
                 rcv.save()
             # rcvform.save()
 
@@ -146,7 +146,7 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None):
             d = datetime.date(year, month, day)
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename=filename,
-                               date=d,
+                               rcv_date=d,
                                correct_name=True
                                )
             rcv_instance.save()
