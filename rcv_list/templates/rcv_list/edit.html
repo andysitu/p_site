@@ -1,0 +1,20 @@
+{% extends 'rcv_list/rcv_list_base.html' %}
+
+{% block content %}
+
+<p>{{ filename }}</p>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Submit" />
+
+</form>
+
+<div>
+    <embed src="{% url 'rcv_list:view_rcv' filename %}" type="application/pdf" width="60%", height="600"></embed>
+</div>
+
+{% endblock %}

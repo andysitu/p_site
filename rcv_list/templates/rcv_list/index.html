@@ -17,8 +17,9 @@
     <li id="{{rcv}}-li" class="rcv-li">
         <a href="{% url 'rcv_list:view_rcv' rcv %}" id="{{ rcv }}-view-link" target="_new">{{ rcv }}</a>
         <div class=add-link-hide id="{{ rcv }}-add-links-div">
-            <a href="{% url 'rcv_list:download_rcv' rcv %}" target="blank" id="{{ rcv }}-download-link">download</a>
-            <a id="{{ rcv }}-delete" class="add-link-delete">delete</a>
+            <a href="{% url 'rcv_list:download_rcv' rcv %}" target="blank" id="{{ rcv }}-download-link">{% trans 'download' %}</a>
+            <a href="{% url 'rcv_list:edit' rcv %}">{% trans 'edit' %}</a>
+            <a id="{{ rcv }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
         </div>
     </li>
     {% endfor %}

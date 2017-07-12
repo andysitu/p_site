@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files import File
 
@@ -12,7 +12,7 @@ import os, re, datetime, random
 from django.conf import settings
 import PyPDF2
 
-from .forms import UploadRCV, XMLRequestForm, UploadRCVs
+from .forms import UploadRCV, XMLRequestForm, UploadRCVs, EditRCVName
 
 from django.utils.translation import gettext
 from django.utils import translation
@@ -244,3 +244,31 @@ def delete(request):
     else:
         message = 0
     return HttpResponse(message)
+
+@login_required
+def edit_name(request, filename):
+    queryset = RCV.objects.filter(filename=filename)
+
+    rcv_inst = get_object_or_404(queryset)
+
+    if request.method=='POST':
+        rcv_editform = EditRCVName(request.POST)
+        if rcv_editform.is_valid():
+            rcv_number = rcv_editform.cleaned_data['rcv_number']
+
+            prev_url = request.session["prev_url"]
+
+            rcv_inst.edit(rcv_number)
+
+            return HttpResponseRedirect(prev_url)
+    else:
+        prev_url = request.META.get('HTTP_REFERER')
+        request.session["prev_url"] = prev_url
+        rcv_editform = EditRCVName()
+
+    return render(request,
+                  'rcv_list/edit.html',
+                  context={
+                      'filename': filename,
+                      'form': rcv_editform
+                  })

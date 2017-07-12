@@ -209,10 +209,10 @@ def edit_cust_dec(request, filename):
 
             prev_url = request.session["prev_url"]
 
-            # Means that the PDF with the name already exists
-            if len(customs_query) != 0:
-                cust_dec_inst.delete()
-                return HttpResponseRedirect(prev_url)
+            # # Means that the PDF with the name already exists
+            # if len(customs_query) != 0:
+            #     cust_dec_inst.delete()
+            #     return HttpResponseRedirect(prev_url)
 
             cust_dec_inst.edit(
                 customs_number=customs_number,

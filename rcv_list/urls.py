@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^check_files_to_model/$',  views.check_files_to_model, name='check_files_to_model'),
     url(r'delete/$', views.delete, name='delete'),
     url(r'^test/$', views.test),
+    url(r'^edit/(?P<filename>.+)$', views.edit_name, name="edit"),
 ]

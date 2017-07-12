@@ -18,3 +18,6 @@ class UploadRCVs(forms.Form):
 class XMLRequestForm(forms.Form):
     command = forms.CharField()
     rcv_filename = forms.CharField()
+
+class EditRCVName(forms.Form):
+    rcv_number = forms.CharField()
