@@ -34,7 +34,7 @@ class RCV(models.Model):
 
         rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})\-\d{4}')
 
-        re_results = re.match(rcv_re, rcv_number)
+        re_results = re.search(rcv_re, rcv_number)
         if re_results != None:
             year = int('20' + re_results.group(2))
             month = int(re_results.group(3))
