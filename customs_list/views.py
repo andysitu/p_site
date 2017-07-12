@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse
-from .models import CustomsDeclaration, RCV
+from .models import CustomsDeclaration
 from .forms import UploadCustomsDeclaration, XMLRequestForm
 from django.contrib.auth.decorators import login_required
 import re, os, random
@@ -21,8 +21,6 @@ def customs_file_save_location():
     return 'customs_declaration'
 def custom_zip_file_folder_name():
     return 'zip_files'
-def rcv_file_save_location():
-    return 'rcv'
 
 @login_required
 def upload(request):
@@ -30,7 +28,6 @@ def upload(request):
         uploadform = UploadCustomsDeclaration(request.POST, request.FILES,)
         if uploadform.is_valid():
             cust_decl_regex = re.compile('\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d\s*\d')
-            rcv_regex = re.compile('RCV\d{6}-\d{4}')
 
             upload_date = uploadform.cleaned_data["upload_date"]
             cus_file_save_folder = customs_file_save_location()
@@ -67,8 +64,7 @@ def upload(request):
                     customs_declaration = CustomsDeclaration(filename=filename,
                                                              customs_number=customs_number,
                                                              correct_name=correct_name,
-                                                             upload_date=upload_date,
-                                                             )
+                                                             upload_date=upload_date,)
                     customs_declaration.save()
 
                     pdfOutputFile.close()
