@@ -37,12 +37,13 @@ def index(request, year=None, month=None,):
         for d in query_list:
             year_list.append(d.year)
     elif month == None:
+
         month_list = []
         query_list = RCV.objects.dates('rcv_date', 'month')
         for d in query_list:
             month_list.append(d.month)
     else:
-        rcv_list = RCV.objects.filter(rcv_date=year, rcv_date__month=month)
+        rcv_list = RCV.objects.filter(rcv_date__year=year, rcv_date__month=month)
 
     return render(
         request,
