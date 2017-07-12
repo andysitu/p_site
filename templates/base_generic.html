@@ -29,7 +29,7 @@
       <div class="col-sm-2">
         {% block sidebar %}
         <ul class="sidebar-nav">
-            <li><a href={% url 'index' %}><img src="{% static 'img/mini-logo.gif' %}" alt="logo"/></a></li>
+            <li><a href="{% url 'index' %}"><img src="{% static 'img/mini-logo.gif' %}" alt="logo"/></a></li>
             {% block home_link %}
               <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
             {% endblock %}

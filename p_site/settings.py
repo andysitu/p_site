@@ -41,7 +41,7 @@ ALLOWED_HOSTS = [ '127.0.0.1',
 
 INSTALLED_APPS = [
     'customs_list.apps.CustomsListConfig',
-    'p_list.apps.P_listConfig',
+    'rcv_list.apps.RcvListConfig',
     'warehouse_map.apps.WarehouseMapConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,7 +68,8 @@ ROOT_URLCONF = 'p_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', 'p_site/templates', 'customs_list/templates',],
+        'DIRS': ['./templates', 'p_site/templates', 'customs_list/templates',
+                 'rcv_list/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
