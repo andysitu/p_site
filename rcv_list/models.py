@@ -18,8 +18,11 @@ class RCV(models.Model):
 
     @receiver(pre_delete)
     def delete_file(sender, instance, using, **kwargs):
-        filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, instance.filename)
-        os.remove(filepath)
+        try:
+            filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, instance.filename)
+            os.remove(filepath)
+        except FileNotFoundError:
+            pass
         # super(RCV, self).delete(*args, **kwargs)
 
     def edit(self, rcv_number):
