@@ -27,6 +27,7 @@ def test(request):
     output = gettext("Hello")
     return HttpResponse(output)
 
+
 def index(request, year=None, month=None,):
     rcv_list = None
     year_list = None
