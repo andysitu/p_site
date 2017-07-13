@@ -116,13 +116,14 @@ def upload_file(request):
         context={'rcvs': rcvs, 'rcvform': rcvform,}
     )
 
-def upload_or_match_pdf(file_exist_status, filename, pdfReader, page):
+def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None, page=None):
     merger = PyPDF2.PdfFileMerger()
     rcv_foldername = get_foldername()
     filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, filename)
-    page_range = (page, page+1)
 
     if file_exist_status:
+        if page != None and page_range == None:
+            page_range = (page, page + 1)
         pdfExistOutput = open(filepath, 'rb')
         merger.append(PyPDF2.PdfFileReader(pdfExistOutput))
         merger.append(pdfReader, pages=page_range)
@@ -131,9 +132,16 @@ def upload_or_match_pdf(file_exist_status, filename, pdfReader, page):
         pdfExistOutput.close()
     else:
         writer = PyPDF2.PdfFileWriter()
-        writer.addPage(pdfReader.getPage(page))
+        if page != None:
+            writer.addPage(pdfReader.getPage(page))
+        else:
+            start_page = page_range[0]
+            end_page = page_range[1]
+            for p in range(start_page, end_page):
+                writer.addPage(pdfReader.getPage(p))
         pdfOutput = open(filepath, 'wb')
         writer.write(pdfOutput)
+        pdfOutput.close()
 
 
 
@@ -198,7 +206,8 @@ def upload_files(request):
                         file_exist_status = True
                     else:
                         file_exist_status = False
-                    upload_or_match_pdf(file_exist_status, filename, pdfReader, pageNum)
+
+                    upload_or_match_pdf(file_exist_status, filename, pdfReader, page=pageNum)
 
     else:
         rcv_batchform = UploadRCVs()
@@ -212,6 +221,7 @@ def upload_files(request):
 
 @login_required
 def check_files_to_model(request):
+    #
     path="./unproc_rcv/"
     rcv_list = os.listdir(path)
 
@@ -250,16 +260,30 @@ def delete(request):
 def edit_name(request, filename):
     queryset = RCV.objects.filter(filename=filename)
 
-    rcv_inst = get_object_or_404(queryset)
+    old_rcv_inst = get_object_or_404(queryset)
 
     if request.method=='POST':
         rcv_editform = EditRCVName(request.POST)
         if rcv_editform.is_valid():
             rcv_number = rcv_editform.cleaned_data['rcv_number']
 
-            prev_url = request.session["prev_url"]
+            check_inst_query = RCV.objects.filter(rcv_number=rcv_number)
 
-            rcv_inst.edit(rcv_number)
+            if check_inst_query != None:
+                check_inst = check_inst_query[0]
+                old_rcv_filepath = old_rcv_inst.get_filepath()
+                new_rcv_filepath = check_inst.get_filepath()
+
+                old_file = open(old_rcv_filepath, 'rb')
+                old_pdfReader = PyPDF2.PdfFileReader(old_file)
+
+
+                upload_or_match_pdf(True, new_rcv_filepath, old_pdfReader, page_range=None)
+                old_rcv_inst.delete()
+            else:
+                old_rcv_inst.edit(rcv_number)
+
+            prev_url = request.session["prev_url"]
 
             return HttpResponseRedirect(prev_url)
     else:

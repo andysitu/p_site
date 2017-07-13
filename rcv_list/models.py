@@ -47,3 +47,7 @@ class RCV(models.Model):
             self.upload_date = d
             self.correct_name = True
         self.save()
+
+    def get_filepath(self):
+        filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, self.filename)
+        return filepath
