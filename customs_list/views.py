@@ -125,7 +125,6 @@ def list_all(request):
     )
 
 def list_date(request, year=None, month=None, day=None):
-    customs_list = None
     day_list = None
     year_dic = None
     if year != None and month != None and day != None:

@@ -56,6 +56,49 @@ def index(request, year=None, month=None,):
                     "month_url": month}
     )
 
+def view_dates(request):
+    year_dic = {}
+    year_query = RCV.objects.dates("rcv_date", "year")
+    for y in year_query:
+        cur_year = y.year
+        month_query = RCV.objects.filter(rcv_date__year=cur_year).dates("rcv_date", "month")
+        month_list = []
+        for m in month_query:
+            month_list.append(m.month)
+        year_dic[cur_year] = month_list
+
+    return render(
+        request,
+        'rcv_list/view_dates.html',
+        context={
+            'year_dic': year_dic,
+        }
+    )
+
+def view_files(request, year, month):
+    rcv_list = RCV.objects.filter(rcv_date__year=year,
+                                  rcv_date__month=month,)
+
+    return render(
+        request,
+        'rcv_list/view_files.html',
+        context={
+            'rcv_list': rcv_list,
+            'year': year,
+            'month': month,
+        }
+    )
+
+def view_edit_list(request):
+    edit_list = RCV.objects.filter(correct_name=False)
+    return render(
+        request,
+        'rcv_list/view_files.html',
+        context={
+            'rcv_list': edit_list,
+        }
+    )
+
 def all_index(request):
 
     rcv_list = RCV.objects.all()

@@ -1,0 +1,39 @@
+{% extends 'rcv_list/rcv_list_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% load static %}
+
+{% trans "RCV List" as rcv_list_word %}
+{% trans "Year:" as year_word %}
+{% trans "Month:"  as month_word %}
+
+{% if year and month %}
+<p>
+    {% trans year_word %} <a href="{% url 'rcv_list:view_dates' %}">{{ year }}</a>
+    {% trans month_word %} <a href="{% url 'rcv_list:view_dates' %}">{{ month }}</a>
+</p>
+{% endif %}
+
+{% if rcv_list %}
+<ul>
+    <script src="{% static 'js/index_page.js' %}"></script>
+
+    {% for rcv in rcv_list %}
+    <li id="{{rcv}}-li" class="rcv-li">
+        <a href="{% url 'rcv_list:view_rcv' rcv %}" id="{{ rcv }}-view-link" target="_new">{{ rcv }}</a>
+        <div class=add-link-hide id="{{ rcv }}-add-links-div">
+            <a href="{% url 'rcv_list:download_rcv' rcv %}" target="blank" id="{{ rcv }}-download-link">{% trans 'download' %}</a>
+            <a href="{% url 'rcv_list:edit' rcv %}">{% trans 'edit' %}</a>
+            <a id="{{ rcv }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <li>There are no RCV's uploaded.</li>
+{% endif %}
+
+{% endblock %}

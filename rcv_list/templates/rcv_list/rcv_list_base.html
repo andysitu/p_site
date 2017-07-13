@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block sidebar_links %}
-<li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>
+<li><a href="{% url 'rcv_list:edit_list' %}">{% trans "View To-Edit Files" %}</a></li>
 <li><a href="{% url 'rcv_list:upload_files' %}">{% trans "Upload" %} RCV's</a></li>
+<li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>
 {% endblock %}

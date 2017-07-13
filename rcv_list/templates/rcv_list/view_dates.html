@@ -1,0 +1,24 @@
+{% extends 'rcv_list/rcv_list_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% trans "RCV List" as rcv_list_word %}
+{% trans "Year:" as year_word %}
+{% trans "Month:"  as month_word %}
+
+{% if year_dic %}
+<ul>
+    {% for year, month_list in year_dic.items %}
+        <p>{% trans year_word %} {{ year }} {% trans month_word %}</p>
+        {% for month in month_list %}
+            <li><a href="{% url 'rcv_list:view_files' year month %}">{{ month }}</a></li>
+        {% endfor %}
+    {% endfor %}
+</ul>
+{% else %}
+    <li>There are no RCV's uploaded.</li>
+{% endif %}
+
+{% endblock %}

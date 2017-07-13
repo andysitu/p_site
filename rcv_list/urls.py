@@ -4,10 +4,10 @@ from . import views
 
 app_name = "rcv_list"
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.index, name="index-month"),
-    url(r'^(?P<year>\d{4})/$', views.index, name="index-year"),
-	url(r'^index/$', views.index, name="index"),
+    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.view_files, name="view_files"),
+    url(r'^$', views.view_dates, name="view_dates"),
+    # url(r'^(?P<year>\d{4})/$', views.index, name="index-year"),
+	url(r'^index/$', views.view_dates, name="index"),
     url(r'^all/$', views.all_index, name="all_index"),
     url(r'^download_rcv/(?P<rcv_filename>.+)$', views.download_rcv, name="download_rcv"),
     url(r'^view_rcv/(?P<rcv_filename>.+)$', views.view_rcv, name="view_rcv"),
@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'delete/$', views.delete, name='delete'),
     url(r'^test/$', views.test),
     url(r'^edit/(?P<filename>.+)$', views.edit_name, name="edit"),
+
+    url(r'^edit_list/$', views.view_edit_list, name="edit_list"),
 ]
