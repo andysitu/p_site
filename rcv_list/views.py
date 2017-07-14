@@ -27,35 +27,6 @@ def test(request):
     output = gettext("Hello")
     return HttpResponse(output)
 
-
-def index(request, year=None, month=None,):
-    rcv_list = None
-    year_list = None
-    month_list = None
-    if year == None:
-        year_list = []
-        query_list = RCV.objects.dates('rcv_date', 'year')
-        for d in query_list:
-            year_list.append(d.year)
-    elif month == None:
-
-        month_list = []
-        query_list = RCV.objects.dates('rcv_date', 'month')
-        for d in query_list:
-            month_list.append(d.month)
-    else:
-        rcv_list = RCV.objects.filter(rcv_date__year=year, rcv_date__month=month)
-
-    return render(
-        request,
-        'rcv_list/index.html',
-        context = { "rcv_list": rcv_list,
-                    "year_list": year_list,
-                    "month_list": month_list,
-                    "year_url": year,
-                    "month_url": month}
-    )
-
 def view_dates(request):
     year_dic = {}
     year_query = RCV.objects.dates("rcv_date", "year")
@@ -105,7 +76,7 @@ def all_index(request):
 
     return render(
         request,
-        'rcv_list/index.html',
+        'rcv_list/view_files.html',
         context = { "rcv_list": rcv_list,}
     )
 

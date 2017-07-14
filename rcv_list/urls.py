@@ -6,7 +6,6 @@ app_name = "rcv_list"
 urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.view_files, name="view_files"),
     url(r'^$', views.view_dates, name="view_dates"),
-    # url(r'^(?P<year>\d{4})/$', views.index, name="index-year"),
 	url(r'^index/$', views.view_dates, name="index"),
     url(r'^all/$', views.all_index, name="all_index"),
     url(r'^download_rcv/(?P<rcv_filename>.+)$', views.download_rcv, name="download_rcv"),
