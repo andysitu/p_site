@@ -15,7 +15,7 @@ class RCV(models.Model):
     upload_date = models.DateTimeField(default=django.utils.timezone.now)
 
     def __str__(self):
-        return self.filename
+        return self.rcv_number
 
     @receiver(pre_delete)
     def delete_file(sender, instance, using, **kwargs):
@@ -45,7 +45,7 @@ class RCV(models.Model):
             day = int(re_results.group(4))
 
             d = datetime.date(year, month, day)
-            self.upload_date = d
+            self.upload_date = django.utils.timezone.now()
             self.correct_name = True
         self.save()
 

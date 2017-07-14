@@ -6,6 +6,8 @@
 
 {% load static %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/rcv_list_styles.css' %}">
+
 {% trans "RCV List" as rcv_list_word %}
 {% trans "Year:" as year_word %}
 {% trans "Month:"  as month_word %}
@@ -15,6 +17,7 @@
     {% trans year_word %} <a href="{% url 'rcv_list:view_dates' %}">{{ year }}</a>
     {% trans month_word %} <a href="{% url 'rcv_list:view_dates' %}">{{ month }}</a>
 </p>
+<p>{% trans 'Total Number of RCV:' %} {{ rcv_list|length }} </p>
 {% endif %}
 
 {% if rcv_list %}
@@ -22,12 +25,12 @@
     <script src="{% static 'js/index_page.js' %}"></script>
 
     {% for rcv in rcv_list %}
-    <li id="{{rcv}}-li" class="rcv-li">
-        <a href="{% url 'rcv_list:view_rcv' rcv %}" id="{{ rcv }}-view-link" target="_new">{{ rcv }}</a>
-        <div class=add-link-hide id="{{ rcv }}-add-links-div">
-            <a href="{% url 'rcv_list:download_rcv' rcv %}" target="blank" id="{{ rcv }}-download-link">{% trans 'download' %}</a>
-            <a href="{% url 'rcv_list:edit' rcv %}">{% trans 'edit' %}</a>
-            <a id="{{ rcv }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
+    <li id="{{rcv.filename}}-li" class="rcv-li">
+        <a href="{% url 'rcv_list:view_rcv' rcv.filename %}" id="{{ rcv.filename }}-view-link" target="_new" class="rcv-link">{{ rcv.rcv_number }}</a>
+        <div class=add-link-hide id="{{ rcv.filename }}-add-links-div">
+            <a href="{% url 'rcv_list:download_rcv' rcv.filename %}" target="blank" id="{{ rcv.filename }}-download-link">{% trans 'download' %}</a>
+            <a href="{% url 'rcv_list:edit' rcv.filename %}">{% trans 'edit' %}</a>
+            <a id="{{ rcv.filename }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
         </div>
     </li>
     {% endfor %}

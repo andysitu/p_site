@@ -9,3 +9,7 @@
 .rcv-link {
     display: inline-block;
 }
+
+.rcv-link:hover {
+    color: red;
+}
