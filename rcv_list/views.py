@@ -189,7 +189,7 @@ def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None,
 
 
 
-def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None):
+def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, original_filename="Unknown.pdf"):
 # Returns an RCV instance if a new one was created,
 #   returns the filename string if one already exists
 
@@ -200,12 +200,14 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None):
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename=filename,
                                rcv_date=d,
-                               correct_name=True
+                               correct_name=True,
+                               original_filename=original_filename
                                )
             rcv_instance.save()
         else:
             rcv_instance = RCV(rcv_number=rcv_number,
-                               filename =filename)
+                               filename =filename,
+                               original_filename=original_filename)
             rcv_instance.save()
 
         return rcv_instance
@@ -222,7 +224,7 @@ def upload_files(request):
             rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
 
             for file in request.FILES.getlist('rcv_batchfile'):
-
+                original_filename = file.name
                 pdfReader = PyPDF2.PdfFileReader(file)
 
                 for pageNum in range(0, pdfReader.numPages):
@@ -245,7 +247,7 @@ def upload_files(request):
                         rcv_number = '00' + str(random.randint(1, 99999999999999))
 
                     filename = rcv_number + '.pdf'
-                    response = add_get_rcv_instance(rcv_number, filename, year, month, day)
+                    response = add_get_rcv_instance(rcv_number, filename, year, month, day, original_filename=original_filename)
                     if type(response) == str:
                         file_exist_status = True
                     else:
