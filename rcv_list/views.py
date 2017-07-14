@@ -227,8 +227,11 @@ def upload_files(request):
                 original_filename = file.name
                 pdfReader = PyPDF2.PdfFileReader(file)
 
-                for pageNum in range(0, pdfReader.numPages):
-                    pageObj = pdfReader.getPage(pageNum)
+                total_pages = pdfReader.getNumPages()
+
+                for pageNum in range(0, total_pages):
+                    pdf_reader = PyPDF2.PdfFileReader(file)
+                    pageObj = pdf_reader.getPage(pageNum)
                     text = pageObj.extractText()
                     rcv_title = None
                     year = None
