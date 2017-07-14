@@ -36,15 +36,18 @@ class RCV(models.Model):
         self.filename = filename
         self.rcv_number = rcv_number
 
-        rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})\-\d{4}')
+        rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
 
         re_results = re.search(rcv_re, rcv_number)
+        print(re_results)
         if re_results != None:
             year = int('20' + re_results.group(2))
             month = int(re_results.group(3))
             day = int(re_results.group(4))
 
             d = datetime.date(year, month, day)
+
+            self.rcv_date = d
             self.upload_date = django.utils.timezone.now()
             self.correct_name = True
         self.save()

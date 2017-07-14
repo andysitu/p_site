@@ -219,7 +219,7 @@ def upload_files(request):
         rcv_batchform = UploadRCVs(request.POST, request.FILES,)
         if rcv_batchform.is_valid():
             folder_name = get_foldername()
-            rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})\-\d{4}')
+            rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
 
             for file in request.FILES.getlist('rcv_batchfile'):
 
