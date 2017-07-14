@@ -313,7 +313,7 @@ def edit_name(request, filename):
 
             check_inst_query = RCV.objects.filter(rcv_number=rcv_number)
 
-            if check_inst_query != None:
+            if len(check_inst_query) != 0:
                 check_inst = check_inst_query[0]
                 old_rcv_filepath = old_rcv_inst.get_filepath()
                 new_rcv_filepath = check_inst.get_filepath()
