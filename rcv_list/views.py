@@ -161,11 +161,11 @@ def upload_file(request):
     )
 
 def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None, page=None):
-    merger = PyPDF2.PdfFileMerger()
     rcv_foldername = get_foldername()
     filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, filename)
 
     if file_exist_status:
+        merger = PyPDF2.PdfFileMerger()
         if page != None and page_range == None:
             page_range = (page, page + 1)
         pdfExistOutput = open(filepath, 'rb')
@@ -180,14 +180,15 @@ def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None,
             writer.addPage(pdfReader.getPage(page))
         else:
             start_page = page_range[0]
-            end_page = page_range[1]
+            end_page = page_rangeQ[1]
             for p in range(start_page, end_page):
                 writer.addPage(pdfReader.getPage(p))
         pdfOutput = open(filepath, 'wb')
         writer.write(pdfOutput)
         pdfOutput.close()
 
-
+def upload_or_match_pdfs():
+    pass
 
 def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, original_filename="Unknown.pdf"):
 # Returns an RCV instance if a new one was created,
@@ -230,8 +231,7 @@ def upload_files(request):
                 total_pages = pdfReader.getNumPages()
 
                 for pageNum in range(0, total_pages):
-                    pdf_reader = PyPDF2.PdfFileReader(file)
-                    pageObj = pdf_reader.getPage(pageNum)
+                    pageObj = pdfReader.getPage(pageNum)
                     text = pageObj.extractText()
                     rcv_title = None
                     year = None
