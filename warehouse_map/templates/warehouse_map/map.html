@@ -1,0 +1,15 @@
+{% extends 'warehouse_map/warehouse_map_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% load static %}
+<script type="text/javascript">
+    var django_data = {{ data_dic|safe }};
+</script>
+<script src="{% static 'js/map.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/warehouse_map.css' %}">
+
+<canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
+{% endblock %}

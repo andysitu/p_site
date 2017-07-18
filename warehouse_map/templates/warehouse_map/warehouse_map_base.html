@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+{% load i18n %}
+
+{% block head %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/rcv_list_styles.css' %}">
+{% endblock %}
+
+{% block home_link %}
+<li><a href="{% url 'rcv_list:index' %}">RCV {% trans "Home" %}</a>
+{% endblock %}
+
+{% block sidebar_links %}
+{% endblock %}

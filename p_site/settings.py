@@ -69,7 +69,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['./templates', 'p_site/templates', 'customs_list/templates',
-                 'rcv_list/templates',],
+                 'rcv_list/templates', 'warehouse_map/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,6 +153,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, "p_site/static"),
     # os.path.join(BASE_DIR, "customs_list/static"),
+    # os.path.join(BASE_DIR, "rcv_list/static"),
+    # os.path.join(BASE_DIR, "warehouse_map/static"),
 ]
 
 LOGIN_REDIRECT_URL = '/'
