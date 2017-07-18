@@ -13,7 +13,7 @@ $( document ).ready(function() {
     console.log(side_nav_bar_width)
 
     canvas_width = $(window).width() - side_nav_bar_width - 30;
-    canvas_height = $(window).height() - 50;
+    canvas_height = $(window).height() - 30;
 
     map_canvas.width = canvas_width
     map_canvas.height = canvas_height;
