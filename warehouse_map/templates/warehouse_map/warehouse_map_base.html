@@ -9,8 +9,9 @@
 {% endblock %}
 
 {% block home_link %}
-<li><a href="{% url 'rcv_list:index' %}">RCV {% trans "Home" %}</a>
+<li><a href="{% url 'warehouse_map:index' %}">{% trans "Map Home" %}</a>
 {% endblock %}
 
 {% block sidebar_links %}
+<li><a href="{% url 'warehouse_map:upload_excel_data' %}">Upload Excel</a></li>
 {% endblock %}

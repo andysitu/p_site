@@ -27,3 +27,11 @@ def view_map(request):
             'data_dic': json_data,
         }
     )
+
+def upload_excel_data(request):
+    return render(
+        request,
+        'warehouse_map/upload_excel_data.html',
+        context={
+        }
+    )
