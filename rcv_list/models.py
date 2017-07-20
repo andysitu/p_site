@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 rcv_foldername = 'rcv'
 
 class RCV(models.Model):
-    rcv_number = models.CharField(max_length=20, default='')
+    rcv_number = models.CharField(max_length=50, default='')
     filename = models.CharField(max_length=50, default="")
     rcv_date = models.DateField(default=django.utils.timezone.now)
     correct_name = models.BooleanField(default=False)

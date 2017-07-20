@@ -218,7 +218,15 @@ def upload_files(request):
                         month = int(re_results.group(3))
                         day = int(re_results.group(4))
                     else:
-                        rcv_number = '00' + str(random.randint(1, 99999999999999))
+                        d = datetime.datetime.now()
+                        d_year = str(d.year)
+                        d_month = str(d.month)
+                        d_day = str(d.day)
+                        d_hour = str(d.hour)
+                        d_min = str(d.minute)
+                        d_sec = str(d.second)
+                        d_microsec = str(d.microsecond)
+                        rcv_number = '00' + d_year + d_month + d_day + d_hour + d_min + d_sec + d_microsec
 
                     filename = rcv_number + '.pdf'
                     response = add_get_rcv_instance(rcv_number, filename, year, month, day, original_filename=original_filename)
