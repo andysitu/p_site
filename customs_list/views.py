@@ -4,7 +4,7 @@ from .models import CustomsDeclaration
 from .forms import UploadCustomsDeclaration, XMLRequestForm
 from django.contrib.auth.decorators import login_required
 import re, os, random
-import zipfile, io
+import zipfile, io, datetime
 import PyPDF2
 from django.core.files import File
 from django.conf import settings
@@ -50,8 +50,15 @@ def upload(request):
                         customs_number = '1100000' + customs_number[-5:]
                         correct_name = True
                     else:
-                        customs_number = '00' + str(random.randint(1, 99999999999999))
-
+                        d = datetime.datetime.now()
+                        d_year = str(d.year)
+                        d_month = str(d.month)
+                        d_day = str(d.day)
+                        d_hour = str(d.hour)
+                        d_min = str(d.minute)
+                        d_sec = str(d.second)
+                        d_microsec = str(d.microsecond)
+                        customs_number = '00' + d_year + d_month + d_day + d_hour + d_min + d_sec + d_microsec
 
 
                     pdfWriter = PyPDF2.PdfFileWriter()
