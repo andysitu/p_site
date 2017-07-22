@@ -10,15 +10,22 @@ $( document ).ready(function() {
     var map_canvas = $( '#map_canvas' )[0];
 
     side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
-    console.log(side_nav_bar_width)
 
     canvas_width = $(window).width() - side_nav_bar_width - 30;
     canvas_height = $(window).height() - 30;
 
     map_canvas.width = canvas_width
     map_canvas.height = canvas_height;
-    console.log(map_canvas)
     var ctx = map_canvas.getContext('2d');
-    ctx.fillStyle = 'gray';
-    ctx.fillRect(0,10,canvas_width,canvas_height);
+    draw_aisle(ctx,10,10,50,30,10)
+
+    draw_aisle(ctx,10,70,50,30,10)
 });
+
+function draw_aisle(ctx,start_x, start_y,width, height,num_shelf) {
+    var i
+
+    for (i = 0; i < num_shelf; i++) {
+        ctx.strokeRect(start_x + i * width,start_y, width, height);
+    }
+}
