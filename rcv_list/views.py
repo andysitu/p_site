@@ -48,7 +48,7 @@ def view_dates(request):
 
 def view_files(request, year, month):
     rcv_list = RCV.objects.filter(rcv_date__year=year,
-                                  rcv_date__month=month,)
+                                  rcv_date__month=month,).order_by('filename')
 
     return render(
         request,
@@ -72,7 +72,7 @@ def view_edit_list(request):
 
 def all_index(request):
 
-    rcv_list = RCV.objects.all()
+    rcv_list = RCV.objects.all().order_by('filename')
 
     return render(
         request,
