@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from .models import RCV, Item, Test, RackLocation
 from .forms import UploadExcelData
 
 from django.utils.encoding import force_text
