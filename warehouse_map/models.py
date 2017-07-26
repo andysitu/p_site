@@ -30,7 +30,13 @@ def delete_all_rack_location():
         r.delete()
 
 def populate_rack_location():
-    pass
+    populate_p_area()
+    populate_s_area()
+    populate_h_rack_of_s()
+    populate_h_area()
+    populate_v_area()
+    populate_v_rack()
+
 def populate_p_area():
     loc = 'P'
 
@@ -127,7 +133,7 @@ def populate_h_area():
                                  loc=loc,
                                  )
                 r.save()
-def populate_V_area():
+def populate_v_area():
     loc = "V"
     num_aisles = 32
     columns = 15

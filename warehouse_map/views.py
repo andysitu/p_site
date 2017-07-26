@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
-from .models import Test
+from .models import RCV, Item, Test, RackLocation
 from .forms import UploadExcelData
 
 from django.utils.encoding import force_text
@@ -90,7 +90,10 @@ def process_excel_file(file):
         "rcv": "N",
     }
 
-    for row in range(2, 32):
+    for row in range(2, 30):
+        value_dic= {}
         row_num = str(row)
         for item_key, col in item_map.items():
-            print(item_key, sheet[col + row_num].value)
+            v = sheet[col + row_num].value
+            value_dic[item_key] = v
+            print(item_key, v)
