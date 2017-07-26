@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'customs_list.apps.CustomsListConfig',
     'rcv_list.apps.RcvListConfig',
     'warehouse_map.apps.WarehouseMapConfig',
+    'warehouse_data.apps.WarehouseDataConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
