@@ -87,7 +87,5 @@ def process_excel_file(file):
     print("xlrd")
     print(end - start)
 
-
-
     # delete_all_rack_location()
     # populate_rack_location()

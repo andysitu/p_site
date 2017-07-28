@@ -3,25 +3,6 @@ from django.db import models
 import uuid
 from django.dispatch import receiver
 
-
-class RackLocation(models.Model):
-    # loc is my own classification of location
-    loc = models.CharField(max_length=2)
-    warehouse_location = models.CharField(max_length=10, default="USLA")
-    area = models.CharField(max_length=2)
-    aisle = models.CharField(max_length=3)
-    level = models.CharField(max_length=2)
-    column = models.CharField(max_length=2)
-
-    location_code = models.CharField(max_length=20, default ="")
-#
-@receiver(models.signals.pre_save)
-def make_location_code(sender, instance, *args, **kwargs):
-     l = instance.warehouse_location + "." + instance.area + "." \
-         + instance.aisle + "." + instance.column + "." \
-         + instance.level
-     instance.location_code = l
-
 def delete_all_rack_location():
     racks_query = RackLocation.objects.all()
     for r in racks_query:
@@ -194,7 +175,7 @@ class Item(models.Model):
     id = models.UUIDField(primary_key=True, default =uuid.uuid4, editable=False)
     quantity = models.IntegerField()
     ship_quantity = models.IntegerField()
-    rack_location = models.ManyToManyField(RackLocation)
+    location_code = models.CharField(max_length=20, default="")
     inven_date = models.DateTimeField()
 
     data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
