@@ -14,13 +14,13 @@ class RackLocation(models.Model):
     column = models.CharField(max_length=2)
 
     location_code = models.CharField(max_length=20)
-
-@receiver(models.signals.pre_save)
-def make_location_code(sender, instance, *args, **kwargs):
-     l = instance.warehouse_location + "." + instance.area + "." \
-         + instance.aisle + "." + instance.column + "." \
-         + instance.level
-     instance.location_code = l
+#
+# @receiver(models.signals.pre_save)
+# def make_location_code(sender, instance, *args, **kwargs):
+#      l = instance.warehouse_location + "." + instance.area + "." \
+#          + instance.aisle + "." + instance.column + "." \
+#          + instance.level
+#      instance.location_code = l
 
 def delete_all_rack_location():
     racks_query = RackLocation.objects.all()
