@@ -13,7 +13,7 @@ class RackLocation(models.Model):
     level = models.CharField(max_length=2)
     column = models.CharField(max_length=2)
 
-    location_code = models.CharField(max_length=20)
+    location_code = models.CharField(max_length=20, default ="")
 #
 # @receiver(models.signals.pre_save)
 # def make_location_code(sender, instance, *args, **kwargs):
