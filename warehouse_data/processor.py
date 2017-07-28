@@ -46,8 +46,7 @@ def process_excel_file(file):
 
     col_map = {
         0: "id",
-        # Will check location manually
-        # 2: "location",
+        2: "location_code",
         9: "inven_date",
         13: "rcv",
         27: "sku_name",
