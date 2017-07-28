@@ -15,8 +15,8 @@ class RackLocation(models.Model):
 
     location_code = models.CharField(max_length=20)
 
-@receiver(models.signals.post_save, sender=RackLocation)
-def make_location_code(sender, instance, created, *args, **kwargs):
+@receiver(models.signals.pre_save)
+def make_location_code(sender, instance, *args, **kwargs):
      l = instance.warehouse_location + "." + instance.area + "." \
          + instance.aisle + "." + instance.column + "." \
          + instance.level
@@ -50,7 +50,7 @@ def populate_p_area():
             columns = 17
         for c in range(1, columns + 1):
             column = "%02d" % c
-            for l in range(1, level + 1):
+            for l in range(1, levels + 1):
                 level = "%d" % l
                 if l == 1:
                     area = "PA"
@@ -92,7 +92,7 @@ def populate_s_area():
                 r = RackLocation(area = area,
                                  aisle = aisle,
                                  column = column,
-                                 level = l,
+                                 level = level,
                                  loc = loc)
                 r.save()
 def populate_h_rack_of_s():
