@@ -27,6 +27,19 @@ def test(request):
     output = gettext("Hello")
     return HttpResponse(output)
 
+def search_rcv(request):
+    if request.method == "GET":
+        search_query = request.GET.get('search_box', None)
+        rcv_list = RCV.objects.filter(rcv_number__contains=search_query)
+    return render(
+        request,
+        'rcv_list/view_files.html',
+        context={
+            "rcv_list": rcv_list,
+        }
+    )
+
+
 def view_dates(request):
     year_dic = {}
     year_query = RCV.objects.dates("rcv_date", "year")

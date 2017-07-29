@@ -21,3 +21,6 @@ class XMLRequestForm(forms.Form):
 
 class EditRCVName(forms.Form):
     rcv_number = forms.CharField()
+
+class SearchRCV(forms.Form):
+    rcv_name = forms.CharField()

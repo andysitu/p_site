@@ -17,3 +17,10 @@
 <li><a href="{% url 'rcv_list:upload_files' %}">{% trans "Upload" %} RCV's</a></li>
 <li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>
 {% endblock %}
+
+{% block precontent %}
+<form type="get" action="{% url 'rcv_list:search_rcv' %}">
+    <input type="text" name="search_box" placehold="RCV">
+    <button id="search_submit" type="submit">Submit</button>
+</form>
+{% endblock %}

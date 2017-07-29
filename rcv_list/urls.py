@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^edit/(?P<filename>.+)$', views.edit_name, name="edit"),
 
     url(r'^edit_list/$', views.view_edit_list, name="edit_list"),
+    url(r'^search_rcv/?$', views.search_rcv, name="search_rcv"),
 ]
