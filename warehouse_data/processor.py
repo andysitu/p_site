@@ -2,7 +2,7 @@ import openpyxl, xlrd
 from io import BytesIO
 from django.core.files.base import ContentFile
 
-from .models import *
+from .models import Item, RackLocation, populate_rack_location, delete_all_rack_location
 
 import re, datetime, time
 
@@ -60,11 +60,14 @@ def process_excel_file(file):
     for col in range(worksheet.ncols):
         first_row.append(worksheet.cell_value(0,col))
 
+    rack_loc_query = RackLocation.objects.all()
+    if len(rack_loc_query) == 0:
+        populate_rack_location()
 
     location_dict = {}
     print(time.time() - start)
     # for row in range(1, worksheet.nrows):
-    for row in range(1, 5):
+    for row in range(1, 15):
         data = {}
         # for key, col in item_map.items():
         for col, key in col_map.items():

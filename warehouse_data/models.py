@@ -47,12 +47,16 @@ def populate_p_area():
                     area = "PA"
                 else:
                     area = "PH"
+
+                w_loc = "USLA"
+                loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
                 r = RackLocation(area = area,
                                  aisle = aisle,
-                                 level = level,
                                  column = column,
+                                 level=level,
                                  loc = loc,
-                                 )
+                                 warehouse_location = w_loc,
+                                 location_code=loc_code,)
                 r.save()
 def populate_s_area():
     loc = 'S'
@@ -80,11 +84,15 @@ def populate_s_area():
                     area = "S"
                     aisle = "S" + "%02d" % a
 
-                r = RackLocation(area = area,
-                                 aisle = aisle,
-                                 column = column,
-                                 level = level,
-                                 loc = loc)
+                w_loc = "USLA"
+                loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
+                r = RackLocation(area=area,
+                                 aisle=aisle,
+                                 column=column,
+                                 level=level,
+                                 loc=loc,
+                                 warehouse_location=w_loc,
+                                 location_code=loc_code, )
                 r.save()
 def populate_h_rack_of_s():
     loc = 'S'
@@ -96,12 +104,16 @@ def populate_h_rack_of_s():
         column = "%02d" % c
         for l in range(1, levels+1):
             level = "%1d" % l
-            r = RackLocation(area = area,
-                             aisle = aisle,
-                             column = column,
-                             level = level,
-                             loc = loc,
-                             )
+
+            w_loc = "USLA"
+            loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
+            r = RackLocation(area=area,
+                             aisle=aisle,
+                             column=column,
+                             level=level,
+                             loc=loc,
+                             warehouse_location=w_loc,
+                             location_code=loc_code, )
             r.save()
 def populate_h_area():
     loc = "H"
@@ -115,12 +127,16 @@ def populate_h_area():
             column = "%02d" % c
             for l in range(1, levels+1):
                 level = "%1d" % l
+
+                w_loc = "USLA"
+                loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
                 r = RackLocation(area=area,
                                  aisle=aisle,
                                  column=column,
                                  level=level,
                                  loc=loc,
-                                 )
+                                 warehouse_location=w_loc,
+                                 location_code=loc_code, )
                 r.save()
 def populate_v_area():
     loc = "V"
@@ -137,12 +153,16 @@ def populate_v_area():
                     area = "VD"
                 else:
                     area = "VC"
+
+                w_loc = "USLA"
+                loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
                 r = RackLocation(area=area,
                                  aisle=aisle,
                                  column=column,
                                  level=level,
                                  loc=loc,
-                                 )
+                                 warehouse_location=w_loc,
+                                 location_code=loc_code, )
                 r.save()
 def populate_v_rack():
     loc = "V"
@@ -157,12 +177,16 @@ def populate_v_rack():
                 area = "VB"
             else:
                 area = "VA"
+
+            w_loc = "USLA"
+            loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
             r = RackLocation(area=area,
                              aisle=aisle,
                              column=column,
                              level=level,
                              loc=loc,
-                             )
+                             warehouse_location=w_loc,
+                             location_code=loc_code, )
             r.save()
 
 class DataDate(models.Model):
@@ -176,6 +200,7 @@ class Item(models.Model):
     inven_date = models.DateTimeField()
 
     data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
+    rack_location = models.ForeignKey(RackLocation, on_delete=models.CASCADE, default=None)
     rcv = models.CharField(max_length=20)
     description = models.CharField(max_length=100)
     sku_name = models.CharField(max_length=50)
