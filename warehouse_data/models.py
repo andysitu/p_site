@@ -159,7 +159,6 @@ class DataDate(models.Model):
     date = models.DateTimeField()
 
 class Item(models.Model):
-    # Info that will change constantly
     id = models.UUIDField(primary_key=True, default =uuid.uuid4, editable=False)
     quantity = models.IntegerField()
     ship_quantity = models.IntegerField()

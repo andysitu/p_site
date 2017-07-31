@@ -51,8 +51,8 @@ def process_excel_file(file):
         13: "rcv",
         27: "sku_name",
         28: "ship_quantity",
-        29: "description",
-        33: "customer_code",
+        39: "description",
+        40: "customer_code",
         42: "quantity",
     }
 
@@ -63,24 +63,32 @@ def process_excel_file(file):
 
     location_dict = {}
     print(time.time() - start)
-    for row in range(1, worksheet.nrows):
+    # for row in range(1, worksheet.nrows):
+    for row in range(1, 5):
         data = {}
         # for key, col in item_map.items():
         for col, key in col_map.items():
             v = worksheet.cell_value(row,col)
+            print(key)
+            if col != 9:
+                print(v)
+            else:
+                print(xlrd.xldate.xldate_as_datetime(v, workbook.datemode))
+            # if key == 'description':
+            #     print(v)
             data[key] = v
-        location_code = worksheet.cell_value(row, 2)
-        if location_code in location_dict:
-            location_dict[location_code].append(data)
-        else:
-            location_dict[location_code] = [data,]
+        # location_code = worksheet.cell_value(row, 2)
+        # if location_code in location_dict:
+        #     location_dict[location_code].append(data)
+        # else:
+        #     location_dict[location_code] = [data,]
 
-    for location_code, data_list in location_dict.items():
-        rack_query = RackLocation.objects.filter(location_code=location_code)
-        if len(rack_query) != 0:
-            for data in data_list:
-                for k, v in data.items():
-                    pass
+    # for location_code, data_list in location_dict.items():
+    #     rack_query = RackLocation.objects.filter(location_code=location_code)
+    #     if len(rack_query) != 0:
+    #         for data in data_list:
+    #             for k, v in data.items():
+    #                 pass
 
     end = time.time()
     print("xlrd")
