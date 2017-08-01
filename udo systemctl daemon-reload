@@ -1,0 +1,13 @@
+[0;1;32m●[0m gunicorn.service - gunicorn daemon
+   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (running)[0m since Mon 2017-07-31 16:01:19 PDT; 8s ago
+ Main PID: 5587 (gunicorn)
+   CGroup: /system.slice/gunicorn.service
+           ├─5587 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --timeout 1200 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           ├─5591 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --timeout 1200 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           ├─5592 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --timeout 1200 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           ├─5593 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --timeout 1200 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+           └─5594 /home/a/Desktop/psite_venv/bin/python3 /home/a/Desktop/psite_venv/bin/gunicorn --timeout 1200 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application
+
+Jul 31 16:01:19 a-XUbuntu-VirtualBox systemd[1]: Stopped gunicorn daemon.
+Jul 31 16:01:19 a-XUbuntu-VirtualBox systemd[1]: Started gunicorn daemon.

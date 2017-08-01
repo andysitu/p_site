@@ -66,19 +66,32 @@ def process_excel_file(file):
 
     location_dict = {}
     print(time.time() - start)
-    # for row in range(1, worksheet.nrows):
-    for row in range(1, 15):
+    for row in range(1, worksheet.nrows):
+    # for row in range(1, 15):
         data = {}
         # for key, col in item_map.items():
         for col, key in col_map.items():
             v = worksheet.cell_value(row,col)
-            print(key)
-            if col != 9:
-                print(v)
+            if key == "inven_date":
+                # print(xlrd.xldate.xldate_as_datetime(v, workbook.datemode))
+                pass
+            elif key == "location_code":
+                loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle>.+)\.(?P<column>.+)\.(?P<level>.+)')
+                r = re.match(loc_regex, v)
+                warehouse_location = r.group("warehouse_location")
+                area = r.group("area")
+                aisle = r.group("aisle")
+                column = r.group("column")
+                level = r.group("level")
+
+                rack_loc = RackLocation.objects.filter(warehouse_location=warehouse_location,
+                                                       area=area,
+                                                       aisle=aisle,
+                                                       column=column,
+                                                       level=level,
+                                                       )
             else:
-                print(xlrd.xldate.xldate_as_datetime(v, workbook.datemode))
-            # if key == 'description':
-            #     print(v)
+                pass
             data[key] = v
         # location_code = worksheet.cell_value(row, 2)
         # if location_code in location_dict:

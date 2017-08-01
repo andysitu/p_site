@@ -13,6 +13,23 @@ class RackLocation(models.Model):
     column = models.CharField(max_length=2)
     location_code = models.CharField(max_length=20)
 
+class DataDate(models.Model):
+    date = models.DateTimeField()
+
+class Item(models.Model):
+    id = models.UUIDField(primary_key=True, default =uuid.uuid4, editable=False)
+    quantity = models.IntegerField()
+    ship_quantity = models.IntegerField()
+    location_code = models.CharField(max_length=20, default="")
+    inven_date = models.DateTimeField()
+
+    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
+    rack_location = models.ForeignKey(RackLocation, on_delete=models.CASCADE, default=None)
+    rcv = models.CharField(max_length=20)
+    description = models.CharField(max_length=100)
+    sku_name = models.CharField(max_length=50)
+    customer_code = models.IntegerField()
+
 def delete_all_rack_location():
     racks_query = RackLocation.objects.all()
     for r in racks_query:
@@ -188,20 +205,3 @@ def populate_v_rack():
                              warehouse_location=w_loc,
                              location_code=loc_code, )
             r.save()
-
-class DataDate(models.Model):
-    date = models.DateTimeField()
-
-class Item(models.Model):
-    id = models.UUIDField(primary_key=True, default =uuid.uuid4, editable=False)
-    quantity = models.IntegerField()
-    ship_quantity = models.IntegerField()
-    location_code = models.CharField(max_length=20, default="")
-    inven_date = models.DateTimeField()
-
-    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
-    rack_location = models.ForeignKey(RackLocation, on_delete=models.CASCADE, default=None)
-    rcv = models.CharField(max_length=20)
-    description = models.CharField(max_length=100)
-    sku_name = models.CharField(max_length=50)
-    customer_code = models.IntegerField()
