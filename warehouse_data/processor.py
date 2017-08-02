@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
 
-from .models import Item, RackLocation, DataDate, \
+from .models import Item, Location, DataDate, \
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
@@ -27,6 +27,11 @@ def process_excel_file(file):
     timezone = pytz.timezone('America/Los_Angeles')
 
     d = datetime.datetime(year=year,month=month,day=day,hour=hour,minute=min,second=sec, tzinfo=timezone)
+    data_date_query = DataDate.objects.filter(date=d)
+    # if len(data_date_query) > 0:
+    #     d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
+    #     return "Excel filew with date " + d_time_str + " has been used before."
+
     data_date = DataDate(date=d)
     data_date.save()
 
@@ -42,11 +47,16 @@ def process_excel_file(file):
         value = int(id_value)
         return uuid.UUID(int=value)
 
+    def get_date_from_xlrd(date_string):
+        d = xlrd.xldate.xldate_as_datetime(date_string, workbook.datemode)
+        return d
+
+
     column_map = {
         (0, "id", convert_id,),
         (2, "location_code", str,),
-        (9, "fifo_date", None,),
-        (18, "iv_create_date", None),
+        (9, "fifo_date", get_date_from_xlrd,),
+        (18, "iv_create_date", get_date_from_xlrd),
         (13, "rcv", str,),
         (27, "sku_name", str,),
         (28, "ship_quantity", int,),
@@ -68,14 +78,16 @@ def process_excel_file(file):
     for col in range(worksheet.ncols):
         first_row.append(worksheet.cell_value(0,col))
 
-    rack_loc_query = RackLocation.objects.all()
+    rack_loc_query = Location.objects.all()
     if not rack_loc_query:
         populate_rack_location()
 
     location_dict = {}
     print(time.time() - start)
-    # for row in range(1, worksheet.nrows):
-    for row in range(1, 30):
+    count = 0
+    for row in range(1, worksheet.nrows):
+    # for row in range(1, 30):
+        count += 1
         data = {}
         data["data_date"] = data_date
 
@@ -87,15 +99,11 @@ def process_excel_file(file):
             modifier = column_tup[2]
 
             v = worksheet.cell_value(row,column)
-            print(key, v)
+            # print(key, v)
 
-            if key == "inven_date":
-                d = xlrd.xldate.xldate_as_datetime(v, workbook.datemode)
-                data[key] = d
-            else:
-                data[key] = modifier(v)
+            data[key] = modifier(v)
 
-            print(data[key])
+            # print(data[key])
 
         location_code = data["location_code"]
 
@@ -104,8 +112,9 @@ def process_excel_file(file):
         else:
             location_dict[location_code] = [data,]
 
+    print("COUNT: ", count)
     for location_code, data_list in location_dict.items():
-        loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle>.+)\.(?P<column>.+)\.(?P<level>.+)')
+        loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
         r = re.match(loc_regex, location_code)
         warehouse_location = r.group("warehouse_location")
         area = r.group("area")
@@ -119,16 +128,29 @@ def process_excel_file(file):
                                                column=column,
                                                level=level,
                                                )
-
-        rack_location = rack_query[0]
-        if len(rack_query) != 0:
-            for data in data_list:
-                i = Item(rack_location=rack_location, **data)
-                i.save()
+        if len(rack_query) > 0:
+            rack_location = rack_query[0]
+        elif len(aisle) == 1:
+            rack_query = RackLocation.objects.filter(warehouse_location=warehouse_location,
+                                                     area=area,
+                                                     aisle= "0" + aisle,
+                                                     column=column,
+                                                     level=level,
+                                                     )
+            rack_location = rack_query[0]
+        else:
+            msg = "Rack not found: " + warehouse_location + "." + area + "." + aisle + "." + column + "." + level
+            print(msg)
+        # if len(rack_query) != 0:
+        #     for data in data_list:
+        #         i = Item(rack_location=rack_location, **data)
+        #         i.save()
 
     end = time.time()
     print("xlrd")
     print(end - start)
+
+    return 0
 
     # delete_all_rack_location()
     # populate_rack_location()
