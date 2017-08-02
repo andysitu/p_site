@@ -14,6 +14,16 @@ class RackLocation(models.Model):
     column = models.CharField(max_length=2)
     location_code = models.CharField(max_length=20)
 
+class Location(models.Model):
+    # loc is my own classification of location
+    loc = models.CharField(max_length=2)
+    warehouse_location = models.CharField(max_length=10, default="USLA")
+    area = models.CharField(max_length=2)
+    aisle_letter = models.CharField(max_length=3)
+    aisle_num = models.IntegerField()
+    level = models.IntegerField()
+    column = models.IntegerField()
+
 class DataDate(models.Model):
     date = models.DateTimeField()
 
@@ -43,7 +53,9 @@ def populate_rack_location():
     populate_h_rack_of_s()
     populate_h_area()
     populate_v_area()
-    populate_v_rack()
+    populate_f_rack
+    populate_va_rack()
+
 
 def populate_p_area():
     loc = 'P'
@@ -183,7 +195,39 @@ def populate_v_area():
                                  warehouse_location=w_loc,
                                  location_code=loc_code, )
                 r.save()
-def populate_v_rack():
+
+def populate_f_rack():
+    loc = 'F'
+
+    num_aisles = 43
+    levels = 3
+
+    for a in range(1, num_aisles + 1):
+        aisle = "%02d" % a
+
+        if a != 27:
+            columns = 23
+        else:
+            columns = 17
+        for c in range(1, columns + 1):
+            column = "%02d" % c
+            for l in range(1, levels + 1):
+                level = "%d" % l
+                if l == 1:
+                    area = "PA"
+                else:
+                    area = "PH"
+
+                w_loc = "USLA"
+                loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
+                r = RackLocation(area=area,
+                                 aisle=aisle,
+                                 column=column,
+                                 level=level,
+                                 loc=loc,
+                                 warehouse_location=w_loc,
+                                 location_code=loc_code, )
+def populate_va_rack():
     loc = "V"
     aisle = "44"
     columns = 22
