@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import RackLocation, Item, DataDate
 
 class RackLocationAdmin(admin.ModelAdmin):
-    list_display = ('loc', 'warehouse_location', 'area', 'aisle_letter', 'level', 'column', 'location_code')
+    list_display = ('loc', 'warehouse_location', 'area', 'aisle_letter', 'aisle_num', 'level', 'column', 'location_code')
 
 admin.site.register(RackLocation, RackLocationAdmin)
 
