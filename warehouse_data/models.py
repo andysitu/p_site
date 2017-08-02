@@ -1,6 +1,6 @@
 from django.db import models
 
-import uuid
+import uuid, datetime
 from django.dispatch import receiver
 
 class RackLocation(models.Model):
@@ -21,7 +21,8 @@ class Item(models.Model):
     quantity = models.IntegerField()
     ship_quantity = models.IntegerField()
     location_code = models.CharField(max_length=20, default="")
-    inven_date = models.DateTimeField()
+    fifo_date = models.DateTimeField()
+    iv_create_date = models.DateTimeField(default=datetime.datetime.now)
 
     data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
     rack_location = models.ForeignKey(RackLocation, on_delete=models.CASCADE, default=None)

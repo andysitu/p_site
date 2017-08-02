@@ -45,7 +45,8 @@ def process_excel_file(file):
     column_map = {
         (0, "id", convert_id,),
         (2, "location_code", str,),
-        (9, "inven_date", None,),
+        (9, "fifo_date", None,),
+        (18, "iv_create_date", None),
         (13, "rcv", str,),
         (27, "sku_name", str,),
         (28, "ship_quantity", int,),
@@ -68,7 +69,7 @@ def process_excel_file(file):
         first_row.append(worksheet.cell_value(0,col))
 
     rack_loc_query = RackLocation.objects.all()
-    if len(rack_loc_query) == 0:
+    if not rack_loc_query:
         populate_rack_location()
 
     location_dict = {}
