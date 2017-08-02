@@ -8,7 +8,7 @@ class RackLocation(models.Model):
     loc = models.CharField(max_length=2)
     warehouse_location = models.CharField(max_length=10, default="USLA")
     area = models.CharField(max_length=2)
-    aisle = models.CharField(max_length=3)
+    aisle_letter = models.CharField(max_length=3)
     level = models.CharField(max_length=2)
     column = models.CharField(max_length=2)
     location_code = models.CharField(max_length=20)
