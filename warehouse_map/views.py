@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from .forms import UploadExcelData
@@ -7,7 +7,7 @@ from .models import Test
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
 
-from warehouse_data import processor as p
+from warehouse_data import processor as processor
 
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
@@ -37,7 +37,7 @@ def upload_excel_data(request):
         if upload_excel_data_form.is_valid():
             for file in request.FILES.getlist("excel_data_file"):
             # file = request.FILES["excel_data_file"]
-                p.process_excel_file(file)
+                processor.process_excel_file(file)
     else:
         upload_excel_data_form = UploadExcelData()
 
@@ -48,3 +48,7 @@ def upload_excel_data(request):
             "upload_form": upload_excel_data_form,
         }
     )
+
+def reset_db(request):
+    processor.reset_db()
+    return redirect("warehouse_map:index")
