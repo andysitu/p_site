@@ -116,31 +116,30 @@ def process_excel_file(file):
     for location_code, data_list in location_dict.items():
         loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
         r = re.match(loc_regex, location_code)
+        if r == None:
+            break
         warehouse_location = r.group("warehouse_location")
         area = r.group("area")
-        aisle = r.group("aisle")
-        column = r.group("column")
-        level = r.group("level")
+        aisle_letter = r.group("aisle_letter")
+        aisle_num = int(r.group("aisle_num"))
+        column = int(r.group("column"))
+        level = int(r.group("level"))
 
-        rack_query = RackLocation.objects.filter(warehouse_location=warehouse_location,
-                                               area=area,
-                                               aisle=aisle,
-                                               column=column,
-                                               level=level,
-                                               )
-        if len(rack_query) > 0:
-            rack_location = rack_query[0]
-        elif len(aisle) == 1:
-            rack_query = RackLocation.objects.filter(warehouse_location=warehouse_location,
-                                                     area=area,
-                                                     aisle= "0" + aisle,
-                                                     column=column,
-                                                     level=level,
-                                                     )
-            rack_location = rack_query[0]
-        else:
-            msg = "Rack not found: " + warehouse_location + "." + area + "." + aisle + "." + column + "." + level
-            print(msg)
+        # Account for human error input of items into WMS
+        if area == 'F' and aisle_letter == '' and level == 1:
+            aisle_letter = 'F'
+
+        location_query = Location.objects.filter(warehouse_location=warehouse_location,
+                                                area=area,
+                                                aisle_letter=aisle_letter,
+                                                aisle_num=aisle_num,
+                                                column=column,
+                                                level=level,
+                                            )
+        if len(location_query) > 0:
+            rack_location = location_query[0]
+        # else:
+        #     location_query = Location.objects.filter(loc="Unknown")
         # if len(rack_query) != 0:
         #     for data in data_list:
         #         i = Item(rack_location=rack_location, **data)
@@ -152,5 +151,14 @@ def process_excel_file(file):
 
     return 0
 
-    # delete_all_rack_location()
-    # populate_rack_location()
+def reset_db():
+    data_date_query = DataDate.objects.all()
+    for d in data_date_query:
+        d.delete()
+
+    item_query = Item.objects.all()
+    for i in item_query:
+        i.delete()
+
+    delete_all_rack_location()
+    populate_rack_location()

@@ -42,8 +42,8 @@ def populate_rack_location():
     populate_h_rack_of_s()
     populate_h_locked_area()
     populate_vc_area()
-    populate_va_rac_of_vc
-    populate_f_rack
+    populate_va_rac_of_vc()
+    populate_f_rack()
     populate_va_rack()
 
 def make_location_area(loc,
@@ -70,6 +70,9 @@ def make_location_area(loc,
                              warehouse_location=warehouse, )
                 location_instance.save()
 
+def make_unknown_area():
+    make_location_area(loc='Unknown', area='', aisle_letter='', aisle_end=1,
+                       column_end=1, level_end=1)
 def populate_p_area():
     loc = "P"
     loc_before_27_aisle = {
@@ -143,12 +146,21 @@ def populate_va_rac_of_vc():
     make_location_area(area='VB', level_start=2, level_end=3, **loc_dic)
 
 def populate_f_rack():
+    # First Level
+    # Aisle 1
+    make_location_area(loc='F', area='F', aisle_letter='F', aisle_start=1, aisle_end=1,
+                       column_end=21, level_end=1)
+    # Rest of aisles
+    make_location_area(loc='F', area='F', aisle_letter='F', aisle_start=2, aisle_end=43,
+                       column_end=14, level_end=1)
+
+    # Levels 2 & 3
     # Aisle 1
     make_location_area(loc='F', area='F', aisle_start=1, aisle_end=1,
-                       column_end=21, level_end=3)
+                       column_end=21, level_start=2, level_end=3)
     # Rest of aisles
     make_location_area(loc='F', area='F', aisle_start=2, aisle_end=43,
-                       column_end=14, level_end=3)
+                       column_end=14, level_start=2, level_end=3)
 def populate_va_rack():
     loc_dic = {
         "loc": "VC",
