@@ -5,10 +5,10 @@ from django.dispatch import receiver
 
 class Location(models.Model):
     # loc is my own classification of location
-    loc = models.CharField(max_length=2)
+    loc = models.CharField(max_length=20)
     warehouse_location = models.CharField(max_length=10, default="USLA")
     area = models.CharField(max_length=2)
-    aisle_letter = models.CharField(max_length=3)
+    aisle_letter = models.CharField(max_length=3, default="")
     aisle_num = models.IntegerField()
     level = models.IntegerField()
     column = models.IntegerField()
@@ -37,207 +37,124 @@ def delete_all_rack_location():
         r.delete()
 
 def populate_rack_location():
-    pass
-#     populate_p_area()
-#     populate_s_area()
-#     populate_h_rack_of_s()
-#     populate_h_area()
-#     populate_v_area()
-#     populate_f_rack
-#     populate_va_rack()
-#
-#
-# def populate_p_area():
-#     loc = 'P'
-#
-#     num_aisles = 27
-#     levels = 3
-#
-#     for a in range(1, num_aisles + 1):
-#         aisle = "%02d" % a
-#
-#         if a != 27:
-#             columns = 23
-#         else:
-#             columns = 17
-#         for c in range(1, columns + 1):
-#             column = "%02d" % c
-#             for l in range(1, levels + 1):
-#                 level = "%d" % l
-#                 if l == 1:
-#                     area = "PA"
-#                 else:
-#                     area = "PH"
-#
-#                 w_loc = "USLA"
-#                 loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#                 r = Location(area = area,
-#                                  aisle = aisle,
-#                                  column = column,
-#                                  level=level,
-#                                  loc = loc,
-#                                  warehouse_location = w_loc,
-#                                  location_code=loc_code,)
-#                 r.save()
-# def populate_s_area():
-#     loc = 'S'
-#
-#     # populate s & h shelves
-#     num_aisles = 56
-#     for a in range(1, num_aisles+1):
-#         if a >= 27 and a <= 42:
-#             levels = 5
-#         else:
-#             levels = 6
-#
-#         if a >= 11:
-#             columns = 42
-#         else:
-#             columns = 33
-#         for c in range(1, columns+1):
-#             column = "%02d" % c
-#             for l in range(1, levels+1):
-#                 level = "%1d" % l
-#                 if l >= 5:
-#                     area = "H"
-#                     aisle = "H" + "%02d" % a
-#                 else:
-#                     area = "S"
-#                     aisle = "S" + "%02d" % a
-#
-#                 w_loc = "USLA"
-#                 loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#                 r = Location(area=area,
-#                                  aisle=aisle,
-#                                  column=column,
-#                                  level=level,
-#                                  loc=loc,
-#                                  warehouse_location=w_loc,
-#                                  location_code=loc_code, )
-#                 r.save()
-# def populate_h_rack_of_s():
-#     loc = 'S'
-#     area = 'H'
-#     aisle="8"
-#     columns = 18
-#     levels = 3
-#     for c in range(1, columns+1):
-#         column = "%02d" % c
-#         for l in range(1, levels+1):
-#             level = "%1d" % l
-#
-#             w_loc = "USLA"
-#             loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#             r = Location(area=area,
-#                              aisle=aisle,
-#                              column=column,
-#                              level=level,
-#                              loc=loc,
-#                              warehouse_location=w_loc,
-#                              location_code=loc_code, )
-#             r.save()
-# def populate_h_area():
-#     loc = "H"
-#     area = "H"
-#     num_aisles = 6
-#     columns = 5
-#     levels = 3
-#     for a in range(1, num_aisles+1):
-#         aisle = "%1d" % a
-#         for c in range(1, columns+1):
-#             column = "%02d" % c
-#             for l in range(1, levels+1):
-#                 level = "%1d" % l
-#
-#                 w_loc = "USLA"
-#                 loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#                 r = Location(area=area,
-#                                  aisle=aisle,
-#                                  column=column,
-#                                  level=level,
-#                                  loc=loc,
-#                                  warehouse_location=w_loc,
-#                                  location_code=loc_code, )
-#                 r.save()
-# def populate_v_area():
-#     loc = "V"
-#     num_aisles = 32
-#     columns = 15
-#     levels = 5
-#     for a in range(1, num_aisles+1):
-#         aisle = "%02d" % a
-#         for c in range(1, columns+1):
-#             column = "%02d" % c
-#             for l in range(1, levels+1):
-#                 level = "%1d" % l
-#                 if l >= 4:
-#                     area = "VD"
-#                 else:
-#                     area = "VC"
-#
-#                 w_loc = "USLA"
-#                 loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#                 r = Location(area=area,
-#                                  aisle=aisle,
-#                                  column=column,
-#                                  level=level,
-#                                  loc=loc,
-#                                  warehouse_location=w_loc,
-#                                  location_code=loc_code, )
-#                 r.save()
-#
-# def populate_f_rack():
-#     loc = 'F'
-#
-#     num_aisles = 43
-#     levels = 3
-#
-#     for a in range(1, num_aisles + 1):
-#         aisle = "%02d" % a
-#
-#         if a != 27:
-#             columns = 23
-#         else:
-#             columns = 17
-#         for c in range(1, columns + 1):
-#             column = "%02d" % c
-#             for l in range(1, levels + 1):
-#                 level = "%d" % l
-#                 if l == 1:
-#                     area = "PA"
-#                 else:
-#                     area = "PH"
-#
-#                 w_loc = "USLA"
-#                 loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#                 r = Location(area=area,
-#                                  aisle=aisle,
-#                                  column=column,
-#                                  level=level,
-#                                  loc=loc,
-#                                  warehouse_location=w_loc,
-#                                  location_code=loc_code, )
-# def populate_va_rack():
-#     loc = "V"
-#     aisle = "44"
-#     columns = 22
-#     levels = 3
-#     for c in range(1, columns+1):
-#         column = "%02d" % c
-#         for l in range(1, levels+1):
-#             level = "%01d" % l
-#             if l >= 2:
-#                 area = "VB"
-#             else:
-#                 area = "VA"
-#
-#             w_loc = "USLA"
-#             loc_code = w_loc + "." + area + "." + aisle + "." + column + "." + level
-#             r = Location(area=area,
-#                              aisle=aisle,
-#                              column=column,
-#                              level=level,
-#                              loc=loc,
-#                              warehouse_location=w_loc,
-#                              location_code=loc_code, )
-#             r.save()
+    populate_p_area()
+    populate_s_area()
+    populate_h_rack_of_s()
+    populate_h_locked_area()
+    populate_vc_area()
+    populate_va_rac_of_vc
+    populate_f_rack
+    populate_va_rack()
+
+def make_location_area(loc,
+                       area,
+                       aisle_end,
+                       column_end,
+                       level_end,
+                       warehouse="USLA",
+                       aisle_letter="",
+                       aisle_start=1,
+                       column_start=1,
+                       level_start=1,
+                       ):
+
+    for aisle_num in range(aisle_start, aisle_end + 1):
+        for column in range(column_start, column_end + 1):
+            for level in range(level_start, level_end + 1):
+                location_instance = Location(area=area,
+                             aisle_letter=aisle_letter,
+                             aisle_num=aisle_num,
+                             column=column,
+                             level=level,
+                             loc=loc,
+                             warehouse_location=warehouse, )
+                location_instance.save()
+
+def populate_p_area():
+    loc = "P"
+    loc_before_27_aisle = {
+        "loc": loc,
+        "aisle_end":26,
+        "column_end":23
+    }
+
+    loc_27_aisle = {
+        "loc": loc,
+        "aisle_start":27,
+        "aisle_end": 27,
+        "column_end":17,
+    }
+
+    # Make PA
+    make_location_area(level_end=1,area='PA', **loc_before_27_aisle)
+    make_location_area(level_end=1,area='PA', **loc_27_aisle)
+    # Make PH
+    make_location_area(level_start=2, level_end=3,area='PH', **loc_before_27_aisle)
+    make_location_area(level_start=2, level_end=3,area='PH', **loc_27_aisle)
+def populate_s_area():
+    loc = 'S'
+
+    # Aisles 1-10
+    make_location_area(loc='S',area='S',aisle_letter='S',aisle_end=10,
+                       column_end=33,level_end=4)
+    make_location_area(loc='S', area='H',aisle_letter='H',aisle_end=10,
+                       column_end=33,level_start=5,level_end=6)
+
+    # Aisles 11-26
+    make_location_area(loc='S',area='S', aisle_letter='S', aisle_start=11, aisle_end=26,
+                       column_end=42, level_end=4)
+    make_location_area(loc='S', area='H',aisle_letter='H', aisle_start=11, aisle_end=26,
+                       column_end=42, level_end=6)
+
+    # Aisles 27-42
+    make_location_area(loc='S', area='S', aisle_letter='S', aisle_start=27, aisle_end=42,
+                       column_end=42, level_end=4)
+    make_location_area(loc='S', area='H', aisle_letter='H', aisle_start=27, aisle_end=42,
+                       column_end=42, level_end=5)
+
+    # Aisles 43-56
+    make_location_area(loc='S', area='S', aisle_letter='S', aisle_start=43, aisle_end=56,
+                       column_end=42, level_end=4)
+    make_location_area(loc='S', area='H', aisle_letter='H', aisle_start=43, aisle_end=56,
+                       column_end=42, level_end=6)
+def populate_h_rack_of_s():
+    make_location_area(loc='S', area='H', aisle_start=8, aisle_end=8,
+                       column_end=18,level_end=3)
+def populate_h_locked_area():
+    make_location_area(loc='H_locked', area='H', aisle_end=6,
+                       column_end=5, level_end=3)
+def populate_vc_area():
+    loc_dic = {
+        "loc": "VC",
+        "aisle_end": 32,
+        "column_end": 15,
+    }
+
+    make_location_area(area='VC', level_end=3, **loc_dic)
+    make_location_area(area='VD', level_start=4,level_end=5, **loc_dic)
+def populate_va_rac_of_vc():
+    loc_dic = {
+        "loc": "VC",
+        "aisle_start": 44,
+        "aisle_end": 44,
+        "column_end": 22,
+    }
+    make_location_area(area='VA', level_end=1, **loc_dic)
+    make_location_area(area='VB', level_start=2, level_end=3, **loc_dic)
+
+def populate_f_rack():
+    # Aisle 1
+    make_location_area(loc='F', area='F', aisle_start=1, aisle_end=1,
+                       column_end=21, level_end=3)
+    # Rest of aisles
+    make_location_area(loc='F', area='F', aisle_start=2, aisle_end=43,
+                       column_end=14, level_end=3)
+def populate_va_rack():
+    loc_dic = {
+        "loc": "VC",
+        "aisle_end": 43,
+        "column_end": 13,
+    }
+
+    make_location_area(area='VA', level_end=1, **loc_dic)
+    make_location_area(area='VB', level_start=2, level_end=3, **loc_dic)
