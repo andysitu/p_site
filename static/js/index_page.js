@@ -20,7 +20,7 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /([\w\d]+-\d+.pdf)-.+/;
+    var rcv_regex = /([\w\d]+.pdf)-.+/;
     ele_id = e.target.id
     console.log(e.target.id)
     result = rcv_regex.exec(ele_id)
