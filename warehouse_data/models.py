@@ -38,13 +38,20 @@ def delete_all_rack_location():
 
 def populate_rack_location():
     populate_p_area()
+
     populate_s_area()
     populate_h_rack_of_s()
+
     populate_h_locked_area()
+
     populate_vc_area()
     populate_va_rac_of_vc()
+
     populate_f_rack()
+
     populate_va_rack()
+
+    make_unknown_area()
 
 def make_location_area(loc,
                        area,
