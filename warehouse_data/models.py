@@ -19,7 +19,7 @@ class DataDate(models.Model):
 class ItemInfo(models.Model):
     data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
     description = models.CharField(max_length=100)
-    sku_name = models.CharField(max_length=50)
+    item_code = models.CharField(max_length=50)
     customer_code = models.IntegerField()
 
 class Items(models.Model):
