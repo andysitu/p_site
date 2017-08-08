@@ -30,6 +30,7 @@ class Items(models.Model):
     fifo_date = models.DateTimeField()
     iv_create_date = models.DateTimeField(default=datetime.datetime.now)
     rack_location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
+    item_info = models.ForeignKey(ItemInfo, on_delete=models.CASCADE, default=None)
     rcv = models.CharField(max_length=20)
 
 

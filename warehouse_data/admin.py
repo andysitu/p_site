@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location, DataDate
+from .models import Location, DataDate, Items, ItemInfo
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('loc', 'warehouse_location', 'area', 'aisle_letter', 'aisle_num', 'level', 'column')
@@ -8,7 +8,7 @@ class LocationAdmin(admin.ModelAdmin):
 admin.site.register(Location, LocationAdmin)
 
 class ItemsAdmin(admin.ModelAdmin):
-    list_display = ("id", "rack_location", "data_date", "quantity")
+    list_display = ("rack_location", "item_info", "avail_quantity", "ship_quantity",)
 
 admin.site.register(Items, ItemsAdmin)
 
