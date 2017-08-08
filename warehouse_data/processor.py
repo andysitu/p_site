@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
 
-from .models import Item, Location, DataDate, \
+from .models import Location, DataDate, \
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
@@ -130,9 +130,9 @@ def process_excel_file(file):
                                             )
         except Location.DoesNotExist:
             rack_location = Location.objects.get(loc="Unknown")
-        for i_data in data_list:
-            i = Item(data_date=data_date, rack_location=rack_location, **i_data)
-            i.save()
+        # for i_data in data_list:
+        #     i = Item(data_date=data_date, rack_location=rack_location, **i_data)
+        #     i.save()
 
     end = time.time()
     print(end - start)
@@ -144,9 +144,9 @@ def reset_db():
     for d in data_date_query:
         d.delete()
 
-    item_query = Item.objects.all()
-    for i in item_query:
-        i.delete()
+    # item_query = Item.objects.all()
+    # for i in item_query:
+    #     i.delete()
 
     delete_all_rack_location()
     populate_rack_location()
