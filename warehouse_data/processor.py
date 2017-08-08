@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
 
-from .models import Location, DataDate, \
+from .models import Location, DataDate, ItemInfo, Items,\
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
@@ -57,9 +57,8 @@ def process_excel_file(file):
     def cut_description_length(desc):
         return str(desc)[:100]
 
-
     column_map = {
-        (0, "id", convert_id,),
+        (0, "item_id", int,),
         (2, "location_code", str,),
         (9, "fifo_date", get_date_from_xlrd,),
         (18, "iv_create_date", get_date_from_xlrd),
@@ -68,7 +67,7 @@ def process_excel_file(file):
         (28, "ship_quantity", int,),
         (39, "description", cut_description_length,),
         (40, "customer_code", int,),
-        (42, "quantity", int,),
+        (42, "avail_quantity", int,),
     }
 
     first_row = []
@@ -80,6 +79,7 @@ def process_excel_file(file):
         populate_rack_location()
 
     location_dict = {}
+    item_dict = {}
     print(time.time() - start)
     for row in range(1, worksheet.nrows):
     # for row in range(1, 30):

@@ -7,10 +7,10 @@ class LocationAdmin(admin.ModelAdmin):
 
 admin.site.register(Location, LocationAdmin)
 
-# class ItemAdmin(admin.ModelAdmin):
-#     list_display = ("id", "rack_location", "data_date", "quantity")
-#
-# admin.site.register(Item, ItemAdmin)
+class ItemsAdmin(admin.ModelAdmin):
+    list_display = ("id", "rack_location", "data_date", "quantity")
+
+admin.site.register(Items, ItemsAdmin)
 
 class DataDateAdmin(admin.ModelAdmin):
     list_display = ("date",)

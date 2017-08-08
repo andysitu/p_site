@@ -16,21 +16,23 @@ class Location(models.Model):
 class DataDate(models.Model):
     date = models.DateTimeField()
 
-# class Item(models.Model):
-#     id = models.UUIDField(primary_key=True, default =uuid.uuid4, editable=False)
-#     quantity = models.IntegerField()
-#     ship_quantity = models.IntegerField()
-#     location_code = models.CharField(max_length=20, default="")
-#     fifo_date = models.DateTimeField()
-#     iv_create_date = models.DateTimeField(default=datetime.datetime.now)
-#
-#     data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
-#     rack_location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
-#     rcv = models.CharField(max_length=20)
-#     description = models.CharField(max_length=100)
-#     sku_name = models.CharField(max_length=50)
-#     customer_code = models.IntegerField()
-#
+class ItemInfo(models.Model):
+    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
+    description = models.CharField(max_length=100)
+    sku_name = models.CharField(max_length=50)
+    customer_code = models.IntegerField()
+
+class Items(models.Model):
+    item_id = models.IntegerField()
+    avail_quantity = models.IntegerField()
+    ship_quantity = models.IntegerField()
+    location_code = models.CharField(max_length=20, default="")
+    fifo_date = models.DateTimeField()
+    iv_create_date = models.DateTimeField(default=datetime.datetime.now)
+    rack_location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
+    rcv = models.CharField(max_length=20)
+
+
 def delete_all_rack_location():
     racks_query = Location.objects.all()
     for r in racks_query:
