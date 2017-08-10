@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 17:20-0700\n"
+"POT-Creation-Date: 2017-08-10 16:09-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: customs_list/forms.py:9
-msgid "Select an Customs Declaration PDF File"
+#, fuzzy
+#| msgid "Select an Customs Declaration PDF File"
+msgid "Select a Customs Declaration PDF File"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
 #: customs_list/forms.py:16
@@ -29,6 +31,7 @@ msgstr "上传日期"
 #: customs_list/templates/customs_list/upload.html:22
 #: rcv_list/templates/rcv_list/rcv_list_base.html:17
 #: rcv_list/templates/rcv_list/upload.html:21
+#: warehouse_map/templates/warehouse_map/upload_excel_data.html:16
 msgid "Upload"
 msgstr "上载"
 
@@ -91,11 +94,11 @@ msgstr "删除"
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_site/settings.py:141
+#: p_site/settings.py:143
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:142
+#: p_site/settings.py:144
 msgid "Chinese"
 msgstr "中文"
 
@@ -123,13 +126,17 @@ msgid "Month"
 msgstr "月:"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:34
+#: templates/base_generic.html:77
 msgid "Home"
 msgstr "家"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:18
 msgid "All"
 msgstr "所有"
+
+#: rcv_list/templates/rcv_list/rcv_list_base.html:24
+msgid "Search"
+msgstr "搜索"
 
 #: rcv_list/templates/rcv_list/view_files.html:20
 msgid "Total Number of RCV:"
@@ -139,17 +146,36 @@ msgstr "RCV文件总数:"
 msgid "Hello"
 msgstr "你好"
 
-#: templates/base_generic.html:38
+#: templates/base_generic.html:81
 msgid "User"
 msgstr "用户"
 
-#: templates/base_generic.html:39
+#: templates/base_generic.html:82
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:41
+#: templates/base_generic.html:84
 msgid "Login"
 msgstr "登录"
+
+#: warehouse_map/forms.py:7
+msgid "Select an exported excel file the warehouse system."
+msgstr "选择EXCEL文件"
+
+#: warehouse_map/forms.py:22 warehouse_map/forms.py:26
+msgid "First Date"
+msgstr ""
+
+#: warehouse_map/templates/warehouse_map/map.html:14
+msgid ""
+"Your internet browser doesn't support HTML canvas. Please use another one."
+msgstr ""
+
+#: warehouse_map/templates/warehouse_map/warehouse_map_base.html:12
+#, fuzzy
+#| msgid "Home"
+msgid "Map Home"
+msgstr "家"
 
 #~ msgid "Upload Customs Declaration"
 #~ msgstr "选择CUSTOMS DECLARATION"
