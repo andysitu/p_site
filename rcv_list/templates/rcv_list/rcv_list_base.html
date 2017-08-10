@@ -18,9 +18,9 @@
 <li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>
 {% endblock %}
 
-{% block precontent %}
-<form type="get" action="{% url 'rcv_list:search_rcv' %}">
+{% block nav_search %}
+<form type="get" action="{% url 'rcv_list:search_rcv' %}" class="navbar-form navbar-right" role="search">
     <input type="text" name="search_box" placehold="RCV">
-    <button id="search_submit" type="submit">Submit</button>
+    <button id="search_submit" type="submit">{% trans "Search" %}</button>
 </form>
 {% endblock %}

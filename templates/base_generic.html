@@ -23,7 +23,7 @@
 
 <body>
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-head">
                 <a class="navbar-brand" href="{% url 'index' %}">
@@ -33,33 +33,35 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="'nav navbar-nav navbar-right">
-                    <li>
-                    <div id="set-lang-div">
 
-                        {% csrf_token %}
-                        {% get_current_language as LANGUAGE_CODE %}
-
-                        {% if LANGUAGE_CODE == 'zh-cn' %}
-
-                        <form method="POST" action="{% url 'set_language' 'en' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            中文 <input class="change-lang-but" type="submit" value="Eng"/>
-                        </form>
-
-                        {% else %}
-
-                        <form method="POST" action="{% url 'set_language' 'zh-cn' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <input class="change-lang-but" type="submit" value="中文" /> Eng
-                        </form>
-
-                        {% endif %}
-
-                    </div>
-                    </li>
                 </ul>
+
+                <div id="set-lang-div">
+
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+
+                    {% if LANGUAGE_CODE == 'zh-cn' %}
+
+                    <form method="POST" action="{% url 'set_language' 'en' %}" class="navbar-form navbar-right">
+                        {% csrf_token %}th }}">
+                        中文 <input class="change-lang-but" type="submit" v
+                        <input type="hidden" name="next" value="{{ request.paalue="Eng"/>
+                    </form>
+
+                    {% else %}
+
+                    <form method="POST" action="{% url 'set_language' 'zh-cn' %}" class="navbar-form navbar-right">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input class="change-lang-but" type="submit" value="中文" /> Eng
+                    </form>
+
+                    {% endif %}
+
+                    {% block nav_search %}{% endblock %}
+
+                </div>
             </div>
         </div>
     </nav>
@@ -88,8 +90,6 @@
 
       <div class="col-sm-10">
 
-
-      {% block precontent %}{% endblock %}
       {% block content %}{% endblock %}
 
       </div>
