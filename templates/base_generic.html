@@ -23,6 +23,47 @@
 
 <body>
 
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-head">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img alt="4PX-logo" src="{% static 'img/mini-logo.gif' %}">
+                </a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="'nav navbar-nav navbar-right">
+                    <li>
+                    <div id="set-lang-div">
+
+                        {% csrf_token %}
+                        {% get_current_language as LANGUAGE_CODE %}
+
+                        {% if LANGUAGE_CODE == 'zh-cn' %}
+
+                        <form method="POST" action="{% url 'set_language' 'en' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            中文 <input class="change-lang-but" type="submit" value="Eng"/>
+                        </form>
+
+                        {% else %}
+
+                        <form method="POST" action="{% url 'set_language' 'zh-cn' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <input class="change-lang-but" type="submit" value="中文" /> Eng
+                        </form>
+
+                        {% endif %}
+
+                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
   <div class="container-fluid">
 
     <div class="row">
@@ -30,7 +71,6 @@
       <div class="col-sm-1" id="sidebar-nav-div">
         {% block sidebar %}
         <ul class="sidebar-nav">
-            <li><a href="{% url 'index' %}"><img src="{% static 'img/mini-logo.gif' %}" alt="logo"/></a></li>
             {% block home_link %}
               <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
             {% endblock %}
@@ -47,31 +87,6 @@
 
 
       <div class="col-sm-10">
-      <div id="set-lang-div">
-        
-        {% csrf_token %}
-        {% get_current_language as LANGUAGE_CODE %}
-
-        {% if LANGUAGE_CODE == 'zh-cn' %}
-        
-        <form method="POST" action="{% url 'set_language' 'en' %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
-            中文 <input class="change-lang-but" type="submit" value="Eng"/>
-        </form>
-
-        {% else %}
-
-        <form method="POST" action="{% url 'set_language' 'zh-cn' %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <input class="change-lang-but" type="submit" value="中文" /> Eng
-        </form>
-
-        {% endif %}
-
-      </div>
-      <div id="message-box"></div>
 
 
       {% block precontent %}{% endblock %}
