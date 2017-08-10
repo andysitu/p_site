@@ -44,9 +44,9 @@
                     {% if LANGUAGE_CODE == 'zh-cn' %}
 
                     <form method="POST" action="{% url 'set_language' 'en' %}" class="navbar-form navbar-right">
-                        {% csrf_token %}th }}">
-                        中文 <input class="change-lang-but" type="submit" v
-                        <input type="hidden" name="next" value="{{ request.paalue="Eng"/>
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        中文 <input class="change-lang-but" type="submit" value="Eng"/>
                     </form>
 
                     {% else %}
