@@ -15,3 +15,12 @@ class UploadExcelData(forms.Form):
     # excel_time = forms.TimeField(widget=forms.widgets.TimeInput(attrs={'type': 'time',}),
     #                              initial=datetime.date.today,
     #                              label=gettext_lazy('Excel Export Time'))
+
+class CompareDates(forms.Form):
+    date1 = forms.DateTimeField(widget=forms.widgets.DateTimeInput(attrs={'type': 'date'}),
+                                  initial=datetime.date.today,
+                                  label=gettext_lazy("First Date"))
+
+    date2 = forms.DateTimeField(widget=forms.widgets.DateTimeInput(attrs={'type': 'date'}),
+                            initial=datetime.date.today,
+                            label=gettext_lazy("First Date"))

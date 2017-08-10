@@ -1,6 +1,6 @@
 from django.db import models
 
-import uuid, datetime
+import datetime
 from django.dispatch import receiver
 
 class Location(models.Model):
@@ -13,14 +13,14 @@ class Location(models.Model):
     level = models.IntegerField()
     column = models.IntegerField()
 
+    def __str__(self):
+        loc_name = self.warehouse_location + "." + self.area + "." +\
+                   self.aisle_letter + str(self.aisle_num) + "." + \
+                   str(self.column) + "." + str(self.level)
+        return loc_name
+
 class DataDate(models.Model):
     date = models.DateTimeField()
-
-class ItemInfo(models.Model):
-    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
-    description = models.CharField(max_length=100)
-    item_code = models.CharField(max_length=50)
-    customer_code = models.IntegerField()
 
 class Items(models.Model):
     item_id = models.IntegerField()
@@ -30,8 +30,11 @@ class Items(models.Model):
     fifo_date = models.DateTimeField()
     iv_create_date = models.DateTimeField(default=datetime.datetime.now)
     rack_location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
-    item_info = models.ForeignKey(ItemInfo, on_delete=models.CASCADE, default=None)
     rcv = models.CharField(max_length=20)
+    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE, default=None)
+    description = models.CharField(max_length=100, default="")
+    item_code = models.CharField(max_length=50, default="")
+    customer_code = models.IntegerField(default="0")
 
 
 def delete_all_rack_location():

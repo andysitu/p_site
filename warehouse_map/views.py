@@ -52,3 +52,25 @@ def upload_excel_data(request):
 def reset_db(request):
     processor.reset_db()
     return redirect("warehouse_map:index")
+
+def compare_dates(request):
+    date_list = processor.get_dates()
+
+    return render(
+        request,
+        "warehouse_map/compare.html",
+        context = {
+            "date_list": date_list,
+        }
+    )
+
+def get_info(request):
+    d = processor.get_info()
+
+    return render(
+        request,
+        "warehouse_map/warehouse_info.html",
+        context={
+            "data_date": d,
+        }
+    )

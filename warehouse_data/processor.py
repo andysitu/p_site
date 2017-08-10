@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
 
-from .models import Location, DataDate, ItemInfo, Items,\
+from .models import Location, DataDate, Items,\
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
@@ -63,7 +63,7 @@ def process_excel_file(file):
         (9, "fifo_date", get_date_from_xlrd,),
         (18, "iv_create_date", get_date_from_xlrd),
         (13, "rcv", str,),
-        (27, "sku_name", str,),
+        (27, "item_code", str,),
         (28, "ship_quantity", int,),
         (39, "description", cut_description_length,),
         (40, "customer_code", int,),
@@ -85,7 +85,6 @@ def process_excel_file(file):
     # for row in range(1, 30):
         item_data = {}
 
-        location_code = None
         # for key, col in item_map.items():
         for column_tup in column_map:
             column = column_tup[0]
@@ -96,19 +95,21 @@ def process_excel_file(file):
 
             item_data[key] = modifier(v)
 
+        # Add item data dictionary to location_dict
         location_code = item_data["location_code"]
+
+        # Add item_data dictionary to item_dict
+        item_code = item_data["item_code"]
 
         if location_code in location_dict:
             location_dict[location_code].append(item_data)
         else:
             location_dict[location_code] = [item_data,]
 
-
     for location_code, data_list in location_dict.items():
         loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
         r = re.match(loc_regex, location_code)
-        if r == None:
-            break
+
         warehouse_location = r.group("warehouse_location")
         area = r.group("area")
         aisle_letter = r.group("aisle_letter")
@@ -122,31 +123,61 @@ def process_excel_file(file):
 
         try:
             rack_location = Location.objects.get(warehouse_location=warehouse_location,
-                                                area=area,
-                                                aisle_letter=aisle_letter,
-                                                aisle_num=aisle_num,
-                                                column=column,
-                                                level=level,
+                                                 area=area,
+                                                 aisle_letter=aisle_letter,
+                                                 aisle_num=aisle_num,
+                                                 column=column,
+                                                 level=level,
                                             )
         except Location.DoesNotExist:
             rack_location = Location.objects.get(loc="Unknown")
-        # for i_data in data_list:
-        #     i = Item(data_date=data_date, rack_location=rack_location, **i_data)
-        #     i.save()
+
+        for data_dict in data_list:
+            i = Items(rack_location=rack_location,
+                      data_date=data_date,
+                      **data_dict
+                )
+            i.save()
 
     end = time.time()
     print(end - start)
 
     return 0
 
-def reset_db():
+def reset_db(delete_rack = False):
     data_date_query = DataDate.objects.all()
     for d in data_date_query:
         d.delete()
 
-    # item_query = Item.objects.all()
-    # for i in item_query:
-    #     i.delete()
+    item_query = Items.objects.all()
+    for i in item_query:
+        i.delete()
 
-    delete_all_rack_location()
-    populate_rack_location()
+    item_info_query = ItemInfo.objects.all()
+    for ii in item_info_query:
+        ii.delete()
+
+    if delete_rack:
+        delete_all_rack_location()
+        populate_rack_location()
+
+def get_dates():
+    dates = DataDate.objects.all()
+    return dates
+
+def get_info():
+    unknown_location = Location.objects.get(loc="Unknown")
+    start = time.time()
+    datadate = DataDate.objects.all().order_by('-date')[0]
+    # items_query = datadate.items_set.all()
+    items_query = Items.objects.filter(data_date=datadate).exclude(rack_location=unknown_location)
+
+    count = 0
+    item_count = 0
+    for i in items_query:
+        count += 1
+        item_count += i.avail_quantity
+
+    print(count)
+    print(time.time() - start)
+    return item_count

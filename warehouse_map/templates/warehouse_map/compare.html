@@ -1,0 +1,22 @@
+{% extends 'warehouse_map/warehouse_map_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<form action="" method="GET">
+    <select name="date1">
+        {% for d in date_list %}
+            <option value="{{ d.id }}">{{ d.date }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="date2">
+        {% for d in date_list %}
+            <option value="{{ d.id }}">{{ d.date }}</option>
+        {% endfor %}
+    </select>
+
+    <p><input type="submit" /></p>
+</form>
+
+{% endblock %}
