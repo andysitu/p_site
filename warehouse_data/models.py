@@ -176,7 +176,7 @@ def populate_f_rack():
                        column_end=14, level_start=2, level_end=3)
 def populate_va_rack():
     loc_dic = {
-        "loc": "VC",
+        "loc": "F",
         "aisle_end": 43,
         "column_end": 13,
     }
