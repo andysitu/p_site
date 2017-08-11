@@ -153,10 +153,6 @@ def reset_db(delete_rack = False):
     for i in item_query:
         i.delete()
 
-    item_info_query = ItemInfo.objects.all()
-    for ii in item_info_query:
-        ii.delete()
-
     if delete_rack:
         delete_all_rack_location()
         populate_rack_location()
