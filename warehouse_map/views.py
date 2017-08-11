@@ -53,6 +53,10 @@ def reset_db(request):
     processor.reset_db()
     return redirect("warehouse_map:index")
 
+def reset_db_true(request):
+    processor.reset_db(delete_rack=True)
+    return redirect("warehouse_map:index")
+
 def compare_dates(request):
     date_list = processor.get_dates()
 
