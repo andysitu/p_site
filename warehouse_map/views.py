@@ -6,6 +6,7 @@ from .models import Test
 
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 from warehouse_data import processor as processor
 
@@ -23,12 +24,24 @@ def view_map(request):
 
     json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
 
+    image_map = [
+        ['sl','sr','rtl','rt','rt','rtr',],
+        ['st','e','rbl','rb','rb','rbr',],
+        ['sb', 'e', 'e', 'e', 'e', 'e', ],
+        ['e', 'e', 'e', 'sl', 'e', 'e', ],
+        ['rtl', 'rtr', 'e', 'e', 'e', 'e', ],
+        ['rl', 'rr', 'e', 'e', 'e', 'e', ],
+        ['rl', 'rr', 'e', 'e', 'e', 'e', ],
+        ['rbl', 'rbr', 'e', 'e', 'e', 'e', ],
+    ]
+
     return render(
         request,
         'warehouse_map/map.html',
         context={
             'data_dic': json_data,
-        }
+            'image_map': json.dumps(image_map),
+        },
     )
 
 def upload_excel_data(request):
@@ -76,5 +89,14 @@ def get_info(request):
         "warehouse_map/warehouse_info.html",
         context={
             "data_date": d,
+        }
+    )
+
+def test_map(request):
+    return render(
+        request,
+        'warehouse_map/test_map.html',
+        context={
+
         }
     )

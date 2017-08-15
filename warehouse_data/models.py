@@ -1,7 +1,20 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField, HStoreField
 
 import datetime
 from django.dispatch import receiver
+
+class GridMap(models.Model):
+    grid_image = ArrayField(
+        ArrayField(
+            models.CharField(max_length=10, blank=True)
+        )
+    )
+    grid_location = ArrayField(
+        ArrayField(
+            models.CharField(max_length=20, blank=True)
+        )
+    )
 
 class Location(models.Model):
     # loc is my own classification of location
