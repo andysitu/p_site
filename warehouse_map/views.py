@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from .forms import UploadExcelData
-from .models import Test
+from .models import Test, GridMap
 
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -80,28 +80,53 @@ def view_map(request):
         return e_map
 
     def create_f_map():
-        f_loc_sub = "USLA.F.F"
+        f_loc_sub = "USLA.F."
         va_loc_sub = "USLA.VA."
         width = 128
         height = 112
 
-        # f_grid =
+        f_grid = GridMap(loc="F", width=width, height=height)
+        f_grid.create_grids()
 
-        image_map = make_empty_map(width, height, "e")
-        location_map = make_empty_map(width, height, "")
-
-        add_rack_aisle(0, 0, image_map, True, location_map, f_loc_sub + "1", 21, 7)
-        add_rack_aisle(0, 7*4 + 4 * 7, image_map, True, location_map, f_loc_sub + "1", 5, 14)
+        f_grid.add_rack_aisle(0, 0, True, f_loc_sub + "1", 21, 7)
+        f_grid.add_rack_aisle(0, 7*4 + 4 * 7, True, f_loc_sub + "1", 15, 14)
 
         for i in range(42):
-            add_rack_aisle(3 + i*3, 0, image_map, True, location_map, f_loc_sub + str(i+2), 13, 13)
-            add_rack_aisle(3 + i*3, 13*4+4, image_map, True, location_map, va_loc_sub + str(i+2), 14, 14)
+            # For now, vertical (True) means that columns decrements
+            f_grid.add_rack_aisle(3 + i*3, 0, True, f_loc_sub + str(i+2), 13, 13)
+            f_grid.add_rack_aisle(3 + i*3, 13*4+4, True, va_loc_sub + str(i+2), 14, 14)
+        f_grid.save()
+
         return {
-            "image_map": image_map,
-            "location_map": location_map,
+            "image_map": f_grid.grid_image,
+            "location_map": f_grid.grid_location,
         }
 
-    map_dic = create_f_map()
+    def create_p_map():
+        p_loc_sub = "USLA.P."
+        width = 96
+        height = 80
+
+        p_grid = GridMap(loc="P", width=width, height=height)
+        p_grid.create_grids()
+
+        # Aisle 1
+        p_grid.add_rack_aisle(0, 0, False, p_loc_sub + "1", 1, 2)
+        p_grid.add_rack_aisle(16, 0, False, p_loc_sub + "1", 3, 5)
+        p_grid.add_rack_aisle(40, 0, False, p_loc_sub + "1", 8, 5)
+        p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "1", 13, 5)
+
+        for i in range(26):
+            p_grid.add_rack_aisle(0, 3+i*3, False, p_loc_sub + str(i+2), 1, 12)
+            p_grid.add_rack_aisle(52, 3+i*3, False, p_loc_sub + str(i+2), 13, 11)
+        p_grid.save()
+
+        return {
+            "image_map": p_grid.grid_image,
+            "location_map": p_grid.grid_location,
+        }
+
+    map_dic = create_p_map()
 
     return render(
         request,
