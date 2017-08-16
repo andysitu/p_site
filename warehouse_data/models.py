@@ -4,22 +4,6 @@ from django.contrib.postgres.fields import ArrayField, HStoreField
 import datetime
 from django.dispatch import receiver
 
-class GridMap(models.Model):
-    grid_image = ArrayField(
-        ArrayField(
-            models.CharField(max_length=10, blank=True)
-        )
-    )
-    grid_location = ArrayField(
-        ArrayField(
-            models.CharField(max_length=20, blank=True)
-        )
-    )
-
-    def add_box(self, x, y, box_type, rack_location):
-        self.grid_map[x][y] = box_type
-        self.grid_location[x][y] = rack_location
-
 class Location(models.Model):
     # loc is my own classification of location
     loc = models.CharField(max_length=20)
