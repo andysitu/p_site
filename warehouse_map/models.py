@@ -22,7 +22,7 @@ class GridMap(models.Model):
     )
 
     def add_box(self, x, y, box_type, rack_location):
-        self.grid_map[y][x] = box_type
+        self.grid_image[y][x] = box_type
         self.grid_location[y][x] = rack_location
 
     def create_grids(self):
@@ -60,7 +60,24 @@ class GridMap(models.Model):
         for i in range(num_racks):
             if vertical:
                 rack_location = location_sub + "." + str(start_column - i)
-                add_rack_box(x, y + i * 4, image_map, vertical, rack_location)
+                self.add_rack_box(x, y + i * 4, vertical, rack_location)
             else:
                 rack_location = location_sub + "." + str(start_column + i)
-                add_rack_box(x + i * 4, y, image_map, vertical, rack_location)
+                self.add_rack_box(x + i * 4, y, vertical, rack_location)
+
+    def add_shelf_box(self, x, y, vertical, location,):
+        if vertical:
+            self.add_box(x,     y,      'st',   location)
+            self.add_box(x,     y+1,    'sb',   location)
+        else:
+            self.add_box(x,     y,      'sl',   location)
+            self.add_box(x+1,   y,      'sr',   location)
+
+    def add_shelf_aisle(self, x, y, vertical, location_sub, start_column, num_racks,):
+        for i in range(num_racks):
+            if vertical:
+                location = location_sub + "." + str(start_column - i)
+                self.add_shelf_box(x, y + i * 2, vertical, location)
+            else:
+                location = location_sub + "." + str(start_column + i)
+                self.add_shelf_box(x + i * 2, y, vertical, location)
