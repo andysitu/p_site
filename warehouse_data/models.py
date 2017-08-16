@@ -16,6 +16,10 @@ class GridMap(models.Model):
         )
     )
 
+    def add_box(self, x, y, box_type, rack_location):
+        self.grid_map[x][y] = box_type
+        self.grid_location[x][y] = rack_location
+
 class Location(models.Model):
     # loc is my own classification of location
     loc = models.CharField(max_length=20)

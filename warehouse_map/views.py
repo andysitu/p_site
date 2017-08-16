@@ -24,23 +24,91 @@ def view_map(request):
 
     json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
 
-    image_map = [
-        ['sl','sr','rtl','rt','rt','rtr',],
-        ['st','e','rbl','rb','rb','rbr',],
-        ['sb', 'e', 'e', 'e', 'e', 'e', ],
-        ['e', 'e', 'e', 'sl', 'e', 'e', ],
-        ['rtl', 'rtr', 'e', 'e', 'e', 'e', ],
-        ['rl', 'rr', 'e', 'e', 'e', 'e', ],
-        ['rl', 'rr', 'e', 'e', 'e', 'e', ],
-        ['rbl', 'rbr', 'e', 'e', 'e', 'e', ],
-    ]
+    def add_rack_box(x, y, image_map, vertical, location_map, rack_location,):
+        if vertical:
+            image_map[y][x] = 'rtl'
+            image_map[y][x+1] = 'rtr'
+            image_map[y+1][x] = 'rl'
+            image_map[y+1][x+1] = 'rr'
+            image_map[y+2][x] = 'rl'
+            image_map[y+2][x+1] = 'rr'
+            image_map[y+3][x] = 'rbl'
+            image_map[y+3][x+1] = 'rbr'
+
+            location_map[y][x] = rack_location
+            location_map[y][x + 1] = rack_location
+            location_map[y + 1][x] = rack_location
+            location_map[y + 1][x + 1] = rack_location
+            location_map[y + 2][x] = rack_location
+            location_map[y + 2][x + 1] = rack_location
+            location_map[y + 3][x] = rack_location
+            location_map[y + 3][x + 1] = rack_location
+        else:
+            image_map[y][x] = 'rtl'
+            image_map[y][x+1] = 'rt'
+            image_map[y][x+2] = 'rt'
+            image_map[y][x+3] = 'rtr'
+            image_map[y+1][x] = 'rbl'
+            image_map[y+1][x+1] = 'rb'
+            image_map[y+1][x+2] = 'rb'
+            image_map[y+1][x+3] = 'rbr'
+
+            location_map[y][x] = rack_location
+            location_map[y][x + 1] = rack_location
+            location_map[y][x + 2] = rack_location
+            location_map[y][x + 3] = rack_location
+            location_map[y + 1][x] = rack_location
+            location_map[y + 1][x + 1] = rack_location
+            location_map[y + 1][x + 2] = rack_location
+            location_map[y + 1][x + 3] = rack_location
+
+    def add_rack_aisle(x, y, image_map, vertical, location_map, location_sub, start_column, num_racks):
+        for i in range(num_racks):
+
+            if vertical:
+                rack_location = location_sub + "." + str(start_column - i)
+                add_rack_box(x, y + i * 4, image_map, vertical, location_map, rack_location)
+            else:
+                rack_location = location_sub + "." + str(start_column + i)
+                add_rack_box(x + i * 4, y, image_map, vertical, location_map, rack_location)
+
+    def make_empty_map(width, height, empty_symbol):
+        # e_map = [ [empty_symbol] * width ] * height
+        e_map = []
+        for h in range(height):
+            e_map.append([empty_symbol] * width)
+
+        return e_map
+
+    def create_f_map():
+        f_loc_sub = "USLA.F.F"
+        va_loc_sub = "USLA.VA."
+        width = 128
+        height = 112
+        image_map = make_empty_map(width, height, "e")
+        location_map = make_empty_map(width, height, "")
+
+        add_rack_aisle(0, 0, image_map, True, location_map, f_loc_sub + "1", 21, 7)
+        add_rack_aisle(0, 7*4 + 4 * 7, image_map, True, location_map, f_loc_sub + "1", 5, 14)
+
+        for i in range(42):
+            add_rack_aisle(3 + i*3, 0, image_map, True, location_map, f_loc_sub + str(i+2), 13, 13)
+            add_rack_aisle(3 + i*3, 13*4+4, image_map, True, location_map, va_loc_sub + str(i+2), 14, 14)
+        return {
+            "image_map": image_map,
+            "location_map": location_map,
+        }
+
+    map_dic = create_f_map()
 
     return render(
         request,
         'warehouse_map/map.html',
         context={
             'data_dic': json_data,
-            'image_map': json.dumps(image_map),
+            'image_map': json.dumps(map_dic["image_map"]),
+            'location_map': json.dumps(map_dic["location_map"]),
+
         },
     )
 

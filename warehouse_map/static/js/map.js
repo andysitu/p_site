@@ -23,7 +23,7 @@ $( document ).ready(function() {
 
 
     draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
-
+    console.log(location_map)
 
     $( '#map_canvas' ).click(function(e) {
         console.log(e.offsetX, e.offsetY);
@@ -40,8 +40,16 @@ function draw_map(ctx, image_map, start_x, start_y, width, height){
 
     var num_across = image_map[0].length;
 
-    var box_width = Math.floor((width - num_across + 1)/ num_across),
-        box_height = Math.floor((height - num_down + 1)/ num_down);
+    console.log("NUM ACROSS:", num_across, "NUM DOWN", num_down)
+
+    var box_width = Math.floor((width+ 1)/ num_across),
+        box_height = Math.floor((height + 1)/ num_down);
+
+    if (box_width > box_height) {
+        box_width = box_height;
+    } else {
+        box_height = box_width;
+    }
 
     // Fill Background color
     var original_color = ctx.fillStyle;
@@ -56,7 +64,6 @@ function draw_map(ctx, image_map, start_x, start_y, width, height){
             map_key = image_map[i][j];
             x = box_width * j;
             y = box_height * i;
-            console.log(x,y,box_width,box_height);
             draw_box(ctx, x, y, box_width, box_height, map_key, "green");
         }
     }
