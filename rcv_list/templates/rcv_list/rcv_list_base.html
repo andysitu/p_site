@@ -19,8 +19,10 @@
 {% endblock %}
 
 {% block nav_search %}
-<form type="get" action="{% url 'rcv_list:search_rcv' %}" class="form-inline" role="search">
-    <input type="text" class="form-control mr-sm-2" name="search_box" placehold="RCV">
-    <button id="search_submit" class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans "Search" %}</button>
+<form type="get" action="{% url 'rcv_list:search_rcv' %}" class="justify-content-end form-inline" role="search">
+    <div class="input-group">
+        <input type="text" class="form-control mr-sm-2" name="search_box" placehold="RCV">
+        <button id="search_submit" class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans "Search" %}</button>
+    </div>
 </form>
 {% endblock %}

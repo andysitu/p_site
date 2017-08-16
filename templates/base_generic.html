@@ -28,7 +28,9 @@
         </a>
 
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav w-100 justify-content-end">
+            {% block nav_search %}{% endblock %}
+
+            <ul class="navbar-nav justify-content-end">
 
                 <li class="nav-item">
 
@@ -61,8 +63,6 @@
                 </li>
 
             </ul>
-
-            {% block nav_search %}{% endblock %}
 
         </div>
     </nav>
