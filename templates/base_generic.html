@@ -22,16 +22,15 @@
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
         <a class="navbar-brand" href="{% url 'index' %}">
             <img alt="4PX-logo" src="{% static 'img/mini-logo.gif' %}">
         </a>
 
-        <div class="navbar-collapse collapse">
-            <ul class="'nav navbar-nav navbar-right">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav w-100 justify-content-end">
 
-                <li>
+                <li class="nav-item">
 
                     <div id="set-lang-div">
 
@@ -40,7 +39,7 @@
 
                         {% if LANGUAGE_CODE == 'zh-cn' %}
 
-                        <form method="POST" action="{% url 'set_language' 'en' %}" class="navbar-form navbar-right">
+                        <form method="POST" action="{% url 'set_language' 'en' %}" class="navbar-form">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                             中文 <input class="change-lang-but" type="submit" value="Eng"/>
@@ -48,7 +47,7 @@
 
                         {% else %}
 
-                        <form method="POST" action="{% url 'set_language' 'zh-cn' %}" class="navbar-form navbar-right">
+                        <form method="POST" action="{% url 'set_language' 'zh-cn' %}" class="navbar-form">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input class="change-lang-but" type="submit" value="中文" /> Eng

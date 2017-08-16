@@ -3,7 +3,7 @@
     list-style: none;
 }
 
-body { padding-top: 50px; }
+body { padding-top: 40px; }
 
 .change-lang-but {
   background-color: transparent;
@@ -16,9 +16,7 @@ body { padding-top: 50px; }
   outline: none;
 }
 
-nav { padding: 4px 10px; }
-.navbar {  min-height:28px;  }
-.navbar-brand {  padding: 4px 10px;  margin: 0; height: 30px}
-.navbar .navbar-nav > li > a { padding-top: 0px; padding-bottom: 0px; }
-.navbar-nav li { list-style-type: none; }
-.navbar .navbar-form.navbar-right { padding: 2px 5px; margin: 0; }
+.navbar {  min-height:28px; padding-top: 0px; padding-bottom: 0px; }
+.navbar-brand {  margin: 0; padding: 0px;}
+.navbar-nav > li > a { padding-top: 0px; padding-bottom: 0px; }
+.navbar .navbar-form .navbar-right { padding: 2px 5px; margin: 0; }
