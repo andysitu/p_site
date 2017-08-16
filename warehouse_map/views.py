@@ -64,7 +64,6 @@ def view_map(request):
 
     def add_rack_aisle(x, y, image_map, vertical, location_map, location_sub, start_column, num_racks):
         for i in range(num_racks):
-
             if vertical:
                 rack_location = location_sub + "." + str(start_column - i)
                 add_rack_box(x, y + i * 4, image_map, vertical, location_map, rack_location)
@@ -85,6 +84,9 @@ def view_map(request):
         va_loc_sub = "USLA.VA."
         width = 128
         height = 112
+
+        # f_grid =
+
         image_map = make_empty_map(width, height, "e")
         location_map = make_empty_map(width, height, "")
 

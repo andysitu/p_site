@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField, HStoreField
 
 import datetime
 from django.dispatch import receiver
