@@ -3,7 +3,7 @@
     list-style: none;
 }
 
-body { padding-top: 40px; }
+body { padding-top: 50px; }
 
 .change-lang-but {
   background-color: transparent;
@@ -16,8 +16,9 @@ body { padding-top: 40px; }
   outline: none;
 }
 
+nav { padding: 4px 10px; }
 .navbar {  min-height:28px;  }
-.navbar .navbar-brand {  padding: 4px 10px;  margin: 0; height: 30px}
+.navbar-brand {  padding: 4px 10px;  margin: 0; height: 30px}
 .navbar .navbar-nav > li > a { padding-top: 0px; padding-bottom: 0px; }
 .navbar-nav li { list-style-type: none; }
 .navbar .navbar-form.navbar-right { padding: 2px 5px; margin: 0; }
