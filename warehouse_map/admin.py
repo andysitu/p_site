@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import GridMap, Test
 
-# Register your models here.
+class GridMapAdmin(admin.ModelAdmin):
+    list_display = ('loc', 'width', 'height',)
+
+admin.site.register(GridMap, GridMapAdmin)
