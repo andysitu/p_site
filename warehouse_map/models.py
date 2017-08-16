@@ -25,16 +25,15 @@ class GridMap(models.Model):
         self.grid_map[y][x] = box_type
         self.grid_location[y][x] = rack_location
 
-    def create_grids(self, width, height):
-        self.grid_image = self.make_empty_map(width, height, "e")
-        self.grid_location = self.make_empty_map(width, height, "")
+    def create_grids(self):
+        self.grid_image = self.make_empty_map(self.width, self.height, "e")
+        self.grid_location = self.make_empty_map(self.width, self.height, "")
 
     def make_empty_map(self, width, height, empty_symbol,):
         # e_map = [ [empty_symbol] * width ] * height
         e_map = []
         for h in range(height):
             e_map.append([empty_symbol] * width)
-
         return e_map
 
     def add_rack_box(self, x, y, vertical, rack_location,):
