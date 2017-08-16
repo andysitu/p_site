@@ -88,13 +88,13 @@ def view_map(request):
         f_grid = GridMap(loc="F", width=width, height=height)
         f_grid.create_grids()
 
-        f_grid.add_rack_aisle(0, 0, True, f_loc_sub + "1", 21, 7)
-        f_grid.add_rack_aisle(0, 7*4 + 4 * 7, True, f_loc_sub + "1", 15, 14)
+        f_grid.add_rack_aisle(0, 0, True, f_loc_sub + "1", 21, 7, True)
+        f_grid.add_rack_aisle(0, 7*4 + 4 * 7, True, f_loc_sub + "1", 14, 14, True)
 
         for i in range(42):
             # For now, vertical (True) means that columns decrements
-            f_grid.add_rack_aisle(3 + i*3, 0, True, f_loc_sub + str(i+2), 13, 13)
-            f_grid.add_rack_aisle(3 + i*3, 13*4+4, True, va_loc_sub + str(i+2), 14, 14)
+            f_grid.add_rack_aisle(3 + i*3, 0, True, f_loc_sub + str(i+2), 13, 13, True)
+            f_grid.add_rack_aisle(3 + i*3, 13*4+4, True, va_loc_sub + str(i+2), 14, 14, True)
         f_grid.save()
 
         return {
@@ -111,14 +111,14 @@ def view_map(request):
         p_grid.create_grids()
 
         # Aisle 1
-        p_grid.add_rack_aisle(0, 0, False, p_loc_sub + "1", 1, 2)
-        p_grid.add_rack_aisle(16, 0, False, p_loc_sub + "1", 3, 5)
-        p_grid.add_rack_aisle(40, 0, False, p_loc_sub + "1", 8, 5)
-        p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "1", 13, 5)
+        p_grid.add_rack_aisle(0, 0, False, p_loc_sub + "1", 1, 2, False)
+        p_grid.add_rack_aisle(16, 0, False, p_loc_sub + "1", 3, 5, False)
+        p_grid.add_rack_aisle(40, 0, False, p_loc_sub + "1", 8, 5, False)
+        p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "1", 13, 5, False)
 
         for i in range(26):
-            p_grid.add_rack_aisle(0, 3+i*3, False, p_loc_sub + str(i+2), 1, 12)
-            p_grid.add_rack_aisle(52, 3+i*3, False, p_loc_sub + str(i+2), 13, 11)
+            p_grid.add_rack_aisle(0, 3+i*3, False, p_loc_sub + str(i+2), 1, 12, False)
+            p_grid.add_rack_aisle(52, 3+i*3, False, p_loc_sub + str(i+2), 13, 11, False)
         p_grid.save()
 
         return {

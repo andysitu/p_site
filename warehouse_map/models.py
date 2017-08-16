@@ -56,13 +56,19 @@ class GridMap(models.Model):
             self.add_box(x+2,   y+1,    'rb',   rack_location)
             self.add_box(x+3,   y+1,    'rbr',  rack_location)
 
-    def add_rack_aisle(self, x, y, vertical, location_sub, start_column, num_racks,):
+    def add_rack_aisle(self, x, y, vertical, location_sub, start_column, num_racks, decrement):
         for i in range(num_racks):
             if vertical:
-                rack_location = location_sub + "." + str(start_column - i)
+                if decrement:
+                    rack_location = location_sub + "." + str(start_column - i)
+                else:
+                    rack_location = location_sub + "." + str(start_column + i)
                 self.add_rack_box(x, y + i * 4, vertical, rack_location)
             else:
-                rack_location = location_sub + "." + str(start_column + i)
+                if decrement:
+                    rack_location = location_sub + "." + str(start_column - i)
+                else:
+                    rack_location = location_sub + "." + str(start_column + i)
                 self.add_rack_box(x + i * 4, y, vertical, rack_location)
 
     def add_shelf_box(self, x, y, vertical, location,):
@@ -73,11 +79,18 @@ class GridMap(models.Model):
             self.add_box(x,     y,      'sl',   location)
             self.add_box(x+1,   y,      'sr',   location)
 
-    def add_shelf_aisle(self, x, y, vertical, location_sub, start_column, num_racks,):
+    def add_shelf_aisle(self, x, y, vertical, location_sub, start_column, num_racks, decrement):
+
         for i in range(num_racks):
             if vertical:
-                location = location_sub + "." + str(start_column - i)
+                if decrement:
+                    location = location_sub + "." + str(start_column - i)
+                else:
+                    location = location_sub + "." + str(start_column + i)
                 self.add_shelf_box(x, y + i * 2, vertical, location)
             else:
-                location = location_sub + "." + str(start_column + i)
+                if decrement:
+                    location = location_sub + "." + str(start_column - i)
+                else:
+                    location = location_sub + "." + str(start_column + i)
                 self.add_shelf_box(x + i * 2, y, vertical, location)
