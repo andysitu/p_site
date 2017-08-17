@@ -95,6 +95,7 @@ def view_map(request):
             # For now, vertical (True) means that columns decrements
             f_grid.add_rack_aisle(3 + i*3, 0, True, f_loc_sub + str(i+2), 13, 13, True)
             f_grid.add_rack_aisle(3 + i*3, 13*4+4, True, va_loc_sub + str(i+2), 14, 14, True)
+
         f_grid.save()
 
         return {
@@ -119,6 +120,7 @@ def view_map(request):
         for i in range(26):
             p_grid.add_rack_aisle(0, 3+i*3, False, p_loc_sub + str(i+2), 1, 12, False)
             p_grid.add_rack_aisle(52, 3+i*3, False, p_loc_sub + str(i+2), 13, 11, False)
+
         p_grid.save()
 
         return {
