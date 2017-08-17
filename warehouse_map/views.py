@@ -164,6 +164,33 @@ def view_map(request):
             "location_map": s_grid.grid_location,
         }
 
+    def create_vc_map():
+        vc_loc_sub = "USLA.VC."
+        rack_loc_sub = "USLA.VA."
+        h_loc_sub = "USLA.H."
+        width = 200
+        height = 200
+
+        vc_grid = GridMap(loc="P", width=width, height=height)
+        vc_grid.create_grids()
+
+        # VA RACKS
+        vc_grid.add_rack_aisle(0, 0, False, rack_loc_sub + "44", 22, 5, True)
+        # vc_grid.add_rack_aisle(0, 0, True, rack_loc_sub + "44", 17, 6, True)
+
+        # H Racks
+        for i in range(6):
+            vc_grid.add_shelf_aisle(4, 0+i*2, False, s_loc_sub + str(56 - i), 42, 18, True)
+            vc_grid.add_shelf_aisle(42, 0+i*2, False, s_loc_sub + str(56 - i), 24, 24, True)
+
+
+        vc_grid.save()
+
+        return {
+            "image_map": vc_grid.grid_image,
+            "location_map": vc_grid.grid_location,
+        }
+
     map_dic = create_s_map()
 
     return render(
