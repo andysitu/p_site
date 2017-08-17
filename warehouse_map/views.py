@@ -16,14 +16,17 @@ class LazyEncoder(DjangoJSONEncoder):
             return force_text(obj)
         return super(LazyEncoder, self).default(obj)
 
-def test(request):
-    return HttpResponse("HELLO")
+def combine_grid_maps(request):
+    try:
+        s_grid_inst = GridMap.objects.get(loc='S')
+        p_grid_inst = GridMap.objects.get(loc='P')
+        f_grid_inst = GridMap.objects.get(loc='F')
+        vc_grid_inst = GridMap.objects.get(loc='VC')
+    except GridMap.DoesNotExist:
+        create_grids(request)
+        grid_inst = GridMap.objects.get(loc='S')
 
-def view_map(request):
-    test_dic = {'fire': 'ball'}
-
-    json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
-
+def get_grid_map(request):
     try:
         grid_inst = GridMap.objects.get(loc='S')
     except GridMap.DoesNotExist:
@@ -34,6 +37,14 @@ def view_map(request):
         "image_map": grid_inst.grid_image,
         "location_map": grid_inst.grid_location,
     }
+    return map_dic
+
+def view_map(request):
+    test_dic = {'fire': 'ball'}
+
+    json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
+
+    map_dic = get_grid_map(request)
 
     return render(
         request,

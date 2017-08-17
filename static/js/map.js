@@ -205,21 +205,6 @@ function draw_p(ctx, canvas_x, canvas_y, width, height, scale) {
     }
 };
 
-function draw_s(ctx, canvas_x, canvas_y, width, height, scale) {
-    if (scale == undefined) {
-        scale = 1;
-    }
-    width *= scale;
-    height *= scale;
-
-    var start_x = canvas_x + 5,
-        start_y = canvas_y + 5,
-        x = start_x,
-        y = start_y,
-        rest,
-        i,
-        num_double_aisles = 13;
-};
 
 function GridSystem(ctx,start_x, start_y, boxWidth, boxHeight, numBox_x, numBox_y) {
     this.ctx = ctx;
