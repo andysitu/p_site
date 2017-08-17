@@ -24,6 +24,86 @@ def view_map(request):
 
     json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
 
+    try:
+        grid_inst = GridMap.objects.get(loc='S')
+    except GridMap.DoesNotExist:
+        create_grids(request)
+        grid_inst = GridMap.objects.get(loc='S')
+
+    map_dic = {
+        "image_map": grid_inst.grid_image,
+        "location_map": grid_inst.grid_location,
+    }
+
+    return render(
+        request,
+        'warehouse_map/map.html',
+        context={
+            'data_dic': json_data,
+            'image_map': json.dumps(map_dic["image_map"]),
+            'location_map': json.dumps(map_dic["location_map"]),
+
+        },
+    )
+
+def upload_excel_data(request):
+    if request.method == 'POST':
+        upload_excel_data_form = UploadExcelData(request.POST, request.FILES)
+        if upload_excel_data_form.is_valid():
+            for file in request.FILES.getlist("excel_data_file"):
+            # file = request.FILES["excel_data_file"]
+                processor.process_excel_file(file)
+    else:
+        upload_excel_data_form = UploadExcelData()
+
+    return render(
+        request,
+        'warehouse_map/upload_excel_data.html',
+        context={
+            "upload_form": upload_excel_data_form,
+        }
+    )
+
+def reset_db(request):
+    processor.reset_db()
+    return redirect("warehouse_map:index")
+
+def reset_db_true(request):
+    processor.reset_db(delete_rack=True)
+    return redirect("warehouse_map:index")
+
+def compare_dates(request):
+    date_list = processor.get_dates()
+
+    return render(
+        request,
+        "warehouse_map/compare.html",
+        context = {
+            "date_list": date_list,
+        }
+    )
+
+def get_info(request):
+    d = processor.get_info()
+
+    return render(
+        request,
+        "warehouse_map/warehouse_info.html",
+        context={
+            "data_date": d,
+        }
+    )
+
+def test_map(request):
+    return render(
+        request,
+        'warehouse_map/test_map.html',
+        context={
+
+        }
+    )
+
+def create_grids(request):
     def create_f_map():
         f_loc_sub = "USLA.F."
         va_loc_sub = "USLA.VA."
@@ -104,7 +184,7 @@ def view_map(request):
         double_rack_status = False
         prev_y = 0
 
-        s_grid = GridMap(loc="P", width=width, height=height)
+        s_grid = GridMap(loc="S", width=width, height=height)
         s_grid.create_grids()
 
         first_rack_y = 0
@@ -177,7 +257,7 @@ def view_map(request):
         width = 35
         height = 72
 
-        vc_grid = GridMap(loc="P", width=width, height=height)
+        vc_grid = GridMap(loc="VC", width=width, height=height)
         vc_grid.create_grids()
 
         # VA RACKS
@@ -226,72 +306,7 @@ def view_map(request):
             "location_map": vc_grid.grid_location,
         }
 
-    map_dic = create_vc_map()
-
-    return render(
-        request,
-        'warehouse_map/map.html',
-        context={
-            'data_dic': json_data,
-            'image_map': json.dumps(map_dic["image_map"]),
-            'location_map': json.dumps(map_dic["location_map"]),
-
-        },
-    )
-
-def upload_excel_data(request):
-    if request.method == 'POST':
-        upload_excel_data_form = UploadExcelData(request.POST, request.FILES)
-        if upload_excel_data_form.is_valid():
-            for file in request.FILES.getlist("excel_data_file"):
-            # file = request.FILES["excel_data_file"]
-                processor.process_excel_file(file)
-    else:
-        upload_excel_data_form = UploadExcelData()
-
-    return render(
-        request,
-        'warehouse_map/upload_excel_data.html',
-        context={
-            "upload_form": upload_excel_data_form,
-        }
-    )
-
-def reset_db(request):
-    processor.reset_db()
-    return redirect("warehouse_map:index")
-
-def reset_db_true(request):
-    processor.reset_db(delete_rack=True)
-    return redirect("warehouse_map:index")
-
-def compare_dates(request):
-    date_list = processor.get_dates()
-
-    return render(
-        request,
-        "warehouse_map/compare.html",
-        context = {
-            "date_list": date_list,
-        }
-    )
-
-def get_info(request):
-    d = processor.get_info()
-
-    return render(
-        request,
-        "warehouse_map/warehouse_info.html",
-        context={
-            "data_date": d,
-        }
-    )
-
-def test_map(request):
-    return render(
-        request,
-        'warehouse_map/test_map.html',
-        context={
-
-        }
-    )
+    create_f_map()
+    create_s_map()
+    create_vc_map()
+    create_p_map()
