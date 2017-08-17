@@ -24,77 +24,34 @@ def view_map(request):
 
     json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
 
-    def add_rack_box(x, y, image_map, vertical, location_map, rack_location,):
-        if vertical:
-            image_map[y][x] = 'rtl'
-            image_map[y][x+1] = 'rtr'
-            image_map[y+1][x] = 'rl'
-            image_map[y+1][x+1] = 'rr'
-            image_map[y+2][x] = 'rl'
-            image_map[y+2][x+1] = 'rr'
-            image_map[y+3][x] = 'rbl'
-            image_map[y+3][x+1] = 'rbr'
-
-            location_map[y][x] = rack_location
-            location_map[y][x + 1] = rack_location
-            location_map[y + 1][x] = rack_location
-            location_map[y + 1][x + 1] = rack_location
-            location_map[y + 2][x] = rack_location
-            location_map[y + 2][x + 1] = rack_location
-            location_map[y + 3][x] = rack_location
-            location_map[y + 3][x + 1] = rack_location
-        else:
-            image_map[y][x] = 'rtl'
-            image_map[y][x+1] = 'rt'
-            image_map[y][x+2] = 'rt'
-            image_map[y][x+3] = 'rtr'
-            image_map[y+1][x] = 'rbl'
-            image_map[y+1][x+1] = 'rb'
-            image_map[y+1][x+2] = 'rb'
-            image_map[y+1][x+3] = 'rbr'
-
-            location_map[y][x] = rack_location
-            location_map[y][x + 1] = rack_location
-            location_map[y][x + 2] = rack_location
-            location_map[y][x + 3] = rack_location
-            location_map[y + 1][x] = rack_location
-            location_map[y + 1][x + 1] = rack_location
-            location_map[y + 1][x + 2] = rack_location
-            location_map[y + 1][x + 3] = rack_location
-
-    def add_rack_aisle(x, y, image_map, vertical, location_map, location_sub, start_column, num_racks):
-        for i in range(num_racks):
-            if vertical:
-                rack_location = location_sub + "." + str(start_column - i)
-                add_rack_box(x, y + i * 4, image_map, vertical, location_map, rack_location)
-            else:
-                rack_location = location_sub + "." + str(start_column + i)
-                add_rack_box(x + i * 4, y, image_map, vertical, location_map, rack_location)
-
-    def make_empty_map(width, height, empty_symbol):
-        # e_map = [ [empty_symbol] * width ] * height
-        e_map = []
-        for h in range(height):
-            e_map.append([empty_symbol] * width)
-
-        return e_map
-
     def create_f_map():
         f_loc_sub = "USLA.F."
         va_loc_sub = "USLA.VA."
         width = 128
         height = 112
+        double_rack_status = False
+        prev_x = 0
 
         f_grid = GridMap(loc="F", width=width, height=height)
         f_grid.create_grids()
 
+        # First Aisle
         f_grid.add_rack_aisle(0, 0, True, f_loc_sub + "1", 21, 7, True)
         f_grid.add_rack_aisle(0, 7*4 + 4 * 7, True, f_loc_sub + "1", 14, 14, True)
 
         for i in range(42):
             # For now, vertical (True) means that columns decrements
-            f_grid.add_rack_aisle(3 + i*3, 0, True, f_loc_sub + str(i+2), 13, 13, True)
-            f_grid.add_rack_aisle(3 + i*3, 13*4+4, True, va_loc_sub + str(i+2), 14, 14, True)
+            if double_rack_status:
+                next_x = prev_x + 2
+                prev_x = next_x
+                double_rack_status = False
+            else:
+                next_x = prev_x + 4
+                prev_x = next_x
+                double_rack_status = True
+
+            f_grid.add_rack_aisle(next_x, 0, True, f_loc_sub + str(i+2), 13, 13, True)
+            f_grid.add_rack_aisle(next_x, 13*4+4, True, va_loc_sub + str(i+2), 14, 14, True)
 
         f_grid.save()
 
@@ -108,6 +65,9 @@ def view_map(request):
         width = 96
         height = 80
 
+        double_rack_status = False
+        prev_y = 0
+
         p_grid = GridMap(loc="P", width=width, height=height)
         p_grid.create_grids()
 
@@ -118,8 +78,16 @@ def view_map(request):
         p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "1", 13, 5, False)
 
         for i in range(26):
-            p_grid.add_rack_aisle(0, 3+i*3, False, p_loc_sub + str(i+2), 1, 12, False)
-            p_grid.add_rack_aisle(52, 3+i*3, False, p_loc_sub + str(i+2), 13, 11, False)
+            if double_rack_status:
+                next_y = prev_y + 2
+                prev_y = next_y
+                double_rack_status = False
+            else:
+                next_y = prev_y + 4
+                prev_y = next_y
+                double_rack_status = True
+            p_grid.add_rack_aisle(0, next_y, False, p_loc_sub + str(i+2), 1, 12, False)
+            p_grid.add_rack_aisle(52, next_y, False, p_loc_sub + str(i+2), 13, 11, False)
 
         p_grid.save()
 
@@ -132,30 +100,68 @@ def view_map(request):
         s_loc_sub = "USLA.S."
         rack_loc_sub = "USLA.H."
         width = 90
-        height = 115
+        height = 91
+        double_rack_status = False
+        prev_y = 0
 
         s_grid = GridMap(loc="P", width=width, height=height)
         s_grid.create_grids()
 
+        first_rack_y = 0
+        second_rack_y = 30
+        third_rack_y = 52
+
         # H RACKS
-        s_grid.add_rack_aisle(0, 8, True, rack_loc_sub + "1", 18, 7, True)
-        s_grid.add_rack_aisle(0, 41, True, rack_loc_sub + "1", 11, 5, True)
-        s_grid.add_rack_aisle(0, 68, True, rack_loc_sub + "1", 6, 6, True)
+        s_grid.add_rack_aisle(0, first_rack_y, True, rack_loc_sub + "1", 18, 7, True)
+        s_grid.add_rack_aisle(0, second_rack_y, True, rack_loc_sub + "1", 11, 5, True)
+        s_grid.add_rack_aisle(0, third_rack_y, True, rack_loc_sub + "1", 6, 6, True)
 
         # S Racks Aisles 25-56
         for i in range(32):
-            s_grid.add_shelf_aisle(4, 0+i*2, False, s_loc_sub + str(56 - i), 42, 18, True)
-            s_grid.add_shelf_aisle(42, 0+i*2, False, s_loc_sub + str(56 - i), 24, 24, True)
+            if double_rack_status:
+                next_y = prev_y + 1
+                prev_y = next_y
+                double_rack_status = False
+            else:
+                next_y = prev_y + 2
+                prev_y = next_y
+                double_rack_status = True
+
+            s_grid.add_shelf_aisle(4, next_y, False, s_loc_sub + str(56 - i), 42, 18, True)
+            s_grid.add_shelf_aisle(42, next_y, False, s_loc_sub + str(56 - i), 24, 24, True)
+
+        double_rack_status = False
+        prev_y = third_rack_y -1
 
         # S Racks Aisles 11 - 24
         for i in range(14):
-            s_grid.add_shelf_aisle(4, 66+i*2, False, s_loc_sub + str(24 - i), 42, 18, True)
-            s_grid.add_shelf_aisle(42, 66+i*2, False, s_loc_sub + str(24 - i), 24, 24, True)
+            if double_rack_status:
+                next_y = prev_y + 1
+                prev_y = next_y
+                double_rack_status = False
+            else:
+                next_y = prev_y + 2
+                prev_y = next_y
+                double_rack_status = True
+
+            s_grid.add_shelf_aisle(4, next_y, False, s_loc_sub + str(24 - i), 42, 18, True)
+            s_grid.add_shelf_aisle(42, next_y, False, s_loc_sub + str(24 - i), 24, 24, True)
+
+        double_rack_status = False
+        prev_y = 75
 
         # S Racks Aisles 1 - 10
         for i in range(10):
-            s_grid.add_shelf_aisle(22, 96+i*2, False, s_loc_sub + str(10 - i), 33, 9, True)
-            s_grid.add_shelf_aisle(42, 96+i*2, False, s_loc_sub + str(10 - i), 24, 24, True)
+            if double_rack_status:
+                next_y = prev_y + 1
+                prev_y = next_y
+                double_rack_status = False
+            else:
+                next_y = prev_y + 2
+                prev_y = next_y
+                double_rack_status = True
+            s_grid.add_shelf_aisle(22, next_y, False, s_loc_sub + str(10 - i), 33, 9, True)
+            s_grid.add_shelf_aisle(42, next_y, False, s_loc_sub + str(10 - i), 24, 24, True)
 
         s_grid.save()
 
@@ -168,20 +174,49 @@ def view_map(request):
         vc_loc_sub = "USLA.VC."
         rack_loc_sub = "USLA.VA."
         h_loc_sub = "USLA.H."
-        width = 200
-        height = 200
+        width = 35
+        height = 72
 
         vc_grid = GridMap(loc="P", width=width, height=height)
         vc_grid.create_grids()
 
         # VA RACKS
-        vc_grid.add_rack_aisle(0, 0, False, rack_loc_sub + "44", 22, 5, True)
-        # vc_grid.add_rack_aisle(0, 0, True, rack_loc_sub + "44", 17, 6, True)
+        vc_grid.add_rack_aisle(9, 0, False, rack_loc_sub + "44", 22, 5, True)
+        vc_grid.add_rack_aisle(33, 0, True, rack_loc_sub + "44", 17, 6, True)
+        vc_grid.add_rack_aisle(33, 28, True, rack_loc_sub + "44", 10, 5, True)
+        vc_grid.add_rack_aisle(33, 52, True, rack_loc_sub + "44", 5, 5, True)
+
 
         # H Racks
+        double_rack_status = True
+        prev_x = 0
+
         for i in range(6):
-            vc_grid.add_shelf_aisle(4, 0+i*2, False, s_loc_sub + str(56 - i), 42, 18, True)
-            vc_grid.add_shelf_aisle(42, 0+i*2, False, s_loc_sub + str(56 - i), 24, 24, True)
+            if double_rack_status:
+                next_x = prev_x + 2
+                prev_x = next_x
+                double_rack_status = False
+            else:
+                next_x = prev_x + 7
+                prev_x = next_x
+                double_rack_status = True
+            vc_grid.add_rack_aisle(next_x, 4, True, h_loc_sub + '8', 1, 5, False)
+
+        # VC Shelves
+        double_rack_status = False
+        prev_y = 23
+
+        for i in range(32):
+            if double_rack_status:
+                next_y = prev_y + 1
+                prev_y = next_y
+                double_rack_status = False
+            else:
+                next_y = prev_y + 2
+                prev_y = next_y
+                double_rack_status = True
+
+            vc_grid.add_shelf_aisle(0, next_y, False, vc_loc_sub + str(i), 15, 15, True)
 
 
         vc_grid.save()
@@ -191,7 +226,7 @@ def view_map(request):
             "location_map": vc_grid.grid_location,
         }
 
-    map_dic = create_s_map()
+    map_dic = create_vc_map()
 
     return render(
         request,
