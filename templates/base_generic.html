@@ -85,11 +85,21 @@
               <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
             {% endblock %}
             {% block sidebar_links %} {% endblock %}
+            <li>
+                <a class="nav-item" href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </a>
+            </li>
+            <div class="collapse" id="settings">
+            <div class="card card-body">
+            Hello
+            <a href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">Close</a>
+            </div>
+        </div>
         </ul>
        {% endblock %}
       </div>
-
-
+        
       {% block content %}{% endblock %}
 
     </div>
