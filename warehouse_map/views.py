@@ -126,7 +126,43 @@ def view_map(request):
             "location_map": p_grid.grid_location,
         }
 
-    map_dic = create_p_map()
+    def create_s_map():
+        s_loc_sub = "USLA.S."
+        rack_loc_sub = "USLA.H."
+        width = 90
+        height = 115
+
+        s_grid = GridMap(loc="P", width=width, height=height)
+        s_grid.create_grids()
+
+        # H RACKS
+        s_grid.add_rack_aisle(0, 8, True, rack_loc_sub + "1", 18, 7, True)
+        s_grid.add_rack_aisle(0, 41, True, rack_loc_sub + "1", 11, 5, True)
+        s_grid.add_rack_aisle(0, 68, True, rack_loc_sub + "1", 6, 6, True)
+
+        # S Racks Aisles 25-56
+        for i in range(32):
+            s_grid.add_shelf_aisle(4, 0+i*2, False, s_loc_sub + str(56 - i), 42, 18, True)
+            s_grid.add_shelf_aisle(42, 0+i*2, False, s_loc_sub + str(56 - i), 24, 24, True)
+
+        # S Racks Aisles 11 - 24
+        for i in range(14):
+            s_grid.add_shelf_aisle(4, 66+i*2, False, s_loc_sub + str(24 - i), 42, 18, True)
+            s_grid.add_shelf_aisle(42, 66+i*2, False, s_loc_sub + str(24 - i), 24, 24, True)
+
+        # S Racks Aisles 1 - 10
+        for i in range(10):
+            s_grid.add_shelf_aisle(22, 96+i*2, False, s_loc_sub + str(10 - i), 33, 9, True)
+            s_grid.add_shelf_aisle(42, 96+i*2, False, s_loc_sub + str(10 - i), 24, 24, True)
+
+        s_grid.save()
+
+        return {
+            "image_map": s_grid.grid_image,
+            "location_map": s_grid.grid_location,
+        }
+
+    map_dic = create_s_map()
 
     return render(
         request,
