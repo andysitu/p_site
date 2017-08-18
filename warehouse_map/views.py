@@ -45,20 +45,10 @@ def get_grid_ajax(request):
     return JsonResponse(data)
 
 def view_map(request):
-    test_dic = {'fire': 'ball'}
-
-    json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
-
-    map_dic = get_grid_map("S")
-
     return render(
         request,
         'warehouse_map/map.html',
         context={
-            'data_dic': json_data,
-            'image_map': json.dumps(map_dic["image_map"]),
-            'location_map': json.dumps(map_dic["location_map"]),
-
         },
     )
 

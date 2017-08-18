@@ -1,11 +1,3 @@
-for (var a in django_data) {
-    console.log(django_data[a]["fields"].test_field);
-}
-
-// var map_canvas = document.getElementById('map_canvas');
-// console.log(map_canvas)
-// var ctx = map_canvas.getContext('2d');
-
 const BACKGROUND_COLOR = "rgb(225,225,225)";
 // const BACKGROUND_COLOR = "white";
 
@@ -22,14 +14,11 @@ $( document ).ready(function() {
             make_map(image_map, location_map);
         }
     });
-
-    $( '#map_canvas' ).click(function(e) {
-        console.log(e.offsetX, e.offsetY);
-    })
 });
 
 function make_map(image_map, location_map) {
-    var map_canvas = $( '#map_canvas' )[0];
+    var map_canvas_jobj = $( '#map_canvas' ),
+        map_canvas = map_canvas_jobj[0];
     side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
 
     var canvas_width = $(window).width() - side_nav_bar_width,
@@ -40,7 +29,28 @@ function make_map(image_map, location_map) {
 
     var ctx = map_canvas.getContext('2d');
 
-    draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
+    map_info = draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
+
+
+    map_canvas_jobj.click(function(e) {
+        var clicked_y = e.offsetY,
+            clicked_x = e.offsetX,
+            box_width = map_info["box_width"],
+            box_height = map_info["box_height"];
+
+        var y = Math.floor( clicked_y / box_height),
+            x = Math.floor( clicked_x / box_width);
+
+        if (typeof location_map[y] !== 'undefined') {
+            if (typeof location_map[y][x] !== 'undefined') {
+                console.log(location_map[y][x], x, y, clicked_x, clicked_y);
+            } else {
+                console.log(x, y, clicked_x, clicked_y);
+            }
+        } else {
+            console.log(x, y, clicked_x, clicked_y);
+        }
+    });
 };
 
 function draw_map(ctx, image_map, start_x, start_y, width, height){
@@ -76,6 +86,11 @@ function draw_map(ctx, image_map, start_x, start_y, width, height){
             y = box_height * i;
             draw_box(ctx, x, y, box_width, box_height, map_key, "green");
         }
+    }
+
+    return {
+        "box_width": box_width,
+        "box_height": box_height,
     }
 };
 
