@@ -10,8 +10,26 @@ const BACKGROUND_COLOR = "rgb(225,225,225)";
 // const BACKGROUND_COLOR = "white";
 
 $( document ).ready(function() {
-    var map_canvas = $( '#map_canvas' )[0];
+    $.ajax({
+        url: request_grid_url,
+        data: {
+            "loc": "S",
+        },
+        dataType: "json",
+        success: function(data) {
+            var image_map = data["image_map"],
+                location_map = data["location_map"];
+            make_map(image_map, location_map);
+        }
+    });
 
+    $( '#map_canvas' ).click(function(e) {
+        console.log(e.offsetX, e.offsetY);
+    })
+});
+
+function make_map(image_map, location_map) {
+    var map_canvas = $( '#map_canvas' )[0];
     side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
 
     var canvas_width = $(window).width() - side_nav_bar_width,
@@ -22,22 +40,8 @@ $( document ).ready(function() {
 
     var ctx = map_canvas.getContext('2d');
 
-    $.ajax({
-        url: request_grid_url,
-        data: {
-            "loc": "S",
-        },
-        dataType: "json",
-        success: function(data) {
-            var image_map = data["image_map"];
-            draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
-        }
-    });
-
-    $( '#map_canvas' ).click(function(e) {
-        console.log(e.offsetX, e.offsetY);
-    })
-});
+    draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
+};
 
 function draw_map(ctx, image_map, start_x, start_y, width, height){
     var i, j,
