@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
-from .forms import UploadExcelData
+from .forms import UploadExcelData, XMLRequestGridForm
 from .models import Test, GridMap
 
 from django.utils.encoding import force_text
@@ -26,12 +26,12 @@ def combine_grid_maps(request):
         create_grids(request)
         grid_inst = GridMap.objects.get(loc='S')
 
-def get_grid_map(request):
+def get_grid_map(loc):
     try:
-        grid_inst = GridMap.objects.get(loc='S')
+        grid_inst = GridMap.objects.get(loc=loc)
     except GridMap.DoesNotExist:
         create_grids(request)
-        grid_inst = GridMap.objects.get(loc='S')
+        grid_inst = GridMap.objects.get(loc=loc)
 
     map_dic = {
         "image_map": grid_inst.grid_image,
@@ -39,12 +39,17 @@ def get_grid_map(request):
     }
     return map_dic
 
+def get_grid_ajax(request):
+    loc = request.GET.get("loc", None)
+    data = get_grid_map(loc)
+    return JsonResponse(data)
+
 def view_map(request):
     test_dic = {'fire': 'ball'}
 
     json_data = serializers.serialize('json', Test.objects.all(), cls=LazyEncoder)
 
-    map_dic = get_grid_map(request)
+    map_dic = get_grid_map("S")
 
     return render(
         request,

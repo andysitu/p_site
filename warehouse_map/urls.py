@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^reset_db_true/$', views.reset_db_true, name="reset_db_true"),
     url(r'^compare_dates/$', views.compare_dates, name="compare_dates"),
     url(r'^get_info/$', views.get_info, name="get_info"),
+    url(r'^request_grid_map_ajax/$', views.get_grid_ajax, name="request_grid_map_ajax"),
 ]

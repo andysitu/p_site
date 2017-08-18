@@ -24,3 +24,6 @@ class CompareDates(forms.Form):
     date2 = forms.DateTimeField(widget=forms.widgets.DateTimeInput(attrs={'type': 'date'}),
                             initial=datetime.date.today,
                             label=gettext_lazy("First Date"))
+
+class XMLRequestGridForm(forms.Form):
+    loc = forms.CharField()

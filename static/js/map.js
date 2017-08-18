@@ -21,16 +21,21 @@ $( document ).ready(function() {
 
     var ctx = map_canvas.getContext('2d');
 
-
-    draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
-    console.log(location_map)
+    $.ajax({
+        url: request_grid_url,
+        data: {
+            "loc": "S",
+        },
+        dataType: "json",
+        success: function(data) {
+            var image_map = data["image_map"];
+            draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
+        }
+    });
 
     $( '#map_canvas' ).click(function(e) {
         console.log(e.offsetX, e.offsetY);
     })
-
-    // draw_p(ctx,0,0,15,7);
-    // draw_s(ctx,0,0,30,15);
 });
 
 function draw_map(ctx, image_map, start_x, start_y, width, height){
