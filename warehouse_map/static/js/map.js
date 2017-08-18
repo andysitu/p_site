@@ -7,13 +7,14 @@ for (var a in django_data) {
 // var ctx = map_canvas.getContext('2d');
 
 const BACKGROUND_COLOR = "rgb(225,225,225)";
+// const BACKGROUND_COLOR = "white";
 
 $( document ).ready(function() {
     var map_canvas = $( '#map_canvas' )[0];
 
     side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
 
-    var canvas_width = $(window).width() - side_nav_bar_width - 50,
+    var canvas_width = $(window).width() - side_nav_bar_width,
         canvas_height = $(window).height() - 50;
 
     map_canvas.width = canvas_width;
