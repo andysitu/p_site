@@ -16,21 +16,37 @@ class LazyEncoder(DjangoJSONEncoder):
             return force_text(obj)
         return super(LazyEncoder, self).default(obj)
 
-def combine_grid_maps(request):
-    try:
-        s_grid_inst = GridMap.objects.get(loc='S')
-        p_grid_inst = GridMap.objects.get(loc='P')
-        f_grid_inst = GridMap.objects.get(loc='F')
-        vc_grid_inst = GridMap.objects.get(loc='VC')
-    except GridMap.DoesNotExist:
-        create_grids(request)
-        grid_inst = GridMap.objects.get(loc='S')
+def combine_all_grid_maps(request):
+    s_grid_map_dic = get_grid_map(loc='S')
+    p_grid_map_dic = get_grid_map(loc='P')
+    f_grid_map_dic = get_grid_map(loc='F')
+    vc_grid_map_dic = get_grid_map(loc='VC')
+    grid_arr = [
+        s_grid_map_dic,
+        p_grid_map_dic,
+        f_grid_map_dic,
+        vc_grid_map_dic,
+    ]
+    combine_grid_maps(grid_arr)
+
+def combine_grid_maps(grid_arr):
+    max_length = 0
+
+    new_image_map = []
+    new_location_map = []
+
+    for grid_dic in grid_arr:
+        g_len = len(grid_dic["image_map"])
+        if g_len > max_length:
+            max_length = g_len
+
+
 
 def get_grid_map(loc):
     try:
         grid_inst = GridMap.objects.get(loc=loc)
     except GridMap.DoesNotExist:
-        create_grids(request)
+        create_grids()
         grid_inst = GridMap.objects.get(loc=loc)
 
     map_dic = {
@@ -109,7 +125,7 @@ def test_map(request):
         }
     )
 
-def create_grids(request):
+def create_grids():
     def create_f_map():
         f_loc_sub = "USLA.F."
         va_loc_sub = "USLA.VA."
