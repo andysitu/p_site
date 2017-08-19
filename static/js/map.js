@@ -44,11 +44,7 @@ function make_map(image_map, location_map) {
         if (typeof location_map[y] !== 'undefined') {
             if (typeof location_map[y][x] !== 'undefined') {
                 console.log(location_map[y][x], x, y, clicked_x, clicked_y);
-            } else {
-                console.log(x, y, clicked_x, clicked_y);
             }
-        } else {
-            console.log(x, y, clicked_x, clicked_y);
         }
     });
 };
