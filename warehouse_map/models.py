@@ -5,6 +5,9 @@ class Test(models.Model):
     test_field  = models.CharField(max_length=50)
 
 class GridMap(models.Model):
+    empty_image_letter = "e"
+    empty_location_letter = ""
+
     loc = models.CharField(max_length=10)
     width = models.IntegerField()
     height = models.IntegerField()

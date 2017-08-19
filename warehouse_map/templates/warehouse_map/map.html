@@ -4,6 +4,7 @@
 
 {% block content %}
 
+
 {% load static %}
 
 <script type="text/javascript">
@@ -16,3 +17,19 @@
 
 <canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
 {% endblock %}
+
+{% block settings_block %}
+<li>
+    <a class="nav-item" href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+    </a>
+</li>
+
+<div class="collapse" id="settings">
+    <div class="card card-body">
+        Hello
+        <a href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">Close</a>
+    </div>
+</div>
+
+{% endblock %}}
