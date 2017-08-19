@@ -16,6 +16,8 @@ $( document ).ready(function() {
     });
 });
 
+
+
 function make_map(image_map, location_map) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0];

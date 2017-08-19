@@ -22,24 +22,42 @@ def combine_all_grid_maps(request):
     f_grid_map_dic = get_grid_map(loc='F')
     vc_grid_map_dic = get_grid_map(loc='VC')
     grid_arr = [
-        s_grid_map_dic,
-        p_grid_map_dic,
         f_grid_map_dic,
         vc_grid_map_dic,
+        s_grid_map_dic,
+        p_grid_map_dic,
     ]
-    combine_grid_maps(grid_arr)
+    return combine_grid_maps(grid_arr)
 
 def combine_grid_maps(grid_arr):
     max_length = 0
-
-    new_image_map = []
-    new_location_map = []
 
     for grid_dic in grid_arr:
         g_len = len(grid_dic["image_map"])
         if g_len > max_length:
             max_length = g_len
 
+    new_image_map = [ [] ] * max_length
+    new_location_map = [ [] ] * max_length
+
+    for grid_dic in grid_arr:
+        i_map = grid_dic["image_map"]
+        loc_map = grid_dic["location_map"]
+
+        x_length = len(i_map[0])
+
+        cur_map_len = len(i_map)
+        for i in range(max_length):
+            if i < cur_map_len:
+                new_image_map[i] = new_image_map[i] + i_map[i]
+                new_location_map[i] = new_location_map[i] + loc_map[i]
+            else:
+                new_image_map[i] += [ GridMap.empty_image_letter ] * x_length
+                new_location_map[i] += [ GridMap.empty_location_letter ] * x_length
+    return {
+        "image_map": new_image_map,
+        "location_map": new_location_map,
+    }
 
 
 def get_grid_map(loc):
@@ -57,7 +75,7 @@ def get_grid_map(loc):
 
 def get_grid_ajax(request):
     loc = request.GET.get("loc", None)
-    data = get_grid_map(loc)
+    data = combine_all_grid_maps(request)
     return JsonResponse(data)
 
 def view_map(request):

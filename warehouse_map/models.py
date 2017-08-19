@@ -29,8 +29,8 @@ class GridMap(models.Model):
         self.grid_location[y][x] = rack_location
 
     def create_grids(self):
-        self.grid_image = self.make_empty_map(self.width, self.height, "e")
-        self.grid_location = self.make_empty_map(self.width, self.height, "")
+        self.grid_image = self.make_empty_map(self.width, self.height, self.empty_image_letter)
+        self.grid_location = self.make_empty_map(self.width, self.height, self.empty_location_letter)
 
     def make_empty_map(self, width, height, empty_symbol,):
         # e_map = [ [empty_symbol] * width ] * height
