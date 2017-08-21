@@ -195,11 +195,11 @@ def create_grids():
         p_grid = GridMap(loc="P", width=width, height=height)
         p_grid.create_grids()
 
-        # Aisle 1
-        p_grid.add_rack_aisle(0, 0, False, p_loc_sub + "1", 1, 2, False)
-        p_grid.add_rack_aisle(16, 0, False, p_loc_sub + "1", 3, 5, False)
-        p_grid.add_rack_aisle(40, 0, False, p_loc_sub + "1", 8, 5, False)
-        p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "1", 13, 5, False)
+        # Aisle 26
+        p_grid.add_rack_aisle(0, 0, False, p_loc_sub + "27", 1, 2, False)
+        p_grid.add_rack_aisle(16, 0, False, p_loc_sub + "27", 3, 5, False)
+        p_grid.add_rack_aisle(40, 0, False, p_loc_sub + "27", 8, 5, False)
+        p_grid.add_rack_aisle(64, 0, False, p_loc_sub + "27", 13, 5, False)
 
         for i in range(26):
             if double_rack_status:
@@ -210,8 +210,8 @@ def create_grids():
                 next_y = prev_y + 4
                 prev_y = next_y
                 double_rack_status = True
-            p_grid.add_rack_aisle(0, next_y, False, p_loc_sub + str(i+2), 1, 12, False)
-            p_grid.add_rack_aisle(52, next_y, False, p_loc_sub + str(i+2), 13, 11, False)
+            p_grid.add_rack_aisle(0, next_y, False, p_loc_sub + str(26-i), 1, 12, False)
+            p_grid.add_rack_aisle(52, next_y, False, p_loc_sub + str(26-i), 13, 11, False)
 
         p_grid.save()
 
