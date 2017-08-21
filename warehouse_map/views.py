@@ -59,7 +59,6 @@ def combine_grid_maps(grid_arr):
         "location_map": new_location_map,
     }
 
-
 def get_grid_map(loc):
     try:
         grid_inst = GridMap.objects.get(loc=loc)
@@ -71,6 +70,8 @@ def get_grid_map(loc):
         "loc": loc,
         "image_map": grid_inst.grid_image,
         "location_map": grid_inst.grid_location,
+        "num_down": grid_inst.height,
+        "num_across": grid_inst.width,
     }
     return map_dic
 

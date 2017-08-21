@@ -2,6 +2,8 @@ const BACKGROUND_COLOR = "rgb(225,225,225)";
 // const BACKGROUND_COLOR = "white";
 
 $( document ).ready(function() {
+    set_canvas()
+
     var loc_list = ['F', 'VC', 'S', 'P',];
     $.ajax({
         url: request_grid_url,
@@ -13,14 +15,15 @@ $( document ).ready(function() {
             console.log(data_list);
             // var image_map = data["image_map"],
             //     location_map = data["location_map"];
-            // make_map(image_map, location_map);
+            make_map(data_list);
         },
     });
 });
 
-function make_map(image_map, location_map) {
+function set_canvas() {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0];
+
     side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
 
     var canvas_width = $(window).width() - side_nav_bar_width,
@@ -28,67 +31,96 @@ function make_map(image_map, location_map) {
 
     map_canvas.width = canvas_width;
     map_canvas.height = canvas_height;
+}
+
+function make_map(data_list) {
+    var map_canvas_jobj = $( '#map_canvas' ),
+        map_canvas = map_canvas_jobj[0],
+        i;
+
+    var canvas_width = map_canvas.width,
+        canvas_height = map_canvas.height;
 
     var ctx = map_canvas.getContext('2d');
 
-    map_info = draw_map(ctx, image_map, 0, 0, canvas_width, canvas_height);
+    // Get total width & length of arrays
+    var max_num_down = 0,
+        total_num_across = 0,
+        data_length = data_list.length,
+        num_down;
+    for ( i = 0; i < data_length; i++) {
+        data_dic = data_list[i];
+        num_down = data_dic.num_down;
 
-
-    map_canvas_jobj.click(function(e) {
-        var clicked_y = e.offsetY,
-            clicked_x = e.offsetX,
-            box_width = map_info["box_width"],
-            box_height = map_info["box_height"];
-
-        var y = Math.floor( clicked_y / box_height),
-            x = Math.floor( clicked_x / box_width);
-
-        if (typeof location_map[y] !== 'undefined') {
-            if (typeof location_map[y][x] !== 'undefined') {
-                console.log(location_map[y][x], x, y, clicked_x, clicked_y);
-            }
+        if (num_down > max_num_down) {
+            max_num_down = num_down
         }
-    });
+
+        total_num_across += data_dic.num_across;
+    }
+
+    var box_width = Math.floor((canvas_width+ 1)/ total_num_across),
+        box_height = Math.floor((canvas_height + 1)/ max_num_down),
+        box_length;
+
+    box_length = (box_width > box_height) ? box_height : box_width;
+
+    var start_x =0, start_y = 0;
+    for ( i = 0; i < data_length; i++) {
+        data_dic = data_list[i];
+        image_map = data_dic["image_map"];
+        map_info = draw_map(ctx, image_map, start_x, start_y, box_length);
+
+        data_dic["start_x"] = start_x;
+        data_dic["start_y"] = start_y;
+        data_dic["end_x"] = map_info["end_x"];
+        data_dic["end_y"] = map_info["end_y"];
+
+        start_x = map_info["end_x"];
+    }
+    // map_canvas_jobj.click(function(e) {
+    //     var clicked_y = e.offsetY,
+    //         clicked_x = e.offsetX,
+    //         box_width = map_info["box_width"],
+    //         box_height = map_info["box_height"];
+    //
+    //     var y = Math.floor( clicked_y / box_height),
+    //         x = Math.floor( clicked_x / box_width);
+    //
+    //     if (typeof location_map[y] !== 'undefined') {
+    //         if (typeof location_map[y][x] !== 'undefined') {
+    //             console.log(location_map[y][x], x, y, clicked_x, clicked_y);
+    //         }
+    //     }
+    // });
 };
 
-function draw_map(ctx, image_map, start_x, start_y, width, height){
+function draw_map(ctx, image_map, start_x, start_y, box_length){
     var i, j,
-        num_down = image_length = image_map.length,
         map_key;
-
-    var num_across = image_map[0].length;
-
-    console.log("NUM ACROSS:", num_across, "NUM DOWN", num_down)
-
-    var box_width = Math.floor((width+ 1)/ num_across),
-        box_height = Math.floor((height + 1)/ num_down);
-
-    if (box_width > box_height) {
-        box_width = box_height;
-    } else {
-        box_height = box_width;
-    }
 
     // Fill Background color
     var original_color = ctx.fillStyle;
 
-    ctx.fillStyle = BACKGROUND_COLOR;
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = original_color;
+    // ctx.fillStyle = BACKGROUND_COLOR;
+    // ctx.fillRect(0, 0, width, height);
+    // ctx.fillStyle = original_color;
 
-    for (i=0; i < image_length; i++) {
+    image_map_length = image_map.length
+
+    for (i=0; i < image_map_length; i++) {
         var sub_arr_len = image_map[i].length;
-        for (j = 0; j < sub_arr_len; j++) {
+        for (j = 0; j < image_map[i].length; j++) {
             map_key = image_map[i][j];
-            x = box_width * j;
-            y = box_height * i;
-            draw_box(ctx, x, y, box_width, box_height, map_key, "green");
+            x = start_x + box_length * j;
+            y = start_y + box_length * i;
+            draw_box(ctx, x, y, box_length, box_length, map_key, "green");
         }
     }
 
     return {
-        "box_width": box_width,
-        "box_height": box_height,
+        "end_x": x + box_length,
+        "end_y": y + box_length,
     }
 };
 
