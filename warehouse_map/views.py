@@ -49,11 +49,11 @@ def combine_grid_maps(grid_arr):
         cur_map_len = len(i_map)
         for i in range(max_length):
             if i < cur_map_len:
-                new_image_map[i] = new_image_map[i] + [ GridMap.empty_image_letter ] + i_map[i]
-                new_location_map[i] = new_location_map[i] + [ GridMap.empty_location_letter ] + loc_map[i]
+                new_image_map[i] = new_image_map[i] + i_map[i]
+                new_location_map[i] = new_location_map[i] + loc_map[i]
             else:
-                new_image_map[i] += [ GridMap.empty_image_letter ] * (x_length + 1)
-                new_location_map[i] += [ GridMap.empty_location_letter ] * (x_length + 1)
+                new_image_map[i] += [ GridMap.empty_image_letter ] * (x_length)
+                new_location_map[i] += [ GridMap.empty_location_letter ] * (x_length)
     return {
         "image_map": new_image_map,
         "location_map": new_location_map,
