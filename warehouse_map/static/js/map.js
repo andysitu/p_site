@@ -2,21 +2,21 @@ const BACKGROUND_COLOR = "rgb(225,225,225)";
 // const BACKGROUND_COLOR = "white";
 
 $( document ).ready(function() {
+    var loc_list = ['F', 'VC', 'S', 'P',];
     $.ajax({
         url: request_grid_url,
         data: {
-            "loc": "S",
+            "loc[]": loc_list,
         },
         dataType: "json",
-        success: function(data) {
-            var image_map = data["image_map"],
-                location_map = data["location_map"];
-            make_map(image_map, location_map);
-        }
+        success: function(data_list) {
+            console.log(data_list);
+            // var image_map = data["image_map"],
+            //     location_map = data["location_map"];
+            // make_map(image_map, location_map);
+        },
     });
 });
-
-
 
 function make_map(image_map, location_map) {
     var map_canvas_jobj = $( '#map_canvas' ),
