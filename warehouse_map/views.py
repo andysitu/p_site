@@ -68,6 +68,7 @@ def get_grid_map(loc):
         grid_inst = GridMap.objects.get(loc=loc)
 
     map_dic = {
+        "loc": loc,
         "image_map": grid_inst.grid_image,
         "location_map": grid_inst.grid_location,
     }
