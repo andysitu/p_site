@@ -49,6 +49,8 @@ function make_map(data_list) {
 
         ctx = map_canvas.getContext('2d');
 
+    ctx.clearRect(0, 0, canvas_width, canvas_height);
+
     // Get total width & length of arrays
     var max_num_down = 0,
         total_num_across = 0,
@@ -85,6 +87,8 @@ function make_map(data_list) {
 
         start_x = map_info["end_x"];
     }
+
+
 
     if (data_length === 4) {
         var highlighted = "";

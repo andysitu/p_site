@@ -1,6 +1,11 @@
 const BACKGROUND_COLOR = "white";
 
 function ajax_map(location_arr, callback_funct) {
+    /*
+        Function that will use ajax to receive an array containing
+        grid_data from each location called by location_arr and will
+        run a callback_function on each location.
+     */
     $.ajax({
         url: request_grid_url,
         data: {
@@ -44,6 +49,8 @@ function make_map(data_list) {
 
         ctx = map_canvas.getContext('2d');
 
+    ctx.clearRect(0, 0, canvas_width, canvas_height);
+
     // Get total width & length of arrays
     var max_num_down = 0,
         total_num_across = 0,
@@ -80,6 +87,8 @@ function make_map(data_list) {
 
         start_x = map_info["end_x"];
     }
+
+
 
     if (data_length === 4) {
         var highlighted = "";
