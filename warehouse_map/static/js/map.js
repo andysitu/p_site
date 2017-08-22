@@ -75,11 +75,49 @@ function make_map(data_list) {
         start_x = map_info["end_x"];
     }
     if (data_length === 4) {
-        map_canvas_jobj.mouseover(function(e) {
+        var highlighted = "";
+        orig_image = ctx.getImageData(0, 0, canvas_width, canvas_height);
 
+        function restore_canvas(){
+            ctx.putImageData(orig_image, 0, 0);
+            highlighted = '';
+        };
+
+        map_canvas_jobj.mousemove(function(e) {
+            var clicked_y = e.offsetY,
+                clicked_x = e.offsetX,
+                i, box_length;
+
+            for (i = 0; i < data_length; i++) {
+                data_dic = data_list[i];
+                box_length = data_dic.box_length;
+                if( clicked_x >= data_dic.start_x && clicked_x <= data_dic.end_x &&
+                    clicked_y >= data_dic.start_y && clicked_y <= data_dic.end_y
+                    )
+                {
+                    if (highlighted == data_dic.loc) {
+                        return 1;
+                    }
+                    ctx.save()
+                    ctx.fillStyle = 'rgba(204,229,255,0.5)';
+                    restore_canvas();
+                    ctx.fillRect(data_dic.start_x, data_dic.start_y,
+                                data_dic.end_x - data_dic.start_x,
+                                data_dic.end_y - data_dic.start_y);
+                    ctx.restore()
+                    highlighted = data_dic.loc;
+                    return 1;
+                }
+            }
+            if (highlighted !== '') {
+                restore_canvas();
+            }
         });
-
-        map_canvas_jobj.click(function (e) {
+        map_canvas_jobj.mouseleave(function(e){
+            restore_canvas();
+        });
+    } else {
+        map_canvas_jobj.click(function(e){
             var clicked_y = e.offsetY,
                 clicked_x = e.offsetX,
                 i, box_length;
@@ -101,9 +139,6 @@ function make_map(data_list) {
                     }
                     break;
                 }
-
-
-
             }
         });
     }
