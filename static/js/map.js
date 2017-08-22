@@ -132,6 +132,31 @@ function make_map(data_list) {
         map_canvas_jobj.mouseleave(function(e){
             restore_canvas();
         });
+        map_canvas_jobj.click(function(e){
+            var clicked_y = e.offsetY,
+                clicked_x = e.offsetX,
+                i, box_length;
+
+            for (i = 0; i < data_length; i++) {
+                data_dic = data_list[i];
+                box_length = data_dic.box_length;
+                if( clicked_x >= data_dic.start_x && clicked_x <= data_dic.end_x &&
+                    clicked_y >= data_dic.start_y && clicked_y <= data_dic.end_y
+                    )
+                {
+                    loc = data_dic.loc;
+
+                    map_canvas_jobj.off("click");
+                    map_canvas_jobj.off("mouseleave");
+                    map_canvas_jobj.off("mousemove");
+
+                    ajax_map([loc,], function(data_list){
+                        make_map(data_list);
+                    });
+                    return 1;
+                }
+            }
+        });
     } else {
         map_canvas_jobj.click(function(e){
             var clicked_y = e.offsetY,
