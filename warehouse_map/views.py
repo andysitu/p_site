@@ -236,9 +236,9 @@ def create_grids():
         third_rack_y = 52
 
         # H RACKS
-        s_grid.add_rack_aisle(0, first_rack_y, True, rack_loc_sub + "1", 18, 7, True)
-        s_grid.add_rack_aisle(0, second_rack_y, True, rack_loc_sub + "1", 11, 5, True)
-        s_grid.add_rack_aisle(0, third_rack_y, True, rack_loc_sub + "1", 6, 6, True)
+        s_grid.add_rack_aisle(0, first_rack_y, True, rack_loc_sub + "8", 18, 7, True)
+        s_grid.add_rack_aisle(0, second_rack_y, True, rack_loc_sub + "8", 11, 5, True)
+        s_grid.add_rack_aisle(0, third_rack_y, True, rack_loc_sub + "8", 6, 6, True)
 
         # S Racks Aisles 25-56
         for i in range(32):
@@ -324,7 +324,7 @@ def create_grids():
                 next_x = prev_x + 7
                 prev_x = next_x
                 double_rack_status = True
-            vc_grid.add_rack_aisle(next_x, 4, True, h_loc_sub + '8', 1, 5, False)
+            vc_grid.add_rack_aisle(next_x, 4, True, h_loc_sub + str(6-i), 1, 5, False)
 
         # VC Shelves
         double_rack_status = False
