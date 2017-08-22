@@ -6,12 +6,11 @@
 
 
 {% load static %}
-
 <script type="text/javascript">
     var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}";
 </script>
 
-<script src="{% static 'js/map.js' %}">
+<script src="{% static 'warehouse_map/js/map.js' %}">
 
 </script>
 
@@ -20,16 +19,12 @@
 
 {% block settings_block %}
 <li>
-    <a class="nav-item" href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">
+    <a class="nav-item" href="#side-setting" data-toggle="collapse" aria-expanded="false" aria-controls="side-setting">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </a>
 </li>
 
-<div class="collapse" id="settings">
-    <div class="card card-body">
-        Hello
-        <a href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">Close</a>
-    </div>
+<div class="sidenav collapse" id="side-setting">
+    <a href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">Close</a>
 </div>
-
 {% endblock %}}
