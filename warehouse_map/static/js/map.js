@@ -1,5 +1,23 @@
 const BACKGROUND_COLOR = "white";
 
+function ajax_map(location_arr, callback_funct) {
+    /*
+        Function that will use ajax to receive an array containing
+        grid_data from each location called by location_arr and will
+        run a callback_function on each location.
+     */
+    $.ajax({
+        url: request_grid_url,
+        data: {
+            "loc[]": location_arr,
+        },
+        dataType: "json",
+        success: function(data_list) {
+            callback_funct(data_list);
+        },
+    });
+};
+
 $( document ).ready(function() {
     // Setup canvas width, height, etc.
     (function set_canvas() {
@@ -17,16 +35,9 @@ $( document ).ready(function() {
 
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
-    $.ajax({
-        url: request_grid_url,
-        data: {
-            "loc[]": loc_list,
-        },
-        dataType: "json",
-        success: function(data_list) {
+    ajax_map(loc_list, function(data_list) {
             make_map(data_list);
-        },
-    });
+        });
 });
 
 function make_map(data_list) {
@@ -74,6 +85,7 @@ function make_map(data_list) {
 
         start_x = map_info["end_x"];
     }
+
     if (data_length === 4) {
         var highlighted = "";
         orig_image = ctx.getImageData(0, 0, canvas_width, canvas_height);
