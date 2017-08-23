@@ -20,17 +20,32 @@
 {% endblock %}
 
 
-{% block settings_button %}
+{% block settings %}
 <li>
     <a class="nav-item" href="#setting" data-toggle="collapse" aria-expanded="false" aria-controls="setting">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </a>
 </li>
+<hr>
+Level:
+<div class="input-group">
+    <span class="input-group-btn">
+        <button type="button" id="minus-level" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
+    </span>
+    <input type="text" id="level-input" name="quant[1]" class="form-control input-number" value="1" min="1" max="10">
+    <span class="input-group-btn">
+        <button type="button" id="plus-level" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+    </span>
+</div>
 {% endblock %}
 
 {% block settings_bar %}
     <div class="collapse" id="setting">
-        <div class="bg-secondary p-4">
+        <div class="bg-white p-4">
             <h4 class="">HELLO</h4>
         </div>
     </div>

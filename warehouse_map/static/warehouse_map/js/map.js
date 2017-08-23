@@ -18,7 +18,49 @@ function ajax_map(location_arr, callback_funct) {
     });
 };
 
+function set_level_input(maxLevel) {
+    if (maxLevel == null)
+        maxLevel = 6;
+
+
+
+    function increase_level(e){
+        var level_input = $( '#level-input' );
+        var level = level_input.val();
+        if (level == "All") {
+            level = 1;
+        } else {
+            level = parseInt(level);
+            level++;
+            if (level >= maxLevel){
+                level = maxLevel;
+            }
+        }
+        level_input.val(level);
+    };
+
+    function decrease_level(e){
+        var level_input = $( '#level-input' );
+        var level = level_input.val();
+        if (level == "1") {
+            level = 'All';
+        } else if (level == 'All'){
+            level == 'All';
+        } else {
+            level = parseInt(level);
+            level--;
+        }
+        level_input.val(level);
+    };
+
+    $( '#minus-level' ).click(decrease_level);
+
+    $( '#plus-level' ).click(increase_level);
+};
+
+
 $( document ).ready(function() {
+
     // Setup canvas width, height, etc.
     (function set_canvas() {
         var map_canvas_jobj = $( '#map_canvas' ),
@@ -33,11 +75,15 @@ $( document ).ready(function() {
         map_canvas.height = canvas_height;
     })();
 
+
+
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
     ajax_map(loc_list, function(data_list) {
             make_map(data_list);
         });
+
+    set_level_input();
 });
 
 function make_map(data_list) {

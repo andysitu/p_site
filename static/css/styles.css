@@ -1,6 +1,6 @@
 #sidebar-nav-div {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 10px;
+    padding-right: 20px;
     padding-top: 10px;
 }
 
@@ -24,7 +24,7 @@ body {
   outline: none;
 }
 
-.navbar {  max-height:28px; padding-top: 0px; padding-bottom: 0px; }
+.navbar {  max-height:30px; padding-top: 0px; padding-bottom: 0px; }
 .navbar-brand {  margin: 0; padding: 0px;}
 .navbar-nav > li > a { padding-top: 0px; padding-bottom: 0px; }
 .navbar .navbar-form .navbar-right { padding: 2px 5px; margin: 0; }
