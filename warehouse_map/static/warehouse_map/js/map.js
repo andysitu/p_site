@@ -18,6 +18,28 @@ function ajax_map(location_arr, callback_funct) {
     });
 };
 
+function set_data_type() {
+    function create_options(){
+        var data_arr = null,
+            data_select = $( '#data-type-select' ),
+            data_arr_len;
+
+        data_arr = [
+            "item_ct", "Item Count",
+        ];
+        data_arr_len = data_arr.length/2;
+
+        for (i=0; i < data_arr_len; i++) {
+            data_select.append($("<option>",
+                {
+                    value: data_arr[i * 2],
+                    text: data_arr[i * 2 + 1],
+                }));
+        }
+    };
+    create_options()
+};
+
 function set_level_input(maxLevel) {
     if (maxLevel == null)
         maxLevel = 6;
@@ -66,9 +88,7 @@ function set_level_input(maxLevel) {
     $( '#plus-level' ).click(increase_level);
 };
 
-
 $( document ).ready(function() {
-
     // Setup canvas width, height, etc.
     (function set_canvas() {
         var map_canvas_jobj = $( '#map_canvas' ),
@@ -83,15 +103,12 @@ $( document ).ready(function() {
         map_canvas.height = canvas_height;
     })();
 
-
-
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
     ajax_map(loc_list, function(data_list) {
             make_map(data_list);
-        });
-
-    set_level_input();
+        }
+    );
 });
 
 function make_map(data_list) {
@@ -141,8 +158,6 @@ function make_map(data_list) {
 
         start_x = map_info["end_x"];
     }
-
-
 
     if (data_length === 4) {
         var highlighted = "";
@@ -212,6 +227,8 @@ function make_map(data_list) {
             }
         });
     } else {
+        set_level_input();
+        set_data_type();
         map_canvas_jobj.click(function(e){
             var clicked_y = e.offsetY,
                 clicked_x = e.offsetX,
