@@ -22,10 +22,17 @@ function set_level_input(maxLevel) {
     if (maxLevel == null)
         maxLevel = 6;
 
-
+    function create_options(maxLevel){
+        var i;
+        var level_input = $( '#level-select' );
+        level_input.append($("<option>", {value: "All", text: "All",}));
+        for (i=1; i <= maxLevel; i++) {
+            level_input.append($("<option>", {value: i, text: i,}));
+        }
+    };
 
     function increase_level(e){
-        var level_input = $( '#level-input' );
+        var level_input = $( '#level-select' );
         var level = level_input.val();
         if (level == "All") {
             level = 1;
@@ -40,7 +47,7 @@ function set_level_input(maxLevel) {
     };
 
     function decrease_level(e){
-        var level_input = $( '#level-input' );
+        var level_input = $( '#level-select' );
         var level = level_input.val();
         if (level == "1") {
             level = 'All';
@@ -52,6 +59,7 @@ function set_level_input(maxLevel) {
         }
         level_input.val(level);
     };
+    create_options(maxLevel)
 
     $( '#minus-level' ).click(decrease_level);
 
