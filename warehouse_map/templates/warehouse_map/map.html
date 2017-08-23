@@ -4,27 +4,34 @@
 
 {% block content %}
 
-
 {% load static %}
 <script type="text/javascript">
     var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}";
 </script>
 
-<script src="{% static 'warehouse_map/js/map.js' %}">
-
-</script>
+<script src="{% static 'warehouse_map/js/map.js' %}"></script>
 
 <canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
 {% endblock %}
 
-{% block settings_block %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'warehouse_map/css/warehouse_map.css' %}" />
+{% endblock %}
+
+
+{% block settings_button %}
 <li>
-    <a class="nav-item" href="#side-setting" data-toggle="collapse" aria-expanded="false" aria-controls="side-setting">
+    <a class="nav-item" href="#setting" data-toggle="collapse" aria-expanded="false" aria-controls="setting">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </a>
 </li>
+{% endblock %}
 
-<div class="sidenav collapse" id="side-setting">
-    <a href="#settings" data-toggle="collapse" aria-expanded="false" aria-controls="settings">Close</a>
-</div>
-{% endblock %}}
+{% block settings_bar %}
+    <div class="collapse" id="setting">
+        <div class="bg-secondary p-4">
+            <h4 class="">HELLO</h4>
+        </div>
+    </div>
+{% endblock %}
