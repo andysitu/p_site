@@ -12,8 +12,8 @@ def process_excel_file(file):
     filename = file.name
     print(filename)
 
-    file_regex = re.compile('(?P<year>20\d\d)(?P<month>[01]\d)'
-                            + '(?P<day>[0123]\d)(?P<hour>[012]\d)'
+    file_regex = re.compile('(?P<year>\d\d\d\d)(?P<month>\d\d)'
+                            + '(?P<day>\d\d)(?P<hour>\d\d)'
                             + '(?P<min>\d\d)(?P<sec>\d\d)')
     re_result = re.match(file_regex, filename)
 
