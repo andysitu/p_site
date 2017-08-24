@@ -159,7 +159,7 @@ function make_map(data_list) {
     } else {
         set_level_input();
         set_data_type();
-
+        set_date_input()
 
         map_canvas_jobj.click(function(e){
             var clicked_y = e.offsetY,

@@ -70,6 +70,13 @@ function set_level_input(maxLevel) {
 
 function set_date_input() {
     $.ajax({
+        url: date_ajax_url,
+        data: {
 
-    })
+        },
+        dateType: "json",
+        success: function(date_list) {
+            console.log(date_list);
+        }
+    });
 };

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from .forms import UploadExcelData, XMLRequestGridForm
-from .models import Test, GridMap
+from .models import GridMap
 
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -10,8 +10,14 @@ import json
 
 from . import views
 
+from warehouse_data import processor as processor
+
 def get_proc_dates(request):
-    pass
+    data_dates = processor.get_dates()
+    date_list = []
+    for data_date in data_dates:
+        date_list.append(data_date.date)
+    return JsonResponse(date_list, safe=False)
 
 def get_grid_ajax(request):
     loclet_list = request.GET.getlist("loc[]", None)
