@@ -13,7 +13,7 @@ from . import views
 from warehouse_data import processor as processor
 
 def get_proc_dates(request):
-    data_dates = processor.get_dates()
+    data_dates = processor.get_datadates()
     date_list = []
     for data_date in data_dates:
         date_list.append(data_date.date)
