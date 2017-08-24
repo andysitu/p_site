@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 
-from . import views
+from . import views, ajax_func
 
 app_name = "warehouse_map"
 urlpatterns = [
