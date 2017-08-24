@@ -45,6 +45,7 @@ def view_map(request):
         request,
         'warehouse_map/map.html',
         context={
+
         },
     )
 
@@ -292,3 +293,4 @@ def create_grids():
     create_s_map()
     create_vc_map()
     create_p_map()
+

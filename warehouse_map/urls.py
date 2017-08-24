@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^reset_db/$', views.reset_db, name="reset_db"),
     url(r'^reset_db_true/$', views.reset_db_true, name="reset_db_true"),
     url(r'^get_info/$', views.get_info, name="get_info"),
-    url(r'^request_grid_map_ajax/$', views.get_grid_ajax, name="request_grid_map_ajax"),
+
+    url(r'^request_grid_map_ajax/$', ajax_func.get_grid_ajax, name="request_grid_map_ajax"),
+    url(r'^request_date_ajax/$', ajax_func.get_proc_dates, name="request_date_ajax"),
 ]

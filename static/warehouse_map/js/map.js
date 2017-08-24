@@ -18,8 +18,6 @@ function ajax_map(location_arr, callback_funct) {
     });
 };
 
-
-
 $( document ).ready(function() {
     // Setup canvas width, height, etc.
     (function set_canvas() {
@@ -161,6 +159,8 @@ function make_map(data_list) {
     } else {
         set_level_input();
         set_data_type();
+
+
         map_canvas_jobj.click(function(e){
             var clicked_y = e.offsetY,
                 clicked_x = e.offsetX,

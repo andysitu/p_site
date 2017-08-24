@@ -7,9 +7,11 @@
 {% load static %}
 <script type="text/javascript">
     var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}";
+    var date_ajax_url = "{% url 'warehouse_map:request_date_ajax' %}";
 </script>
 
 <script src="{% static 'warehouse_map/js/map.js' %}"></script>
+<script src="{% static 'warehouse_map/js/map_ajax.js' %}"></script>
 
 <canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
 {% endblock %}
@@ -45,9 +47,15 @@
             </span>
         </div>
     </div>
+
     <div class="form-group">
         <label for="data-type-select">Data Type</label>
         <select class="form-control" id="data-type-select"></select>
+    </div>
+
+    <div class="form-group">
+        <label for="date-select">Date</label>
+        <select class="form-control" id="date-select"></select>
     </div>
 
     <button type="submit" class="btn btn-primary">Search</button>
