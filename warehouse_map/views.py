@@ -16,13 +16,14 @@ class LazyEncoder(DjangoJSONEncoder):
             return force_text(obj)
         return super(LazyEncoder, self).default(obj)
 
-def get_grid_map(loc):
+def get_grid_map(loc, data_type = None):
     try:
         grid_inst = GridMap.objects.get(loc=loc)
     except GridMap.DoesNotExist:
         create_grids()
         grid_inst = GridMap.objects.get(loc=loc)
-
+        if data_type:
+            data_map = processor.get_data_map(grid_inst.grid_location, data_type)
     map_dic = {
         "loc": loc,
         "image_map": grid_inst.grid_image,

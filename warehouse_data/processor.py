@@ -177,3 +177,6 @@ def get_info():
     print(count)
     print(time.time() - start)
     return item_count
+
+def get_data_map(location_map, data_type):
+    return []
