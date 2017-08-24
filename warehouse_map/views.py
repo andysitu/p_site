@@ -33,13 +33,6 @@ def get_grid_map(loc, data_type = None):
     }
     return map_dic
 
-def get_grid_ajax(request):
-    loclet_list = request.GET.getlist("loc[]", None)
-    loc_list = []
-    for locLetter in loclet_list:
-        loc_list.append(get_grid_map(locLetter))
-    return JsonResponse(loc_list, safe=False)
-
 def view_map(request):
     return render(
         request,

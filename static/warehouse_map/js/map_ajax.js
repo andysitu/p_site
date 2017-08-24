@@ -76,7 +76,14 @@ function set_date_input() {
         },
         dateType: "json",
         success: function(date_list) {
-            console.log(date_list);
+            var date_select_jobj = $('#date-select'),
+                i,
+                date_list_len = date_list.length;
+            for (i = 0; i < date_list_len; i++) {
+                date_select_jobj.append($("<option>", {
+                    text: date_list[i],
+                }));
+            }
         }
     });
 };
