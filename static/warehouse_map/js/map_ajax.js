@@ -1,11 +1,14 @@
-function get_data_select_type() {
+function get_data_select_type(data_type) {
     // Key represents data name
     // Value is whether a second date is needed
     var data_dic =  {
         "Item Count": false,
         "Item Change": true,
     }
-    return data_dic;
+    if (arguments.length == 1) {
+        return data_dic[data_type];
+    } else
+        return data_dic;
 };
 
 function set_data_type() {
@@ -100,14 +103,18 @@ function check_date_input2_hidden() {
    Checks if date-input-2 should be hidden based on the
     value of data-type.
 */
-    console.log("TEST");
-    console.log($('#data-type-select').val());
+    var data_type = $('#data-type-select').val();
+    if (get_data_select_type(data_type))
+         $('#date-select-2-div').attr('hidden', true);
+    else
+        $('#date-select-2-div').attr('hidden', false);
 };
 
 function change_data_type_select() {
+    // Ajax that runs when data-type select is changed
+    //  Sees if the second data type should be hidden
+
     $('#data-type-select').change(function(e){
-        console.log(e);
-        console.log($(this).val());
-        console.log( $('#date-select-2-div').attr('hidden', true) );
+        check_date_input2_hidden();
     });
 };

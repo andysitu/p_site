@@ -103,13 +103,18 @@ function check_date_input2_hidden() {
    Checks if date-input-2 should be hidden based on the
     value of data-type.
 */
-    console.log("TEST");
-    console.log($('#data-type-select').val());
+    var data_type = $('#data-type-select').val();
+    if (get_data_select_type(data_type))
+         $('#date-select-2-div').attr('hidden', true);
+    else
+        $('#date-select-2-div').attr('hidden', false);
 };
 
 function change_data_type_select() {
+    // Ajax that runs when data-type select is changed
+    //  Sees if the second data type should be hidden
+
     $('#data-type-select').change(function(e){
-        console.log($(this).val());
-        console.log( $('#date-select-2-div').attr('hidden', true) );
+        check_date_input2_hidden();
     });
 };
