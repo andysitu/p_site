@@ -1,20 +1,27 @@
+function get_data_select_type(data_type) {
+    // Key represents data name
+    // Value is whether a second date is needed
+    var data_dic =  {
+        "Item Count": false,
+        "Item Change": true,
+    }
+    if (arguments.length == 1) {
+        return data_dic[data_type];
+    } else
+        return data_dic;
+};
+
 function set_data_type() {
     function create_options(){
         var data_arr = null,
-            data_select = $( '#data-type-select' ),
-            data_arr_len;
+            data_select = $( '#data-type-select' );
 
-        data_arr = [
-                "item_ct", "Item Count",
-                "itm_ch", "Item Change",
-        ];
-        data_arr_len = data_arr.length/2;
+        data_select_dic = get_data_select_type();
 
-        for (i=0; i < data_arr_len; i++) {
+        for (var k in data_select_dic) {
             data_select.append($("<option>",
                 {
-                    value: data_arr[i * 2],
-                    text: data_arr[i * 2 + 1],
+                    text: k,
                 }));
         }
 
@@ -102,7 +109,6 @@ function check_date_input2_hidden() {
 
 function change_data_type_select() {
     $('#data-type-select').change(function(e){
-        console.log(e);
         console.log($(this).val());
         console.log( $('#date-select-2-div').attr('hidden', true) );
     });

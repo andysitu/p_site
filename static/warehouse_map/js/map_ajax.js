@@ -1,20 +1,24 @@
+function get_data_select_type() {
+    // Key represents data name
+    // Value is whether a second date is needed
+    var data_dic =  {
+        "Item Count": false,
+        "Item Change": true,
+    }
+    return data_dic;
+};
+
 function set_data_type() {
     function create_options(){
         var data_arr = null,
-            data_select = $( '#data-type-select' ),
-            data_arr_len;
+            data_select = $( '#data-type-select' );
 
-        data_arr = [
-                "item_ct", "Item Count",
-                "itm_ch", "Item Change",
-        ];
-        data_arr_len = data_arr.length/2;
+        data_select_dic = get_data_select_type();
 
-        for (i=0; i < data_arr_len; i++) {
+        for (var k in data_select_dic) {
             data_select.append($("<option>",
                 {
-                    value: data_arr[i * 2],
-                    text: data_arr[i * 2 + 1],
+                    text: k,
                 }));
         }
 
