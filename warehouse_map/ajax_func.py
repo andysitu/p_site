@@ -16,7 +16,7 @@ def get_proc_dates(request):
     data_dates = processor.get_datadates()
     date_list = []
     for data_date in data_dates:
-        date_list.append(data_date.date)
+        date_list.append(data_date.date.astimezone())
     return JsonResponse(date_list, safe=False)
 
 def get_grid_ajax(request):
