@@ -7,8 +7,11 @@ from .models import Location, DataDate, Items,\
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
+from django.utils.timezone import activate
+from django.conf import settings
 
 def process_excel_file(file):
+    activate(settings.TIME_ZONE)
     filename = file.name
     print(filename)
 
@@ -24,9 +27,7 @@ def process_excel_file(file):
     min = int(re_result.group("min"))
     sec = int(re_result.group("sec"))
 
-    timezone = pytz.timezone('America/Los_Angeles')
-
-    d = datetime.datetime(year=year,month=month,day=day,hour=hour,minute=min,second=sec, tzinfo=timezone)
+    d = datetime.datetime(year=year,month=month,day=day,hour=hour,minute=min,second=sec)
     data_date_query = DataDate.objects.filter(date=d)
     if len(data_date_query) > 0:
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
