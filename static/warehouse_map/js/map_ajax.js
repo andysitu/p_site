@@ -5,7 +5,8 @@ function set_data_type() {
             data_arr_len;
 
         data_arr = [
-            "item_ct", "Item Count",
+                "item_ct", "Item Count",
+                "itm_ch", "Item Change",
         ];
         data_arr_len = data_arr.length/2;
 
@@ -16,6 +17,8 @@ function set_data_type() {
                     text: data_arr[i * 2 + 1],
                 }));
         }
+
+        check_date_input2_hidden()
     };
     create_options()
 };
@@ -85,5 +88,22 @@ function set_date_input() {
                 }));
             }
         }
+    });
+};
+
+function check_date_input2_hidden() {
+/*
+   Checks if date-input-2 should be hidden based on the
+    value of data-type.
+*/
+    console.log("TEST");
+    console.log($('#data-type-select').val());
+};
+
+function change_data_type_select() {
+    $('#data-type-select').change(function(e){
+        console.log(e);
+        console.log($(this).val());
+        console.log( $('#date-select-2-div').attr('hidden', true) );
     });
 };
