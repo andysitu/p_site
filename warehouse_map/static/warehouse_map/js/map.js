@@ -77,6 +77,7 @@ function make_map(data_list, loc) {
     };
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
+    remove_events();
 
     // Get total width & length of arrays
     var max_num_down = 0,
@@ -176,8 +177,6 @@ function make_map(data_list, loc) {
                     )
                 {
                     loc = data_dic.loc;
-
-                    remove_events();
 
                     ajax_map([loc,], function(data_list){
                         make_map(data_list, loc);
