@@ -129,10 +129,10 @@ function change_data_type_select() {
 };
 
 function map_search(e) {
-    var level,
-        data_type,
-        date_1,
-        date_2;
+    var level       = $("#level-select").val(),
+        data_type   = $("#data-type-select").val(),
+        date_1      = $("#date-select").val(),
+        date_2      = $("#date-select-2").val();
     console.log("SEARCH");
-    console.log(e);
+    console.log(level, data_type, date_1, date_2);
 };
