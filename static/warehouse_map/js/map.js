@@ -12,8 +12,8 @@ function ajax_map(location_arr, callback_funct) {
             "loc[]": location_arr,
         },
         dataType: "json",
-        success: function(data_list) {
-            callback_funct(data_list);
+        success: function(map_data_list) {
+            callback_funct(map_data_list);
         },
     });
 };
@@ -35,8 +35,8 @@ $( document ).ready(function() {
 
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
-    ajax_map(loc_list, function(data_list) {
-            make_map(data_list);
+    ajax_map(loc_list, function(map_data_list) {
+            make_map(map_data_list);
         }
     );
 });
@@ -51,7 +51,7 @@ function remove_events() {
     $("#map-submit-button").off("click");
 };
 
-function make_map(data_list, loc) {
+function make_map(map_data_list, loc) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0],
         i,
@@ -69,17 +69,17 @@ function make_map(data_list, loc) {
     // Get total width & length of arrays
     var max_num_down = 0,
         total_num_across = 0,
-        data_length = data_list.length,
+        data_length = map_data_list.length,
         num_down;
     for ( i = 0; i < data_length; i++) {
-        data_dic = data_list[i];
-        num_down = data_dic.num_down;
+        map_data_dic = map_data_list[i];
+        num_down = map_data_dic.num_down;
 
         if (num_down > max_num_down) {
             max_num_down = num_down
         }
 
-        total_num_across += data_dic.num_across;
+        total_num_across += map_data_dic.num_across;
     }
 
     var box_width = Math.floor((canvas_width+ 1)/ total_num_across),
@@ -90,22 +90,22 @@ function make_map(data_list, loc) {
 
     var start_x =0, start_y = 0;
     for ( i = 0; i < data_length; i++) {
-        data_dic = data_list[i];
-        image_map = data_dic["image_map"];
+        map_data_dic = map_data_list[i];
+        image_map = map_data_dic["image_map"];
         map_info = draw_map(ctx, image_map, start_x, start_y, box_length);
 
-        data_dic["start_x"] = start_x;
-        data_dic["start_y"] = start_y;
-        data_dic["end_x"] = map_info["end_x"];
-        data_dic["end_y"] = map_info["end_y"];
-        data_dic["box_length"] = box_length;
+        map_data_dic["start_x"] = start_x;
+        map_data_dic["start_y"] = start_y;
+        map_data_dic["end_x"] = map_info["end_x"];
+        map_data_dic["end_y"] = map_info["end_y"];
+        map_data_dic["box_length"] = box_length;
 
         start_x = map_info["end_x"];
     }
 
     $("#map-submit-button").click(function(e){
         e.preventDefault();
-        map_search(data_list);
+        map_search(map_data_list);
     });
 
     // Showing all locations
@@ -124,23 +124,23 @@ function make_map(data_list, loc) {
                 i, box_length;
 
             for (i = 0; i < data_length; i++) {
-                data_dic = data_list[i];
-                box_length = data_dic.box_length;
-                if( clicked_x >= data_dic.start_x && clicked_x <= data_dic.end_x &&
-                    clicked_y >= data_dic.start_y && clicked_y <= data_dic.end_y
+                map_data_dic = map_data_list[i];
+                box_length = map_data_dic.box_length;
+                if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
+                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y
                     )
                 {
-                    if (highlighted == data_dic.loc) {
+                    if (highlighted == map_data_dic.loc) {
                         return 1;
                     }
                     ctx.save()
                     ctx.fillStyle = 'rgba(204,229,255,0.5)';
                     restore_canvas();
-                    ctx.fillRect(data_dic.start_x, data_dic.start_y,
-                                data_dic.end_x - data_dic.start_x,
-                                data_dic.end_y - data_dic.start_y);
+                    ctx.fillRect(map_data_dic.start_x, map_data_dic.start_y,
+                                map_data_dic.end_x - map_data_dic.start_x,
+                                map_data_dic.end_y - map_data_dic.start_y);
                     ctx.restore()
-                    highlighted = data_dic.loc;
+                    highlighted = map_data_dic.loc;
                     return 1;
                 }
             }
@@ -157,16 +157,16 @@ function make_map(data_list, loc) {
                 i, box_length;
 
             for (i = 0; i < data_length; i++) {
-                data_dic = data_list[i];
-                box_length = data_dic.box_length;
-                if( clicked_x >= data_dic.start_x && clicked_x <= data_dic.end_x &&
-                    clicked_y >= data_dic.start_y && clicked_y <= data_dic.end_y
+                map_data_dic = map_data_list[i];
+                box_length = map_data_dic.box_length;
+                if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
+                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y
                     )
                 {
-                    loc = data_dic.loc;
+                    loc = map_data_dic.loc;
 
-                    ajax_map( [loc,] , function(data_list){
-                        make_map(data_list, loc);
+                    ajax_map( [loc,] , function(map_data_list){
+                        make_map(map_data_list, loc);
                     });
                     return 1;
                 }
@@ -185,14 +185,14 @@ function make_map(data_list, loc) {
                 i, box_length;
 
             for (i = 0; i < data_length; i++) {
-                data_dic = data_list[i];
-                box_length = data_dic.box_length;
-                if( clicked_x >= data_dic.start_x && clicked_x <= data_dic.end_x &&
-                    clicked_y >= data_dic.start_y && clicked_y <= data_dic.end_y)
+                map_data_dic = map_data_list[i];
+                box_length = map_data_dic.box_length;
+                if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
+                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y)
                 {
-                    location_map = data_dic["location_map"];
-                    var y = Math.floor( (clicked_y - data_dic.start_y )/ box_length),
-                        x = Math.floor( (clicked_x - data_dic.start_x ) / box_length);
+                    location_map = map_data_dic["location_map"];
+                    var y = Math.floor( (clicked_y - map_data_dic.start_y )/ box_length),
+                        x = Math.floor( (clicked_x - map_data_dic.start_x ) / box_length);
 
                     if (typeof location_map[y] !== 'undefined') {
                         if (typeof location_map[y][x] !== 'undefined') {
