@@ -41,6 +41,16 @@ $( document ).ready(function() {
     );
 });
 
+function remove_events() {
+    var map_canvas_jobj = $( '#map_canvas' );
+
+    map_canvas_jobj.off("click");
+    map_canvas_jobj.off("mouseleave");
+    map_canvas_jobj.off("mousemove");
+
+    $("#map-submit-button").off("click");
+};
+
 function make_map(data_list, loc) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0],
@@ -167,9 +177,7 @@ function make_map(data_list, loc) {
                 {
                     loc = data_dic.loc;
 
-                    map_canvas_jobj.off("click");
-                    map_canvas_jobj.off("mouseleave");
-                    map_canvas_jobj.off("mousemove");
+                    remove_events();
 
                     ajax_map([loc,], function(data_list){
                         make_map(data_list, loc);
