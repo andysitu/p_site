@@ -79,6 +79,9 @@ function set_level_input(maxLevel) {
 };
 
 function set_date_input() {
+/*
+    Fill both date html select with dates.
+ */
     $.ajax({
         url: date_ajax_url,
         data: {
@@ -87,10 +90,16 @@ function set_date_input() {
         dateType: "json",
         success: function(date_list) {
             var date_select_jobj = $('#date-select'),
+                date_select2_jobj = $('#date-select-2'),
                 i,
                 date_list_len = date_list.length;
+
             for (i = 0; i < date_list_len; i++) {
                 date_select_jobj.append($("<option>", {
+                    text: date_list[i],
+                }));
+
+                date_select2_jobj.append($("<option>", {
                     text: date_list[i],
                 }));
             }
