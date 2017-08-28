@@ -127,3 +127,11 @@ function change_data_type_select() {
         check_date_input2_hidden();
     });
 };
+
+function map_search(e) {
+    var level,
+        data_type,
+        date_1,
+        date_2;
+    console.log("SEARCH");
+};

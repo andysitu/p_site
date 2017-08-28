@@ -105,6 +105,12 @@ function make_map(data_list, loc) {
         start_x = map_info["end_x"];
     }
 
+    $("#map-submit-button").click(function(e){
+        e.preventDefault();
+        map_search(e);
+    });
+
+    // Showing all locations
     if (data_length === 4) {
         var highlighted = "";
         orig_image = ctx.getImageData(0, 0, canvas_width, canvas_height);
@@ -172,6 +178,7 @@ function make_map(data_list, loc) {
                 }
             }
         });
+    // Showing only one section
     } else {
         set_level_input(max_level);
         set_data_type();
