@@ -105,7 +105,7 @@ function make_map(data_list, loc) {
 
     $("#map-submit-button").click(function(e){
         e.preventDefault();
-        map_search(loc);
+        map_search(data_list);
     });
 
     // Showing all locations
@@ -165,7 +165,7 @@ function make_map(data_list, loc) {
                 {
                     loc = data_dic.loc;
 
-                    ajax_map([loc,], function(data_list){
+                    ajax_map( [loc,] , function(data_list){
                         make_map(data_list, loc);
                     });
                     return 1;

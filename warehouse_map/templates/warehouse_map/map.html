@@ -6,8 +6,9 @@
 
 {% load static %}
 <script type="text/javascript">
-    var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}";
-    var date_ajax_url = "{% url 'warehouse_map:request_date_ajax' %}";
+    var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}",
+        date_ajax_url = "{% url 'warehouse_map:request_date_ajax' %}",
+        map_search_info_url = "{% url 'warehouse_map:request_map_search_info' %}";
 </script>
 
 <script src="{% static 'warehouse_map/js/map.js' %}"></script>

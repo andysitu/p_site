@@ -128,11 +128,28 @@ function change_data_type_select() {
     });
 };
 
-function map_search(loc) {
+function map_search(map_data_list) {
+
+    //  "loc": loc,
+    // "image_map": grid_inst.grid_image,
+    // "location_map": grid_inst.grid_location,
+    // "num_down": grid_inst.height,
+    // "num_across": grid_inst.width,
+
     var level       = $("#level-select").val(),
         data_type   = $("#data-type-select").val(),
         date_1      = $("#date-select").val(),
         date_2      = $("#date-select-2").val();
-    console.log("SEARCH", loc);
+    console.log("SEARCH", map_data_list);
     console.log(level, data_type, date_1, date_2);
+
+    $.ajax({
+            url: map_search_info_url,
+            data: {
+                "test": "HELLO",
+            },
+        success: function(response) {
+                console.log(response);
+        }
+        });
 };
