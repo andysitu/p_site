@@ -14,10 +14,17 @@ from warehouse_data import processor as processor
 
 def get_proc_dates(request):
     data_dates = processor.get_datadates()
+    date_id_list = []
     date_list = []
+
     for data_date in data_dates:
+        date_id_list.append(data_date.id)
         date_list.append(data_date.date.astimezone())
-    return JsonResponse(date_list, safe=False)
+    return JsonResponse({"date_id_list": date_id_list,
+                         "date_list": date_list,}
+                        , safe=False)
+
+
 
 def get_grid_ajax(request):
     loclet_list = request.GET.getlist("loc[]", None)
@@ -28,5 +35,7 @@ def get_grid_ajax(request):
 
 def get_map_search_info(request):
     location_map = request.POST.getlist("location_map[]")
-    
+    data_type = request.POST["data_type"]
+    level = request.POST["level"]
+
     return JsonResponse(location_map, safe=False)

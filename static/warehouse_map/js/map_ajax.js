@@ -88,19 +88,24 @@ function set_date_input() {
 
         },
         dateType: "json",
-        success: function(date_list) {
+        success: function(date_dic) {
+            var date_list = date_dic["date_list"],
+                date_id_list = date_dic["date_id_list"];
+
             var date_select_jobj = $('#date-select'),
                 date_select2_jobj = $('#date-select-2'),
                 i,
-                date_list_len = date_list.length;
+                date_list_len = date_id_list.length;
 
             for (i = 0; i < date_list_len; i++) {
                 date_select_jobj.append($("<option>", {
                     text: date_list[i],
+                    value: date_id_list[i],
                 }));
 
                 date_select2_jobj.append($("<option>", {
                     text: date_list[i],
+                    value: date_id_list[i],
                 }));
             }
         }
@@ -165,7 +170,11 @@ function map_search(map_data_arr) {
         $.ajax({
             url: map_search_info_url,
             data: {
+                "data_type": data_type,
                 "location_map[]": map_data_dic["location_map"],
+                "level": level,
+                "date_1": date_1,
+                "date_2": date_2,
             },
             method: "POST",
             dateType: "json",
@@ -174,5 +183,7 @@ function map_search(map_data_arr) {
             }
         });
     }
-    console.log(map_data_arr)
+    console.log(map_data_arr);
+    console.log("Date 1", date_1);
+    console.log("Date 2", date_2);
 };
