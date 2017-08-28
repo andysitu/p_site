@@ -148,8 +148,8 @@ function map_search(map_data_list) {
     }
 
     function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -163,6 +163,7 @@ function map_search(map_data_list) {
         url: map_search_info_url,
         data: {
             "test": "HELLO",
+            "map_data_list": map_data_list,
         },
         method: "POST",
         success: function(response) {
