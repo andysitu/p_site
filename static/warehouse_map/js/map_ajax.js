@@ -140,16 +140,33 @@ function map_search(map_data_list) {
         data_type   = $("#data-type-select").val(),
         date_1      = $("#date-select").val(),
         date_2      = $("#date-select-2").val();
-    console.log("SEARCH", map_data_list);
+
     console.log(level, data_type, date_1, date_2);
 
-    $.ajax({
-            url: map_search_info_url,
-            data: {
-                "test": "HELLO",
-            },
-        success: function(response) {
-                console.log(response);
+    if (level === null && data_type === null) {
+        return 0;
+    }
+
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
         }
-        });
+    });
+
+    $.ajax({
+        url: map_search_info_url,
+        data: {
+            "test": "HELLO",
+        },
+        method: "POST",
+        success: function(response) {
+            console.log(response);
+        }
+    });
 };

@@ -5,7 +5,10 @@
 {% block content %}
 
 {% load static %}
+{% csrf_token %}
 <script type="text/javascript">
+    var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
+
     var request_grid_url = "{% url 'warehouse_map:request_grid_map_ajax' %}",
         date_ajax_url = "{% url 'warehouse_map:request_date_ajax' %}",
         map_search_info_url = "{% url 'warehouse_map:request_map_search_info' %}";
