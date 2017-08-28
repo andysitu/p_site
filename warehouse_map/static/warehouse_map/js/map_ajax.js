@@ -105,9 +105,9 @@ function check_date_input2_hidden() {
 */
     var data_type = $('#data-type-select').val();
     if (get_data_select_type(data_type))
-         $('#date-select-2-div').attr('hidden', true);
+         $('#date-select-2-div').attr('hidden', false);
     else
-        $('#date-select-2-div').attr('hidden', false);
+        $('#date-select-2-div').attr('hidden', true);
 };
 
 function change_data_type_select() {
