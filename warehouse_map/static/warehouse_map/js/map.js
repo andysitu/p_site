@@ -41,14 +41,30 @@ $( document ).ready(function() {
     );
 });
 
-function make_map(data_list) {
+function make_map(data_list, loc) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0],
         i,
         canvas_width = map_canvas.width,
         canvas_height = map_canvas.height,
 
-        ctx = map_canvas.getContext('2d');
+        ctx = map_canvas.getContext('2d'),
+        max_level = null;
+
+    switch(loc) {
+        case "S":
+            max_level = 6;
+            break;
+        case "F":
+            max_level = 4;
+            break;
+        case "P":
+            max_level = 3;
+            break;
+        case "VC":
+            max_level = 5;
+            break;
+    };
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
 
@@ -150,14 +166,14 @@ function make_map(data_list) {
                     map_canvas_jobj.off("mousemove");
 
                     ajax_map([loc,], function(data_list){
-                        make_map(data_list);
+                        make_map(data_list, loc);
                     });
                     return 1;
                 }
             }
         });
     } else {
-        set_level_input();
+        set_level_input(max_level);
         set_data_type();
         set_date_input()
         change_data_type_select()
