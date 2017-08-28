@@ -61,22 +61,10 @@ function make_map(data_list, loc) {
         ctx = map_canvas.getContext('2d'),
         max_level = null;
 
-    switch(loc) {
-        case "S":
-            max_level = 6;
-            break;
-        case "F":
-            max_level = 4;
-            break;
-        case "P":
-            max_level = 3;
-            break;
-        case "VC":
-            max_level = 5;
-            break;
-    };
+    max_level = get_max_level(loc);
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
+    remove_events();
 
     // Get total width & length of arrays
     var max_num_down = 0,
@@ -117,7 +105,7 @@ function make_map(data_list, loc) {
 
     $("#map-submit-button").click(function(e){
         e.preventDefault();
-        map_search();
+        map_search(loc);
     });
 
     // Showing all locations
@@ -176,8 +164,6 @@ function make_map(data_list, loc) {
                     )
                 {
                     loc = data_dic.loc;
-
-                    remove_events();
 
                     ajax_map([loc,], function(data_list){
                         make_map(data_list, loc);
@@ -293,4 +279,23 @@ function draw_box(ctx, x, y, width, height, map_key, color) {
             ctx.fillRect(x+1, y, width-1, height);
             break;
     }
+};
+
+function get_max_level(loc) {
+    var max_level;
+    switch(loc) {
+        case "S":
+            max_level = 6;
+            break;
+        case "F":
+            max_level = 4;
+            break;
+        case "P":
+            max_level = 3;
+            break;
+        case "VC":
+            max_level = 5;
+            break;
+    };
+    return max_level;
 };
