@@ -27,5 +27,6 @@ def get_grid_ajax(request):
     return JsonResponse(loc_list, safe=False)
 
 def get_map_search_info(request):
-    t = request.POST["test"]
-    return HttpResponse(t)
+    location_map = request.POST.getlist("location_map[]")
+    
+    return JsonResponse(location_map, safe=False)

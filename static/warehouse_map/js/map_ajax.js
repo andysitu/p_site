@@ -128,7 +128,7 @@ function change_data_type_select() {
     });
 };
 
-function map_search(map_data_list) {
+function map_search(map_data_arr) {
 
     //  "loc": loc,
     // "image_map": grid_inst.grid_image,
@@ -139,7 +139,9 @@ function map_search(map_data_list) {
     var level       = $("#level-select").val(),
         data_type   = $("#data-type-select").val(),
         date_1      = $("#date-select").val(),
-        date_2      = $("#date-select-2").val();
+        date_2      = $("#date-select-2").val(),
+        i,
+        map_data_length = map_data_arr.length;
 
     console.log(level, data_type, date_1, date_2);
 
@@ -148,8 +150,8 @@ function map_search(map_data_list) {
     }
 
     function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -158,15 +160,19 @@ function map_search(map_data_list) {
             }
         }
     });
-
-    $.ajax({
-        url: map_search_info_url,
-        data: {
-            "test": "HELLO",
-        },
-        method: "POST",
-        success: function(response) {
-            console.log(response);
-        }
-    });
+    for (i = 0; i < map_data_length; i++) {
+        var map_data_dic = map_data_arr[i];
+        $.ajax({
+            url: map_search_info_url,
+            data: {
+                "location_map[]": map_data_dic["location_map"],
+            },
+            method: "POST",
+            dateType: "json",
+            success: function (color_map) {
+                map_data_dic["color_map"] = color_map;
+            }
+        });
+    }
+    console.log(map_data_arr)
 };
