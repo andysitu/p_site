@@ -181,3 +181,6 @@ def get_info():
 
 def get_data_map(location_map, data_type):
     return []
+
+def get_item_count_map():
+    pass

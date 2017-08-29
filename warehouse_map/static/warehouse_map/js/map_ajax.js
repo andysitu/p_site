@@ -141,14 +141,14 @@ function map_search(map_data_arr) {
     // "num_down": grid_inst.height,
     // "num_across": grid_inst.width,
 
-    var level       = $("#level-select").val(),
-        data_type   = $("#data-type-select").val(),
-        date_1      = $("#date-select").val(),
-        date_2      = $("#date-select-2").val(),
+    var level           = $("#level-select").val(),
+        data_type       = $("#data-type-select").val(),
+        date_1_inst_id  = $("#date-select").val(),
+        date_2_inst_id  = $("#date-select-2").val(),
         i,
         map_data_length = map_data_arr.length;
 
-    console.log(level, data_type, date_1, date_2);
+    console.log(level, data_type, date_1_inst_id, date_2_inst_id);
 
     if (level === null && data_type === null) {
         return 0;
@@ -173,8 +173,8 @@ function map_search(map_data_arr) {
                 "data_type": data_type,
                 "location_map[]": map_data_dic["location_map"],
                 "level": level,
-                "date_1": date_1,
-                "date_2": date_2,
+                "date_1_inst_id": date_1_inst_id,
+                "date_2_inst_id": date_2_inst_id,
             },
             method: "POST",
             dateType: "json",
@@ -184,6 +184,6 @@ function map_search(map_data_arr) {
         });
     }
     console.log(map_data_arr);
-    console.log("Date 1", date_1);
-    console.log("Date 2", date_2);
+    console.log("Date 1", date_1_inst_id);
+    console.log("Date 2", date_2_inst_id);
 };
