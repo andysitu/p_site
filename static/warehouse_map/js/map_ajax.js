@@ -170,16 +170,17 @@ function map_search(map_data_arr) {
         $.ajax({
             url: map_search_info_url,
             data: {
+                "loc": map_data_dic["loc"],
                 "data_type": data_type,
-                "location_map[]": map_data_dic["location_map"],
+                // "location_map[]": map_data_dic["location_map"],
                 "level": level,
                 "date_1_inst_id": date_1_inst_id,
                 "date_2_inst_id": date_2_inst_id,
             },
             method: "POST",
             dateType: "json",
-            success: function (color_map) {
-                map_data_dic["color_map"] = color_map;
+            success: function (data_return_map) {
+                map_data_dic["data_return_map"] = data_return_map;
             }
         });
     }

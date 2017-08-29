@@ -32,10 +32,11 @@ def get_grid_ajax(request):
     return JsonResponse(loc_list, safe=False)
 
 def get_map_search_info(request):
-    location_map = request.POST.getlist("location_map[]")
+    # location_map = request.POST.getlist("location_map[]")
     data_type = request.POST["data_type"]
     level = request.POST["level"]
     date_1_id = request.POST["date_1_inst_id"]
     date_2_id = request.POST["date_2_inst_id"]
+    loc = request.POST["loc"]
 
-    return JsonResponse(location_map, safe=False)
+    return JsonResponse([], safe=False)
