@@ -23,7 +23,7 @@ class DataDate(models.Model):
     date = models.DateTimeField()
 
 class Items(models.Model):
-    item = models.IntegerField()
+    item_id = models.IntegerField()
     avail_quantity = models.IntegerField()
     ship_quantity = models.IntegerField()
     location_code = models.CharField(max_length=20, default="")
