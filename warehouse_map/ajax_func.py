@@ -33,12 +33,14 @@ def get_grid_ajax(request):
 
 def get_map_search_info(request):
     # location_map = request.POST.getlist("location_map[]")
-    data_type = request.POST["data_type"]
-    level = request.POST["level"]
-    date_1_id = request.POST["date_1_inst_id"]
-    date_2_id = request.POST["date_2_inst_id"]
-    loc = request.POST["loc"]
+    data_type = request.POST.get("data_type")
+    level = request.POST.get("level")
+    date_1_id = request.POST.get("date_1_inst_id")
+    date_2_id = request.POST.get("date_2_inst_id")
+    loc = request.POST.get("loc")
 
-    data_dic = processor.get_item_count_map(loc, date_1_id, level)
+    data_dic = {}
+    if data_type == "Item Count":
+        data_dic = processor.get_item_count_map(loc, date_1_id, level)
 
     return JsonResponse(data_dic, safe=False)
