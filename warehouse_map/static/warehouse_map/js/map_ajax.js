@@ -177,11 +177,13 @@ function map_search(map_data_arr) {
             },
             method: "POST",
             dateType: "json",
-            success: function (data_return_map) {
-                map_data_dic["data_return_map"] = data_return_map;
-                console.log(data_return_map)
+            success: function (data_map) {
+                map_data_dic["data_map"] = data_map;
+
+                color_map = make_color_map(data_type, data_map);
+                console.log(data_map);
+                console.log(color_map);
             }
         });
     }
-    console.log(map_data_arr);
 };
