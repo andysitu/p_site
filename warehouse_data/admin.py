@@ -8,7 +8,8 @@ class LocationAdmin(admin.ModelAdmin):
 admin.site.register(Location, LocationAdmin)
 
 class ItemsAdmin(admin.ModelAdmin):
-    list_display = ("rack_location", "avail_quantity", "ship_quantity",)
+    list_display = ("rack_location", "avail_quantity", "ship_quantity", "location_code")
+    search_fields = ["location_code"]
 
 admin.site.register(Items, ItemsAdmin)
 
