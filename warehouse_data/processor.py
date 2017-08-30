@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
 
-from .models import Location, DataDate, Items,\
+from .models import Location, DataDate, Items, DataDate, \
     populate_rack_location, delete_all_rack_location
 
 import re, datetime, time, pytz
@@ -107,6 +107,8 @@ def process_excel_file(file):
         else:
             location_dict[location_code] = [item_data,]
 
+    unknown_rack_location = Location.objects.get(loc="Unknown")
+
     for location_code, data_list in location_dict.items():
         loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
         r = re.match(loc_regex, location_code)
@@ -131,7 +133,7 @@ def process_excel_file(file):
                                                  level=level,
                                             )
         except Location.DoesNotExist:
-            rack_location = Location.objects.get(loc="Unknown")
+            rack_location = unknown_rack_location
 
         for data_dict in data_list:
             i = Items(rack_location=rack_location,
@@ -183,5 +185,52 @@ def get_data_map(location_map, data_type):
     return []
 
 def get_item_count_map(loc, date_id, level):
+    data_dic = {}
+    data_date_inst = DataDate.objects.get(pk = date_id)
 
-    pass
+    loc_query = Location.objects.filter(loc=loc)
+    for loc_inst in loc_query:
+        js_loc_code = loc_inst_to_jsloccode(loc_inst)
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {}
+        cur_loc_dic = data_dic[js_loc_code]
+
+        items_query = Items.objects.filter(rack_location=loc_inst)
+
+        for item_inst in items_query:
+            item_code = item_inst.item_code
+            if item_code not in cur_loc_dic:
+                cur_loc_dic[item_code] = item_inst.avail_quantity
+            else:
+                cur_loc_dic[item_code] += item_inst.avail_quantity
+    return data_dic
+
+def loc_inst_to_jsloccode(loc_inst):
+    warehouse_code = "USLA"
+    area_code = ""
+    aisle_code = str(loc_inst.aisle_num)
+    column_code = str(loc_inst.column)
+
+    loc = loc_inst.loc
+    area = loc_inst.area
+    aisle_letter = loc_inst.aisle_letter
+    if loc == "P":
+        area_code = "P"
+    elif loc == "S":
+        if area == "H" and aisle_letter == "H" or area == "S":
+            area_code = "S"
+        else:
+            area_code = "H"
+    elif loc == "VC":
+        if area == "VC" or area == "VD":
+            area_code = "VC"
+        elif area == "VA" or area == "VB":
+            area_code = "VA"
+        else:
+            area_code = "H"
+    else:
+        if area == "F":
+            area_code = "F"
+        else:
+            area_code = "VA"
+    return warehouse_code + "." + area_code + "." + aisle_code + "." + column_code
