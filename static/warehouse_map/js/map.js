@@ -217,7 +217,7 @@ function draw_map(ctx, image_map, start_x, start_y, box_length){
             map_key = image_map[i][j];
             x = start_x + box_length * j;
             y = start_y + box_length * i;
-            draw_box(ctx, x, y, box_length, box_length, map_key, "green");
+            draw_box(ctx, x, y, box_length, box_length, map_key, "white");
         }
     }
 

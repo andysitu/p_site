@@ -188,21 +188,19 @@ def get_item_count_map(loc, date_id, level):
     data_dic = {}
     data_date_inst = DataDate.objects.get(pk = date_id)
 
-    loc_query = Location.objects.filter(loc=loc)
-    for loc_inst in loc_query:
-        js_loc_code = loc_inst_to_jsloccode(loc_inst)
+    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc).select_related('rack_location')
+
+    for item_inst in i_q:
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {}
         cur_loc_dic = data_dic[js_loc_code]
 
-        items_query = Items.objects.filter(rack_location=loc_inst)
-
-        for item_inst in items_query:
-            item_code = item_inst.item_code
-            if item_code not in cur_loc_dic:
-                cur_loc_dic[item_code] = item_inst.avail_quantity
-            else:
-                cur_loc_dic[item_code] += item_inst.avail_quantity
+        item_code = item_inst.item_code
+        if item_code not in cur_loc_dic:
+            cur_loc_dic[item_code] = item_inst.avail_quantity
+        else:
+            cur_loc_dic[item_code] += item_inst.avail_quantity
     return data_dic
 
 def loc_inst_to_jsloccode(loc_inst):
