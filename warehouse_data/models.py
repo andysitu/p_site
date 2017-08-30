@@ -114,25 +114,25 @@ def populate_s_area():
     make_location_area(loc=loc,area='S',aisle_letter='S',aisle_end=10,
                        column_end=33,level_end=4)
     make_location_area(loc=loc, area='H',aisle_letter='H',aisle_end=10,
-                       column_end=33,level_start=5,level_end=6)
+                       column_end=33,level_start=5, level_end=6)
 
     # Aisles 11-26
     make_location_area(loc=loc,area='S', aisle_letter='S', aisle_start=11, aisle_end=26,
                        column_end=42, level_end=4)
     make_location_area(loc=loc, area='H',aisle_letter='H', aisle_start=11, aisle_end=26,
-                       column_end=42, level_end=6)
+                       column_end=42, level_start=5, level_end=6)
 
     # Aisles 27-42
     make_location_area(loc=loc, area='S', aisle_letter='S', aisle_start=27, aisle_end=42,
                        column_end=42, level_end=4)
     make_location_area(loc=loc, area='H', aisle_letter='H', aisle_start=27, aisle_end=42,
-                       column_end=42, level_end=5)
+                       column_end=42, level_start=5, level_end=5)
 
     # Aisles 43-56
     make_location_area(loc=loc, area='S', aisle_letter='S', aisle_start=43, aisle_end=56,
                        column_end=42, level_end=4)
     make_location_area(loc=loc, area='H', aisle_letter='H', aisle_start=43, aisle_end=56,
-                       column_end=42, level_end=6)
+                       column_end=42, level_start=5, level_end=6)
 def populate_h_rack_of_s():
     make_location_area(loc='S', area='H', aisle_start=8, aisle_end=8,
                        column_end=18,level_end=3)
