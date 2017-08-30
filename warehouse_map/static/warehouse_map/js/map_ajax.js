@@ -148,8 +148,6 @@ function map_search(map_data_arr) {
         i,
         map_data_length = map_data_arr.length;
 
-    console.log(level, data_type, date_1_inst_id, date_2_inst_id);
-
     if (level === null && data_type === null) {
         return 0;
     }
@@ -181,10 +179,9 @@ function map_search(map_data_arr) {
             dateType: "json",
             success: function (data_return_map) {
                 map_data_dic["data_return_map"] = data_return_map;
+                console.log(data_return_map)
             }
         });
     }
     console.log(map_data_arr);
-    console.log("Date 1", date_1_inst_id);
-    console.log("Date 2", date_2_inst_id);
 };
