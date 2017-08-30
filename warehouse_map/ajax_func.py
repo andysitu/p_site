@@ -39,4 +39,6 @@ def get_map_search_info(request):
     date_2_id = request.POST["date_2_inst_id"]
     loc = request.POST["loc"]
 
-    return JsonResponse([], safe=False)
+    data_dic = processor.get_item_count_map(loc, date_1_id, level)
+
+    return JsonResponse(data_dic, safe=False)
