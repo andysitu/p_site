@@ -193,14 +193,18 @@ def get_item_count_map(loc, date_id, level):
     for item_inst in i_q:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
-            data_dic[js_loc_code] = {}
-        cur_loc_dic = data_dic[js_loc_code]
+            data_dic[js_loc_code] = {"items": {}, "total": 0}
+        cur_item_dic = data_dic[js_loc_code]["items"]
 
         item_code = item_inst.item_code
-        if item_code not in cur_loc_dic:
-            cur_loc_dic[item_code] = item_inst.avail_quantity
+        item_quantity = item_inst.avail_quantity
+        data_dic[js_loc_code]["total"] += item_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity
         else:
-            cur_loc_dic[item_code] += item_inst.avail_quantity
+            cur_item_dic[item_code] += item_quantity
+
     return data_dic
 
 def loc_inst_to_jsloccode(loc_inst):
