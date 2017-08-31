@@ -51,7 +51,7 @@ function remove_events() {
     $("#map-submit-button").off("click");
 };
 
-function make_map(map_data_arr, loc) {
+function make_map(map_data_arr) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0],
         i,
@@ -193,7 +193,7 @@ function make_map(map_data_arr, loc) {
                     // function is the callback function for get_map_arr_ajax,
                     // with map_data_arr being the argument passed onto it.
                     get_map_arr_ajax( [loc,] , function(map_data_arr){
-                        make_map(map_data_arr, loc);
+                        make_map(map_data_arr);
                     });
                     return 1;
                 }
