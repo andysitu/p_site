@@ -203,13 +203,22 @@ function make_map(map_data_arr) {
         });
     // Showing only one section
     } else {
-        set_level_input(max_level);
-        set_data_type();
-        set_date_input()
-        change_data_type_select()
+        fill_sidemenu(max_level);
 
         map_canvas_jobj.click( click_map_for_info );
     }
+}
+
+function fill_sidemenu(max_level) {
+    $('#data-type-select').empty();
+    $('#level-select').empty();
+    $('#date-select').empty();
+    $('#date-select-2').empty();
+
+    set_level_input(max_level);
+    set_data_type();
+    set_date_input()
+    change_data_type_select()
 }
 
 function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map){
