@@ -3,7 +3,7 @@ function get_data_select_type(data_type) {
     // Value is whether a second date is needed
     var data_dic =  {
         "Item Count": false,
-        "Item Change": true,
+        "Items Shipped": true,
     }
     if (arguments.length == 1) {
         return data_dic[data_type];
@@ -149,6 +149,11 @@ function map_search(map_data_arr) {
         map_data_length = map_data_arr.length;
 
     if (level === null && data_type === null) {
+        return 0;
+    }
+
+    // Check if date_1 and date_2 should be different
+    if (get_data_select_type(data_type) && date_1_inst_id == date_2_inst_id) {
         return 0;
     }
 

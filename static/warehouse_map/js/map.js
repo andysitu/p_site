@@ -158,8 +158,7 @@ function make_map(map_data_arr) {
                 map_data_dic = map_data_arr[i];
                 box_length = map_data_dic.box_length;
                 if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y
-                    )
+                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y )
                 {
                     if (highlighted == map_data_dic.loc) {
                         return 1;
