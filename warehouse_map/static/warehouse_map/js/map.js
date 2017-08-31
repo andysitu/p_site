@@ -89,7 +89,7 @@ function make_map(map_data_arr, loc) {
     for ( i = 0; i < data_length; i++) {
         map_data_dic = map_data_arr[i];
         image_map = map_data_dic["image_map"];
-        map_info = draw_map(ctx, image_map, start_x, start_y, box_length);
+        map_info = draw_map(ctx, image_map, start_x, start_y, box_length, map_data_dic["color_map"]);
 
         map_data_dic["start_x"] = start_x;
         map_data_dic["start_y"] = start_y;
@@ -206,10 +206,11 @@ function make_map(map_data_arr, loc) {
     }
 }
 
-function draw_map(ctx, image_map, start_x, start_y, box_length){
+function draw_map(ctx, image_map, start_x, start_y, box_length, color_map){
     var i, j,
         map_key,
-        image_map_length = image_map.length
+        image_map_length = image_map.length,
+        color;
 
     for (i=0; i < image_map_length; i++) {
         var sub_arr_len = image_map[i].length;
@@ -217,7 +218,12 @@ function draw_map(ctx, image_map, start_x, start_y, box_length){
             map_key = image_map[i][j];
             x = start_x + box_length * j;
             y = start_y + box_length * i;
-            draw_box(ctx, x, y, box_length, box_length, map_key, "white");
+
+            if (color_map)
+                color = color_map[i][j];
+            else
+                color = "white";
+            draw_box(ctx, x, y, box_length, box_length, map_key, color);
         }
     }
 
