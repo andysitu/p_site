@@ -13,7 +13,6 @@ from django.conf import settings
 def process_excel_file(file):
     activate(settings.TIME_ZONE)
     filename = file.name
-    print(filename)
 
     file_regex = re.compile('(?P<year>\d\d\d\d)(?P<month>\d\d)'
                             + '(?P<day>\d\d)(?P<hour>\d\d)'
@@ -33,16 +32,12 @@ def process_excel_file(file):
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
         return "Excel filew with date " + d_time_str + " has been used before."
 
+    data = file.read()
+    workbook = xlrd.open_workbook(file_contents=data)
+    worksheet = workbook.sheet_by_index(0)
+
     data_date = DataDate(date=d)
     data_date.save()
-
-    start = time.time()
-    data = file.read()
-    print(time.time() - start)
-    workbook = xlrd.open_workbook(file_contents=data)
-    print(time.time() - start)
-    worksheet = workbook.sheet_by_index(0)
-    print(time.time() - start)
 
     def convert_id(id_value):
         value = int(id_value)
@@ -81,7 +76,6 @@ def process_excel_file(file):
 
     location_dict = {}
     item_dict = {}
-    print(time.time() - start)
     for row in range(1, worksheet.nrows):
     # for row in range(1, 30):
         item_data = {}
@@ -142,10 +136,7 @@ def process_excel_file(file):
                 )
             i.save()
 
-    end = time.time()
-    print(end - start)
-
-    return 0
+    return 1
 
 def reset_db(delete_rack = False):
     data_date_query = DataDate.objects.all()
