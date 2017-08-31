@@ -1,6 +1,6 @@
 const BACKGROUND_COLOR = "white";
 
-function ajax_map(location_arr, callback_funct) {
+function get_map_arr_ajax(location_arr, callback_funct) {
     /*
         Function that will use ajax to receive an array containing
         grid_data from each location called by location_arr and will
@@ -35,7 +35,7 @@ $( document ).ready(function() {
 
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
-    ajax_map(loc_list, function(map_data_arr) {
+    get_map_arr_ajax( loc_list, function(map_data_arr) {
             make_map(map_data_arr);
         }
     );
@@ -62,6 +62,8 @@ function make_map(map_data_arr, loc) {
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     remove_events();
+
+    var max_level = get_max_level(map_data_arr);
 
     // Get total width & length of arrays
     var max_num_down = 0,
@@ -174,6 +176,8 @@ function make_map(map_data_arr, loc) {
             restore_canvas();
         });
         map_canvas_jobj.click(function(e){
+            // Click on map with all locations
+            // will focus onto that area by creating new map.
             var clicked_y = e.offsetY,
                 clicked_x = e.offsetX,
                 i, box_length;
@@ -182,12 +186,13 @@ function make_map(map_data_arr, loc) {
                 map_data_dic = map_data_arr[i];
                 box_length = map_data_dic.box_length;
                 if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y
-                    )
+                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y )
                 {
                     loc = map_data_dic.loc;
 
-                    ajax_map( [loc,] , function(map_data_arr){
+                    // function is the callback function for get_map_arr_ajax,
+                    // with map_data_arr being the argument passed onto it.
+                    get_map_arr_ajax( [loc,] , function(map_data_arr){
                         make_map(map_data_arr, loc);
                     });
                     return 1;
@@ -196,7 +201,6 @@ function make_map(map_data_arr, loc) {
         });
     // Showing only one section
     } else {
-        var max_level = get_max_level(loc);
         set_level_input(max_level);
         set_data_type();
         set_date_input()
@@ -287,21 +291,34 @@ function draw_box(ctx, x, y, width, height, map_key, color) {
     }
 };
 
-function get_max_level(loc) {
-    var max_level;
-    switch(loc) {
-        case "S":
-            max_level = 6;
-            break;
-        case "F":
-            max_level = 4;
-            break;
-        case "P":
-            max_level = 3;
-            break;
-        case "VC":
-            max_level = 5;
-            break;
-    };
+function get_max_level(map_data_arr) {
+    var max_level = 0,
+        i,
+        map_data_len = map_data_arr.length,
+        loc;
+
+    for (i = 0; i < map_data_len; i++) {
+        var level;
+
+        loc = map_data_arr[i]["loc"];
+
+        switch(loc) {
+            case "S":
+                level = 6;
+                break;
+            case "F":
+                level = 4;
+                break;
+            case "P":
+                level = 3;
+                break;
+            case "VC":
+                level = 5;
+                break;
+        };
+        if (level > max_level)
+            max_level = level;
+    }
+
     return max_level;
 };
