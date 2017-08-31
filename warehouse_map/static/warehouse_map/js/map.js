@@ -126,7 +126,12 @@ function make_map(map_data_arr) {
                 if (typeof location_map[y] !== 'undefined') {
                     if (typeof location_map[y][x] !== 'undefined') {
                         var location = location_map[y][x];
-                        console.log(location);
+                        if (typeof map_data_dic["data_map"] !== "undefined" ) {
+                            var data = map_data_dic["data_map"][location];
+                            console.log(location, data);
+                        } else {
+                            console.log(location);
+                        }
                     }
                 }
                 break;

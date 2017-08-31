@@ -21,14 +21,14 @@ def get_proc_dates(request):
         date_id_list.append(data_date.id)
         date_list.append(data_date.date.astimezone())
     return JsonResponse({"date_id_list": date_id_list,
-                         "date_list": date_list,}
-                        , safe=False)
+                         "date_list": date_list,},
+                        safe=False)
 
 def get_grid_ajax(request):
     loclet_list = request.GET.getlist("loc[]", None)
     loc_list = []
     for locLetter in loclet_list:
-        loc_list.append(views.get_grid_map(locLetter))
+        loc_list.append( views.get_grid_map(locLetter) )
     return JsonResponse(loc_list, safe=False)
 
 def get_map_search_info(request):
