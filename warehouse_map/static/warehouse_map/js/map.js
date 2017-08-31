@@ -91,7 +91,9 @@ function make_map(map_data_arr) {
     for ( i = 0; i < data_length; i++) {
         map_data_dic = map_data_arr[i];
         image_map = map_data_dic["image_map"];
-        map_info = draw_map(ctx, image_map, start_x, start_y, box_length, map_data_dic["color_map"]);
+        map_info = draw_map(ctx, image_map, start_x, start_y, box_length,
+                            map_data_dic["color_map"],
+                            map_data_dic["location_map"]);
 
         map_data_dic["start_x"] = start_x;
         map_data_dic["start_y"] = start_y;
@@ -210,11 +212,11 @@ function make_map(map_data_arr) {
     }
 }
 
-function draw_map(ctx, image_map, start_x, start_y, box_length, color_map){
+function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map){
     var i, j,
         map_key,
         image_map_length = image_map.length,
-        color;
+        color, location;
 
     for (i=0; i < image_map_length; i++) {
         var sub_arr_len = image_map[i].length;
@@ -223,10 +225,15 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map){
             x = start_x + box_length * j;
             y = start_y + box_length * i;
 
-            if (typeof(color_map) !== "undefined")
-                color = color_map[i][j];
-            else
+            if (typeof(color_map) !== "undefined") {
+                location = location_map[i][j];
+                if (location in color_map)
+                    color = color_map[location];
+                else
+                    color = "white";
+            } else {
                 color = "white";
+            }
             draw_box(ctx, x, y, box_length, box_length, map_key, color);
         }
     }
