@@ -223,7 +223,7 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map){
             x = start_x + box_length * j;
             y = start_y + box_length * i;
 
-            if (color_map)
+            if (typeof(color_map) !== "undefined")
                 color = color_map[i][j];
             else
                 color = "white";
