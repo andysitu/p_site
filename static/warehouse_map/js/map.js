@@ -58,10 +58,7 @@ function make_map(map_data_arr, loc) {
         canvas_width = map_canvas.width,
         canvas_height = map_canvas.height,
 
-        ctx = map_canvas.getContext('2d'),
-        max_level = null;
-
-    max_level = get_max_level(loc);
+        ctx = map_canvas.getContext('2d');
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     remove_events();
@@ -107,6 +104,31 @@ function make_map(map_data_arr, loc) {
         e.preventDefault();
         map_search(map_data_arr);
     });
+
+    function click_map_for_info(e) {
+        var clicked_y = e.offsetY,
+            clicked_x = e.offsetX,
+            i, box_length;
+
+        for (i = 0; i < data_length; i++) {
+            map_data_dic = map_data_arr[i];
+            box_length = map_data_dic.box_length;
+            if (clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
+                clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y) {
+                location_map = map_data_dic["location_map"];
+                var y = Math.floor((clicked_y - map_data_dic.start_y ) / box_length),
+                    x = Math.floor((clicked_x - map_data_dic.start_x ) / box_length);
+
+                if (typeof location_map[y] !== 'undefined') {
+                    if (typeof location_map[y][x] !== 'undefined') {
+                        var location = location_map[y][x];
+                        console.log(location);
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     // Showing all locations
     if (data_length === 4) {
@@ -174,37 +196,15 @@ function make_map(map_data_arr, loc) {
         });
     // Showing only one section
     } else {
+        var max_level = get_max_level(loc);
         set_level_input(max_level);
         set_data_type();
         set_date_input()
         change_data_type_select()
 
-        map_canvas_jobj.click(function(e){
-            var clicked_y = e.offsetY,
-                clicked_x = e.offsetX,
-                i, box_length;
-
-            for (i = 0; i < data_length; i++) {
-                map_data_dic = map_data_arr[i];
-                box_length = map_data_dic.box_length;
-                if( clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-                    clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y)
-                {
-                    location_map = map_data_dic["location_map"];
-                    var y = Math.floor( (clicked_y - map_data_dic.start_y )/ box_length),
-                        x = Math.floor( (clicked_x - map_data_dic.start_x ) / box_length);
-
-                    if (typeof location_map[y] !== 'undefined') {
-                        if (typeof location_map[y][x] !== 'undefined') {
-                            console.log(location_map[y][x], x, y, clicked_x, clicked_y);
-                        }
-                    }
-                    break;
-                }
-            }
-        });
+        map_canvas_jobj.click( click_map_for_info );
     }
-};
+}
 
 function draw_map(ctx, image_map, start_x, start_y, box_length){
     var i, j,
