@@ -1,0 +1,30 @@
+#map_canvas {
+}
+
+#level-input {
+    width: 34px;
+}
+
+.sidenav {
+    /*height: 100%;*/
+    /*width: 300px;*/
+    /*position: fixed;*/
+    /*z-index: 99;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*background-color: #111;*/
+    /*padding-top: 70px;*/
+    /*transition: 0.5s;*/
+}
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}

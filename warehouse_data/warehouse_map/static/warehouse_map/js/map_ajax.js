@@ -178,22 +178,11 @@ function map_search(map_data_arr) {
             method: "POST",
             dateType: "json",
             success: function (data_map) {
-                color_map = make_color_map(data_type, data_map);
                 map_data_dic["data_map"] = data_map;
-                map_data_dic["color_map"] = color_map;
 
-                // Test if there is a color map & data map in all data_dics
-                // by searching through the data_arr
-                var i, data_arr_len = map_data_arr.length
-                for (var i = 0; i < data_arr_len; i++) {
-                    var data_dic = map_data_arr[i];
-
-                    if (!("color_map" in data_dic)) {
-                        return 0;
-                    }
-                }
-                console.log(map_data_arr);
-                make_map(map_data_arr);
+                color_map = make_color_map(data_type, data_map);
+                console.log(data_map);
+                console.log(color_map);
             }
         });
     }

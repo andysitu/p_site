@@ -1,0 +1,19 @@
+{% extends 'warehouse_map/warehouse_map_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% load static %}
+
+<form action="{% url 'warehouse_map:upload_excel_data' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table>
+        {{ upload_form.as_table }}
+    </table>
+
+    <p><input type="submit" value="{% trans 'Upload' %}" /></p>
+</form>
+
+{% endblock %}
