@@ -198,6 +198,56 @@ def get_item_count_map(loc, date_id, level):
 
     return data_dic
 
+def get_item_shipped_map(loc, date_1_id, date_2_id, level):
+    data_dic = {}
+
+    datadate_1 = DataDate.objects.get(pk = date_1_id)
+    datadate_2 = DataDate.objects.get(pk = date_2_id)
+    d_1 = datadate_1.date
+    d_2 = datadate_2.date
+
+    if d_1 > d_2:
+        newer_datadate = datadate_1
+        older_datadate = datadate_2
+    else:
+        newer_datadate = datadate_2
+        older_datadate = datadate_1
+
+    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc).select_related('rack_location')
+    item_query_newer = Items.objects.filter(data_date=newer_datadate).select_related('rack_location')
+
+    newer_item_dic = {}
+    for item in item_query_newer:
+        newer_item_dic[item.item_id] = item.avail_quantity
+
+    for item in item_query_older:
+        itemId = item.item_id
+        js_loc_code = loc_inst_to_jsloccode(item.rack_location)
+        item_code = item.item_code
+        item_quantity = item.avail_quantity
+
+
+        if itemId in newer_item_dic:
+            difference = item_quantity - newer_item_dic[itemId]
+        else:
+            difference = item_quantity
+        if difference == 0:
+            continue
+
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}, "total": 0}
+
+        cur_item_dic = data_dic[js_loc_code]["items"]
+
+        data_dic[js_loc_code]["total"] += difference
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = difference
+        else:
+            cur_item_dic[item_code] += difference
+
+    return data_dic
+
 def loc_inst_to_jsloccode(loc_inst):
     warehouse_code = "USLA"
     area_code = ""

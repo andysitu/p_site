@@ -3,6 +3,8 @@ function make_color_map(data_type, data_map) {
 
     if (data_type == "Item Count"){
         color_map = item_count_map(data_map);
+    } else if (data_type == "Items Shipped") {
+        color_map = item_count_map(data_map);
     }
 
     return color_map;

@@ -42,5 +42,7 @@ def get_map_search_info(request):
     data_dic = {}
     if data_type == "Item Count":
         data_dic = processor.get_item_count_map(loc, date_1_id, level)
+    elif data_type == "Items Shipped":
+        data_dic = processor.get_item_shipped_map(loc, date_1_id, date_2_id, level)
 
     return JsonResponse(data_dic, safe=False)
