@@ -35,6 +35,6 @@
     right: 400px;
     left: 400px;
     height: 300px;
-    background-color: #d000;
+    background-color: "red";
     z-index: 1000;
 }
