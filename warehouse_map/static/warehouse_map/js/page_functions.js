@@ -13,4 +13,3 @@ function fill_sidemenu(max_level) {
     set_date_input()
     change_data_type_select()
 }
-
