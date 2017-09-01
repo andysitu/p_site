@@ -135,12 +135,6 @@ function change_data_type_select() {
 
 function map_search(map_data_arr) {
 
-    //  "loc": loc,
-    // "image_map": grid_inst.grid_image,
-    // "location_map": grid_inst.grid_location,
-    // "num_down": grid_inst.height,
-    // "num_across": grid_inst.width,
-
     var level           = $("#level-select").val(),
         data_type       = $("#data-type-select").val(),
         date_1_inst_id  = $("#date-select").val(),
