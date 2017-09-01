@@ -87,6 +87,7 @@ function make_map(map_data_arr, fill_sidemenu_status) {
 
     box_length = (box_width > box_height) ? box_height : box_width;
 
+    // Add x,y,html info for each data_dictionary
     var start_x =0, start_y = 0;
     for ( i = 0; i < data_length; i++) {
         map_data_dic = map_data_arr[i];
@@ -110,32 +111,49 @@ function make_map(map_data_arr, fill_sidemenu_status) {
         map_search(map_data_arr);
     });
 
-    function click_map_for_info(e) {
-        var clicked_y = e.offsetY,
-            clicked_x = e.offsetX,
+    function get_map_index_by_xy(e) {
+        var offset_y = e.offsetY,
+            offset_x = e.offsetX,
             i, box_length;
 
         for (i = 0; i < data_length; i++) {
             map_data_dic = map_data_arr[i];
             box_length = map_data_dic.box_length;
-            if (clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-                clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y) {
+            if (offset_x >= map_data_dic.start_x && offset_x <= map_data_dic.end_x &&
+                offset_y >= map_data_dic.start_y && offset_y <= map_data_dic.end_y) {
                 location_map = map_data_dic["location_map"];
-                var y = Math.floor((clicked_y - map_data_dic.start_y ) / box_length),
-                    x = Math.floor((clicked_x - map_data_dic.start_x ) / box_length);
+                var y = Math.floor((offset_y - map_data_dic.start_y ) / box_length),
+                    x = Math.floor((offset_x - map_data_dic.start_x ) / box_length);
 
-                if (typeof location_map[y] !== 'undefined') {
-                    if (typeof location_map[y][x] !== 'undefined') {
-                        var location = location_map[y][x];
-                        if (typeof map_data_dic["data_map"] !== "undefined" ) {
-                            var data = map_data_dic["data_map"][location];
-                            console.log(location, data);
-                        } else {
-                            console.log(location);
-                        }
-                    }
+                return [i, x, y];
+            }
+        }
+        return 0;
+    }
+
+    function click_map_for_info(e) {
+        var map_index_arr = get_map_index_by_xy(e);
+
+        if (map_index_arr === 0)
+            return 0;
+
+        var i = map_index_arr[0],
+            x = map_index_arr[1],
+            y = map_index_arr[2];
+
+        var map_data_dic = map_data_arr[i];
+
+        location_map = map_data_dic["location_map"];
+
+        if (typeof location_map[y] !== 'undefined') {
+            var location = location_map[y][x];
+            if (location !== '' && typeof location !== 'undefined') {
+                if (typeof map_data_dic["data_map"] !== "undefined" ) {
+                    var data = map_data_dic["data_map"][location];
+                    console.log(location, data);
+                } else {
+                    console.log(location);
                 }
-                break;
             }
         }
     }
