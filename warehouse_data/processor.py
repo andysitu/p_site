@@ -179,7 +179,10 @@ def get_item_count_map(loc, date_id, level):
     data_dic = {}
     data_date_inst = DataDate.objects.get(pk = date_id)
 
-    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc).select_related('rack_location')
+    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc)
+    if level != "All":
+        i_q = i_q.filter(rack_location__level=level)
+    i_q = i_q.select_related('rack_location')
 
     for item_inst in i_q:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -213,8 +216,13 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         newer_datadate = datadate_2
         older_datadate = datadate_1
 
-    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc).select_related('rack_location')
+    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc)
     item_query_newer = Items.objects.filter(data_date=newer_datadate).select_related('rack_location')
+
+    if level != "All":
+        item_query_older = item_query_older.filter(rack_location__level=level)
+    item_query_older = item_query_older.select_related('rack_location')
+
 
     newer_item_dic = {}
     for item in item_query_newer:
