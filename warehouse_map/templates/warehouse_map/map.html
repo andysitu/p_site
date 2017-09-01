@@ -14,6 +14,7 @@
         map_search_info_url = "{% url 'warehouse_map:request_map_search_info' %}";
 </script>
 
+<script src="{% static 'warehouse_map/js/page_functions.js' %}"></script>
 <script src="{% static 'warehouse_map/js/color_map.js' %}"></script>
 <script src="{% static 'warehouse_map/js/map.js' %}"></script>
 <script src="{% static 'warehouse_map/js/map_ajax.js' %}"></script>
@@ -24,6 +25,7 @@
 
 {% block outside_content %}
     <div class="container collapse show" id="display-screen">
+        <div id="display-screen-text"></div>
     </div>
 {% endblock %}
 
