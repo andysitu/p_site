@@ -51,7 +51,7 @@ function remove_events() {
     $("#map-submit-button").off("click");
 };
 
-function make_map(map_data_arr) {
+function make_map(map_data_arr, fill_sidemenu_status=False) {
     var map_canvas_jobj = $( '#map_canvas' ),
         map_canvas = map_canvas_jobj[0],
         i,
@@ -199,7 +199,7 @@ function make_map(map_data_arr) {
                     // function is the callback function for get_map_arr_ajax,
                     // with map_data_arr being the argument passed onto it.
                     get_map_arr_ajax( [loc,] , function(map_data_arr){
-                        make_map(map_data_arr);
+                        make_map(map_data_arr, True);
                     });
                     return 1;
                 }
@@ -207,7 +207,8 @@ function make_map(map_data_arr) {
         });
     // Showing only one section
     } else {
-        fill_sidemenu(max_level);
+        if fill_sidemenu_status:
+            fill_sidemenu(max_level);
 
         map_canvas_jobj.click( click_map_for_info );
     }
