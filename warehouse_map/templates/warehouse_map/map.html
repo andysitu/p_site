@@ -18,7 +18,14 @@
 <script src="{% static 'warehouse_map/js/map.js' %}"></script>
 <script src="{% static 'warehouse_map/js/map_ajax.js' %}"></script>
 
+
 <canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
+{% endblock %}
+
+{% block outside_content %}
+<div class="container collapse" id="display-screen">
+    Hello
+</div>
 {% endblock %}
 
 {% block head %}
@@ -27,7 +34,7 @@
 
 {% block settings %}
 <li>
-    <a class="nav-item" href="#setting" data-toggle="collapse" aria-expanded="false" aria-controls="setting">
+    <a class="nav-item" href="#display-screen" data-toggle="collapse" aria-expanded="false" aria-controls="display-screen">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </a>
 </li>
