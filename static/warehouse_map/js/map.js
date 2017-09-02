@@ -150,9 +150,9 @@ function make_map(map_data_arr, fill_sidemenu_status) {
             if (location !== '' && typeof location !== 'undefined') {
                 if (typeof map_data_dic["data_map"] !== "undefined" ) {
                     var data = map_data_dic["data_map"][location];
-                    console.log(location, data);
+                    display_loc_info(location, data);
                 } else {
-                    console.log(location);
+                    display_loc_info(location);
                 }
             }
         }

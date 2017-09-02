@@ -38,3 +38,11 @@
     z-index: 1000;
     overflow-y: auto;
 }
+
+#display-msg-text {
+    white-space: normal;
+}
+
+.underline {
+    text-decoration: underline;
+}
