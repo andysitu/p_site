@@ -31,9 +31,9 @@
 
 #display-msg-div {
     position: absolute;
-    top: 60%;
+    top: 5%;
     left: 80%;
-    height: 35%;
+    height: 70%;
     width: 19%;
     z-index: 1000;
     overflow-y: auto;
