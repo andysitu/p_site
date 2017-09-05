@@ -12,6 +12,13 @@ var color_map_functions = {
     },
 
     item_count_map: function(data_map, r, g, b) {
+    /*
+        Two parts to function.
+        Part 1 creates a dictionary containing location as the key
+          with a number associated as value.
+        Part 2 uses this dictionary to create a gradient based
+          on the number values.
+     */
         var color_map = {},
             rack_loc= null,
             item_sku = null,
@@ -22,6 +29,8 @@ var color_map_functions = {
 
         var re = /(\w+\.\w+)\./;
 
+        // Part 1, Creating dictionary
+        //  { [location]: [total], }
         for (rack_loc in data_map) {
             loc_code = re.exec(rack_loc)[0];
             total = data_map[rack_loc]["total"];
@@ -34,6 +43,9 @@ var color_map_functions = {
             color_map[rack_loc] = total;
         }
 
+        // Part 2, Change dictionary created prev.
+        //  to reflect a color gradient based on the absolute
+        //  maximum (needs to be changed later).
         for (rack_loc in color_map) {
             loc_code = re.exec(rack_loc)[0];
             max_num = max_dic[loc_code];
