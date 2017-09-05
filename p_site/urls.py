@@ -20,7 +20,13 @@ from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.i18n import javascript_catalog
+
 from . import views
+
+js_info_dict = {
+    'packages': ('warehouse_map',),
+}
 
 app_name = "p_site"
 urlpatterns = [
@@ -41,3 +47,7 @@ urlpatterns += [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
+]

@@ -22,7 +22,7 @@ var page_functions = {
     },
 
     display_loc_info: function(location, info_dic) {
-        var msg = "<div class='underline'>Location: " + location + "</div>";
+        var msg = "<div class='underline'>" +  gettext("Location") + ": " + location + "</div>";
 
         if (info_dic != undefined) {
             var dic_key, dic_key_2;

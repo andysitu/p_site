@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-10 16:09-0700\n"
+"POT-Creation-Date: 2017-09-05 15:59-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,7 @@ msgstr "上传日期"
 #: customs_list/templates/customs_list/upload.html:22
 #: rcv_list/templates/rcv_list/rcv_list_base.html:17
 #: rcv_list/templates/rcv_list/upload.html:21
+#: warehouse_data/warehouse_map/templates/warehouse_map/upload_excel_data.html:16
 #: warehouse_map/templates/warehouse_map/upload_excel_data.html:16
 msgid "Upload"
 msgstr "上载"
@@ -74,19 +75,19 @@ msgstr "下载pdf文件"
 
 #: customs_list/templates/customs_list/view_files.html:30
 #: rcv_list/templates/rcv_list/index.html:20
-#: rcv_list/templates/rcv_list/view_files.html:31
+#: rcv_list/templates/rcv_list/view_files.html:32
 msgid "download"
 msgstr "下载"
 
 #: customs_list/templates/customs_list/view_files.html:31
 #: rcv_list/templates/rcv_list/index.html:21
-#: rcv_list/templates/rcv_list/view_files.html:32
+#: rcv_list/templates/rcv_list/view_files.html:33
 msgid "edit"
 msgstr "编辑"
 
 #: customs_list/templates/customs_list/view_files.html:32
 #: rcv_list/templates/rcv_list/index.html:22
-#: rcv_list/templates/rcv_list/view_files.html:33
+#: rcv_list/templates/rcv_list/view_files.html:34
 msgid "delete"
 msgstr "删除"
 
@@ -126,7 +127,7 @@ msgid "Month"
 msgstr "月:"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:77
+#: templates/base_generic.html:88
 msgid "Home"
 msgstr "家"
 
@@ -134,7 +135,7 @@ msgstr "家"
 msgid "All"
 msgstr "所有"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:24
+#: rcv_list/templates/rcv_list/rcv_list_base.html:25
 msgid "Search"
 msgstr "搜索"
 
@@ -146,36 +147,33 @@ msgstr "RCV文件总数:"
 msgid "Hello"
 msgstr "你好"
 
-#: templates/base_generic.html:81
-msgid "User"
-msgstr "用户"
-
-#: templates/base_generic.html:82
+#: templates/base_generic.html:40
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:84
+#: templates/base_generic.html:42
 msgid "Login"
 msgstr "登录"
 
-#: warehouse_map/forms.py:7
+#: warehouse_data/warehouse_map/forms.py:7 warehouse_map/forms.py:7
 msgid "Select an exported excel file the warehouse system."
 msgstr "选择EXCEL文件"
 
-#: warehouse_map/forms.py:22 warehouse_map/forms.py:26
+#: warehouse_data/warehouse_map/forms.py:22
+#: warehouse_data/warehouse_map/forms.py:26 warehouse_map/forms.py:22
+#: warehouse_map/forms.py:26
 msgid "First Date"
 msgstr ""
 
-#: warehouse_map/templates/warehouse_map/map.html:14
+#: warehouse_data/warehouse_map/templates/warehouse_map/map.html:21
+#: warehouse_map/templates/warehouse_map/map.html:25
 msgid ""
 "Your internet browser doesn't support HTML canvas. Please use another one."
 msgstr ""
 
-#: warehouse_map/templates/warehouse_map/warehouse_map_base.html:12
+#: warehouse_data/warehouse_map/templates/warehouse_map/warehouse_map_base.html:11
+#: warehouse_map/templates/warehouse_map/warehouse_map_base.html:11
 #, fuzzy
 #| msgid "Home"
 msgid "Map Home"
 msgstr "家"
-
-#~ msgid "Upload Customs Declaration"
-#~ msgstr "选择CUSTOMS DECLARATION"

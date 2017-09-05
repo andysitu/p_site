@@ -6,6 +6,9 @@
 
 {% load static %}
 {% csrf_token %}
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
 <script type="text/javascript">
     var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
 
@@ -14,11 +17,10 @@
         map_search_info_url = "{% url 'warehouse_map:request_map_search_info' %}";
 </script>
 
-<script src="{% static 'warehouse_map/js/page_functions.js' %}"></script>
-<script src="{% static 'warehouse_map/js/color_map.js' %}"></script>
-<script src="{% static 'warehouse_map/js/map.js' %}"></script>
-<script src="{% static 'warehouse_map/js/map_ajax.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'warehouse_map/js/page_functions.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_map/js/color_map.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_map/js/map.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_map/js/map_ajax.js' %}"></script>
 
 <canvas id="map_canvas">{% trans "Your internet browser doesn't support HTML canvas. Please use another one." %}</canvas>
 {% endblock %}
