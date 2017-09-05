@@ -150,9 +150,9 @@ function make_map(map_data_arr, fill_sidemenu_status) {
             if (location !== '' && typeof location !== 'undefined') {
                 if (typeof map_data_dic["data_map"] !== "undefined" ) {
                     var data = map_data_dic["data_map"][location];
-                    display_loc_info(location, data);
+                    page_functions.display_loc_info(location, data);
                 } else {
-                    display_loc_info(location);
+                    page_functions.display_loc_info(location);
                 }
             }
         }
@@ -227,7 +227,7 @@ function make_map(map_data_arr, fill_sidemenu_status) {
     // Showing only one section
     } else {
         if (fill_sidemenu_status === true) {
-            fill_sidemenu(max_level);
+            page_functions.fill_sidemenu(max_level);
         }
 
         map_canvas_jobj.click( click_map_for_info );
