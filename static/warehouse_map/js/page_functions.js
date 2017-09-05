@@ -22,21 +22,29 @@ var page_functions = {
     },
 
     display_loc_info: function(location, info_dic) {
-        var msg = "<div class='underline'>" +  gettext("Location") + ": " + location + "</div>";
+        var msg = "<div class='underline'>" + gettext("Location") + ": " + location + "</div>";
 
         if (info_dic != undefined) {
             var dic_key, dic_key_2;
 
             for (dic_key in info_dic) {
-                console.log(dic_key, info_dic[dic_key]);
                 if (typeof info_dic[dic_key] == "object") {
-                    msg += + dic_key;
+                    msg += dic_key + "<br>";
 
                     for (dic_key_2 in info_dic[dic_key]){
+                        console.log(dic_key_2);
                         msg += dic_key_2 + ": " + info_dic[dic_key][dic_key_2] + "<br>";
                     }
                 } else {
-                    msg += dic_key + ": " + info_dic[dic_key] + "<br>";
+                    var trans_dic_key = '';
+                    switch(dic_key) {
+                        case "total":
+                            trans_dic_key = gettext("total");
+                            break;
+                        default:
+                            trans_dic_key = dic_key;
+                    };
+                    msg += trans_dic_key + ": " + info_dic[dic_key] + "<br>";
                 }
             }
         }
