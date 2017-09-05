@@ -108,7 +108,7 @@ function make_map(map_data_arr, fill_sidemenu_status) {
     // Clicking the search button.
     $("#map-submit-button").click(function(e){
         e.preventDefault();
-        map_search(map_data_arr);
+        map_ajax.map_search(map_data_arr);
     });
 
     function get_map_index_by_xy(e) {

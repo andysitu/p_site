@@ -13,10 +13,10 @@ function fill_sidemenu(max_level) {
     $('#date-select').empty();
     $('#date-select-2').empty();
 
-    set_level_input(max_level);
-    set_data_type();
-    set_date_input();
-    change_data_type_select();
+    map_ajax.set_level_input(max_level);
+    map_ajax.set_data_type();
+    map_ajax.set_date_input();
+    map_ajax.change_data_type_select();
 }
 
 function display_loc_info(location, info_dic) {
