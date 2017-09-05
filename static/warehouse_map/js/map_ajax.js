@@ -174,7 +174,7 @@ var map_ajax = {
                 method: "POST",
                 dateType: "json",
                 success: function (data_map) {
-                    color_map = make_color_map(data_type, data_map);
+                    color_map = color_map_functions.make_color_map(data_type, data_map);
                     map_data_dic["data_map"] = data_map;
                     map_data_dic["color_map"] = color_map;
 
@@ -194,7 +194,4 @@ var map_ajax = {
             });
         }
     },
-}
-
-
-
+};
