@@ -20,7 +20,7 @@ var page_functions = {
         map_ajax.set_date_input();
         map_ajax.change_data_type_select();
     },
-    
+
     display_loc_info: function(location, info_dic) {
         var msg = "<div class='underline'>Location: " + location + "</div>";
 
@@ -28,16 +28,16 @@ var page_functions = {
             var dic_key, dic_key_2;
 
             for (dic_key in info_dic) {
+                console.log(dic_key, info_dic[dic_key]);
                 if (typeof info_dic[dic_key] == "object") {
                     msg += + dic_key;
 
                     for (dic_key_2 in info_dic[dic_key]){
-                        msg += "<br>" + dic_key_2 + ": " + info_dic[dic_key][dic_key_2];
+                        msg += dic_key_2 + ": " + info_dic[dic_key][dic_key_2] + "<br>";
                     }
                 } else {
-                    msg += "<br>" + dic_key + ": " + info_dic[dic_key];
+                    msg += dic_key + ": " + info_dic[dic_key] + "<br>";
                 }
-
             }
         }
 
