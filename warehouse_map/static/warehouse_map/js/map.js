@@ -112,32 +112,7 @@ function make_map(map_data_arr, fill_sidemenu_status) {
     });
 
 
-    function click_map_for_info(e) {
-        var map_index_arr = get_map_index_by_xy(e, map_data_arr);
 
-        if (map_index_arr === 0)
-            return 0;
-
-        var i = map_index_arr[0],
-            x = map_index_arr[1],
-            y = map_index_arr[2];
-
-        var map_data_dic = map_data_arr[i];
-
-        location_map = map_data_dic["location_map"];
-
-        if (typeof location_map[y] !== 'undefined') {
-            var location = location_map[y][x];
-            if (location !== '' && typeof location !== 'undefined') {
-                if (typeof map_data_dic["data_map"] !== "undefined" ) {
-                    var data = map_data_dic["data_map"][location];
-                    page_functions.display_loc_info(location, data);
-                } else {
-                    page_functions.display_loc_info(location);
-                }
-            }
-        }
-    }
 
     // Showing all locations
     if (data_length === 4) {
@@ -211,7 +186,36 @@ function make_map(map_data_arr, fill_sidemenu_status) {
             page_functions.fill_sidemenu(max_level);
         }
 
-        map_canvas_jobj.click( click_map_for_info );
+        map_canvas_jobj.click( make_click_map_for_info(map_data_arr) );
+    }
+}
+
+function make_click_map_for_info(map_data_arr) {
+    return function click_map_for_info(e) {
+        var map_index_arr = get_map_index_by_xy(e, map_data_arr);
+
+        if (map_index_arr === 0)
+            return 0;
+
+        var i = map_index_arr[0],
+            x = map_index_arr[1],
+            y = map_index_arr[2];
+
+        var map_data_dic = map_data_arr[i];
+
+        location_map = map_data_dic["location_map"];
+
+        if (typeof location_map[y] !== 'undefined') {
+            var location = location_map[y][x];
+            if (location !== '' && typeof location !== 'undefined') {
+                if (typeof map_data_dic["data_map"] !== "undefined" ) {
+                    var data = map_data_dic["data_map"][location];
+                    page_functions.display_loc_info(location, data);
+                } else {
+                    page_functions.display_loc_info(location);
+                }
+            }
+        }
     }
 }
 
