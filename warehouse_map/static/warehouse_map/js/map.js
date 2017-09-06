@@ -112,6 +112,14 @@ function make_map(map_data_arr, fill_sidemenu_status) {
     });
 
     function get_map_index_by_xy(e) {
+        /**
+         * Uses the map_data_arr in outerscope.
+         * Return
+         * i [int]: (representing index in map_data_arr
+         *   to get map_data_dict),
+         * x[int], y[int]: use in [y][x] format in location map
+         *   or other maps.
+         */
         var offset_y = e.offsetY,
             offset_x = e.offsetX,
             i, box_length;
@@ -229,6 +237,10 @@ function make_map(map_data_arr, fill_sidemenu_status) {
         if (fill_sidemenu_status === true) {
             page_functions.fill_sidemenu(max_level);
         }
+
+        map_canvas_jobj.mousemove(function(e){
+            console.log(get_map_index_by_xy(e));
+        });
 
         map_canvas_jobj.click( click_map_for_info );
     }
