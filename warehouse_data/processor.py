@@ -188,7 +188,11 @@ def get_item_count_map(loc, date_id, level):
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}, "total": 0}
-        cur_item_dic = data_dic[js_loc_code]["items"]
+
+        location = item_inst.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
 
         item_code = item_inst.item_code
         item_quantity = item_inst.avail_quantity
@@ -223,7 +227,6 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         item_query_older = item_query_older.filter(rack_location__level=level)
     item_query_older = item_query_older.select_related('rack_location')
 
-
     newer_item_dic = {}
     for item in item_query_newer:
         newer_item_dic[item.item_id] = item.avail_quantity
@@ -234,7 +237,6 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         item_code = item.item_code
         item_quantity = item.avail_quantity
 
-
         if itemId in newer_item_dic:
             difference = item_quantity - newer_item_dic[itemId]
         else:
@@ -244,6 +246,11 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
 
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}, "total": 0}
+
+        location = item.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
 
         cur_item_dic = data_dic[js_loc_code]["items"]
 
