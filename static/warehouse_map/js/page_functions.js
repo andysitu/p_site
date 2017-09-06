@@ -42,7 +42,7 @@ var page_functions = {
             var value = info_dict[key];
 
             if (typeof value == "object") {
-                msg += key + "<br>" + this.make_msg(value);
+                msg += this.make_underline_div(key) + this.make_msg(value);
             } else {
                 msg += key + ": " + info_dict[key] + "<br>";
             }
