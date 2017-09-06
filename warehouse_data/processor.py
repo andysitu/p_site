@@ -252,8 +252,6 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        cur_item_dic = data_dic[js_loc_code]["items"]
-
         data_dic[js_loc_code]["total"] += difference
 
         if item_code not in cur_item_dic:
