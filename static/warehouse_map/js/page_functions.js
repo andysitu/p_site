@@ -4,6 +4,9 @@ For functions that edit everything except canvas, ie the map
 
 var page_functions = {
     div_underline_class: "underline",
+    make_underline_div: function(text) {
+        return "<div class='" + this.div_underline_class + "'>" + String(text) + "</div>";
+    },
     fill_sidemenu: function(max_level) {
     /**
      * Clears out the settings on the sidemenu
@@ -22,8 +25,7 @@ var page_functions = {
     },
 
     display_loc_info: function(location, info_dic) {
-        var underline_div = "<div class='" + this.div_underline_class + "'>",
-            msg = underline_div + gettext("Location") + ": " + location + "</div>";
+        var msg = this.make_underline_div(gettext("Location") + ": " + location) + "</div>";
 
         if (info_dic != undefined) {
             msg += this.make_msg(info_dic);
