@@ -56,7 +56,6 @@ var page_functions = {
             key_list = Object.keys(info_dict).sort(function(a,b){
                 a = a[a.length-1];
                 b = b[b.length-1];
-                console.log(a, b, a>b);
 
                 if (a < b)
                     return -1;

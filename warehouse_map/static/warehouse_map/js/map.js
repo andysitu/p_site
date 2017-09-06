@@ -111,9 +111,6 @@ function make_map(map_data_arr, fill_sidemenu_status) {
         map_ajax.map_search(map_data_arr);
     });
 
-
-
-
     // Showing all locations
     if (data_length === 4) {
         var highlighted = "";
