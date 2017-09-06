@@ -238,8 +238,19 @@ function make_map(map_data_arr, fill_sidemenu_status) {
             page_functions.fill_sidemenu(max_level);
         }
 
+        var prev_x, prev_y, prev_i, locked_status = false;
+
         map_canvas_jobj.mousemove(function(e){
-            console.log(get_map_index_by_xy(e));
+            e_arr = get_map_index_by_xy(e);
+            if (e_arr === 0)
+                return 1;
+            cur_x = e_arr[1];
+            cur_y = e_arr[2];
+            if (!locked_status && cur_x != prev_x && cur_y != prev_y) {
+                prev_x = cur_x;
+                prev_y = cur_y;
+                click_map_for_info(e);
+            }
         });
 
         map_canvas_jobj.click( click_map_for_info );
