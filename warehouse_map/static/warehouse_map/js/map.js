@@ -111,36 +111,9 @@ function make_map(map_data_arr, fill_sidemenu_status) {
         map_ajax.map_search(map_data_arr);
     });
 
-    function get_map_index_by_xy(e) {
-        /**
-         * Uses the map_data_arr in outerscope.
-         * Return
-         * i [int]: (representing index in map_data_arr
-         *   to get map_data_dict),
-         * x[int], y[int]: use in [y][x] format in location map
-         *   or other maps.
-         */
-        var offset_y = e.offsetY,
-            offset_x = e.offsetX,
-            i, box_length;
-
-        for (i = 0; i < data_length; i++) {
-            map_data_dic = map_data_arr[i];
-            box_length = map_data_dic.box_length;
-            if (offset_x >= map_data_dic.start_x && offset_x <= map_data_dic.end_x &&
-                offset_y >= map_data_dic.start_y && offset_y <= map_data_dic.end_y) {
-                location_map = map_data_dic["location_map"];
-                var y = Math.floor((offset_y - map_data_dic.start_y ) / box_length),
-                    x = Math.floor((offset_x - map_data_dic.start_x ) / box_length);
-
-                return [i, x, y];
-            }
-        }
-        return 0;
-    }
 
     function click_map_for_info(e) {
-        var map_index_arr = get_map_index_by_xy(e);
+        var map_index_arr = get_map_index_by_xy(e, map_data_arr);
 
         if (map_index_arr === 0)
             return 0;
@@ -238,23 +211,37 @@ function make_map(map_data_arr, fill_sidemenu_status) {
             page_functions.fill_sidemenu(max_level);
         }
 
-        var prev_x, prev_y, prev_i, locked_status = false;
-
-        map_canvas_jobj.mousemove(function(e){
-            e_arr = get_map_index_by_xy(e);
-            if (e_arr === 0)
-                return 1;
-            cur_x = e_arr[1];
-            cur_y = e_arr[2];
-            if (!locked_status && cur_x != prev_x && cur_y != prev_y) {
-                prev_x = cur_x;
-                prev_y = cur_y;
-                click_map_for_info(e);
-            }
-        });
-
         map_canvas_jobj.click( click_map_for_info );
     }
+}
+
+function get_map_index_by_xy(e, map_data_arr) {
+    /**
+     * Uses the map_data_arr in outerscope.
+     * Return
+     * i [int]: (representing index in map_data_arr
+     *   to get map_data_dict),
+     * x[int], y[int]: use in [y][x] format in location map
+     *   or other maps.
+     */
+    var offset_y = e.offsetY,
+        offset_x = e.offsetX,
+        i, box_length,
+        data_length = map_data_arr.length;
+
+    for (i = 0; i < data_length; i++) {
+        map_data_dic = map_data_arr[i];
+        box_length = map_data_dic.box_length;
+        if (offset_x >= map_data_dic.start_x && offset_x <= map_data_dic.end_x &&
+            offset_y >= map_data_dic.start_y && offset_y <= map_data_dic.end_y) {
+            location_map = map_data_dic["location_map"];
+            var y = Math.floor((offset_y - map_data_dic.start_y ) / box_length),
+                x = Math.floor((offset_x - map_data_dic.start_x ) / box_length);
+
+            return [i, x, y];
+        }
+    }
+    return 0;
 }
 
 function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map){
