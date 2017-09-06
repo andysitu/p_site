@@ -2,8 +2,8 @@
 For functions that edit everything except canvas, ie the map
  */
 
-
 var page_functions = {
+    div_underline_class: "underline",
     fill_sidemenu: function(max_level) {
     /**
      * Clears out the settings on the sidemenu
@@ -22,35 +22,29 @@ var page_functions = {
     },
 
     display_loc_info: function(location, info_dic) {
-        var msg = "<div class='underline'>" + gettext("Location") + ": " + location + "</div>";
+        var underline_div = "<div class='" + this.div_underline_class + "'>",
+            msg = underline_div + gettext("Location") + ": " + location + "</div>";
 
         if (info_dic != undefined) {
-            var dic_key, dic_key_2;
-
-            for (dic_key in info_dic) {
-                if (typeof info_dic[dic_key] == "object") {
-                    msg += dic_key + "<br>";
-
-                    for (dic_key_2 in info_dic[dic_key]){
-                        console.log(dic_key_2);
-                        msg += dic_key_2 + ": " + info_dic[dic_key][dic_key_2] + "<br>";
-                    }
-                } else {
-                    var trans_dic_key = '';
-                    switch(dic_key) {
-                        case "total":
-                            trans_dic_key = gettext("total");
-                            break;
-                        default:
-                            trans_dic_key = dic_key;
-                    };
-                    msg += trans_dic_key + ": " + info_dic[dic_key] + "<br>";
-                }
-            }
+            msg += this.make_msg(info_dic);
         }
 
         $('#display-msg-text').html(msg);
     },
+    make_msg: function(info_dict, msg) {
+        if (msg == undefined) {
+            msg = ''
+        }
+
+        for (key in info_dict) {
+            var value = info_dict[key];
+
+            if (typeof value == "object") {
+                msg += key + "<br>" + this.make_msg(value);
+            } else {
+                msg += key + ": " + info_dict[key] + "<br>";
+            }
+        }
+        return msg
+    }
 };
-
-
