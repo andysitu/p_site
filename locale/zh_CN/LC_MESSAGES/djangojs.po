@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-05 16:12-0700\n"
+"POT-Creation-Date: 2017-09-06 12:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:25
+#: warehouse_map/static/warehouse_map/js/page_functions.js:28
 msgid "Location"
 msgstr "位置"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:42
-msgid "total"
+#: warehouse_map/static/warehouse_map/js/page_functions.js:31
+msgid "Total"
 msgstr "总"

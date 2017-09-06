@@ -32,6 +32,12 @@ def get_grid_ajax(request):
     return JsonResponse(loc_list, safe=False)
 
 def get_map_search_info(request):
+    """
+    Reads data from settings and returns a JsonReponse
+      of the corresponding data needed.
+    :param request:
+    :return: JsonResponse
+    """
     # location_map = request.POST.getlist("location_map[]")
     data_type = request.POST.get("data_type")
     level = request.POST.get("level")

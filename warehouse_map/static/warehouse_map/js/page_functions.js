@@ -25,20 +25,51 @@ var page_functions = {
     },
 
     display_loc_info: function(location, info_dic) {
-        var msg = this.make_underline_div(gettext("Location") + ": " + location) + "</div>";
+        /**
+         * location: string, info_dic: dictionary with keys
+         *   "total" and "items."
+         * Displays this information in msg div.
+         */
+        var msg = this.make_underline_div(gettext("Location") + ": " + location);
 
         if (info_dic != undefined) {
-            msg += this.make_msg(info_dic);
+            msg += this.make_underline_div(gettext("Total") + ": " + info_dic["total"]);
+            msg += this.make_msg(info_dic["items"], true);
         }
 
         $('#display-msg-text').html(msg);
     },
-    make_msg: function(info_dict, msg) {
-        if (msg == undefined) {
-            msg = ''
-        }
+    make_msg: function(info_dict, location) {
+        /**
+         * Function can be used recursively.
+         * info_dict must be a dictionary.
+         * location can be undefined; if true, it means that
+         *   the keys of info_dict are location and will be
+         *   sorted accordingly.
+         * Returns a string in html format containing information
+         *   from info_dic.
+         */
+        var i, key_len, key_list,
+            msg = "";
 
-        for (key in info_dict) {
+        if (location === true) {
+            key_list = Object.keys(info_dict).sort(function(a,b){
+                a = a[a.length-1];
+                b = b[b.length-1];
+                console.log(a, b, a>b);
+
+                if (a < b)
+                    return -1;
+                if (a > b)
+                    return 1;
+                return 0;
+            });
+        } else {
+            key_list = Object.keys(info_dict).sort();
+        }
+        key_len = key_list.length;
+        for (i = 0; i < key_len; i++) {
+            key = key_list[i];
             var value = info_dict[key];
 
             if (typeof value == "object") {
