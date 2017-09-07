@@ -189,7 +189,7 @@ var map_ajax = {
                         }
                     }
                     console.log(map_data_arr);
-                    make_map(map_data_arr);
+                    canvasMap.make_map(canvasMap.map_data_arr);
                 }
             });
         }
