@@ -117,6 +117,8 @@ var canvasMap = {
             start_x = map_info["end_x"];
         }
 
+        this.save_canvas();
+
         // Clicking the search button.
         $("#map-submit-button").click( (function (e) {
             e.preventDefault();
@@ -153,12 +155,96 @@ var canvasMap = {
     restore_canvas: function() {
         this.ctx.putImageData(this.orig_image, 0, 0);
         highlighted = '';
-    }
+    },
+    highlight_map: function(i,x, y) {
+        var locations_info_dic = this.get_similar_locations(i, x, y)
+            data_dic = this.map_data_arr[i],
+            image_map = data_dic["image_map"],
+            loc_info_arr = null,
+            i, x, y;
+
+        for (location_str in locations_info_dic) {
+            loc_info_arr = locations_info_dic[location_str];
+            i = loc_info_arr[0];
+            x = loc_info_arr[1];
+            y = loc_info_arr[2];
+
+            this.highlight_box(i, x, y);
+        }
+
+    },
+    highlight_box: function(i, x, y) {
+        /**
+         * Highlights the edges of the boxes
+         * i [int]: the index in the map_data_arr to get the dict.
+         * x[int], y[int]: the indexes in the maps to get that location.
+         */
+        var data_dic = this.map_data_arr[i],
+            image_key = data_dic["image_map"][y][x],
+            loc_start_x = data_dic.start_x,
+            loc_start_y = data_dic.start_y,
+            ctx = this.ctx,
+            box_length = data_dic["box_length"];
+
+        var start_x = loc_start_x + x * box_length,
+            start_y = loc_start_y + y * box_length;
+
+        this.ctx.save();
+
+        this.ctx.fillStyle = "red";
+        this.ctx.fillRect(start_x, start_y, box_length, box_length);
+        this.ctx.restore();
+    },
+    get_similar_locations: function(i, x, y, location, loc_dic) {
+        var data_arr = this.map_data_arr,
+            data_dic = data_arr[i],
+            location_map = data_dic["location_map"],
+            cur_loc = location_map[y][x],
+            key_loc = String(i) + "_" + String(x) + "_" + String(y);
+
+
+        if (location === undefined) {
+            location = cur_loc;
+        }
+        if (loc_dic === undefined) {
+            loc_dic = {};
+        }
+        if (key_loc in loc_dic) {
+            return 0;
+        }
+
+        if (cur_loc == location) {
+            loc_dic[ key_loc ] = [i,x,y];
+
+            // left
+            if (x-1 >= 0) {
+                this.get_similar_locations(i, x-1, y, location, loc_dic);
+            }
+            //right
+            var right_y_len = location_map[y].length;
+            if (x+1 < right_y_len) {
+                this.get_similar_locations(i, x+1, y, location, loc_dic);
+            }
+            //up
+            if (y - 1 >= 0) {
+                this.get_similar_locations(i, x, y-1, location, loc_dic);
+            }
+            //down
+            var down_len = location_map.length;
+            if (y + 1 < down_len) {
+                this.get_similar_locations(i, x, y+1, location, loc_dic);
+            }
+        }
+
+        return loc_dic;
+    },
 
 }
 
 function click_map_for_info(e) {
     var map_index_arr = get_map_index_by_xy(e, this.map_data_arr);
+
+    this.restore_canvas();
 
     if (map_index_arr === 0)
         return 0;
@@ -180,6 +266,7 @@ function click_map_for_info(e) {
             } else {
                 page_functions.display_loc_info(location);
             }
+            this.highlight_map(i, x, y);
         }
     }
 }
