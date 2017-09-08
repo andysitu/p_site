@@ -61,7 +61,7 @@ var canvasMap = {
     highlighted: "",
     orig_image: null,
 
-    make_map: function(map_data_arr, fill_sidemenu_status) {
+    make_map: function(map_data_arr, fill_sidemenu_status, level) {
         this.map_data_arr = map_data_arr;
         this.map_canvas_jobj = $('#map_canvas');
 
@@ -106,7 +106,7 @@ var canvasMap = {
             image_map = map_data_dic["image_map"];
             map_info = draw_map(this.ctx, image_map, start_x, start_y, box_length,
                 map_data_dic["color_map"],
-                map_data_dic["location_map"]);
+                map_data_dic["location_map"], level);
 
             map_data_dic["start_x"] = start_x;
             map_data_dic["start_y"] = start_y;
@@ -386,7 +386,7 @@ function get_map_index_by_xy(e, map_data_arr) {
     return 0;
 }
 
-function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map){
+function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map, level){
     var i, j,
         map_key,
         image_map_length = image_map.length,
@@ -400,8 +400,17 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, locat
             x = start_x + box_length * j;
             y = start_y + box_length * i;
 
+            location = location_map[i][j];
+
+            if (location == '')
+                continue;
+
             if (typeof(color_map) !== "undefined") {
-                location = location_map[i][j];
+                // location = location_map[i][j];
+                // if (!(level == undefined) && level !== "All") {
+                //
+                // }
+
                 if (location in color_map)
                     color = color_map[location];
                 else
