@@ -193,11 +193,91 @@ var canvasMap = {
         var start_x = loc_start_x + x * box_length,
             start_y = loc_start_y + y * box_length;
 
-        this.ctx.save();
+        ctx.save();
 
-        this.ctx.fillStyle = "red";
-        this.ctx.fillRect(start_x, start_y, box_length, box_length);
-        this.ctx.restore();
+        ctx.strokeStyle = "red";
+
+        switch(image_key) {
+            case "e":
+                break;
+            case "sl":
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case "sr":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+
+            case 'st':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'sb':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+
+            case "rtl":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+            case "rbl":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rtr':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rbr':
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+
+            case 'rt':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+            case 'rb':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rr':
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rl':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+        }
+        ctx.stroke();
+        ctx.restore();
     },
     get_similar_locations: function(i, x, y, location, loc_dic) {
         var data_arr = this.map_data_arr,
