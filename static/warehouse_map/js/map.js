@@ -145,7 +145,7 @@ var canvasMap = {
     },
     clearMap: function() {
         this.ctx.clearRect(0, 0, this.canvas_width, this.canvas_height);
-        this.highlighted = "";
+        this.clear_highlight();
         remove_events();
     },
     save_canvas: function() {
@@ -154,8 +154,11 @@ var canvasMap = {
     },
     restore_canvas: function() {
         this.ctx.putImageData(this.orig_image, 0, 0);
+        this.clear_highlight();
+    },
+    clear_highlight: function() {
+        this.highlighted = "";
         page_functions.write_msg("");
-        highlighted = '';
     },
     highlight_map: function(i,x, y) {
         var locations_info_dic = this.get_similar_locations(i, x, y)
