@@ -154,6 +154,7 @@ var canvasMap = {
     },
     restore_canvas: function() {
         this.ctx.putImageData(this.orig_image, 0, 0);
+        page_functions.write_msg("");
         highlighted = '';
     },
     highlight_map: function(i,x, y) {
@@ -267,6 +268,8 @@ function click_map_for_info(e) {
                 page_functions.display_loc_info(location);
             }
             this.highlight_map(i, x, y);
+        } else {
+            this.restore_canvas();
         }
     }
 }
