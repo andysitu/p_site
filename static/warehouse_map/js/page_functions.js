@@ -37,6 +37,9 @@ var page_functions = {
             msg += this.make_msg(info_dic["items"], true);
         }
 
+        this.write_msg(msg);
+    },
+    write_msg: function(msg) {
         $('#display-msg-text').html(msg);
     },
     make_msg: function(info_dict, location) {
