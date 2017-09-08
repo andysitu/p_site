@@ -195,7 +195,7 @@ def get_item_count_map(loc, date_id, level):
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
         item_code = item_inst.item_code
-        item_quantity = item_inst.avail_quantity
+        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
         data_dic[js_loc_code]["total"] += item_quantity
 
         if item_code not in cur_item_dic:
@@ -227,18 +227,18 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         item_query_older = item_query_older.filter(rack_location__level=level)
     item_query_older = item_query_older.select_related('rack_location')
 
-    newer_item_dic = {}
+    newerItem_Amount_dic = {}
     for item in item_query_newer:
-        newer_item_dic[item.item_id] = item.avail_quantity
+        newerItem_Amount_dic[item.item_id] = item.avail_quantity + item.ship_quantity
 
     for item in item_query_older:
         itemId = item.item_id
         js_loc_code = loc_inst_to_jsloccode(item.rack_location)
         item_code = item.item_code
-        item_quantity = item.avail_quantity
+        item_quantity = item.avail_quantity + item.ship_quantity
 
-        if itemId in newer_item_dic:
-            difference = item_quantity - newer_item_dic[itemId]
+        if itemId in newerItem_Amount_dic:
+            difference = item_quantity - newerItem_Amount_dic[itemId]
         else:
             difference = item_quantity
         if difference == 0:
