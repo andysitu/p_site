@@ -405,11 +405,10 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, locat
             if (location == '')
                 continue;
 
+            if ( ! map_functions.proc_level_from_location(location, level))
+                continue;
+
             if (typeof(color_map) !== "undefined") {
-                // location = location_map[i][j];
-                // if (!(level == undefined) && level !== "All") {
-                //
-                // }
 
                 if (location in color_map)
                     color = color_map[location];

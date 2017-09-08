@@ -188,8 +188,7 @@ var map_ajax = {
                             return 0;
                         }
                     }
-                    console.log(map_data_arr);
-                    canvasMap.make_map(canvasMap.map_data_arr);
+                    canvasMap.make_map(canvasMap.map_data_arr, false, level);
                 }
             });
         }
