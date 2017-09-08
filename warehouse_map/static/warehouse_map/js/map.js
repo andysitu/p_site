@@ -390,7 +390,8 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, locat
     var i, j,
         map_key,
         image_map_length = image_map.length,
-        color, location;
+        color, location,
+        blank_rack_color = "rgb(102, 102, 153)";
 
     for (i=0; i < image_map_length; i++) {
         var sub_arr_len = image_map[i].length;
@@ -404,9 +405,9 @@ function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, locat
                 if (location in color_map)
                     color = color_map[location];
                 else
-                    color = "white";
+                    color = blank_rack_color;
             } else {
-                color = "white";
+                color = blank_rack_color;
             }
             draw_box(ctx, x, y, box_length, box_length, map_key, color);
         }

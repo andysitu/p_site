@@ -1,4 +1,5 @@
 var color_map_functions = {
+    // Creates color_map [arr][arr]
     make_color_map: function(data_type, data_map) {
         var color_map = {};
 
