@@ -136,7 +136,7 @@ def process_excel_file(file):
                 )
             i.save()
 
-    return 1
+    return 0
 
 def reset_db(delete_rack = False):
     data_date_query = DataDate.objects.all()
