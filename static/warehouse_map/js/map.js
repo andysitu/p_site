@@ -350,7 +350,7 @@ function click_map_for_info(e) {
             } else {
                 page_functions.display_loc_info(location);
             }
-            console.log(data);
+            console.log(location, map_data_dic["data_map"], data);
             this.highlight_map(i, x, y);
         } else {
             this.restore_canvas();
