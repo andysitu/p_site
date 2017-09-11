@@ -38,9 +38,7 @@ class Items(models.Model):
 
 
 def delete_all_rack_location():
-    racks_query = Location.objects.all()
-    for r in racks_query:
-        r.delete()
+    Location.objects.all().delete()
 
 def populate_rack_location():
     populate_p_area()

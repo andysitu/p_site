@@ -66,6 +66,7 @@ def reset_db(request):
 
 def reset_db_true(request):
     processor.reset_db(delete_rack=True)
+    delete_grids()
     return redirect("warehouse_map:index")
 
 def get_info(request):
@@ -78,6 +79,9 @@ def get_info(request):
             "data_date": d,
         }
     )
+
+def delete_grids():
+    GridMap.objects.all().delete()
 
 def create_grids():
     def create_f_map():

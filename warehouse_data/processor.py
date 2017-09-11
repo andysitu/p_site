@@ -139,13 +139,9 @@ def process_excel_file(file):
     return 0
 
 def reset_db(delete_rack = False):
-    data_date_query = DataDate.objects.all()
-    for d in data_date_query:
-        d.delete()
+    DataDate.objects.all().delete()
 
-    item_query = Items.objects.all()
-    for i in item_query:
-        i.delete()
+    Items.objects.all().delete()
 
     if delete_rack:
         delete_all_rack_location()
