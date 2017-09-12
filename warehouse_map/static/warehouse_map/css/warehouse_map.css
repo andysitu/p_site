@@ -46,3 +46,7 @@
 .underline {
     text-decoration: underline;
 }
+
+.list-group {
+    display:inline-block;
+}
