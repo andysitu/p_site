@@ -141,8 +141,10 @@ def reset_db(delete_rack = False):
         delete_all_rack_location()
         populate_rack_location()
 
-def get_datadates():
+def get_datadates(num_dates=0):
     dates = DataDate.objects.order_by('-date')
+    if num_dates != 0:
+        dates = dates[:num_dates]
     return dates
 
 def get_info():

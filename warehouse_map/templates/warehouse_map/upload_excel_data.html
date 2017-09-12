@@ -16,4 +16,11 @@
     <p><input type="submit" value="{% trans 'Upload' %}" /></p>
 </form>
 
+Dates Uploaded:
+<ul>
+    {% for date_inst in date_inst_list %}
+    <li>{{ date_inst.date }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

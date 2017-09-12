@@ -52,11 +52,14 @@ def upload_excel_data(request):
     else:
         upload_excel_data_form = UploadExcelData()
 
+    date_inst_list = processor.get_datadates(20)
+
     return render(
         request,
         'warehouse_map/upload_excel_data.html',
         context={
             "upload_form": upload_excel_data_form,
+            "date_inst_list": date_inst_list,
         }
     )
 
