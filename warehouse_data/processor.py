@@ -39,10 +39,6 @@ def process_excel_file(file):
     data_date = DataDate(date=d)
     data_date.save()
 
-    def convert_id(id_value):
-        value = int(id_value)
-        return uuid.UUID(int=value)
-
     def get_date_from_xlrd(date_string):
         # d = xlrd.xldate.xldate_as_datetime(date_string, workbook.datemode)
         timezone = pytz.timezone('Asia/Hong_Kong')
@@ -66,18 +62,19 @@ def process_excel_file(file):
         (42, "avail_quantity", int,),
     }
 
-    first_row = []
-    for col in range(worksheet.ncols):
-        first_row.append(worksheet.cell_value(0,col))
-
     rack_loc_query = Location.objects.all()
     if not rack_loc_query:
         populate_rack_location()
 
     location_dict = {}
     item_list = []
+
+    loc_regex = re.compile(
+        '(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
+
+    unknown_rack_location = Location.objects.get(loc="Unknown")
+
     for row in range(1, worksheet.nrows):
-    # for row in range(1, 30):
         item_data = {}
 
         # for key, col in item_map.items():
@@ -96,45 +93,42 @@ def process_excel_file(file):
         # Add item_data dictionary to item_dict
         item_code = item_data["item_code"]
 
+
+
         if location_code in location_dict:
-            location_dict[location_code].append(item_data)
+            location_inst = location_dict[location_code]
         else:
-            location_dict[location_code] = [item_data,]
+            r = re.match(loc_regex, location_code)
 
-    unknown_rack_location = Location.objects.get(loc="Unknown")
+            warehouse_location = r.group("warehouse_location")
+            area = r.group("area")
+            aisle_letter = r.group("aisle_letter")
+            aisle_num = int(r.group("aisle_num"))
+            column = int(r.group("column"))
+            level = int(r.group("level"))
 
-    for location_code, data_list in location_dict.items():
-        loc_regex = re.compile('(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
-        r = re.match(loc_regex, location_code)
+            # Account for human error input of items into WMS
+            if area == 'F' and aisle_letter == '' and level == 1:
+                aisle_letter = 'F'
 
-        warehouse_location = r.group("warehouse_location")
-        area = r.group("area")
-        aisle_letter = r.group("aisle_letter")
-        aisle_num = int(r.group("aisle_num"))
-        column = int(r.group("column"))
-        level = int(r.group("level"))
+            try:
+                location_inst = Location.objects.get(warehouse_location=warehouse_location,
+                                                     area=area,
+                                                     aisle_letter=aisle_letter,
+                                                     aisle_num=aisle_num,
+                                                     column=column,
+                                                     level=level,
+                                                     )
+            except Location.DoesNotExist:
+                location_inst = unknown_rack_location
 
-        # Account for human error input of items into WMS
-        if area == 'F' and aisle_letter == '' and level == 1:
-            aisle_letter = 'F'
+            location_dict[location_code] = location_inst
 
-        try:
-            rack_location = Location.objects.get(warehouse_location=warehouse_location,
-                                                 area=area,
-                                                 aisle_letter=aisle_letter,
-                                                 aisle_num=aisle_num,
-                                                 column=column,
-                                                 level=level,
-                                            )
-        except Location.DoesNotExist:
-            rack_location = unknown_rack_location
-
-        for data_dict in data_list:
-            i = Items(rack_location=rack_location,
-                      data_date=data_date,
-                      **data_dict
-                )
-            i.save()
+        i = Items(rack_location=location_inst,
+                  data_date=data_date,
+                  **item_data
+                  )
+        i.save()
 
     return 0
 
