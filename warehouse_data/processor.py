@@ -75,7 +75,7 @@ def process_excel_file(file):
         populate_rack_location()
 
     location_dict = {}
-    item_dict = {}
+    item_list = []
     for row in range(1, worksheet.nrows):
     # for row in range(1, 30):
         item_data = {}
