@@ -209,6 +209,8 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
     d_1 = datadate_1.date
     d_2 = datadate_2.date
 
+    if d_1 == d_2:
+        return {}
     if d_1 > d_2:
         newer_datadate = datadate_1
         older_datadate = datadate_2
