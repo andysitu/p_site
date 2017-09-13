@@ -19,7 +19,7 @@ def get_proc_dates(request):
 
     for data_date in data_dates:
         date_id_list.append(data_date.id)
-        date_list.append(data_date.date.astimezone())
+        date_list.append(data_date.date.astimezone().strftime("%m/%d/%Y-%I:%M%p"))
     return JsonResponse({"date_id_list": date_id_list,
                          "date_list": date_list,},
                         safe=False)
