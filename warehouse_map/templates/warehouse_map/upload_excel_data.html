@@ -5,6 +5,7 @@
 {% block content %}
 
 {% load static %}
+<script type="text/javascript" src="{% static 'warehouse_map/js/upload_page.js' %}"></script>
 
 <form action="{% url 'warehouse_map:upload_excel_data' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -17,9 +18,9 @@
 </form>
 
 Dates Uploaded:
-<ul class="list-group">
+<ul class="list-group" id="upload-ul">
     {% for date_inst in date_inst_list %}
-    <li class="list-group-item">{{ date_inst.date }}</li>
+    <li class="list-group-item upload-dates-li">{{ date_inst.date }}</li>
     {% endfor %}
 </ul>
 
