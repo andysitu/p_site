@@ -34,9 +34,9 @@
 
 {% block settings %}
 <li>
-    <a class="nav-item" href="#display-msg-div" data-toggle="collapse" aria-expanded="false" aria-controls="display-msg-div">
+    <button class="navbar-toggler" id="menubarSideButton" type="button">
         <i class="fa fa-cog" aria-hidden="true"></i>
-    </a>
+    </button>
 </li>
 <hr>
 
@@ -75,4 +75,20 @@
 
     <button type="submit" id="map-submit-button" class="btn btn-primary">Search</button>
 </form>
+
+<ul class="menubar-side" id="menubarSide">
+    <li class="menubar-side-item">
+        <a class="side-link" href="#display-msg-div" data-toggle="collapse" aria-expanded="false" aria-controls="display-msg-div">
+            Toggle msg box
+        </a>
+    </li>
+    <li class="menubar-side-item">
+        <a class="side-link" href="{% static 'warehouse_map:reset_db' %}">Reset DB</a>
+    </li>
+    <li class="menubar-side-item">
+        <a class="side-link" href="{% static 'warehouse_map:reset_db_true' %}">Reset DB & Locations</a>
+    </li>
+</ul>
+
+<div class="overlay"></div>
 {% endblock %}

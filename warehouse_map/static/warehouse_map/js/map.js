@@ -39,6 +39,16 @@ $( document ).ready(function() {
             canvasMap.make_map(map_data_arr);
         }
     );
+
+    $('#menubarSideButton').on('click', function() {
+        $('#menubarSide').addClass('reveal');
+        $('.overlay').show();
+    });
+
+    $('.overlay').on('click', function() {
+        $('#menubarSide').removeClass('reveal');
+        $('.overlay').hide();
+    });
 });
 
 function remove_events() {
