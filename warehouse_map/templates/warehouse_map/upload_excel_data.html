@@ -11,7 +11,11 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'warehouse_map/js/upload_page.js' %}"></script>
 
-<form action="{% url 'warehouse_map:upload_excel_data' %}" method="post" enctype="multipart/form-data">
+<script>
+    var upload_response = "{{ upload_response }}";
+</script>
+
+<form id="upload-form" action="{% url 'warehouse_map:upload_excel_data' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
     <table>

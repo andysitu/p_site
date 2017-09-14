@@ -30,7 +30,7 @@ def process_excel_file(file):
     data_date_query = DataDate.objects.filter(date=d)
     if len(data_date_query) > 0:
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
-        return "Excel filew with date " + d_time_str + " has been used before."
+        return "Excel file with date " + d_time_str + " has been used before."
 
     data = file.read()
     workbook = xlrd.open_workbook(file_contents=data)
@@ -130,7 +130,7 @@ def process_excel_file(file):
                   )
         i.save()
 
-    return 0
+    return "Done"
 
 def reset_db(delete_rack = False):
     DataDate.objects.all().delete()

@@ -46,16 +46,18 @@ def view_map(request):
 
 @login_required
 def upload_excel_data(request):
-    if request.method == 'POST':
-        upload_excel_data_form = UploadExcelData(request.POST, request.FILES)
-        if upload_excel_data_form.is_valid():
-            for file in request.FILES.getlist("excel_data_file"):
-            # file = request.FILES["excel_data_file"]
-                processor.process_excel_file(file)
-    else:
-        upload_excel_data_form = UploadExcelData()
+    upload_response = 0
 
     date_inst_list = processor.get_datadates(20)
+
+    if request.method == 'POST':
+        response_excel_data_form = UploadExcelData(request.POST, request.FILES)
+        if response_excel_data_form.is_valid():
+            for file in request.FILES.getlist("excel_data_file"):
+            # file = request.FILES["excel_data_file"]
+                upload_response = processor.process_excel_file(file)
+
+    upload_excel_data_form = UploadExcelData()
 
     return render(
         request,
@@ -63,6 +65,7 @@ def upload_excel_data(request):
         context={
             "upload_form": upload_excel_data_form,
             "date_inst_list": date_inst_list,
+            "upload_response": upload_response,
         }
     )
 
