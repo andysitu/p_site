@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from .forms import UploadExcelData, XMLRequestGridForm
+
 from .models import Test, GridMap
 
 from django.utils.encoding import force_text
@@ -42,6 +44,7 @@ def view_map(request):
         },
     )
 
+@login_required
 def upload_excel_data(request):
     if request.method == 'POST':
         upload_excel_data_form = UploadExcelData(request.POST, request.FILES)
@@ -63,10 +66,12 @@ def upload_excel_data(request):
         }
     )
 
+@login_required
 def reset_db(request):
     processor.reset_db()
     return redirect("warehouse_map:index")
 
+@login_required
 def reset_db_true(request):
     processor.reset_db(delete_rack=True)
     delete_grids()
