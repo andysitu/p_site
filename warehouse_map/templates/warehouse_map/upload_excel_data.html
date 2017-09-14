@@ -2,6 +2,10 @@
 
 {% load i18n %}
 
+{% block head %}
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+{% endblock %}
+
 {% block content %}
 
 {% load static %}
@@ -17,12 +21,16 @@
     <p><input type="submit" id="upload-button" value="{% trans 'Upload' %}" /></p>
 </form>
 
+<div class="d-block bg-warning" id="upload-msg-div"></div>
+
 Dates Uploaded:
 <ul class="list-group" id="upload-ul">
     {% for date_inst in date_inst_list %}
     <li class="list-group-item upload-dates-li">{{ date_inst.date }}</li>
     {% endfor %}
 </ul>
+
+
 
 <!--<i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>-->
 <!--<span class="sr-only">Refreshing...</span>-->
