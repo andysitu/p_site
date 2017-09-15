@@ -47,7 +47,14 @@ $( document ).ready(function() {
 
     $('.overlay').on('click', function() {
         $('#menubarSide').removeClass('reveal');
+        $('#del_menuSide').removeClass('reveal');
         $('.overlay').hide();
+    });
+
+    $( '#date-del-a' ).click(function(e){
+        e.preventDefault();
+        $('#menubarSide').removeClass('reveal');
+        $('#del_menuSide').addClass('reveal');
     });
 });
 

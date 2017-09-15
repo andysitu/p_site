@@ -8,7 +8,7 @@ $( document). ready(function() {
         success: function(date_dic) {
             var date_list = date_dic["date_list"],
                 date_id_list = date_dic["date_id_list"],
-                date_select_jobj = $( '#date-del-select' );
+                date_select_jobj = $( 'date-del-select' );
 
             var i,
                 date_list_len = date_id_list.length;

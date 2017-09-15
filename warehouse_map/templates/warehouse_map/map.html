@@ -89,7 +89,13 @@
         <a class="side-link" href="{% url 'warehouse_map:reset_db_true' %}">{% trans "Reset Database & Locations" %}</a>
     </li>
     <li class="menubar-side-item">
-        <a class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
+        <a id="date-del-a" class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
+    </li>
+</ul>
+
+<ul class="menubar-side" id="del_menuSide">
+    <li class="menubar-side-item">
+
     </li>
 </ul>
 
