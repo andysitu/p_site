@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-06 12:19-0700\n"
+"POT-Creation-Date: 2017-09-14 17:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:28
+#: warehouse_map/static/warehouse_map/js/page_functions.js:33
 msgid "Location"
 msgstr "位置"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:31
+#: warehouse_map/static/warehouse_map/js/page_functions.js:36
 msgid "Total"
 msgstr "总"
+
+#: warehouse_map/static/warehouse_map/js/upload_page.js:17
+msgid "Currently Uploading"
+msgstr "目前上传"
+
+#: warehouse_map/static/warehouse_map/js/upload_page.js:32
+msgid "No file was uploaded."
+msgstr "没有上传文件。"
+
+#: warehouse_map/static/warehouse_map/js/upload_page.js:40
+msgid ""
+"The file is named incorrectly. It should contain 14 numbers for year, month, "
+"day, hour, minute, and second."
+msgstr "该文件的名称不正确。它应该包含14个数字的年，月，日，小时，分钟和秒。"

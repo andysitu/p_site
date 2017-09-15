@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-06 12:18-0700\n"
+"POT-Creation-Date: 2017-09-14 17:19-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,7 @@ msgstr "上传日期"
 #: customs_list/templates/customs_list/upload.html:22
 #: rcv_list/templates/rcv_list/rcv_list_base.html:17
 #: rcv_list/templates/rcv_list/upload.html:21
-#: warehouse_data/warehouse_map/templates/warehouse_map/upload_excel_data.html:16
-#: warehouse_map/templates/warehouse_map/upload_excel_data.html:16
+#: warehouse_map/templates/warehouse_map/upload_excel_data.html:25
 msgid "Upload"
 msgstr "上载"
 
@@ -95,11 +94,11 @@ msgstr "删除"
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_site/settings.py:143
+#: p_site/settings.py:144
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:144
+#: p_site/settings.py:145
 msgid "Chinese"
 msgstr "中文"
 
@@ -127,7 +126,7 @@ msgid "Month"
 msgstr "月:"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:88
+#: templates/base_generic.html:90
 msgid "Home"
 msgstr "家"
 
@@ -147,33 +146,73 @@ msgstr "RCV文件总数:"
 msgid "Hello"
 msgstr "你好"
 
-#: templates/base_generic.html:40
+#: templates/base_generic.html:42
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:42
+#: templates/base_generic.html:44
 msgid "Login"
 msgstr "登录"
 
-#: warehouse_data/warehouse_map/forms.py:7 warehouse_map/forms.py:7
-msgid "Select an exported excel file the warehouse system."
+#: templates/registration/logged_out.html:6
+msgid "You have logged out."
+msgstr ""
+
+#: templates/registration/logged_out.html:8
+msgid "Log in again"
+msgstr ""
+
+#: templates/registration/login.html:8
+msgid "Your username and password didn't match. Please try again."
+msgstr "您的用户名和密码不匹配。请再试一次。"
+
+#: templates/registration/login.html:13
+msgid ""
+"Your account doesn't have access to this page. To proceed, please login with "
+"one that does."
+msgstr "您的帐户无权访问此页面。要继续，请登录一个。"
+
+#: templates/registration/login.html:15
+msgid "Please login to see this page."
+msgstr "请登录查看此页面。"
+
+#: warehouse_map/forms.py:7
+msgid "Select an exported excel file from the WMS."
 msgstr "选择EXCEL文件"
 
-#: warehouse_data/warehouse_map/forms.py:22
-#: warehouse_data/warehouse_map/forms.py:26 warehouse_map/forms.py:22
-#: warehouse_map/forms.py:26
+#: warehouse_map/forms.py:15 warehouse_map/forms.py:19
 msgid "First Date"
-msgstr ""
+msgstr "第一次约会"
 
-#: warehouse_data/warehouse_map/templates/warehouse_map/map.html:21
-#: warehouse_map/templates/warehouse_map/map.html:25
+#: warehouse_map/templates/warehouse_map/map.html:26
 msgid ""
 "Your internet browser doesn't support HTML canvas. Please use another one."
-msgstr ""
+msgstr "您的互联网浏览器不支持HTML画布。请使用另一个。"
 
-#: warehouse_data/warehouse_map/templates/warehouse_map/warehouse_map_base.html:11
+#: warehouse_map/templates/warehouse_map/map.html:45
+msgid "Data Type"
+msgstr "数据类型"
+
+#: warehouse_map/templates/warehouse_map/map.html:50
+msgid "Floor Level"
+msgstr "楼层"
+
+#: warehouse_map/templates/warehouse_map/map.html:67
+msgid "Date"
+msgstr "日期"
+
+#: warehouse_map/templates/warehouse_map/map.html:72
+msgid "Previous Date"
+msgstr "上一个日期"
+
+#: warehouse_map/templates/warehouse_map/upload_excel_data.html:30
+msgid "Dates Uploaded"
+msgstr "上载"
+
 #: warehouse_map/templates/warehouse_map/warehouse_map_base.html:11
-#, fuzzy
-#| msgid "Home"
 msgid "Map Home"
 msgstr "家"
+
+#: warehouse_map/templates/warehouse_map/warehouse_map_base.html:16
+msgid "Upload Excel"
+msgstr "上传日期"
