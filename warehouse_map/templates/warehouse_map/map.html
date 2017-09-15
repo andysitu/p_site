@@ -83,10 +83,13 @@
         </a>
     </li>
     <li class="menubar-side-item">
-        <a class="side-link" href="{% static 'warehouse_map:reset_db' %}">Reset DB</a>
+        <a class="side-link" href="{% url 'warehouse_map:reset_db' %}">{% trans "Reset DB" %}</a>
     </li>
     <li class="menubar-side-item">
-        <a class="side-link" href="{% static 'warehouse_map:reset_db_true' %}">Reset DB & Locations</a>
+        <a class="side-link" href="{% url 'warehouse_map:reset_db_true' %}">{% trans "Reset DB & Locations" %}</a>
+    </li>
+    <li class="menubar-side-item">
+        <a class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
     </li>
 </ul>
 

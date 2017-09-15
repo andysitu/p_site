@@ -1,0 +1,14 @@
+{% extends 'warehouse_map/warehouse_map_base.html' %}
+
+{% load i18n %}
+
+{% block head %}
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<script type="text/javascript" src="{% static 'warehouse_map/js/delete_date_page.js' %}"></script>
+
+{% endblock %}
