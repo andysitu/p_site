@@ -74,7 +74,6 @@ def upload_excel_data(request):
 
 @login_required
 def delete_date_page(request):
-
     return render(
         request,
         'warehouse_map/delete_date.html',
@@ -82,7 +81,6 @@ def delete_date_page(request):
 
         }
     )
-
 
 @login_required
 def reset_db(request):
@@ -316,4 +314,3 @@ def create_grids():
     create_s_map()
     create_vc_map()
     create_p_map()
-

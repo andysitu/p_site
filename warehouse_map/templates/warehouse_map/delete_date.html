@@ -1,14 +1,35 @@
 {% extends 'warehouse_map/warehouse_map_base.html' %}
 
 {% load i18n %}
+{% load static %}
 
 {% block head %}
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<link rel="stylesheet" href="{% static 'warehouse_map/css/delete_page.css' %}" />
+<script>
+    var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val();
+
+    var date_ajax_url = "{% url 'warehouse_map:request_date_ajax' %}";
+</script>
 {% endblock %}
 
 {% block content %}
 
 {% load static %}
 <script type="text/javascript" src="{% static 'warehouse_map/js/delete_date_page.js' %}"></script>
+<h2>{% trans "Delete items by date" %}</h2>
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="form-group" id="date-del-select-div">
+        <label for="date-del-select">{% trans "Date" %}</label>
+        <select class="form-control" id="date-del-select"></select>
+    </div>
+
+    <button type="submit" id="date-del-submit" class="btn btn-primary">
+        {% trans "Delete" %}
+    </button>
+</form>
 
 {% endblock %}
