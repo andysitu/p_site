@@ -2,9 +2,10 @@ var map_ajax = {
     get_data_select_type: function(data_type){
         // Key represents data name
         // Value is whether a second date is needed
+
         var data_dic =  {
-            "Item Count": false,
-            "Items Shipped": true,
+            [gettext("Item Count")]: false,
+            [gettext("Items Shipped")]: true,
         }
         if (arguments.length == 1) {
             return data_dic[data_type];
