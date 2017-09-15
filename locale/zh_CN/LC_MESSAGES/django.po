@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 17:19-0700\n"
+"POT-Creation-Date: 2017-09-15 14:35-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgid "Month"
 msgstr "月:"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:90
+#: templates/base_generic.html:77
 msgid "Home"
 msgstr "家"
 
@@ -146,11 +146,11 @@ msgstr "RCV文件总数:"
 msgid "Hello"
 msgstr "你好"
 
-#: templates/base_generic.html:42
+#: templates/base_generic.html:38
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:44
+#: templates/base_generic.html:40
 msgid "Login"
 msgstr "登录"
 
@@ -184,6 +184,19 @@ msgstr "选择EXCEL文件"
 msgid "First Date"
 msgstr "第一次约会"
 
+#: warehouse_map/templates/warehouse_map/delete_date.html:20
+msgid "Delete items by date"
+msgstr "按日期删除项目"
+
+#: warehouse_map/templates/warehouse_map/delete_date.html:26
+#: warehouse_map/templates/warehouse_map/map.html:67
+msgid "Date"
+msgstr "日期"
+
+#: warehouse_map/templates/warehouse_map/delete_date.html:31
+msgid "Delete"
+msgstr "删除"
+
 #: warehouse_map/templates/warehouse_map/map.html:26
 msgid ""
 "Your internet browser doesn't support HTML canvas. Please use another one."
@@ -197,13 +210,25 @@ msgstr "数据类型"
 msgid "Floor Level"
 msgstr "楼层"
 
-#: warehouse_map/templates/warehouse_map/map.html:67
-msgid "Date"
-msgstr "日期"
-
 #: warehouse_map/templates/warehouse_map/map.html:72
 msgid "Previous Date"
 msgstr "上一个日期"
+
+#: warehouse_map/templates/warehouse_map/map.html:82
+msgid "Toggle msg box"
+msgstr "切换消息框"
+
+#: warehouse_map/templates/warehouse_map/map.html:86
+msgid "Reset Database"
+msgstr "重置数据库"
+
+#: warehouse_map/templates/warehouse_map/map.html:89
+msgid "Reset Database & Locations"
+msgstr "重置数据库和位置"
+
+#: warehouse_map/templates/warehouse_map/map.html:92
+msgid "Delete By Date"
+msgstr "按日期删除"
 
 #: warehouse_map/templates/warehouse_map/upload_excel_data.html:30
 msgid "Dates Uploaded"

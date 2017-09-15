@@ -79,14 +79,14 @@
 <ul class="menubar-side" id="menubarSide">
     <li class="menubar-side-item">
         <a class="side-link" href="#display-msg-div" data-toggle="collapse" aria-expanded="false" aria-controls="display-msg-div">
-            Toggle msg box
+            {% trans "Toggle msg box" %}
         </a>
     </li>
     <li class="menubar-side-item">
-        <a class="side-link" href="{% url 'warehouse_map:reset_db' %}">{% trans "Reset DB" %}</a>
+        <a class="side-link" href="{% url 'warehouse_map:reset_db' %}">{% trans "Reset Database" %}</a>
     </li>
     <li class="menubar-side-item">
-        <a class="side-link" href="{% url 'warehouse_map:reset_db_true' %}">{% trans "Reset DB & Locations" %}</a>
+        <a class="side-link" href="{% url 'warehouse_map:reset_db_true' %}">{% trans "Reset Database & Locations" %}</a>
     </li>
     <li class="menubar-side-item">
         <a class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
