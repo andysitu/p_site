@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 14:35-0700\n"
+"POT-Creation-Date: 2017-09-15 14:46-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,10 @@ msgstr "选择CUSTOMS DECLARATION PDF文件"
 msgid "RCV List"
 msgstr "RCV 列表"
 
+#: p_site/templates/p_site/index.html:15
+msgid "Warehouse Map"
+msgstr "仓库地图"
+
 #: rcv_list/forms.py:6 rcv_list/forms.py:13
 msgid "Select an RCV PDF File"
 msgstr "选择RCV PDF文件"
@@ -124,7 +128,7 @@ msgid "Month"
 msgstr "月:"
 
 #: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:77
+#: templates/base_generic.html:79
 msgid "Home"
 msgstr "家"
 
@@ -144,21 +148,25 @@ msgstr "RCV文件总数:"
 msgid "Hello"
 msgstr "你好"
 
-#: templates/base_generic.html:38
+#: templates/base_generic.html:39
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:40
+#: templates/base_generic.html:39
+msgid "User"
+msgstr "用户"
+
+#: templates/base_generic.html:42
 msgid "Login"
 msgstr "登录"
 
 #: templates/registration/logged_out.html:6
 msgid "You have logged out."
-msgstr ""
+msgstr "你已经注销了"
 
 #: templates/registration/logged_out.html:8
 msgid "Log in again"
-msgstr ""
+msgstr "再次登录"
 
 #: templates/registration/login.html:8
 msgid "Your username and password didn't match. Please try again."
