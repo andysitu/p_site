@@ -56,17 +56,17 @@
     width: 20%;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     padding: 4rem 0px 0px 0px;
     list-style: none;
-    border-left: 2px solid #ccc;
+    border-right: 2px solid #ccc;
     background-color: #7B7B7C;
-    overflow-y: scroll;
+    overflow-y: auto;
     z-index: 1050;
 
-    -webkit-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    transform: translateX(100%);
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
     -webkit-transition: 300ms ease;
     transition: 300ms ease;
 }
