@@ -29,8 +29,8 @@
 
 {% trans 'Dates Uploaded' %}:
 <ul class="list-group" id="upload-ul">
-    {% for date_inst in date_inst_list %}
-    <li class="list-group-item upload-dates-li">{{ date_inst.date }}</li>
+    {% for date in date_list %}
+    <li class="list-group-item upload-dates-li">{{ date }}</li>
     {% endfor %}
 </ul>
 
