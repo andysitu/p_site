@@ -39,7 +39,7 @@ function check_excel_file() {
     if (re_result == null || re_result[1].length != 14) {
         write_upload_msg(gettext("The file is named incorrectly. It should contain 14 numbers for year, month, day, hour, minute, and second."));
         return false;
-    } else if (re_result[2] != 'xlsx') {
+    } else if (re_result[2] != 'xlsx' && re_results[2] == 'xls') {
         write_upload_msg("The file should be an excel file, ending in XLSX.");
         return false;
     }
