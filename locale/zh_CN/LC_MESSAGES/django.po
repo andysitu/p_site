@@ -18,8 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: customs_list/forms.py:9
-#, fuzzy
-#| msgid "Select an Customs Declaration PDF File"
 msgid "Select a Customs Declaration PDF File"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
@@ -212,7 +210,7 @@ msgstr "楼层"
 
 #: warehouse_map/templates/warehouse_map/map.html:72
 msgid "Previous Date"
-msgstr "上一个日期"
+msgstr "以前的日期"
 
 #: warehouse_map/templates/warehouse_map/map.html:82
 msgid "Toggle msg box"
