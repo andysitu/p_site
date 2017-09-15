@@ -1,16 +1,18 @@
 {% extends 'base_generic.html' %}
 
+{% load i18n %}
+
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>{% trans "Your username and password didn't match. Please try again." %}</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your accoun't doesn't have access to this page. To procced, please login with one that does.</p>
+    <p>{% trans "Your accoun't doesn't have access to this page. To procced, please login with one that does." %}</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>{% trans "Please login to see this page." %}</p>
     {% endif %}
 {% endif %}
 
