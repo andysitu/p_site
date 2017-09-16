@@ -89,13 +89,24 @@
         <a class="side-link" href="{% url 'warehouse_map:reset_db_true' %}">{% trans "Reset Database & Locations" %}</a>
     </li>
     <li class="menubar-side-item">
-        <a id="date-del-a" class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
+        <a id="date-del-link" class="side-link" href="{% url 'warehouse_map:delete_date' %}">{% trans "Delete By Date" %}</a>
     </li>
 </ul>
 
 <ul class="menubar-side" id="del_menuSide">
-    <li class="menubar-side-item">
+    <li class="delmenu-side-item">
+        {% trans "Delete items by date" %}
+             {% csrf_token %}
 
+            <div class="form-group" id="date-del-select-div">
+                <label for="date-del-select">{% trans "Date" %}</label>
+                <select class="form-control" id="date-del-select"></select>
+            </div>
+
+            <button type="submit" id="date-del-submit" class="btn btn-primary">
+                {% trans "Delete" %}
+            </button>
+        </form>
     </li>
 </ul>
 

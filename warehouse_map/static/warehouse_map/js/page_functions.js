@@ -81,5 +81,5 @@ var page_functions = {
             }
         }
         return msg
-    }
+    },
 };

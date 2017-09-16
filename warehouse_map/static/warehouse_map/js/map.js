@@ -51,8 +51,9 @@ $( document ).ready(function() {
         $('.overlay').hide();
     });
 
-    $( '#date-del-a' ).click(function(e){
+    $( '#date-del-link' ).click(function(e){
         e.preventDefault();
+        map_ajax.fill_delMenu_date();
         $('#menubarSide').removeClass('reveal');
         $('#del_menuSide').addClass('reveal');
     });
