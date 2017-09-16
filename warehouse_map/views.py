@@ -73,16 +73,6 @@ def upload_excel_data(request):
     )
 
 @login_required
-def delete_date_page(request):
-    return render(
-        request,
-        'warehouse_map/delete_date.html',
-        context = {
-
-        }
-    )
-
-@login_required
 def reset_db(request):
     processor.reset_db()
     return redirect("warehouse_map:index")
