@@ -93,8 +93,6 @@ def process_excel_file(file):
         # Add item_data dictionary to item_dict
         item_code = item_data["item_code"]
 
-
-
         if location_code in location_dict:
             location_inst = location_dict[location_code]
         else:
