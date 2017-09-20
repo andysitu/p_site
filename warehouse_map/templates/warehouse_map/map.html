@@ -93,23 +93,7 @@
     </li>
 </ul>
 
-<ul class="menubar-side" id="menu-screen-container">
-    <li class="menu-side-item">
-        <form class="form-group">
-        {% trans "Delete items by date" %}
-             {% csrf_token %}
-
-            <div class="form-group" id="date-del-select-div">
-                <label for="date-del-select">{% trans "Date" %}</label>
-                <select class="form-control" id="date-del-select"></select>
-            </div>
-
-            <button type="submit" id="date-del-submit" class="btn btn-primary">
-                {% trans "Delete" %}
-            </button>
-        </form>
-    </li>
-</ul>
+<div class="menubar-side" id="menu-screen-container"></div>
 
 <div class="overlay"></div>
 {% endblock %}

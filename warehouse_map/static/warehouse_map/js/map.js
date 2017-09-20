@@ -56,7 +56,7 @@ $( document ).ready(function() {
     // Click on Delete items by date link
     $( '#date-del-link' ).click(function(e){
         e.preventDefault();
-        page_functions.fill_delmenu()
+        page_functions.fill_delmenu();
         map_ajax.fill_delMenu_date();
         $('#menu-setting').removeClass('reveal');
         $('#menu-screen-container').addClass('reveal');

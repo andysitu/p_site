@@ -24,7 +24,32 @@ var page_functions = {
         map_ajax.change_data_type_select();
     },
     fill_delmenu: function() {
+        var $menu_container = $( '#menu-screen-container'),
+            $form_group = $("<form></form>"),
+            $date_select_div = $("<form>", {
+                id: "date-del-select-div",});
 
+        $("<label>", {
+            for: "date-del-select",
+            text: gettext('Date'),
+        })
+            .appendTo($date_select_div);
+        $("<select>", {
+            "class": "form-control",
+            id: "date-del-select",
+        })
+            .appendTo($date_select_div);
+
+        var $date_del_but = $("<button>", {
+            "type": "submit",
+            id: "date-del-submit",
+            "class": "btn btn-primary",
+            "text": gettext("Delete"),
+        });
+
+        $form_group.append($date_select_div);
+        $form_group.append($date_del_but);
+        $menu_container.append($form_group);
     },
 
     display_loc_info: function(location, info_dic) {
