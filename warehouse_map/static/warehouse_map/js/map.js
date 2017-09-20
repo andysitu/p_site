@@ -49,7 +49,7 @@ $( document ).ready(function() {
 
     $('.overlay').on('click', function() {
         $('#menu-setting').removeClass('reveal');
-        $('#del_menuSide').removeClass('reveal');
+        $('#menu-screen-container').removeClass('reveal');
         $('.overlay').hide();
     });
 
@@ -59,7 +59,7 @@ $( document ).ready(function() {
         page_functions.fill_delmenu()
         map_ajax.fill_delMenu_date();
         $('#menu-setting').removeClass('reveal');
-        $('#del_menuSide').addClass('reveal');
+        $('#menu-screen-container').addClass('reveal');
     });
 });
 
