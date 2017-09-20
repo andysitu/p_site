@@ -34,7 +34,7 @@
 
 {% block settings %}
 <li>
-    <button class="navbar-toggler" id="menubarSideButton" type="button">
+    <button class="navbar-toggler" id="menu-settingButton" type="button">
         <i class="fa fa-cog" aria-hidden="true"></i>
     </button>
 </li>
@@ -76,7 +76,7 @@
     <button type="submit" id="map-submit-button" class="btn btn-primary">Search</button>
 </form>
 
-<ul class="menubar-side" id="menubarSide">
+<ul class="menubar-side" id="menu-setting">
     <li class="menubar-side-item">
         <a class="side-link" href="#display-msg-div" data-toggle="collapse" aria-expanded="false" aria-controls="display-msg-div">
             {% trans "Toggle msg box" %}
@@ -94,7 +94,8 @@
 </ul>
 
 <ul class="menubar-side" id="del_menuSide">
-    <li class="delmenu-side-item">
+    <li class="menu-side-item">
+        <form class="form-group">
         {% trans "Delete items by date" %}
              {% csrf_token %}
 

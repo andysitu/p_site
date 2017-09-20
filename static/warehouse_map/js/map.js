@@ -40,21 +40,25 @@ $( document ).ready(function() {
         }
     );
 
-    $('#menubarSideButton').on('click', function() {
-        $('#menubarSide').addClass('reveal');
+    // Add Event handlers for sidemenu
+
+    $('#menu-settingButton').on('click', function() {
+        $('#menu-setting').addClass('reveal');
         $('.overlay').show();
     });
 
     $('.overlay').on('click', function() {
-        $('#menubarSide').removeClass('reveal');
+        $('#menu-setting').removeClass('reveal');
         $('#del_menuSide').removeClass('reveal');
         $('.overlay').hide();
     });
 
+    // Click on Delete items by date link
     $( '#date-del-link' ).click(function(e){
         e.preventDefault();
+        page_functions.fill_delmenu()
         map_ajax.fill_delMenu_date();
-        $('#menubarSide').removeClass('reveal');
+        $('#menu-setting').removeClass('reveal');
         $('#del_menuSide').addClass('reveal');
     });
 });

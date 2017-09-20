@@ -23,6 +23,9 @@ var page_functions = {
         map_ajax.set_date_input();
         map_ajax.change_data_type_select();
     },
+    fill_delmenu: function() {
+
+    },
 
     display_loc_info: function(location, info_dic) {
         /**
