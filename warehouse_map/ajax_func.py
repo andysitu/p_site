@@ -52,3 +52,6 @@ def get_map_search_info(request):
         data_dic = processor.get_item_shipped_map(loc, date_1_id, date_2_id, level)
 
     return JsonResponse(data_dic, safe=False)
+
+def delete_by_date(request):
+    return JsonResponse({}, safe=False)

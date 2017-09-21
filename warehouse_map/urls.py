@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^request_grid_map_ajax/$', ajax_func.get_grid_ajax, name="request_grid_map_ajax"),
     url(r'^request_date_ajax/$', ajax_func.get_proc_dates, name="request_date_ajax"),
     url(r'^request_map_search_info_ajax/$', ajax_func.get_map_search_info, name="request_map_search_info"),
+    url(r'^date_del_ajax/$', ajax_func.delete_by_date, name="date_by_date"),
 ]

@@ -106,11 +106,10 @@ var menu_screen = {
             $form_group = $("<form>", {
                 id: "date-del-form",
                 method: "post",
-                action: "/test/",
+                action: date_del_url,
             }),
             $date_select_div = $("<div>", {
                 id: "date-del-select-div",
-
             });
 
         $("<label>", {
@@ -142,7 +141,6 @@ var menu_screen = {
             console.log($date_del_select.val());
             console.log($form_group.attr("method"));
             console.log($form_group.attr("action"));
-            console.log($form_group.serialize());
         })
     },
 };
