@@ -1,4 +1,17 @@
 var map_ajax = {
+    csrf_it: function() {
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !self.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    },
     get_data_select_type: function(data_type){
         // Key represents data name
         // Value is whether a second date is needed
@@ -149,17 +162,7 @@ var map_ajax = {
             return 0;
         }
 
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !self.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
+        this.csrf_it();
         for (i = 0; i < map_data_length; i++) {
             var map_data_dic = map_data_arr[i];
             $.ajax({
@@ -216,6 +219,25 @@ var map_ajax = {
                     }));
                 }
             }
+        });
+    },
+    submit_date_del: function(e) {
+        var $form_group = $('#date-del-form');
+
+        this.csrf_it();
+
+        $.ajax({
+            type: $form_group.attr("method"),
+            url: $form_group.attr("action"),
+            data: $form_group.serialize(),
+            success: function(data) {
+                window.location.reload(true);
+            },
+            error: function(data) {
+                page_functions.write_msg("ERROR in deleting by date");
+                console.log("ERROR in ajax date del");
+                console.log("DATA", data);
+            },
         });
     },
 };

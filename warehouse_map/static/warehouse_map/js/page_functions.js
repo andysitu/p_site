@@ -120,6 +120,7 @@ var menu_screen = {
         var $date_del_select = $("<select>", {
             "class": "form-control",
             id: "date-del-select",
+            name: "delete_date",
         })
             .appendTo($date_select_div);
 
@@ -135,12 +136,9 @@ var menu_screen = {
         $menu_container.append($form_group);
 
         $form_group.submit(function(e) {
-            var $form_group = $('#date-del-form');
-
             e.preventDefault();
-            console.log($date_del_select.val());
-            console.log($form_group.attr("method"));
-            console.log($form_group.attr("action"));
-        })
+
+            map_ajax.submit_date_del();
+        });
     },
 };
