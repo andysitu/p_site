@@ -103,16 +103,22 @@ var menu_screen = {
     },
     fill_delmenu: function() {
         var $menu_container = $( '#menu-screen-container'),
-            $form_group = $("<form></form>"),
-            $date_select_div = $("<form>", {
-                id: "date-del-select-div",});
+            $form_group = $("<form>", {
+                id: "date-del-form",
+                method: "post",
+                action: "/test/",
+            }),
+            $date_select_div = $("<div>", {
+                id: "date-del-select-div",
+
+            });
 
         $("<label>", {
             for: "date-del-select",
             text: gettext('Date'),
         })
             .appendTo($date_select_div);
-        $("<select>", {
+        var $date_del_select = $("<select>", {
             "class": "form-control",
             id: "date-del-select",
         })
@@ -128,5 +134,15 @@ var menu_screen = {
         $form_group.append($date_select_div);
         $form_group.append($date_del_but);
         $menu_container.append($form_group);
+
+        $form_group.submit(function(e) {
+            var $form_group = $('#date-del-form');
+
+            e.preventDefault();
+            console.log($date_del_select.val());
+            console.log($form_group.attr("method"));
+            console.log($form_group.attr("action"));
+            console.log($form_group.serialize());
+        })
     },
 };
