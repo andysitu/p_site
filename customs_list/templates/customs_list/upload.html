@@ -11,13 +11,13 @@
 
 <form action="{% url 'customs_list:upload' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>{{ rcvform.non_field_errors }}</p>
-    <p>{{ rcvform.rcvfile.label_tag }} {{ rcvform.rcvfile.help_text }}</p>
+    <p>{{ uploadform.non_field_errors }}</p>
+    <p>{{ rcvform.rcvfile.help_text }}</p>
     <p>
-        {{ rcvform.rcvfile.errors }}
-
-    {{ uploadform }}
+        {{ uploadform.customs_file.errors }}
     </p>
+
+    {{ uploadform.as_p }}
 
     <p><input type="submit" value="{% trans 'Upload' %}" /></p>
 </form>
