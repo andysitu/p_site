@@ -282,3 +282,9 @@ def loc_inst_to_jsloccode(loc_inst):
         else:
             area_code = "VA"
     return warehouse_code + "." + area_code + "." + aisle_code + "." + column_code
+
+def delete_by_date(date_id):
+    data_date = DataDate.objects.get(id=date_id)
+    data_date.delete()
+    # It cascades to Items by foreign key association
+    return data_date

@@ -55,4 +55,7 @@ def get_map_search_info(request):
 
 def delete_by_date(request):
     data_date_id = request.POST.get("delete_date")
-    return JsonResponse({"test": data_date_id}, safe=False)
+
+    d = processor.delete_by_date(data_date_id)
+
+    return JsonResponse({"test": d.date}, safe=False)
