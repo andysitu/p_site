@@ -130,7 +130,6 @@ def upload_file(request):
 
                 rcv = RCV(rcvfile=file, filename=filename, rcv_date=d)
                 rcv.save()
-            # rcvform.save()
 
             return HttpResponseRedirect(reverse('rcv_list:upload'))
     else:
@@ -145,6 +144,7 @@ def upload_file(request):
     )
 
 def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None, page=None):
+# Actually uploads the pdf tile to the server
     rcv_foldername = get_foldername()
     filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, filename)
 
@@ -174,7 +174,8 @@ def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None,
 def upload_or_match_pdfs():
     pass
 
-def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, original_filename="Unknown.pdf"):
+def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, original_filename="Unknown.pdf", input_date=None):
+# Saves the RCV to the model.
 # Returns an RCV instance if a new one was created,
 #   returns the filename string if one already exists
 
@@ -186,14 +187,17 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, 
                                filename=filename,
                                rcv_date=d,
                                correct_name=True,
-                               original_filename=original_filename
+                               original_filename=original_filename,
+                               input_date=input_date,
                                )
-            rcv_instance.save()
         else:
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename =filename,
-                               original_filename=original_filename)
-            rcv_instance.save()
+                               original_filename=original_filename,
+                               input_date=input_date,
+                               )
+
+        rcv_instance.save()
 
         return rcv_instance
     else:
@@ -204,6 +208,7 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, 
 def upload_files(request):
     if request.method == 'POST':
         rcv_batchform = UploadRCVs(request.POST, request.FILES,)
+
         if rcv_batchform.is_valid():
             folder_name = get_foldername()
             rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
@@ -241,14 +246,19 @@ def upload_files(request):
                         d_microsec = str(d.microsecond)
                         rcv_number = '00' + d_year + d_month + d_day + d_hour + d_min + d_sec + d_microsec
 
+                    if request.POST.get("input_date_status") == "on":
+                        input_date = request.POST.get("input_date")
+                    else:
+                        input_date = None
+
                     filename = rcv_number + '.pdf'
-                    response = add_get_rcv_instance(rcv_number, filename, year, month, day, original_filename=original_filename)
+                    response = add_get_rcv_instance(rcv_number, filename, year, month, day, original_filename=original_filename,input_date=input_date)
                     if type(response) == str:
                         file_exist_status = True
                     else:
                         file_exist_status = False
 
-                    upload_or_match_pdf(file_exist_status, filename, pdfReader, page=pageNum)
+                    upload_or_match_pdf(file_exist_status, filename, pdfReader, page=pageNum,)
 
     else:
         rcv_batchform = UploadRCVs()

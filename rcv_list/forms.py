@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy
 
+import datetime
+
 class UploadRCV(forms.Form):
     rcvfile = forms.FileField(
         label=gettext_lazy("Select an RCV PDF File"),
@@ -13,6 +15,16 @@ class UploadRCVs(forms.Form):
         label=gettext_lazy("Select an RCV PDF File"),
         help_text='',
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
+    )
+
+    input_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}),
+                                  initial=datetime.date.today,
+                                  label=gettext_lazy("Input Date"))
+
+    input_date_status = forms.BooleanField(
+        label=gettext_lazy("Input Date"),
+        initial=True,
+        required=False,
     )
 
 class XMLRequestForm(forms.Form):

@@ -15,6 +15,7 @@ class RCV(models.Model):
     correct_name = models.BooleanField(default=False)
     upload_date = models.DateTimeField(default=django.utils.timezone.now)
     original_filename = models.CharField(max_length=50, default='Unknown.pdf')
+    input_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.rcv_number
