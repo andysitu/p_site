@@ -5,8 +5,8 @@ from . import views
 app_name = "uploader"
 urlpatterns = [
     # url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.view_files, name="view_files"),
-    # url(r'^$', views.view_dates, name="view_dates"),
-    # url(r'^index/$', views.view_dates, name="index"),
+    url(r'^$', views.view_files,),
+    url(r'^index/$', views.view_files, name="index"),
     # url(r'^all/$', views.all_index, name="all_index"),
     # url(r'^download_rcv/(?P<rcv_filename>.+)$', views.download_rcv, name="download_rcv"),
     # url(r'^view_rcv/(?P<rcv_filename>.+)$', views.view_rcv, name="view_rcv"),

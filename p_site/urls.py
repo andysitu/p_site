@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^customs_list/', include('customs_list.urls')),
     url(r'^rcv_list/', include('rcv_list.urls')),
     url(r'^warehouse_map/', include('warehouse_map.urls')),
+    url(r'^uploader/', include('uploader.urls')),
     url(r'^$', views.index),
     url(r'^index/$', views.index, name="index"),
     url(r'^set_language/(?P<language>.+)/$', views.setlanguage, name="set_language"),
