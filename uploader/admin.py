@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import UFileManager, UFile, Note
 
-# Register your models here.
+admin.site.register(UFile)
+
+admin.site.register(UFileManager)
+
+# admin.site.register(Note)
