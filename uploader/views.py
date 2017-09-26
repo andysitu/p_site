@@ -13,7 +13,7 @@ import os
 
 def view_files(request):
     filemanager_list = []
-    for file_manager in filemanager_list:
+    for file_manager in UFileManager.objects.all():
         filemanager_list.append(file_manager.name)
 
     return render(
