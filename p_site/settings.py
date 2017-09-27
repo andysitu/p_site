@@ -69,8 +69,7 @@ ROOT_URLCONF = 'p_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', 'p_site/templates', 'customs_list/templates',
-                 'rcv_list/templates', 'warehouse_map/templates', 'uploader/templates',
+        'DIRS': ['./templates', 'p_site/templates',
                  ],
         'APP_DIRS': True,
         'OPTIONS': {

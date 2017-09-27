@@ -13,7 +13,7 @@ import urllib
 
 import os, re
 
-import django.utils.encoding as e
+from django.utils.encoding import smart_str
 
 def view_files(request):
 
@@ -96,8 +96,10 @@ def download_file(request, filemanager_id):
     filepath = os.path.relpath(ufile.get_filepath())
     # print(filename.encode('utf-8'), filemanager.name.encode('utf-8'))
 
-    response = HttpResponse()
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    response = HttpResponse(content_type='application/force-download; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename.encode("unicode-escape").decode('unicode-escape')
+    print(filename.encode("unicode-escape").decode("unicode-escape"))
+    print('attachment; filename="%s"' % filename.encode("unicode-escape").decode('unicode-escape'))
     response['X-Accel-Redirect'] = "/media/uploader/" + str(filemanager.id) + "/" + str(ufile.id) + ufile.file_extensions
-    # response['X-Accel-Redirect'] = filepath
     return response
