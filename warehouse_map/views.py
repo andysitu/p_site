@@ -124,8 +124,8 @@ def create_grids():
                 prev_x = next_x
                 double_rack_status = True
 
-            f_grid.add_rack_aisle(next_x, 0, True, f_loc_sub + str(i+2), 13, 13, True)
-            f_grid.add_rack_aisle(next_x, 13*4+4, True, va_loc_sub + str(i+2), 14, 14, True)
+            f_grid.add_rack_aisle(next_x, 0, True, va_loc_sub + str(i+2), 13, 13, True)
+            f_grid.add_rack_aisle(next_x, 13*4+4, True, f_loc_sub + str(i+2), 14, 14, True)
 
         f_grid.save()
 
