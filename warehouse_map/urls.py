@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'upload_excel/$', views.upload_excel_data, name="upload_excel_data"),
     url(r'^reset_db/$', views.reset_db, name="reset_db"),
     url(r'^reset_db_true/$', views.reset_db_true, name="reset_db_true"),
+    url(r'^reset_grid/$', views.reset_grid_map, name="reset_grid_map"),
     url(r'^get_info/$', views.get_info, name="get_info"),
 
     url(r'^request_grid_map_ajax/$', ajax_func.get_grid_ajax, name="request_grid_map_ajax"),

@@ -83,6 +83,11 @@ def reset_db_true(request):
     delete_grids()
     return redirect("warehouse_map:index")
 
+@login_required
+def reset_grid_map(request):
+    delete_grids()
+    return redirect("warehouse_map:index")
+
 def get_info(request):
     d = processor.get_info()
 
