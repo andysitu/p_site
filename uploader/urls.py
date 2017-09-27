@@ -19,4 +19,6 @@ urlpatterns = [
     #
     # url(r'^edit_list/$', views.view_edit_list, name="edit_list"),
     # url(r'^search_rcv/?$', views.search_rcv, name="search_rcv"),
+
+    url(r'^download_file/(?P<filemanager_id>\d+)/$', views.download_file, name="download_file"),
 ]

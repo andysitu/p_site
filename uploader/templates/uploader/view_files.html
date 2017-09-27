@@ -6,6 +6,8 @@
 
 {% load static %}
 
+<script type="text/javascript" src="{% static 'uploader/js/view_files.js' %}"></script>
+<link rel="stylesheet" href="{% static 'uploader/css/view_files.css' %}" />
 <!--<link rel="stylesheet" type="text/css" href="{% static 'css/rcv_list_styles.css' %}">-->
 
 <!--{% trans "RCV List" as rcv_list_word %}-->
@@ -25,14 +27,18 @@
 
     <!--<script src="{% static 'js/index_page.js' %}"></script>-->
 
-    {% for filemanager_name in filemanager_list %}
+    {% for filemanager in filemanager_list %}
     <li>
-        {{ filemanager_name }}
+        <a href="{% url 'uploader:download_file' filemanager.id %}" id="{{ filemanager }}-view-link" target="_new">{{ filemanager.name }}</a>
     </li>
     {% endfor %}
 {% else %}
     <li>There are no files uploaded.</li>
 {% endif %}
 </ul>
+
+<div class="menu-screen" id="menu-screen-container"></div>
+
+<div class="overlay"></div>
 
 {% endblock %}

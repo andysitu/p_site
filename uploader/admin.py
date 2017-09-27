@@ -5,4 +5,4 @@ admin.site.register(UFile)
 
 admin.site.register(UFileManager)
 
-# admin.site.register(Note)
+admin.site.register(Note)

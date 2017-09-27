@@ -9,18 +9,21 @@ from django.urls import reverse
 from .models import UFileManager, UFile, Note
 from .forms import UploadFile
 
-import os
+import urllib
+
+import os, re
+
+import django.utils.encoding as e
 
 def view_files(request):
-    filemanager_list = []
-    for file_manager in UFileManager.objects.all():
-        filemanager_list.append(file_manager.name)
+
+    filemanagers = UFileManager.objects.all()
 
     return render(
         request,
         "uploader/view_files.html",
-        {
-            "filemanager_list": filemanager_list,
+        context={
+            "filemanager_list": filemanagers,
         }
     )
 
@@ -30,17 +33,31 @@ def upload_file(request):
         uploadfile_form = UploadFile(request.POST, request.FILES,)
         if uploadfile_form.is_valid():
 
+            name = request.POST["name"]
+            note = request.POST["note"]
+
+            if note != "":
+                n = Note(text=note)
+                n.save()
+
+            file_ext_re = re.compile('(\..+)$')
+
             # form hands request.FILES
             for file in request.FILES.getlist('file'):
                 filename = file.name
+                print(file_ext_re.search(filename))
+                file_ext = file_ext_re.search(filename).group(0)
 
-                ufilemanager = UFileManager(name=filename)
+                if file_ext == None:
+                    file_ext = ""
+
+                ufilemanager = UFileManager(name=name)
                 ufilemanager.save()
 
-                ufile = UFile(filename=filename, file_manager = ufilemanager)
+                ufile = UFile(filename=filename, file_manager = ufilemanager, file_extensions=file_ext)
                 ufile.save()
 
-                make_file(file, filename, filename)
+                make_file(file, filename=str(ufile.id) + file_ext, folder=str(ufilemanager.id))
 
             return HttpResponseRedirect(reverse('uploader:upload_file'))
     else:
@@ -69,3 +86,18 @@ def make_file(file, filename, folder):
     f = open(filename, 'wb')
     f.write(file.read())
     f.close()
+
+def download_file(request, filemanager_id):
+    filemanager = UFileManager.objects.get(id=filemanager_id)
+    ufiles = filemanager.ufile_set.all()
+
+    ufile = ufiles[0]
+    filename = ufile.filename
+    filepath = os.path.relpath(ufile.get_filepath())
+    # print(filename.encode('utf-8'), filemanager.name.encode('utf-8'))
+
+    response = HttpResponse()
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    response['X-Accel-Redirect'] = "/media/uploader/" + str(filemanager.id) + "/" + str(ufile.id) + ufile.file_extensions
+    # response['X-Accel-Redirect'] = filepath
+    return response

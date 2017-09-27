@@ -5,7 +5,6 @@
 {% block head %}
     {% load static %}
 
-    <!--<link rel="stylesheet" href="{% static 'css/rcv_list_styles.css' %}">-->
 {% endblock %}
 
 {% block home_link %}
@@ -13,7 +12,5 @@
 {% endblock %}
 
 {% block sidebar_links %}
-<!--<li><a href="{% url 'rcv_list:edit_list' %}">{% trans "View To-Edit Files" %}</a></li>-->
 <li><a href="{% url 'uploader:upload_file' %}">{% trans "Upload File" %}</a></li>
-<!--<li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>-->
 {% endblock %}
