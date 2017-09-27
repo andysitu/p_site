@@ -96,10 +96,14 @@ def download_file(request, filemanager_id):
     filepath = os.path.relpath(ufile.get_filepath())
     # print(filename.encode('utf-8'), filemanager.name.encode('utf-8'))
 
+    # with open(filepath, 'rb') as fh:
+    #     response = HttpResponse(fh.read(), content_type='application/force-download')
+    #     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    #     print(response['Content-Disposition'])
+    #     return response
 
     response = HttpResponse(content_type='application/force-download; charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="%s"' % filename.encode("unicode-escape").decode('unicode-escape')
-    print(filename.encode("unicode-escape").decode("unicode-escape"))
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
     print('attachment; filename="%s"' % filename.encode("unicode-escape").decode('unicode-escape'))
     response['X-Accel-Redirect'] = "/media/uploader/" + str(filemanager.id) + "/" + str(ufile.id) + ufile.file_extensions
     return response
