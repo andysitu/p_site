@@ -11,6 +11,8 @@ from django.utils.timezone import activate
 from django.conf import settings
 
 def process_excel_file(file):
+
+    print(datetime.datetime.now())
     activate(settings.TIME_ZONE)
     filename = file.name
 
@@ -74,7 +76,10 @@ def process_excel_file(file):
 
     unknown_rack_location = Location.objects.get(loc="Unknown")
 
+    items_list = []
     for row in range(1, worksheet.nrows):
+    # for row in range(1, 1000):
+
         item_data = {}
 
         # for key, col in item_map.items():
@@ -126,8 +131,10 @@ def process_excel_file(file):
                   data_date=data_date,
                   **item_data
                   )
-        i.save()
-
+        # i.save()
+        items_list.append(i)
+    it = Items.objects.bulk_create(items_list, batch_size=2000)
+    print(datetime.datetime.now())
     return "Done"
 
 def reset_db(delete_rack = False):
