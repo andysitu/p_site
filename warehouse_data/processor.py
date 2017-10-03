@@ -64,9 +64,9 @@ def process_excel_file(file):
         (42, "avail_quantity", int,),
     }
 
-    rack_loc_query = Location.objects.all()
-    if not rack_loc_query:
-        populate_rack_location()
+    # rack_loc_query = Location.objects.all()
+    # if not rack_loc_query:
+    #     populate_rack_location()
 
     location_dict = {}
     item_list = []
@@ -74,7 +74,7 @@ def process_excel_file(file):
     loc_regex = re.compile(
         '(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
 
-    unknown_rack_location = Location.objects.get(loc="Unknown")
+    # unknown_rack_location = Location.objects.get(loc="Unknown")
 
     items_list = []
     for row in range(1, worksheet.nrows):
@@ -123,7 +123,15 @@ def process_excel_file(file):
                                                      level=level,
                                                      )
             except Location.DoesNotExist:
-                location_inst = unknown_rack_location
+                # location_inst = unknown_rack_location
+                location_inst = Location(warehouse_location=warehouse_location,
+                                         area=area,
+                                         aisle_letter=aisle_letter,
+                                         aisle_num=aisle_num,
+                                         column=column,
+                                         level=level,
+                                         )
+                location_inst.save()
 
             location_dict[location_code] = location_inst
 
@@ -144,7 +152,7 @@ def reset_db(delete_rack = False):
 
     if delete_rack:
         delete_all_rack_location()
-        populate_rack_location()
+        # populate_rack_location()
 
 def get_datadates(num_dates=0):
     dates = DataDate.objects.order_by('-date')
@@ -153,11 +161,11 @@ def get_datadates(num_dates=0):
     return dates
 
 def get_info():
-    unknown_location = Location.objects.get(loc="Unknown")
+    # unknown_location = Location.objects.get(loc="Unknown")
     start = time.time()
     datadate = DataDate.objects.all().order_by('-date')[0]
     # items_query = datadate.items_set.all()
-    items_query = Items.objects.filter(data_date=datadate).exclude(rack_location=unknown_location)
+    items_query = Items.objects.filter(data_date=datadate)
 
     count = 0
     item_count = 0
