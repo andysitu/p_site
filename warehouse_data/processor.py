@@ -4,11 +4,12 @@ from django.core.files.base import ContentFile
 import uuid
 
 from .models import Location, DataDate, Items, DataDate, \
-    populate_rack_location, delete_all_rack_location
+    make_location, delete_all_rack_location
 
 import re, datetime, time, pytz
 from django.utils.timezone import activate
 from django.conf import settings
+from django import db
 
 def process_excel_file(file):
 
@@ -52,13 +53,16 @@ def process_excel_file(file):
         return str(desc)[:100]
 
     column_map = {
+        # Name has to mach Items model values
         (0, "item_id", int,),
         (2, "location_code", str,),
+        (6, "lab_id", str,),
         (9, "fifo_date", get_date_from_xlrd,),
         (18, "iv_create_date", get_date_from_xlrd),
         (13, "rcv", str,),
         (27, "item_code", str,),
         (28, "ship_quantity", int,),
+        (31, "item_weight", float,),
         (39, "description", cut_description_length,),
         (40, "customer_code", int,),
         (42, "avail_quantity", int,),
@@ -124,14 +128,13 @@ def process_excel_file(file):
                                                      )
             except Location.DoesNotExist:
                 # location_inst = unknown_rack_location
-                location_inst = Location(warehouse_location=warehouse_location,
+                location_inst = make_location(warehouse_location=warehouse_location,
                                          area=area,
                                          aisle_letter=aisle_letter,
                                          aisle_num=aisle_num,
                                          column=column,
                                          level=level,
                                          )
-                location_inst.save()
 
             location_dict[location_code] = location_inst
 
@@ -142,6 +145,7 @@ def process_excel_file(file):
         # i.save()
         items_list.append(i)
     it = Items.objects.bulk_create(items_list, batch_size=2000)
+    db.reset_queries()
     print(datetime.datetime.now())
     return "Done"
 

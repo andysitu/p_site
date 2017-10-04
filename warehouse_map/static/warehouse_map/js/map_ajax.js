@@ -39,10 +39,10 @@ var map_ajax = {
                     }));
             }
 
-            map_ajax.check_date_input2_hidden()
+            map_ajax.check_date_input2_hidden();
         };
 
-        create_options()
+        create_options();
     },
     set_level_input: function(maxLevel) {
         if (maxLevel == null)
@@ -85,7 +85,7 @@ var map_ajax = {
             }
             level_input.val(level);
         };
-        create_options(maxLevel)
+        create_options(maxLevel);
 
         $( '#minus-level' ).click(decrease_level);
 
@@ -145,7 +145,6 @@ var map_ajax = {
     },
 
     map_search: function(map_data_arr){
-
         var level           = $("#level-select").val(),
             data_type       = $("#data-type-select").val(),
             date_1_inst_id  = $("#date-select").val(),

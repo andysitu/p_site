@@ -44,7 +44,7 @@ def get_map_search_info(request):
     date_1_id = request.POST.get("date_1_inst_id")
     date_2_id = request.POST.get("date_2_inst_id")
     loc = request.POST.get("loc")
-
+    
     data_dic = {}
     if data_type == "Item Count":
         data_dic = processor.get_item_count_map(loc, date_1_id, level)
