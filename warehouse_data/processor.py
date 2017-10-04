@@ -145,7 +145,7 @@ def process_excel_file(file):
         # i.save()
         items_list.append(i)
     it = Items.objects.bulk_create(items_list, batch_size=2000)
-    db.reset_queries()
+    # db.reset_queries()
     print(datetime.datetime.now())
     return "Done"
 
