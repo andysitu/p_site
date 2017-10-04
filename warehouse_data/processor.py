@@ -222,6 +222,7 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
     d_1 = datadate_1.date
     d_2 = datadate_2.date
 
+    # Check whether date_1 or date_2 is older.
     if d_1 == d_2:
         return {}
     if d_1 > d_2:
@@ -231,25 +232,43 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         newer_datadate = datadate_2
         older_datadate = datadate_1
 
-    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc)
+    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc).select_related('rack_location')
     item_query_newer = Items.objects.filter(data_date=newer_datadate).select_related('rack_location')
 
     if level != "All":
         item_query_older = item_query_older.filter(rack_location__level=level)
     item_query_older = item_query_older.select_related('rack_location')
 
-    newerItem_Amount_dic = {}
+    labId_newerItem_dic = {}
+    labId_olderItem_dic = {}
+    labId_older_iteminst_dic = {}
     for item in item_query_newer:
-        newerItem_Amount_dic[item.item_id] = item.avail_quantity + item.ship_quantity
-
+        lid = item.lab_id
+        if lid in labId_newerItem_dic:
+            labId_newerItem_dic[lid] += item.avail_quantity + item.ship_quantity
+        else:
+            labId_newerItem_dic[lid] = item.avail_quantity + item.ship_quantity
     for item in item_query_older:
-        itemId = item.item_id
-        js_loc_code = loc_inst_to_jsloccode(item.rack_location)
-        item_code = item.item_code
-        item_quantity = item.avail_quantity + item.ship_quantity
+        lid = item.lab_id
+        if lid in labId_olderItem_dic:
+            labId_olderItem_dic[lid] += item.avail_quantity + item.ship_quantity
+        else:
+            labId_olderItem_dic[lid] = item.avail_quantity + item.ship_quantity
+        # New items in excel are read first, so older items will replace older
+        #   ones in lab_id_loc_dic.
 
-        if itemId in newerItem_Amount_dic:
-            difference = item_quantity - newerItem_Amount_dic[itemId]
+        labId_older_iteminst_dic[lid] = item
+
+    for lab_id in labId_olderItem_dic:
+        item_inst = labId_older_iteminst_dic[lab_id]
+
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+
+        item_code = item_inst.item_code
+        item_quantity = labId_olderItem_dic[lab_id]
+
+        if lab_id in labId_newerItem_dic:
+            difference = item_quantity - labId_newerItem_dic[lab_id]
         else:
             difference = item_quantity
         if difference == 0:
@@ -258,7 +277,7 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}, "total": 0}
 
-        location = item.location_code
+        location = item_inst.location_code
         if location not in data_dic[js_loc_code]["items"]:
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
@@ -273,6 +292,8 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
     return data_dic
 
 def loc_inst_to_jsloccode(loc_inst):
+    # Returns the loc_code used in js component
+    #   (Location code, without the level implemented).
     warehouse_code = "USLA"
     area_code = ""
     aisle_code = str(loc_inst.aisle_num)
