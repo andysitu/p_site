@@ -19,11 +19,47 @@ class Location(models.Model):
                    str(self.column) + "." + str(self.level)
         return loc_name
 
+def make_location(warehouse_location, area, aisle_letter, aisle_num, column, level):
+    location_inst = Location(warehouse_location=warehouse_location,
+                             area=area,
+                             aisle_letter=aisle_letter,
+                             aisle_num=aisle_num,
+                             column=column,
+                             level=level,
+                             )
+    loc = ''
+    if area == "PH" or area == "PA":
+        loc = "P"
+    elif area == "S":
+        loc = "S"
+    elif area == "F":
+        loc = "F"
+    elif area == "VA" or area == "VB":
+        if aisle_num == 44:
+            loc = "VC"
+        else:
+            loc = "F"
+    elif area == "VC" or area == "VD":
+        loc = "VC"
+    elif area == "H":
+        if aisle_letter == "H":
+            loc = "S"
+        elif aisle_num == 8:
+            loc = "S"
+        elif aisle_num <= 6:
+            loc = "VC"
+    location_inst.loc = loc
+
+    location_inst.save()
+    return location_inst
+
 class DataDate(models.Model):
     date = models.DateTimeField()
 
 class Items(models.Model):
     item_id = models.IntegerField()
+    lab_id = models.CharField(max_length = 20, default = "")
+    item_weight = models.FloatField(default = 0)
     avail_quantity = models.IntegerField()
     ship_quantity = models.IntegerField()
     location_code = models.CharField(max_length=20, default="")
