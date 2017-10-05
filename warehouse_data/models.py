@@ -58,7 +58,7 @@ class DataDate(models.Model):
 
 class Items(models.Model):
     item_id = models.IntegerField()
-    # lab_id = models.IntegerField(max_length = 20, default = "")
+    lab_id = models.IntegerField(default = 0)
     item_weight = models.FloatField(default = 0)
     avail_quantity = models.IntegerField()
     ship_quantity = models.IntegerField()
