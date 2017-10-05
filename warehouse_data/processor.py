@@ -42,6 +42,10 @@ def process_excel_file(file):
     data_date = DataDate(date=d)
     data_date.save()
 
+    def convert_lab_id(id_string):
+        return int(float(id_string))
+
+
     def get_date_from_xlrd(date_string):
         # d = xlrd.xldate.xldate_as_datetime(date_string, workbook.datemode)
         timezone = pytz.timezone('Asia/Hong_Kong')
@@ -56,7 +60,7 @@ def process_excel_file(file):
         # Name has to mach Items model values
         (0, "item_id", int,),
         (2, "location_code", str,),
-        (6, "lab_id", str,),
+        (6, "lab_id", convert_lab_id,),
         (9, "fifo_date", get_date_from_xlrd,),
         (18, "iv_create_date", get_date_from_xlrd),
         (13, "rcv", str,),
