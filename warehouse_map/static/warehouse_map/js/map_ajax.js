@@ -12,13 +12,17 @@ var map_ajax = {
             }
         });
     },
+    data_select_trans_dic: {
+        "Item Count": [gettext("Item Count")],
+        "Items Shipped": [gettext("Items Shipped")]
+    },
     get_data_select_type: function(data_type){
         // Key represents data name
         // Value is whether a second date is needed
 
         var data_dic =  {
-            [gettext("Item Count")]: false,
-            [gettext("Items Shipped")]: true,
+            "Item Count": false,
+            "Items Shipped": true,
         }
         if (arguments.length == 1) {
             return data_dic[data_type];
@@ -30,13 +34,15 @@ var map_ajax = {
             var data_arr = null,
                 data_select = $( '#data-type-select' );
 
-            data_select_dic = map_ajax.get_data_select_type();
+            data_select_dic = map_ajax.data_select_trans_dic;
 
             for (var k in data_select_dic) {
                 data_select.append($("<option>",
                     {
-                        text: k,
-                    }));
+                        text: data_select_dic[k],
+                        value: k,
+                    }
+                ));
             }
 
             map_ajax.check_date_input2_hidden();

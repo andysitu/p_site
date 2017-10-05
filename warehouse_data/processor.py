@@ -255,7 +255,8 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         else:
             labId_olderItem_dic[lid] = item.avail_quantity + item.ship_quantity
         # New items in excel are read first, so older items will replace older
-        #   ones in lab_id_loc_dic.
+        #   ones in lab_id_loc_dic. Because older items should go first
+        #   (It's actually by RCV date).
 
         labId_older_iteminst_dic[lid] = item
 
