@@ -12,6 +12,8 @@ import json
 
 from warehouse_data import processor as processor
 
+from django.contrib.auth.decorators import user_passes_test
+
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
         if isinstance(obj, YourCustomType):
@@ -72,12 +74,12 @@ def upload_excel_data(request):
         }
     )
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def reset_db(request):
     processor.reset_db()
     return redirect("warehouse_map:index")
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def reset_db_true(request):
     processor.reset_db(delete_rack=True)
     delete_grids()
