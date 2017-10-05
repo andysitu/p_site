@@ -51,9 +51,6 @@ def upload_excel_data(request):
     upload_response = 0
 
     date_inst_list = processor.get_datadates(20)
-    date_list = []
-    for data_date in date_inst_list:
-        date_list.append(data_date.date.astimezone().strftime("%m/%d/%Y-%I:%M%p"))
 
     if request.method == 'POST':
         response_excel_data_form = UploadExcelData(request.POST, request.FILES)
@@ -63,6 +60,10 @@ def upload_excel_data(request):
                 upload_response = processor.process_excel_file(file)
 
     upload_excel_data_form = UploadExcelData()
+
+    date_list = []
+    for data_date in date_inst_list:
+        date_list.append(data_date.date.astimezone().strftime("%m/%d/%Y-%I:%M%p"))
 
     return render(
         request,
