@@ -24,7 +24,7 @@ var map_ajax = {
         var data_dic =  {
             "Item Count": false,
             "Items Shipped": true,
-            "Item Added": true,
+            "Items Added": true,
         }
         if (arguments.length == 1) {
             return data_dic[data_type];
@@ -138,9 +138,11 @@ var map_ajax = {
         value of data-type.
     */
         var data_type = $('#data-type-select').val();
-        if (this.get_data_select_type(data_type))
-             $('#date-select-2-div').attr('hidden', false);
-        else
+
+        if (this.get_data_select_type(data_type)) {
+
+            $('#date-select-2-div').attr('hidden', false);
+        } else
             $('#date-select-2-div').attr('hidden', true);
     },
     change_data_type_select: function() {

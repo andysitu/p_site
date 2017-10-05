@@ -160,6 +160,7 @@ var canvasMap = {
         } else {
             if (fill_sidemenu_status === true) {
                 page_functions.fill_sidemenu(this.max_level);
+                map_ajax.change_data_type_select();
             }
 
             this.map_canvas_jobj.click( click_map_for_info.bind(this) );

@@ -33,9 +33,7 @@ var page_functions = {
         map_ajax.set_level_input(max_level);
         map_ajax.set_data_type();
         map_ajax.set_date_input();
-        map_ajax.change_data_type_select();
     },
-
 
     display_loc_info: function(location, info_dic) {
         /**
@@ -49,7 +47,6 @@ var page_functions = {
             msg += this.make_underline_div(gettext("Total") + ": " + info_dic["total"]);
             msg += this.make_msg(info_dic["items"], true);
         }
-
         this.write_msg(msg);
     },
     write_msg: function(msg) {
