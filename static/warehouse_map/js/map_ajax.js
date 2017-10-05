@@ -13,8 +13,9 @@ var map_ajax = {
         });
     },
     data_select_trans_dic: {
-        "Item Count": [gettext("Item Count")],
-        "Items Shipped": [gettext("Items Shipped")]
+        "Item Count": gettext("Item Count"),
+        "Items Shipped": gettext("Items Shipped"),
+        "Items Added": gettext("Items Added"),
     },
     get_data_select_type: function(data_type){
         // Key represents data name
@@ -23,6 +24,7 @@ var map_ajax = {
         var data_dic =  {
             "Item Count": false,
             "Items Shipped": true,
+            "Item Added": true,
         }
         if (arguments.length == 1) {
             return data_dic[data_type];
