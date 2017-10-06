@@ -116,34 +116,38 @@ var side_menu = {
     },
     set_datatype_sel_changeEvent: function() {
         this.clear_side_menu_additions();
-        this.check_date_input2();
+        this.clear_side_menu_additions();
+    },
+    add_sidemenu_additions: function() {
+        var data_type = $('#data-type-select').val();
+
+        if (data_type == "Items Shipped" || data_type == "Items Added") {
+            this.add_date_input2();
+        }
     },
     clear_side_menu_additions: function() {
         $('#side-menu-additions').empty();
     },
-    check_date_input2: function() {
+    add_date_input2: function() {
     /*
        Checks if date-input-2 should be hidden based on the
         value of data-type.
     */
-        var data_type = $('#data-type-select').val();
-        $addition_div = $('#side-menu-additions');
+        var $addition_div = $('#side-menu-additions');
 
-        if (side_menu.get_data_select_type(data_type)) {
-            var $div = $("<div>", {
-                "class": "form-group",
-                id: "date-select-2-div",
-                }).appendTo($addition_div);
-            $("<label>", {
-               "for": "date-select-2",
-                text: gettext("Previous Date"),
-                }).appendTo($div);
-            $("<select>", {
-                "class": "form-control",
-                id: "date-select-2",
-                }).appendTo($div);
-            side_menu.set_date_select_input("#date-select-2");
-        }
+        var $div = $("<div>", {
+            "class": "form-group",
+            id: "date-select-2-div",
+            }).appendTo($addition_div);
+        $("<label>", {
+           "for": "date-select-2",
+            text: gettext("Previous Date"),
+            }).appendTo($div);
+        $("<select>", {
+            "class": "form-control",
+            id: "date-select-2",
+            }).appendTo($div);
+        side_menu.set_date_select_input("#date-select-2");
     },
     change_data_type_select: function() {
         // Ajax that runs when data-type select is changed
