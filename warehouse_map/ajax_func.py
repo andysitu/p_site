@@ -44,6 +44,7 @@ def get_map_search_info(request):
     date_1_id = request.POST.get("date_1_inst_id")
     date_2_id = request.POST.get("date_2_inst_id")
     loc = request.POST.get("loc")
+    time_period = request.POST.get("time_period")
     
     data_dic = {}
     if data_type == "Item Count":
@@ -51,7 +52,7 @@ def get_map_search_info(request):
     elif data_type == "Items Shipped":
         data_dic = processor.get_item_shipped_map(loc, date_1_id, date_2_id, level)
     elif data_type == "Items Added":
-        data_dic = processor.get_item_added_map(loc, date_1_id, date_2_id, level)
+        data_dic = processor.get_item_added_map(loc, date_1_id, time_period, level)
 
     return JsonResponse(data_dic, safe=False)
 

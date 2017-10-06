@@ -126,6 +126,7 @@ var map_ajax = {
             data_type       = $("#data-type-select").val(),
             date_1_inst_id  = $("#date-select").val(),
             date_2_inst_id  = $("#date-select-2").val(),
+            time_period = parseInt($("#prev-dateAmount-input").val()),
             i,
             map_data_length = map_data_arr.length;
 
@@ -133,10 +134,15 @@ var map_ajax = {
             return 0;
         }
 
+        // Check that time_period is error or default to 1
+        if (typeof(time_period) != "number")
+            time_period = 1;
+
         // Check if date_1 and date_2 should be different
         if (side_menu.get_data_select_type(data_type) && date_1_inst_id == date_2_inst_id) {
             return 0;
         }
+
 
         this.csrf_it();
         for (i = 0; i < map_data_length; i++) {
@@ -146,10 +152,10 @@ var map_ajax = {
                 data: {
                     "loc": map_data_dic["loc"],
                     "data_type": data_type,
-                    // "location_map[]": map_data_dic["location_map"],
                     "level": level,
                     "date_1_inst_id": date_1_inst_id,
                     "date_2_inst_id": date_2_inst_id,
+                    "time_period": time_period,
                 },
                 method: "POST",
                 dateType: "json",
