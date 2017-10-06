@@ -12,31 +12,12 @@ var map_ajax = {
             }
         });
     },
-    data_select_trans_dic: {
-        "Item Count": gettext("Item Count"),
-        "Items Shipped": gettext("Items Shipped"),
-        "Items Added": gettext("Items Added"),
-    },
-    get_data_select_type: function(data_type){
-        // Key represents data name
-        // Value is whether a second date is needed
-
-        var data_dic =  {
-            "Item Count": false,
-            "Items Shipped": true,
-            "Items Added": true,
-        }
-        if (arguments.length == 1) {
-            return data_dic[data_type];
-        } else
-            return data_dic;
-    },
     set_data_type: function() {
         function create_options(){
             var data_arr = null,
                 data_select = $( '#data-type-select' );
 
-            data_select_dic = map_ajax.data_select_trans_dic;
+            data_select_dic = side_menu.data_select_trans_dic;
 
             for (var k in data_select_dic) {
                 data_select.append($("<option>",
@@ -125,7 +106,7 @@ var map_ajax = {
     */
         var data_type = $('#data-type-select').val();
 
-        if (this.get_data_select_type(data_type)) {
+        if (side_menu.get_data_select_type(data_type)) {
 
             $('#date-select-2-div').attr('hidden', false);
         } else
@@ -153,7 +134,7 @@ var map_ajax = {
         }
 
         // Check if date_1 and date_2 should be different
-        if (this.get_data_select_type(data_type) && date_1_inst_id == date_2_inst_id) {
+        if (side_menu.get_data_select_type(data_type) && date_1_inst_id == date_2_inst_id) {
             return 0;
         }
 

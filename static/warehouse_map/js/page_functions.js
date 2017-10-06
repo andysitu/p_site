@@ -95,6 +95,49 @@ var page_functions = {
 };
 
 var side_menu = {
+    data_select_trans_dic: {
+        "Item Count": gettext("Item Count"),
+        "Items Shipped": gettext("Items Shipped"),
+        "Items Added": gettext("Items Added"),
+    },
+    get_data_select_type: function(data_type){
+        // Key represents data name
+        // Value is whether a second date is needed
+
+        var data_dic =  {
+            "Item Count": false,
+            "Items Shipped": true,
+            "Items Added": true,
+        }
+        if (arguments.length == 1) {
+            return data_dic[data_type];
+        } else
+            return data_dic;
+    },
+    set_datatype_sel_changeEvent: function() {
+        this.check_date_input2_hidden()
+    },
+    check_date_input2_hidden: function() {
+    /*
+       Checks if date-input-2 should be hidden based on the
+        value of data-type.
+    */
+        var data_type = $('#data-type-select').val();
+
+        if (side_menu.get_data_select_type(data_type)) {
+
+            $('#date-select-2-div').attr('hidden', false);
+        } else
+            $('#date-select-2-div').attr('hidden', true);
+    },
+    change_data_type_select: function() {
+        // Ajax that runs when data-type select is changed
+        //  Sees if the second data type should be hidden
+
+        $('#data-type-select').change(function(e){
+            side_menu.check_date_input2_hidden();
+        });
+    },
     set_date_1_input: function() {
         function date_1_setter(date_dic) {
             var date_list = date_dic["date_list"],
