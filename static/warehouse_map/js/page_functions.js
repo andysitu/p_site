@@ -116,13 +116,15 @@ var side_menu = {
     },
     set_datatype_sel_changeEvent: function() {
         this.clear_side_menu_additions();
-        this.clear_side_menu_additions();
+        this.add_sidemenu_additions();
     },
     add_sidemenu_additions: function() {
         var data_type = $('#data-type-select').val();
 
-        if (data_type == "Items Shipped" || data_type == "Items Added") {
+        if (data_type == "Items Shipped") {
             this.add_date_input2();
+        } else if (data_type == "Items Added") {
+            this.add_prev_time_period();
         }
     },
     clear_side_menu_additions: function() {
@@ -148,6 +150,31 @@ var side_menu = {
             id: "date-select-2",
             }).appendTo($div);
         side_menu.set_date_select_input("#date-select-2");
+    },
+    add_prev_time_period: function() {
+        var $addition_div = $('#side-menu-additions');
+
+        var $div = $("<div>", {
+            "class": "form-group",
+            id: "date-select-2-div",
+            }).appendTo($addition_div);
+        $("<label>", {
+           "for": "prev-dateAmount-input",
+            text: gettext("Time Period"),
+            }).appendTo($div);
+
+        var $div_input = $("<div>", {
+                "class": "input-group",
+            }).appendTo($div);
+        $("<input>", {
+            "class": "form-control",
+            id: "prev-dateAmount-input",
+            value: 1,
+            }).appendTo($div_input);
+        $("<span>", {
+            "class": "input-group-addon",
+            text: "Days"
+            }).appendTo($div_input);
     },
     change_data_type_select: function() {
         // Ajax that runs when data-type select is changed
