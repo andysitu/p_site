@@ -119,8 +119,9 @@ var side_menu = {
         this.check_date_input2();
     },
     clear_side_menu_additions: function() {
-        $('side-menu-additions').empty();
-    }
+        console.log("EMPTYING");
+        $('#side-menu-additions').empty();
+    },
     check_date_input2: function() {
     /*
        Checks if date-input-2 should be hidden based on the
@@ -150,7 +151,7 @@ var side_menu = {
         //  Sees if the second data type should be hidden
 
         $('#data-type-select').change(function(e){
-            side_menu.check_date_input2();
+            side_menu.set_datatype_sel_changeEvent();
         });
     },
     set_date_select_input: function(select_id) {
