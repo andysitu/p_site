@@ -119,7 +119,6 @@ var side_menu = {
         this.check_date_input2();
     },
     clear_side_menu_additions: function() {
-        console.log("EMPTYING");
         $('#side-menu-additions').empty();
     },
     check_date_input2: function() {
