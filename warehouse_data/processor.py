@@ -246,23 +246,23 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
     labId_newerItem_dic = {}
     labId_olderItem_dic = {}
     labId_older_iteminst_dic = {}
-    for item in item_query_newer:
-        lid = item.lab_id
+    for item_1 in item_query_newer:
+        lid = item_1.lab_id
         if lid in labId_newerItem_dic:
-            labId_newerItem_dic[lid] += item.avail_quantity + item.ship_quantity
+            labId_newerItem_dic[lid] += item_1.avail_quantity + item_1.ship_quantity
         else:
-            labId_newerItem_dic[lid] = item.avail_quantity + item.ship_quantity
-    for item in item_query_older:
-        lid = item.lab_id
+            labId_newerItem_dic[lid] = item_1.avail_quantity + item_1.ship_quantity
+    for item_2 in item_query_older:
+        lid = item_2.lab_id
         if lid in labId_olderItem_dic:
-            labId_olderItem_dic[lid] += item.avail_quantity + item.ship_quantity
+            labId_olderItem_dic[lid] += item_2.avail_quantity + item_2.ship_quantity
         else:
-            labId_olderItem_dic[lid] = item.avail_quantity + item.ship_quantity
+            labId_olderItem_dic[lid] = item_2.avail_quantity + item_2.ship_quantity
         # New items in excel are read first, so older items will replace older
         #   ones in lab_id_loc_dic. Because older items should go first
         #   (It's actually by RCV date).
 
-        labId_older_iteminst_dic[lid] = item
+        labId_older_iteminst_dic[lid] = item_2
 
     for lab_id in labId_olderItem_dic:
         item_inst = labId_older_iteminst_dic[lab_id]
@@ -278,6 +278,14 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
             difference = item_quantity
         if difference == 0:
             continue
+        elif difference < 0:
+            item_q = Items.objects.filter(data_date=older_datadate, lab_id=lab_id)
+            total = 0
+            for i in item_q:
+                total += i.avail_quantity + i.ship_quantity
+                difference = total - labId_newerItem_dic[lab_id]
+            if difference == 0:
+                continue
 
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}, "total": 0}
