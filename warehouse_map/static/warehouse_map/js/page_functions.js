@@ -32,7 +32,7 @@ var page_functions = {
 
         map_ajax.set_level_input(max_level);
         map_ajax.set_data_type();
-        side_menu.set_date_1_input();
+        side_menu.set_date_select_input("#date-select");
     },
 
     display_loc_info: function(location, info_dic) {
@@ -115,9 +115,9 @@ var side_menu = {
             return data_dic;
     },
     set_datatype_sel_changeEvent: function() {
-        this.check_date_input2_hidden()
+        this.check_date_input2();
     },
-    check_date_input2_hidden: function() {
+    check_date_input2: function() {
     /*
        Checks if date-input-2 should be hidden based on the
         value of data-type.
@@ -125,25 +125,27 @@ var side_menu = {
         var data_type = $('#data-type-select').val();
 
         if (side_menu.get_data_select_type(data_type)) {
-
             $('#date-select-2-div').attr('hidden', false);
-        } else
+            side_menu.set_date_select_input("#date-select-2");
+        } else {
             $('#date-select-2-div').attr('hidden', true);
+            return true;
+        }
     },
     change_data_type_select: function() {
         // Ajax that runs when data-type select is changed
         //  Sees if the second data type should be hidden
 
         $('#data-type-select').change(function(e){
-            side_menu.check_date_input2_hidden();
+            side_menu.check_date_input2();
         });
     },
-    set_date_1_input: function() {
-        function date_1_setter(date_dic) {
+    set_date_select_input: function(select_id) {
+        function date_setter(date_dic) {
             var date_list = date_dic["date_list"],
                 date_id_list = date_dic["date_id_list"];
 
-            var date_select_jobj = $('#date-select'),
+            var date_select_jobj = $(select_id),
                 // date_select2_jobj = $('#date-select-2'),
                 i,
                 date_list_len = date_id_list.length;
@@ -160,7 +162,7 @@ var side_menu = {
                 // }));
             }
         }
-        map_ajax.get_dates(date_1_setter)
+        map_ajax.get_dates(date_setter)
     },
 }
 
