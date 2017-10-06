@@ -99,10 +99,14 @@ var map_ajax = {
 
         $( '#plus-level' ).click(increase_level);
     },
-    set_date_input: function() {
+    get_dates: function(callback_function) {
     /*
         Fill both date html select with dates.
+        On success, date_dic is return, containing
+            [date_list] & [date_id_list]
      */
+        var dates_dic;
+
         $.ajax({
             url: date_ajax_url,
             data: {
@@ -110,25 +114,7 @@ var map_ajax = {
             },
             dateType: "json",
             success: function(date_dic) {
-                var date_list = date_dic["date_list"],
-                    date_id_list = date_dic["date_id_list"];
-
-                var date_select_jobj = $('#date-select'),
-                    date_select2_jobj = $('#date-select-2'),
-                    i,
-                    date_list_len = date_id_list.length;
-
-                for (i = 0; i < date_list_len; i++) {
-                    date_select_jobj.append($("<option>", {
-                        text: date_list[i],
-                        value: date_id_list[i],
-                    }));
-
-                    date_select2_jobj.append($("<option>", {
-                        text: date_list[i],
-                        value: date_id_list[i],
-                    }));
-                }
+                callback_function(date_dic);
             }
         });
     },

@@ -32,7 +32,7 @@ var page_functions = {
 
         map_ajax.set_level_input(max_level);
         map_ajax.set_data_type();
-        map_ajax.set_date_input();
+        side_menu.set_date_1_input();
     },
 
     display_loc_info: function(location, info_dic) {
@@ -93,6 +93,34 @@ var page_functions = {
         return msg
     },
 };
+
+var side_menu = {
+    set_date_1_input: function() {
+        function date_1_setter(date_dic) {
+            var date_list = date_dic["date_list"],
+                date_id_list = date_dic["date_id_list"];
+
+            var date_select_jobj = $('#date-select'),
+                // date_select2_jobj = $('#date-select-2'),
+                i,
+                date_list_len = date_id_list.length;
+
+            for (i = 0; i < date_list_len; i++) {
+                date_select_jobj.append($("<option>", {
+                    text: date_list[i],
+                    value: date_id_list[i],
+                }));
+
+                // date_select2_jobj.append($("<option>", {
+                //     text: date_list[i],
+                //     value: date_id_list[i],
+                // }));
+            }
+        }
+
+        map_ajax.get_dates(date_1_setter)
+    },
+}
 
 var menu_screen = {
     empty: function() {
