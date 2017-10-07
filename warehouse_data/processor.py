@@ -219,6 +219,14 @@ def get_item_count_map(loc, date_id, level):
     return data_dic
 
 def get_item_shipped_map(loc, date_1_id, date_2_id, level):
+    """
+    Returns dictionary map of items_shipped
+    :param loc: String letter
+    :param date_1_id: Int of datadate ID
+    :param date_2_id: Int of datadate ID
+    :param level: Int ( or "All") of level to search
+    :return: {"items": {["location code"]: {item_sku[Int]: [Int # item shipped]} }, "total": 0}
+    """
     data_dic = {}
 
     datadate_1 = DataDate.objects.get(pk = date_1_id)
@@ -301,6 +309,56 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
             cur_item_dic[item_code] = difference
         else:
             cur_item_dic[item_code] += difference
+
+    return data_dic
+
+def get_item_added_map(loc, date_1_id, time_period, level):
+    data_dic = {}
+
+    datadate = DataDate.objects.get(pk=date_1_id)
+    submitted_date = datadate.date
+
+    t_delta = datetime.timedelta(days=int(time_period))
+
+    prev_date = submitted_date - t_delta
+
+    item_query = Items.objects.filter(data_date=datadate, rack_location__loc=loc, iv_create_date__gt=prev_date)
+
+    if level != "All":
+        item_query = item_query.filter(rack_location__level=level)
+    item_query = item_query.select_related('rack_location')
+
+    for item in item_query:
+        rcv = item.rcv
+        recv_re = re.compile("^RECV")
+
+        # If RECV item
+        if recv_re.match(rcv):
+            if item.iv_create_date < prev_date:
+                continue
+        else:
+            if item.fifo_date < prev_date:
+                continue
+
+        js_loc_code = loc_inst_to_jsloccode(item.rack_location)
+
+        item_code = item.item_code
+        item_quantity = item.avail_quantity + item.ship_quantity
+
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}, "total": 0}
+
+        location = item.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
+
+        data_dic[js_loc_code]["total"] += item_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity
+        else:
+            cur_item_dic[item_code] += item_quantity
 
     return data_dic
 

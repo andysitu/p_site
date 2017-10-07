@@ -5,7 +5,7 @@ var color_map_functions = {
 
         if (data_type == "Item Count"){
             color_map = this.item_count_map(data_map);
-        } else if (data_type == "Items Shipped") {
+        } else if (data_type == "Items Shipped" || data_type == "Items Added") {
             color_map = this.item_count_map(data_map);
         }
 
