@@ -47,8 +47,11 @@ def process_excel_file(file):
 
 
     def get_date_from_xlrd(date_string):
+        if date_string == "":
+            return None
         # d = xlrd.xldate.xldate_as_datetime(date_string, workbook.datemode)
         timezone = pytz.timezone('Asia/Hong_Kong')
+        print(date_string)
         year, month, day, hour, minute, second = xlrd.xldate_as_tuple(date_string, workbook.datemode)
         d = datetime.datetime(year, month, day, hour, minute, second, tzinfo=timezone)
         return d
@@ -67,6 +70,7 @@ def process_excel_file(file):
         (27, "item_code", str,),
         (28, "ship_quantity", int,),
         (31, "item_weight", float,),
+        (36, "last_out_date", get_date_from_xlrd,),
         (39, "description", cut_description_length,),
         (40, "customer_code", int,),
         (42, "avail_quantity", int,),

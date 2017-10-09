@@ -71,6 +71,7 @@ class Items(models.Model):
     description = models.CharField(max_length=100, default="")
     item_code = models.CharField(max_length=50, default="")
     customer_code = models.IntegerField(default="0")
+    last_out_date = models.DateTimeField(blank=True, null=True, default=None)
 
 
 def delete_all_rack_location():
