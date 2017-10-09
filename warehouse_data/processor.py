@@ -328,7 +328,7 @@ def get_item_added_map(loc, date_1_id, time_period, level):
 
     # iv_create_date is usually the the newest date, with it being sometimes nearly the same
     #   as fifo_date.
-    item_query = Items.objects.filter(data_date=datadate, rack_location__loc=loc, iv_create_date__gt=prev_date)
+    item_query = Items.objects.filter(data_date=datadate, rack_location__loc=loc, iv_create_date__gte=prev_date)
 
     if level != "All":
         item_query = item_query.filter(rack_location__level=level)
