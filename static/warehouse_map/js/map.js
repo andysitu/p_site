@@ -126,7 +126,7 @@ var canvasMap = {
         for (i = 0; i < data_length; i++) {
             map_data_dic = this.map_data_arr[i];
             image_map = map_data_dic["image_map"];
-            map_info = draw_map(this.ctx, image_map, start_x, start_y, box_length,
+            map_info = this.draw_map(this.ctx, image_map, start_x, start_y, box_length,
                 map_data_dic["color_map"],
                 map_data_dic["location_map"], level);
 
@@ -345,8 +345,48 @@ var canvasMap = {
 
         return loc_dic;
     },
+    draw_map: function(ctx, image_map, start_x, start_y, box_length, color_map, location_map, level){
+        var i, j,
+            map_key,
+            image_map_length = image_map.length,
+            color, location,
+            blank_rack_color = "rgb(102, 102, 153)";
 
-}
+        for (i=0; i < image_map_length; i++) {
+            var sub_arr_len = image_map[i].length;
+            for (j = 0; j < image_map[i].length; j++) {
+                map_key = image_map[i][j];
+                x = start_x + box_length * j;
+                y = start_y + box_length * i;
+
+                location = location_map[i][j];
+
+                if (location == '')
+                    continue;
+
+                if ( ! map_functions.proc_level_from_location(location, level))
+                    continue;
+
+                if (typeof(color_map) !== "undefined") {
+
+                    if (location in color_map)
+                        color = color_map[location];
+                    else
+                        color = blank_rack_color;
+                } else {
+                    color = blank_rack_color;
+                }
+                draw_box(ctx, x, y, box_length, box_length, map_key, color);
+            }
+        }
+
+        return {
+            "end_x": x + box_length,
+            "end_y": y + box_length,
+        }
+    },
+
+};
 
 function click_map_for_info(e) {
     var map_index_arr = get_map_index_by_xy(e, this.map_data_arr);
@@ -408,47 +448,6 @@ function get_map_index_by_xy(e, map_data_arr) {
     }
     return 0;
 }
-
-function draw_map(ctx, image_map, start_x, start_y, box_length, color_map, location_map, level){
-    var i, j,
-        map_key,
-        image_map_length = image_map.length,
-        color, location,
-        blank_rack_color = "rgb(102, 102, 153)";
-
-    for (i=0; i < image_map_length; i++) {
-        var sub_arr_len = image_map[i].length;
-        for (j = 0; j < image_map[i].length; j++) {
-            map_key = image_map[i][j];
-            x = start_x + box_length * j;
-            y = start_y + box_length * i;
-
-            location = location_map[i][j];
-
-            if (location == '')
-                continue;
-
-            if ( ! map_functions.proc_level_from_location(location, level))
-                continue;
-
-            if (typeof(color_map) !== "undefined") {
-
-                if (location in color_map)
-                    color = color_map[location];
-                else
-                    color = blank_rack_color;
-            } else {
-                color = blank_rack_color;
-            }
-            draw_box(ctx, x, y, box_length, box_length, map_key, color);
-        }
-    }
-
-    return {
-        "end_x": x + box_length,
-        "end_y": y + box_length,
-    }
-};
 
 function draw_box(ctx, x, y, width, height, map_key, color) {
     ctx.strokeStyle = "black";
