@@ -80,7 +80,7 @@ var canvasMap = {
     ctx: null,
     max_level: null,
     highlighted: "",
-    orig_image: null,
+    saved_canvas_img: null,
 
     make_map: function(map_data_arr, fill_sidemenu_status, level) {
         this.map_data_arr = map_data_arr;
@@ -171,11 +171,11 @@ var canvasMap = {
         remove_events();
     },
     save_canvas: function() {
-        this.orig_image = this.ctx.getImageData(0, 0,
+        this.saved_canvas_img = this.ctx.getImageData(0, 0,
             this.canvas_width, this.canvas_height);
     },
     restore_canvas: function() {
-        this.ctx.putImageData(this.orig_image, 0, 0);
+        this.ctx.putImageData(this.saved_canvas_img, 0, 0);
         this.clear_highlight();
     },
     clear_highlight: function() {
