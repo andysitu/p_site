@@ -32,19 +32,16 @@ var map_functions = {
                 if (level == 6)
                     return false;
         } else if (area == "VA") {
-            if (aisle == 44)
-                if (level > 3)
-                    return false;
-            else if (level > 4)
+            if (aisle == 44 && level > 3)
                 return false;
+            else if (column == 13 && level == 2) {
+                console.log(area, aisle, column==13 && level==2);
+                return false;
+                }
         } else if (area == "H") {
             if (level > 3)
                 return false;
         } else if (area == "F") {
-            if (aisle > 1) {
-                if (column == 13 && level <= 2)
-                    return false;
-            }
         }
         return true;
     }
