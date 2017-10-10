@@ -24,10 +24,11 @@ $( document ).ready(function() {
         var map_canvas_jobj = $( '#map_canvas' ),
             map_canvas = map_canvas_jobj[0];
 
-        side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth();
+        var side_nav_bar_width = $( '#sidebar-nav-div' ).outerWidth(),
+            main_navbar_height = $( '#main-navbar' ).outerHeight();
 
         var canvas_width = $(window).width() - side_nav_bar_width,
-            canvas_height = $(window).height() - 50;
+            canvas_height = $(window).height() - main_navbar_height -10;
 
         map_canvas.width = canvas_width;
         map_canvas.height = canvas_height;
@@ -73,6 +74,10 @@ function remove_events() {
 };
 
 var canvasMap = {
+    /* map_data_arr contains array of dictionaries of each maps, which contains:
+      box_length, end_x, end_y, loc, num_across, num_down, start_x, start_y,
+      color_map, data_map, location_map
+    */
     map_data_arr: null,
     map_canvas_jobj: null,
     canvas_width: null,
@@ -81,7 +86,6 @@ var canvasMap = {
     max_level: null,
     highlighted: "",
     saved_canvas_img: null,
-
     make_map: function(map_data_arr, fill_sidemenu_status, level) {
         this.map_data_arr = map_data_arr;
         this.map_canvas_jobj = $('#map_canvas');
@@ -141,19 +145,14 @@ var canvasMap = {
         this.save_canvas();
 
         // Add event handler for clicking the search button.
-        $("#map-submit-button").click( (function (e) {
-            e.preventDefault();
-            map_ajax.map_search(this.map_data_arr);
-        }).bind(this) );
+        $("#map-submit-button").click( this.map_search.bind(this) );
 
         // When entire map is shown
         if (data_length === 4) {
             this.save_canvas()
 
             this.map_canvas_jobj.mousemove( mouseHandlers.mouse_move_handler.bind(this) );
-
             this.map_canvas_jobj.mouseleave( mouseHandlers.mouseleave_handler.bind(this) );
-
             this.map_canvas_jobj.click( mouseHandlers.mouseclick_handler.bind(this) );
             // Showing only one section of map is shown
         } else {
@@ -164,6 +163,10 @@ var canvasMap = {
 
             this.map_canvas_jobj.click( click_map_for_info.bind(this) );
         }
+    },
+    map_search: function(e) {
+        e.preventDefault();
+        map_ajax.map_search(this.map_data_arr);
     },
     clearMap: function() {
         this.ctx.clearRect(0, 0, this.canvas_width, this.canvas_height);
@@ -358,7 +361,6 @@ var canvasMap = {
                 y = start_y + box_length * i;
 
                 location = location_map[i][j];
-
                 if (location == '')
                     continue;
 
