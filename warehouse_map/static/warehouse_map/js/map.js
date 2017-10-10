@@ -150,11 +150,11 @@ var canvasMap = {
         if (data_length === 4) {
             this.save_canvas()
 
-            this.map_canvas_jobj.mousemove( mouse_move_handler.bind(this) );
+            this.map_canvas_jobj.mousemove( mouseHandlers.mouse_move_handler.bind(this) );
 
-            this.map_canvas_jobj.mouseleave( mouseleave_handler.bind(this) );
+            this.map_canvas_jobj.mouseleave( mouseHandlers.mouseleave_handler.bind(this) );
 
-            this.map_canvas_jobj.click( mouseclick_handler.bind(this) );
+            this.map_canvas_jobj.click( mouseHandlers.mouseclick_handler.bind(this) );
             // Showing only one section of map is shown
         } else {
             if (fill_sidemenu_status === true) {
@@ -532,62 +532,3 @@ function get_max_level(map_data_arr) {
 
     return max_level;
 };
-
-function mouse_move_handler(e) {
-    var clicked_y = e.offsetY,
-        clicked_x = e.offsetX,
-        i, box_length,
-        data_length = this.map_data_arr.length;
-
-    for (i = 0; i < data_length; i++) {
-        map_data_dic = this.map_data_arr[i];
-        box_length = map_data_dic.box_length;
-        if (clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-            clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y) {
-            if (this.highlighted == map_data_dic.loc) {
-                return 1;
-            }
-            this.ctx.save()
-            this.ctx.fillStyle = 'rgba(204,229,255,0.5)';
-            this.restore_canvas();
-            this.ctx.fillRect(map_data_dic.start_x, map_data_dic.start_y,
-                map_data_dic.end_x - map_data_dic.start_x,
-                map_data_dic.end_y - map_data_dic.start_y);
-            this.ctx.restore()
-            this.highlighted = map_data_dic.loc;
-            return 1;
-        }
-    }
-    if (this.highlighted !== '') {
-        this.restore_canvas();
-    }
-}
-
-function mouseleave_handler(e) {
-    this.restore_canvas();
-}
-
-function mouseclick_handler(e) {
-    // Click on map with all locations
-    // will focus onto that area by creating new map.
-    var clicked_y = e.offsetY,
-        clicked_x = e.offsetX,
-        i, box_length,
-        data_length = this.map_data_arr.length;
-
-    for (i = 0; i < data_length; i++) {
-        map_data_dic = this.map_data_arr[i];
-        box_length = map_data_dic.box_length;
-        if (clicked_x >= map_data_dic.start_x && clicked_x <= map_data_dic.end_x &&
-            clicked_y >= map_data_dic.start_y && clicked_y <= map_data_dic.end_y) {
-            loc = map_data_dic.loc;
-
-            // function is the callback function for get_map_arr_ajax,
-            // with map_data_arr being the argument passed onto it.
-            get_map_arr_ajax([loc,], function (map_data_arr) {
-                canvasMap.make_map(map_data_arr, true);
-            });
-            return 1;
-        }
-    }
-}
