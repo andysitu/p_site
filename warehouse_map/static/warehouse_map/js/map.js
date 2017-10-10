@@ -36,9 +36,8 @@ $( document ).ready(function() {
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
     get_map_arr_ajax( loc_list, function(map_data_arr) {
-            canvasMap.make_map(map_data_arr);
-        }
-    );
+        canvasMap.make_map(map_data_arr);
+    });
 
     // Add Event handlers for sidemenu
 
@@ -141,13 +140,13 @@ var canvasMap = {
 
         this.save_canvas();
 
-        // Clicking the search button.
+        // Add event handler for clicking the search button.
         $("#map-submit-button").click( (function (e) {
             e.preventDefault();
             map_ajax.map_search(this.map_data_arr);
         }).bind(this) );
 
-        // Showing all locations
+        // When entire map is shown
         if (data_length === 4) {
             this.save_canvas()
 
@@ -156,7 +155,7 @@ var canvasMap = {
             this.map_canvas_jobj.mouseleave( mouseleave_handler.bind(this) );
 
             this.map_canvas_jobj.click( mouseclick_handler.bind(this) );
-            // Showing only one section
+            // Showing only one section of map is shown
         } else {
             if (fill_sidemenu_status === true) {
                 page_functions.fill_sidemenu(this.max_level);
@@ -198,7 +197,6 @@ var canvasMap = {
 
             this.highlight_box(i, x, y);
         }
-
     },
     highlight_box: function(i, x, y) {
         /**

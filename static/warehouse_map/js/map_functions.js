@@ -35,7 +35,6 @@ var map_functions = {
             if (aisle == 44 && level > 3)
                 return false;
             else if (column == 13 && level == 2) {
-                console.log(area, aisle, column==13 && level==2);
                 return false;
                 }
         } else if (area == "H") {
