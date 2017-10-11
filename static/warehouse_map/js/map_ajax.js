@@ -147,8 +147,6 @@ var map_ajax = {
             i,
             map_data_length = map_data_arr.length;
 
-        console.log(data_type)
-
         if (level === null && data_type === null) {
             return 0;
         }
