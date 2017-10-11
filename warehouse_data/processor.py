@@ -248,8 +248,8 @@ def get_item_shipped_map(loc, date_1_id, date_2_id, level):
         newer_datadate = datadate_2
         older_datadate = datadate_1
 
-    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc).select_related('rack_location')
-    item_query_newer = Items.objects.filter(data_date=newer_datadate, last_out_date__gte=older_datadate.date).select_related('rack_location')
+    item_query_older = Items.objects.filter(data_date=older_datadate, rack_location__loc=loc)
+    item_query_newer = Items.objects.filter(data_date=newer_datadate, fifo_date__lte=older_datadate.date).select_related('rack_location')
 
     if level != "All":
         item_query_older = item_query_older.filter(rack_location__level=level)
