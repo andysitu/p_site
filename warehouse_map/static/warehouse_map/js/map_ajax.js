@@ -12,6 +12,23 @@ var map_ajax = {
             }
         });
     },
+    get_map_arr_ajax: function(location_arr, callback_funct) {
+        /*
+            Function that will use ajax to receive an array containing
+            grid_data from each location called by location_arr and will
+            run a callback_function on each location.
+         */
+        $.ajax({
+            url: request_grid_url,
+            data: {
+                "loc[]": location_arr,
+            },
+            dataType: "json",
+            success: function(map_data_arr) {
+                callback_funct(map_data_arr);
+            },
+        });
+    },
     set_data_type: function() {
         function create_options(){
             var data_arr = null,

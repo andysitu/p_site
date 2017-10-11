@@ -1,22 +1,5 @@
 const BACKGROUND_COLOR = "white";
 
-function get_map_arr_ajax(location_arr, callback_funct) {
-    /*
-        Function that will use ajax to receive an array containing
-        grid_data from each location called by location_arr and will
-        run a callback_function on each location.
-     */
-    $.ajax({
-        url: request_grid_url,
-        data: {
-            "loc[]": location_arr,
-        },
-        dataType: "json",
-        success: function(map_data_arr) {
-            callback_funct(map_data_arr);
-        },
-    });
-};
 
 $( document ).ready(function() {
     // Setup canvas width, heightcanvasMap, etc.
@@ -36,7 +19,7 @@ $( document ).ready(function() {
 
     // Ajax to get grid_map (arrays)
     var loc_list = ['F', 'VC', 'S', 'P',];
-    get_map_arr_ajax( loc_list, function(map_data_arr) {
+    map_ajax.get_map_arr_ajax( loc_list, function(map_data_arr) {
         canvasMap.make_map(map_data_arr);
     });
 

@@ -97,7 +97,7 @@ var mouseHandlers = {
 
                 // function is the callback function for get_map_arr_ajax,
                 // with map_data_arr being the argument passed onto it.
-                get_map_arr_ajax([loc,], function (map_data_arr) {
+                map_ajax.get_map_arr_ajax([loc,], function (map_data_arr) {
                     canvasMap.make_map(map_data_arr, true);
                 });
                 return 1;
