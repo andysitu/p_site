@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^upload_files/$', views.upload_files, name="upload_files"),
     url(r'^check_files_to_model/$',  views.check_files_to_model, name='check_files_to_model'),
     url(r'delete/$', views.delete_ajax, name='delete'),
-    url(r'^test/$', views.test),
     url(r'^edit/(?P<filename>.+)$', views.edit_name, name="edit"),
 
     url(r'^edit_list/$', views.view_edit_list, name="edit_list"),

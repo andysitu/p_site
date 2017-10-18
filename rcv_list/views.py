@@ -20,13 +20,6 @@ from django.utils import translation
 def get_foldername():
     return 'rcv'
 
-def test(request):
-    user_language = 'zh-cn'
-    translation.activate(user_language)
-    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-    output = gettext("Hello")
-    return HttpResponse(output)
-
 def search_rcv(request):
     if request.method == "GET":
         search_query = request.GET.get('search_box', None)
