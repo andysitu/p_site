@@ -4,13 +4,15 @@
 {% load static %}
 
 {% block content %}
-<script src="{% static 'rcv_list/js/edit_page.js' %}"></script>
+<script>
+    var csrftoken = jQuery('[name=csrfmiddlewaretoken]').val(),
+        rcv_filename = "{{ filename }}";
+</script>
 
+<script src="{% static 'rcv_list/js/edit_page.js' %}"></script>
 <p>{{ filename }}</p>
 
-<form action="" method="POST">
-    {% csrf_token %}
-
+<form method="POST" action="{% url 'rcv_list:edit_file_ajax' %}" id="edit-form">
     <div class="form-group row">
         <label for="rcv-name-input" class="col-form-label col-sm-1">{% trans "RCV name" %}</label>
         <div class="col-sm-4">
@@ -19,18 +21,17 @@
     </div>
 
     <div class="form-group">
-        <label>{% trans "Pages (none selected will edit all pages)" %}</label>
+        <label>P{% trans "ages (none selected will edit all pages)" %}</label>
         <br>
         {% for page in page_list %}
         <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" id="checkbox{{ page }}" value="{{ page }}">{{ page }}
-            </label>
+            <label class="form-check-label page-check-label">
+                <input class="form-check-input" type="checkbox" id="checkbox{{ page }}" value="{{ page }}">{{ page }}</label>
         </div>
         {% endfor %}
     </div>
 
-    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+    <button type="submit" class="btn btn-primary" id="submit-edit">{% trans "Submit" %}</button>
 </form>
 
 <div>
