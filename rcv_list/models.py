@@ -20,15 +20,6 @@ class RCV(models.Model):
     def __str__(self):
         return self.rcv_number
 
-    @receiver(pre_delete, sender=User)
-    def delete_file(sender, instance, using, **kwargs):
-        try:
-            filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, instance.filename)
-            os.remove(filepath)
-        except FileNotFoundError:
-            pass
-        # super(RCV, self).delete(*args, **kwargs)
-
     def edit(self, rcv_number):
         filename = rcv_number + ".pdf"
 
@@ -58,3 +49,13 @@ class RCV(models.Model):
     def get_filepath(self):
         filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, self.filename)
         return filepath
+
+@receiver(pre_delete, sender=RCV)
+def delete_file(sender, instance, using, **kwargs):
+    try:
+        print("Deleting RCV FILE")
+        filepath = os.path.join(settings.MEDIA_ROOT, rcv_foldername, instance.filename)
+        os.remove(filepath)
+    except FileNotFoundError:
+        pass
+        # super(RCV, self).delete(*args, **kwargs)
