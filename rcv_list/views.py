@@ -236,16 +236,13 @@ def check_files_to_model(request):
     return HttpResponse("")
 
 def delete_ajax(request):
-    form = XMLRequestForm(request.POST)
-    if form.is_valid():
-        command = form.cleaned_data['command']
-        rcv_filename = form.cleaned_data['rcv_filename']
-        if request.user.is_authenticated:
-            rcv_instance = RCV.objects.filter(filename=rcv_filename)
+    command = request.POST.get('command')
+    rcv_number = request.POST.get('rcv_number')
+    if request.user.is_authenticated:
+        if command == "delete":
+            rcv_instance = RCV.objects.get(rcv_number=rcv_number)
             rcv_instance.delete()
-            message = rcv_filename
-    else:
-        message = 0
+            message = rcv_number
     return HttpResponse(message)
 
 def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None, page=None):
