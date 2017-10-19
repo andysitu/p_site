@@ -6,7 +6,7 @@
 
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/rcv_list_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'rcv_list/css/rcv_list_styles.css' %}">
 
 {% trans "RCV List" as rcv_list_word %}
 {% trans "Year:" as year_word %}
@@ -23,7 +23,7 @@
 <ul>
 {% if rcv_list %}
 
-    <script src="{% static 'js/index_page.js' %}"></script>
+    <script src="{% static 'rcv_list/js/index_page.js' %}"></script>
 
     {% for rcv in rcv_list %}
     <li id="{{rcv.filename}}-li" class="rcv-li">

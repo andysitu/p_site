@@ -21,10 +21,11 @@ function getCookie(name) {
 
 function click_add_link_response(e) {
     var rcv_regex = /([\w\d]+.pdf)-.+/;
-    ele_id = e.target.id
-    console.log(e.target.id)
-    result = rcv_regex.exec(ele_id)
-    rcv_filename = result[1]
+    ele_id = e.target.id;
+    console.log(e.target.id);
+    result = rcv_regex.exec(ele_id);
+    rcv_filename = result[1];
+    console.log(rcv_filename);
 
     var command = '';
 
@@ -32,7 +33,7 @@ function click_add_link_response(e) {
     xmlhttpRequest.onreadystatechange = function(event) {
         if (xmlhttpRequest.readyState == XMLHttpRequest.DONE) {
             if (xmlhttpRequest.status == 200) {
-                var responseText = xmlhttpRequest.responseText
+                var responseText = xmlhttpRequest.responseText;
                 if (responseText == "0") {
                     write_message("You need to login");
                 } else {

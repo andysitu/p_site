@@ -32,6 +32,18 @@ def search_rcv(request):
         }
     )
 
+def check_rcv_name(rcv_num):
+    rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
+    re_results = re.search(rcv_re, rcv_num)
+    if re_results != None:
+        year = int('20' + re_results.group(2))
+        month = int(re_results.group(3))
+        day = int(re_results.group(4))
+
+        d = datetime.date(year, month, day)
+        return d
+    else:
+        return None
 
 def view_dates(request):
     year_dic = {}
@@ -291,13 +303,9 @@ def edit_name(request, filename):
         }
     )
 
-def edit_file_ajax(request):
-    rcv_name = request.POST.get('rcv_name')
-    pages_list = request.POST.getlist("pages[]", None)
-    filename = request.POST.get("filename")
-
+def edit_file(new_rcv_name, filename, pages_list=None):
     old_rcv_inst = RCV.objects.get(filename=filename)
-    check_inst_query = RCV.objects.filter(rcv_number=rcv_name)
+    check_inst_query = RCV.objects.filter(rcv_number=new_rcv_name)
 
     old_rcv_filepath = old_rcv_inst.get_filepath()
     old_file = open(old_rcv_filepath, 'rb')
@@ -325,20 +333,20 @@ def edit_file_ajax(request):
         pageObj = old_pdfReader.getPage(page)
         pdfWriter.addPage(pageObj)
 
-    pdfOutputFile = open(rcv_name + ".pdf", 'wb')
+    pdfOutputFile = open(new_rcv_name + ".pdf", 'wb')
     pdfWriter.write(pdfOutputFile)
     pdfOutputFile.close()
 
     if len(pages_list) == old_pdfReader.numPages or len(pages_list) == 0:
-    # If all pages of the old file are being edited
+        # If all pages of the old file are being edited
         if check_inst_q_length != 0:
             # All of the pages are being transferred to existing PDF.
             old_rcv_inst.delete()
         else:
-        # Can use edit function of instance but this renames file on its own
-            old_rcv_inst.edit(rcv_name)
+            # Can use edit function of instance but this renames file on its own
+            old_rcv_inst.edit(new_rcv_name)
     else:
-    # Only if some of the pages are being edited
+        # Only if some of the pages are being edited
         old_pdfWriter = PyPDF2.PdfFileWriter()
         for page_num in range(old_pdf_numpages):
             if page_num + 1 not in pages_list:
@@ -352,8 +360,21 @@ def edit_file_ajax(request):
         if check_inst_q_length == 0:
             # Pages are being transferred to nonextisting PDF, meaning RCV
             #   needs to be created.
-            rcv = RCV(rcvfile=file, filename=filename, rcv_date=d)
-            rcv.save()
+            check_response = check_rcv_name(new_rcv_name)
+
+            new_filename = new_rcv_name + ".pdf"
+            original_filename = old_rcv_inst.original_filename
+            input_date = old_rcv_inst.input_date
+
+            new_rcv = RCV(rcv_number=new_rcv_name,
+                          filename=new_filename,
+                          original_filename=original_filename,
+                          input_date=input_date,
+                          )
+            if check_response != None:
+                new_rcv.rcv_date = check_response,
+                new_rcv.correct_name = True
+            new_rcv.save()
 
     old_pdfReader.close()
     new_pdfReader.close()
@@ -361,7 +382,14 @@ def edit_file_ajax(request):
     prev_url = request.session["prev_url"]
 
     return JsonResponse({
-        "rcv_name": rcv_name,
+        "rcv_name": new_rcv_name,
         "pages": pages,
         "filename": filename,
     })
+
+def edit_file_ajax(request):
+    rcv_name = request.POST.get('rcv_name')
+    pages_list = request.POST.getlist("pages[]", None)
+    filename = request.POST.get("filename")
+
+    edit_file(rcv, filename, pages_list)
