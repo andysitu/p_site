@@ -20,9 +20,8 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /([\w\d]+.pdf)-.+/;
+    var rcv_regex = /([\w\d]+-\d+\.pdf)-+/;
     ele_id = e.target.id;
-    console.log(e.target.id);
     result = rcv_regex.exec(ele_id);
     rcv_filename = result[1];
     console.log(rcv_filename);
@@ -65,11 +64,12 @@ function click_add_link_response(e) {
     
 }
 
-function delete_rcv_link(rcv) {
-    li_element = document.getElementById(rcv + '-li');
-    li_element.parentNode.removeChild(li_element);
+function delete_rcv_link(delete_link_id) {
+    li_element = $("#" + delete_link_id);
+    console.log(delete_link_id);
+    console.log(li_element);
+    li_element.remove();
 }
-
 
 function hoovering_rcv(e) {
     var li_ele = e.target,
