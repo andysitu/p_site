@@ -11,7 +11,7 @@ rcv_foldername = 'rcv'
 class RCV(models.Model):
     rcv_number = models.CharField(max_length=50, default='')
     filename = models.CharField(max_length=50, default="")
-    rcv_date = models.DateField(default=django.utils.timezone.now)
+    rcv_date = models.DateField(blank=True, null=True, default=None)
     correct_name = models.BooleanField(default=False)
     upload_date = models.DateTimeField(default=django.utils.timezone.now)
     original_filename = models.CharField(max_length=50, default='Unknown.pdf')
