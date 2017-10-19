@@ -20,11 +20,10 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /([\w\d]+-\d+\.pdf)-+/;
+    var rcv_regex = /([\w\d]+-\d+)-\w+/;
     ele_id = e.target.id;
     result = rcv_regex.exec(ele_id);
-    rcv_filename = result[1];
-    console.log(rcv_filename);
+    rcv_number = result[1];
 
     var command = '';
 
@@ -51,7 +50,7 @@ function click_add_link_response(e) {
 
         var formData = new FormData();
         formData.append('command', "delete");
-        formData.append('rcv_filename', rcv_filename);
+        formData.append('rcv_number', rcv_number);
 
         xmlhttpRequest.open('POST', './delete/', true);
         xmlhttpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
@@ -61,13 +60,10 @@ function click_add_link_response(e) {
     } else {
 
     }
-    
 }
 
-function delete_rcv_link(delete_link_id) {
-    li_element = $("#" + delete_link_id);
-    console.log(delete_link_id);
-    console.log(li_element);
+function delete_rcv_link(rcv_number) {
+    li_element = $("#" + rcv_number + "-li");
     li_element.remove();
 }
 
