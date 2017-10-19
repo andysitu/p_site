@@ -20,7 +20,7 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    var rcv_regex = /([\w\d]+-\d+)-\w+/;
+    var rcv_regex = /^(.+)-\w+$/;
     ele_id = e.target.id;
     result = rcv_regex.exec(ele_id);
     rcv_number = result[1];
