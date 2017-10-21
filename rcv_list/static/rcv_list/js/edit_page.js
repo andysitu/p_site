@@ -27,6 +27,8 @@ function submit_edit(e) {
         }
     });
 
+    console.log(rcv_name, pages_selected, rcv_filename);
+
     $.ajax({
         type: frm.attr('method'),
         url: frm.attr('action'),

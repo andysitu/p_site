@@ -10,7 +10,7 @@
 </script>
 
 <script src="{% static 'rcv_list/js/edit_page.js' %}"></script>
-<p>{{ filename }}</p>
+<p id="rcv-name-display">{{ filename }}</p>
 
 <form method="POST" action="{% url 'rcv_list:edit_file_ajax' %}" id="edit-form">
     <div class="form-group row">

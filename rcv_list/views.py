@@ -17,6 +17,8 @@ from .forms import UploadRCV, XMLRequestForm, UploadRCVs, EditRCVName
 from django.utils.translation import gettext
 from django.utils import translation
 
+from .models import get_rcv_filepath
+
 def get_foldername():
     return 'rcv'
 
@@ -32,7 +34,8 @@ def search_rcv(request):
         }
     )
 
-def check_rcv_name(rcv_num):
+def get_date_from_rcvname(rcv_num):
+    # Checks if RCV is in proper format and returns datetime if so
     rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
     re_results = re.search(rcv_re, rcv_num)
     if re_results != None:
@@ -266,7 +269,7 @@ def upload_or_match_pdf(file_exist_status, filename, pdfReader, page_range=None,
             writer.addPage(pdfReader.getPage(page))
         else:
             start_page = page_range[0]
-            end_page = page_rangeQ[1]
+            end_page = page_range[1]
             for p in range(start_page, end_page):
                 writer.addPage(pdfReader.getPage(p))
         pdfOutput = open(filepath, 'wb')
@@ -300,7 +303,9 @@ def edit_name(request, filename):
         }
     )
 
-def edit_file(new_rcv_name, filename, pages_list=None):
+def edit_file(request, new_rcv_name, filename, pages_list=None):
+    existing_rcvfile = None
+
     old_rcv_inst = RCV.objects.get(filename=filename)
     check_inst_query = RCV.objects.filter(rcv_number=new_rcv_name)
 
@@ -309,32 +314,44 @@ def edit_file(new_rcv_name, filename, pages_list=None):
     old_pdfReader = PyPDF2.PdfFileReader(old_file)
     old_pdf_numpages = old_pdfReader.numPages
 
-    merger.append(new_pdfReader)
+    if pages_list == None or len(pages_list) == 0:
+        pages_list = range(1, old_pdf_numpages+1)
 
     pdfWriter = PyPDF2.PdfFileWriter()
 
     check_inst_q_length = len(check_inst_query)
 
     if check_inst_q_length != 0:
-        new_inst = check_inst_query[0]
+        existing_inst = check_inst_query[0]
 
-        new_rcv_filepath = check_inst.get_filepath()
-        new_file = open(new_rcv_filepath, 'rb')
-        new_pdfReader = PyPDF2.PdfFileReader
+        existing_rcv_filepath = existing_inst.get_filepath()
+        existing_rcvfile = open(existing_rcv_filepath, 'rb')
+        existing_rcv_pdfReader = PyPDF2.PdfFileReader(existing_rcvfile)
 
-        for page in range(new_pdfReader.numPages):
-            pageObj = new_pdfReader.getPage(page)
+        for page in range(existing_rcv_pdfReader.numPages):
+            pageObj = existing_rcv_pdfReader.getPage(page)
             pdfWriter.addPage(pageObj)
 
     for page in pages_list:
-        pageObj = old_pdfReader.getPage(page)
+        pageObj = old_pdfReader.getPage(int(page)-1)
         pdfWriter.addPage(pageObj)
 
-    pdfOutputFile = open(new_rcv_name + ".pdf", 'wb')
+    output_filename = new_rcv_name + ".pdf"
+    # output_filename = "output" + ".pdf"
+    output_filepath = get_rcv_filepath(output_filename)
+
+    pdfOutputFile = open(get_rcv_filepath("output.pdf"), 'wb')
     pdfWriter.write(pdfOutputFile)
+
+    old_file.close()
+    if existing_rcvfile != None:
+        existing_rcvfile.close()
+
+    os.rename(get_rcv_filepath("output.pdf"), output_filepath)
+
     pdfOutputFile.close()
 
-    if len(pages_list) == old_pdfReader.numPages or len(pages_list) == 0:
+    if len(pages_list) == old_pdfReader.numPages or len(pages_list) == 0 or pages_list == None:
         # If all pages of the old file are being edited
         if check_inst_q_length != 0:
             # All of the pages are being transferred to existing PDF.
@@ -343,21 +360,28 @@ def edit_file(new_rcv_name, filename, pages_list=None):
             # Can use edit function of instance but this renames file on its own
             old_rcv_inst.edit(new_rcv_name)
     else:
-        # Only if some of the pages are being edited
+        # Only if some of the pages are being edited.
+        # Will recreate old pdf file with only pages not in page_list
         old_pdfWriter = PyPDF2.PdfFileWriter()
-        for page_num in range(old_pdf_numpages):
-            if page_num + 1 not in pages_list:
-                pageObj = old_pdfReader.getPage(page_num)
+
+        oldfile2 = open(old_rcv_filepath, 'rb')
+        old_pdfReader2 = PyPDF2.PdfFileReader(oldfile2)
+
+        for page_num in range(old_pdfReader2.numPages):
+            if str(page_num + 1) not in pages_list:
+                pageObj = old_pdfReader2.getPage(page_num)
                 old_pdfWriter.addPage(pageObj)
 
-        old_pdfOutputFile = open(old_rcv_filepath, 'wb')
+        old_pdfOutputFile = open(get_rcv_filepath("output.pdf"), 'wb')
         old_pdfWriter.write(old_pdfOutputFile)
         old_pdfOutputFile.close()
+
+        os.rename(get_rcv_filepath("output.pdf"), old_rcv_filepath)
 
         if check_inst_q_length == 0:
             # Pages are being transferred to nonextisting PDF, meaning RCV
             #   needs to be created.
-            check_response = check_rcv_name(new_rcv_name)
+            check_response = get_date_from_rcvname(new_rcv_name)
 
             new_filename = new_rcv_name + ".pdf"
             original_filename = old_rcv_inst.original_filename
@@ -373,14 +397,12 @@ def edit_file(new_rcv_name, filename, pages_list=None):
                 new_rcv.correct_name = True
             new_rcv.save()
 
-    old_pdfReader.close()
-    new_pdfReader.close()
-
     prev_url = request.session["prev_url"]
 
     return JsonResponse({
         "rcv_name": new_rcv_name,
-        "pages": pages,
+        # "pages": pages_list,
+        "prev_url": prev_url,
         "filename": filename,
     })
 
@@ -389,4 +411,4 @@ def edit_file_ajax(request):
     pages_list = request.POST.getlist("pages[]", None)
     filename = request.POST.get("filename")
 
-    edit_file(rcv, filename, pages_list)
+    return edit_file(request, rcv_name, filename, pages_list)

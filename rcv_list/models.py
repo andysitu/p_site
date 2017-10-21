@@ -6,16 +6,22 @@ from django.dispatch.dispatcher import receiver
 from django.conf import settings
 from django.contrib.auth.models import User
 
+
+def get_rcv_filepath(rcv_filename):
+    return os.path.join(settings.MEDIA_ROOT, "rcv", rcv_filename)
+
 rcv_foldername = 'rcv'
 
 class RCV(models.Model):
     rcv_number = models.CharField(max_length=50, default='')
     filename = models.CharField(max_length=50, default="")
-    rcv_date = models.DateField(blank=True, null=True, default=None)
-    correct_name = models.BooleanField(default=False)
-    upload_date = models.DateTimeField(default=django.utils.timezone.now)
     original_filename = models.CharField(max_length=50, default='Unknown.pdf')
     input_date = models.DateField(null=True, blank=True)
+
+    correct_name = models.BooleanField(default=False)
+    rcv_date = models.DateField(blank=True, null=True, default=None)
+
+    upload_date = models.DateTimeField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.rcv_number
