@@ -20,12 +20,12 @@ function getCookie(name) {
 
 
 function click_add_link_response(e) {
-    e.preventDefault();
-
     var rcv_regex = /^(.+)-\w+$/;
     ele_id = e.target.id;
     result = rcv_regex.exec(ele_id);
     rcv_number = result[1];
+
+    e.preventDefault();
 
     var command = '';
 
