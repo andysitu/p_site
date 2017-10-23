@@ -27,8 +27,6 @@ function submit_edit(e) {
         }
     });
 
-    console.log(rcv_name, pages_selected, rcv_filename);
-
     $.ajax({
         type: frm.attr('method'),
         url: frm.attr('action'),
@@ -40,7 +38,7 @@ function submit_edit(e) {
         dataType: "json",
         success: function(data) {
             console.log(data);
-            // window.history.back();
+            window.history.back();
         },
     });
     return false;
