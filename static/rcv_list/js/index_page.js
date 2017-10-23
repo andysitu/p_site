@@ -102,7 +102,7 @@ function run_on_load() {
 
     for (var i = 0; i < elements_length; i++) {
         elements[i].addEventListener('mouseenter', hoovering_rcv);
-    };
+    }
 }
 
-document.addEventListener("DOMContentLoaded", run_on_load)
+document.addEventListener("DOMContentLoaded", run_on_load);

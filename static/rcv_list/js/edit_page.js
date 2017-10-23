@@ -27,19 +27,27 @@ function submit_edit(e) {
         }
     });
 
-    $.ajax({
-        type: frm.attr('method'),
-        url: frm.attr('action'),
-        data: {
-            "rcv_name": rcv_name,
-            "pages[]": pages_selected,
-            "filename": rcv_filename,
-        },
-        dataType: "json",
-        success: function(data) {
-            console.log(data);
-            window.history.back();
-        },
-    });
+    rcv_name = rcv_name.toUpperCase();
+    var rcv_re = /^(RCV|RECV)\d{6}-\d{4}$/;
+
+    //Check if rcv name is in correct format
+    if (rcv_name + ".pdf" == rcv_filename) {
+        alert(gettext("RCV name is the same as the original."))
+    } else {
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: {
+                "rcv_name": rcv_name,
+                "pages[]": pages_selected,
+                "filename": rcv_filename,
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                window.history.back();
+            },
+        });
+    }
     return false;
 }
