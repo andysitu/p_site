@@ -241,6 +241,7 @@ def check_files_to_model(request):
 def delete_ajax(request):
     command = request.POST.get('command')
     rcv_number = request.POST.get('rcv_number')
+    message = ""
     if request.user.is_authenticated:
         if command == "delete":
             rcv_instance = RCV.objects.get(rcv_number=rcv_number)
@@ -319,9 +320,10 @@ def edit_file(request, new_rcv_name, filename, pages_list=None):
 
     pdfWriter = PyPDF2.PdfFileWriter()
 
-    check_inst_q_length = len(check_inst_query)
+    existing_rcv_status = len(check_inst_query) != 0
 
-    if check_inst_q_length != 0:
+
+    if existing_rcv_status:
         existing_inst = check_inst_query[0]
 
         existing_rcv_filepath = existing_inst.get_filepath()
@@ -353,7 +355,7 @@ def edit_file(request, new_rcv_name, filename, pages_list=None):
 
     if len(pages_list) == old_pdfReader.numPages or len(pages_list) == 0 or pages_list == None:
         # If all pages of the old file are being edited
-        if check_inst_q_length != 0:
+        if existing_rcv_status:
             # All of the pages are being transferred to existing PDF.
             old_rcv_inst.delete()
         else:
@@ -378,23 +380,29 @@ def edit_file(request, new_rcv_name, filename, pages_list=None):
 
         os.rename(get_rcv_filepath("output.pdf"), old_rcv_filepath)
 
-        if check_inst_q_length == 0:
-            # Pages are being transferred to nonextisting PDF, meaning RCV
-            #   needs to be created.
+        if not existing_rcv_status:
+            # Create new RCV instance the new RCV does not exists.
             check_response = get_date_from_rcvname(new_rcv_name)
-
-            new_filename = new_rcv_name + ".pdf"
             original_filename = old_rcv_inst.original_filename
             input_date = old_rcv_inst.input_date
+            upload_date = old_rcv_inst.upload_date
 
-            new_rcv = RCV(rcv_number=new_rcv_name,
-                          filename=new_filename,
-                          original_filename=original_filename,
-                          input_date=input_date,
-                          )
             if check_response != None:
-                new_rcv.rcv_date = check_response,
-                new_rcv.correct_name = True
+                new_rcv = RCV(rcv_number=new_rcv_name,
+                              filename=output_filename,
+                              original_filename=original_filename,
+                              input_date=input_date,
+                              rcv_date=check_response,
+                              correct_name=True,
+                              upload_date=upload_date,
+                              )
+            else:
+                new_rcv = RCV(rcv_number=new_rcv_name,
+                              filename=output_filename,
+                              original_filename=original_filename,
+                              input_date=input_date,
+                              upload_date=upload_date,
+                              )
             new_rcv.save()
 
     prev_url = request.session["prev_url"]
