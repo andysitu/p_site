@@ -31,7 +31,7 @@
         <div class=add-link-hide id="{{ rcv.rcv_number }}-add-links-div">
             <a href="{% url 'rcv_list:download_rcv' rcv.filename %}" target="blank" id="{{ rcv.filename }}-download-link">{% trans 'download' %}</a>
             <a href="{% url 'rcv_list:edit' rcv.filename %}">{% trans 'edit' %}</a>
-            <a id="{{ rcv.rcv_number }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
+            <a href="" id="{{ rcv.rcv_number }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
         </div>
     </li>
     {% endfor %}

@@ -244,7 +244,7 @@ def delete_ajax(request):
     message = ""
     if request.user.is_authenticated:
         if command == "delete":
-            rcv_instance = RCV.objects.get(rcv_number=rcv_number)
+            rcv_instance = RCV.objects.filter(rcv_number=rcv_number)[0]
             rcv_instance.delete()
             message = rcv_number
     return HttpResponse(message)
