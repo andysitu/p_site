@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 14:32-0700\n"
+"POT-Creation-Date: 2017-10-23 17:11-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: warehouse_map/static/warehouse_map/js/map_ajax.js:7
-msgid "Item Count"
-msgstr "物品数量"
+#: rcv_list/static/rcv_list/js/edit_page.js:36
+msgid "RCV name is the same as the original."
+msgstr "RCV名称与原来的名称相同"
 
-#: warehouse_map/static/warehouse_map/js/map_ajax.js:8
-msgid "Items Shipped"
-msgstr "发货数量"
+#: rcv_list/static/rcv_list/js/edit_page.js:38
+msgid "Are you sure "
+msgstr "你确定"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:33
+#: rcv_list/static/rcv_list/js/edit_page.js:39
+msgid " is the correct rcv number?"
+msgstr "是正确的rcv号码吗？"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:44
 msgid "Location"
 msgstr "位置"
 
-#: warehouse_map/static/warehouse_map/js/page_functions.js:36
+#: warehouse_map/static/warehouse_map/js/page_functions.js:47
 msgid "Total"
 msgstr "总"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:99
+msgid "Item Count"
+msgstr "物品数量"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:100
+msgid "Items Shipped"
+msgstr "发货数量"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:101
+#, fuzzy
+#| msgid "Items Shipped"
+msgid "Items Added"
+msgstr "发货数量"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:146
+msgid "Previous Date"
+msgstr "上一个日期"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:163
+msgid "Time Period"
+msgstr "时间段"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:230
+msgid "Date"
+msgstr "日期"
+
+#: warehouse_map/static/warehouse_map/js/page_functions.js:244
+msgid "Delete"
+msgstr "删除"
 
 #: warehouse_map/static/warehouse_map/js/upload_page.js:17
 msgid "Currently Uploading"

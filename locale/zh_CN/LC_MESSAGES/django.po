@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 14:46-0700\n"
+"POT-Creation-Date: 2017-10-23 17:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,9 @@ msgstr "上传日期"
 
 #: customs_list/templates/customs_list/customs_list_base.html:14
 #: customs_list/templates/customs_list/upload.html:22
-#: rcv_list/templates/rcv_list/rcv_list_base.html:17
-#: rcv_list/templates/rcv_list/upload.html:21
+#: rcv_list/templates/rcv_list/rcv_list_base.html:18
+#: rcv_list/templates/rcv_list/upload.html:23
+#: uploader/templates/uploader/upload.html:17
 #: warehouse_map/templates/warehouse_map/upload_excel_data.html:25
 msgid "Upload"
 msgstr "上载"
@@ -38,7 +39,7 @@ msgid "View All PDFS"
 msgstr "查看所有pdf"
 
 #: customs_list/templates/customs_list/customs_list_base.html:16
-#: rcv_list/templates/rcv_list/rcv_list_base.html:16
+#: rcv_list/templates/rcv_list/rcv_list_base.html:17
 msgid "View To-Edit Files"
 msgstr "文件名不正确"
 
@@ -48,6 +49,7 @@ msgstr "文件名不正确"
 #: customs_list/templates/customs_list/view_files.html:17
 #: rcv_list/templates/rcv_list/view_dates.html:8
 #: rcv_list/templates/rcv_list/view_files.html:12
+#: uploader/templates/uploader/view_files.html:14
 msgid "Year:"
 msgstr "年:"
 
@@ -57,6 +59,7 @@ msgstr "年:"
 #: customs_list/templates/customs_list/view_files.html:18
 #: rcv_list/templates/rcv_list/view_dates.html:9
 #: rcv_list/templates/rcv_list/view_files.html:13
+#: uploader/templates/uploader/view_files.html:15
 msgid "Month:"
 msgstr "月:"
 
@@ -71,19 +74,16 @@ msgid "Download All Pdf Files"
 msgstr "下载pdf文件"
 
 #: customs_list/templates/customs_list/view_files.html:30
-#: rcv_list/templates/rcv_list/index.html:20
 #: rcv_list/templates/rcv_list/view_files.html:32
 msgid "download"
 msgstr "下载"
 
 #: customs_list/templates/customs_list/view_files.html:31
-#: rcv_list/templates/rcv_list/index.html:21
 #: rcv_list/templates/rcv_list/view_files.html:33
 msgid "edit"
 msgstr "编辑"
 
 #: customs_list/templates/customs_list/view_files.html:32
-#: rcv_list/templates/rcv_list/index.html:22
 #: rcv_list/templates/rcv_list/view_files.html:34
 msgid "delete"
 msgstr "删除"
@@ -105,9 +105,9 @@ msgid "Customs Declaration List"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
 #: p_site/templates/p_site/index.html:14
-#: rcv_list/templates/rcv_list/index.html:9
 #: rcv_list/templates/rcv_list/view_dates.html:7
 #: rcv_list/templates/rcv_list/view_files.html:11
+#: uploader/templates/uploader/view_files.html:13
 msgid "RCV List"
 msgstr "RCV 列表"
 
@@ -115,48 +115,62 @@ msgstr "RCV 列表"
 msgid "Warehouse Map"
 msgstr "仓库地图"
 
-#: rcv_list/forms.py:6 rcv_list/forms.py:13
+#: p_site/templates/p_site/index.html:16
+#, fuzzy
+#| msgid "Dates Uploaded"
+msgid "File Uploader"
+msgstr "上载"
+
+#: rcv_list/forms.py:8 rcv_list/forms.py:15
 msgid "Select an RCV PDF File"
 msgstr "选择RCV PDF文件"
 
-#: rcv_list/templates/rcv_list/index.html:10
-msgid "Year"
-msgstr "年:"
+#: rcv_list/forms.py:22 rcv_list/forms.py:25
+#, fuzzy
+#| msgid "First Date"
+msgid "Input Date"
+msgstr "第一次约会"
 
-#: rcv_list/templates/rcv_list/index.html:11
-msgid "Month"
-msgstr "月:"
+#: rcv_list/templates/rcv_list/edit.html:17
+msgid "RCV name"
+msgstr "RCV名称"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:12
-#: templates/base_generic.html:79
+#: rcv_list/templates/rcv_list/edit.html:24
+msgid "Pages to edit (None selected mean all pages will be edited)"
+msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
+
+#: rcv_list/templates/rcv_list/edit.html:34
+msgid "Submit"
+msgstr "提交"
+
+#: rcv_list/templates/rcv_list/rcv_list_base.html:13
+#: templates/base_generic.html:79 uploader/templates/base_generic.html:79
+#: uploader/templates/uploader/uploader_base.html:11
 msgid "Home"
 msgstr "家"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:18
+#: rcv_list/templates/rcv_list/rcv_list_base.html:19
 msgid "All"
 msgstr "所有"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:25
+#: rcv_list/templates/rcv_list/rcv_list_base.html:26
 msgid "Search"
 msgstr "搜索"
 
 #: rcv_list/templates/rcv_list/view_files.html:20
+#: uploader/templates/uploader/view_files.html:22
 msgid "Total Number of RCV:"
 msgstr "RCV文件总数:"
 
-#: rcv_list/views.py:27
-msgid "Hello"
-msgstr "你好"
-
-#: templates/base_generic.html:39
+#: templates/base_generic.html:39 uploader/templates/base_generic.html:39
 msgid "Logout"
 msgstr "登出"
 
-#: templates/base_generic.html:39
+#: templates/base_generic.html:39 uploader/templates/base_generic.html:39
 msgid "User"
 msgstr "用户"
 
-#: templates/base_generic.html:42
+#: templates/base_generic.html:42 uploader/templates/base_generic.html:42
 msgid "Login"
 msgstr "登录"
 
@@ -182,6 +196,18 @@ msgstr "您的帐户无权访问此页面。要继续，请登录一个。"
 msgid "Please login to see this page."
 msgstr "请登录查看此页面。"
 
+#: uploader/forms.py:10
+#, fuzzy
+#| msgid "Select an RCV PDF File"
+msgid "Select a File"
+msgstr "选择RCV PDF文件"
+
+#: uploader/templates/uploader/uploader_base.html:15
+#, fuzzy
+#| msgid "Upload Date"
+msgid "Upload File"
+msgstr "上传日期"
+
 #: warehouse_map/forms.py:7
 msgid "Select an exported excel file from the WMS."
 msgstr "选择EXCEL文件"
@@ -195,7 +221,7 @@ msgid "Delete items by date"
 msgstr "按日期删除项目"
 
 #: warehouse_map/templates/warehouse_map/delete_date.html:26
-#: warehouse_map/templates/warehouse_map/map.html:67
+#: warehouse_map/templates/warehouse_map/map.html:68
 msgid "Date"
 msgstr "日期"
 
@@ -203,36 +229,36 @@ msgstr "日期"
 msgid "Delete"
 msgstr "删除"
 
-#: warehouse_map/templates/warehouse_map/map.html:26
+#: warehouse_map/templates/warehouse_map/map.html:27
 msgid ""
 "Your internet browser doesn't support HTML canvas. Please use another one."
 msgstr "您的互联网浏览器不支持HTML画布。请使用另一个。"
 
-#: warehouse_map/templates/warehouse_map/map.html:45
+#: warehouse_map/templates/warehouse_map/map.html:46
 msgid "Data Type"
 msgstr "数据类型"
 
-#: warehouse_map/templates/warehouse_map/map.html:50
+#: warehouse_map/templates/warehouse_map/map.html:51
 msgid "Floor Level"
 msgstr "楼层"
 
-#: warehouse_map/templates/warehouse_map/map.html:72
-msgid "Previous Date"
-msgstr "以前的日期"
-
-#: warehouse_map/templates/warehouse_map/map.html:82
+#: warehouse_map/templates/warehouse_map/map.html:80
 msgid "Toggle msg box"
 msgstr "切换消息框"
 
-#: warehouse_map/templates/warehouse_map/map.html:86
+#: warehouse_map/templates/warehouse_map/map.html:84
 msgid "Reset Database"
 msgstr "重置数据库"
 
-#: warehouse_map/templates/warehouse_map/map.html:89
+#: warehouse_map/templates/warehouse_map/map.html:87
 msgid "Reset Database & Locations"
 msgstr "重置数据库和位置"
 
-#: warehouse_map/templates/warehouse_map/map.html:92
+#: warehouse_map/templates/warehouse_map/map.html:90
+msgid "Reset Grid (Image) Map"
+msgstr ""
+
+#: warehouse_map/templates/warehouse_map/map.html:93
 msgid "Delete By Date"
 msgstr "按日期删除"
 
@@ -247,3 +273,15 @@ msgstr "家"
 #: warehouse_map/templates/warehouse_map/warehouse_map_base.html:16
 msgid "Upload Excel"
 msgstr "上传日期"
+
+#~ msgid "Year"
+#~ msgstr "年:"
+
+#~ msgid "Month"
+#~ msgstr "月:"
+
+#~ msgid "Hello"
+#~ msgstr "你好"
+
+#~ msgid "Previous Date"
+#~ msgstr "以前的日期"
