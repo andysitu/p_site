@@ -160,7 +160,6 @@ var map_ajax = {
             return 0;
         }
 
-
         this.csrf_it();
         for (i = 0; i < map_data_length; i++) {
             var map_data_dic = map_data_arr[i];
@@ -192,6 +191,12 @@ var map_ajax = {
                         }
                     }
                     canvasMap.make_map(canvasMap.map_data_arr, false, level);
+
+                    sessionStorage.setItem("search_level", level);
+                    sessionStorage.setItem("search_data_type", data_type);
+                    sessionStorage.setItem("search_date_1", date_1_inst_id);
+                    sessionStorage.setItem("search_date_2", date_2_inst_id);
+                    sessionStorage.setItem("search_level", level);
                 }
             });
         }
