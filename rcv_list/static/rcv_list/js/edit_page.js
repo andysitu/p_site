@@ -51,6 +51,7 @@ function submit_edit(e) {
                 success: function (data) {
                     console.log(data);
                     window.history.back();
+                    window.location.reload(true);
                 },
             });
         } else {
