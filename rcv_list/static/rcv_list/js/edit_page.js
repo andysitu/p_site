@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     $( "#edit-form" ).submit(submit_edit);
+    $("#rcv-name-input").focus()
 });
 
 function submit_edit(e) {
@@ -34,20 +35,27 @@ function submit_edit(e) {
     if (rcv_name + ".pdf" == rcv_filename) {
         alert(gettext("RCV name is the same as the original."))
     } else {
-        $.ajax({
-            type: frm.attr('method'),
-            url: frm.attr('action'),
-            data: {
-                "rcv_name": rcv_name,
-                "pages[]": pages_selected,
-                "filename": rcv_filename,
-            },
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                window.history.back();
-            },
-        });
+        var msg_1 = gettext("Are you sure "),
+            msg_2 = gettext(" is the correct rcv number?");
+        var confirm_status = window.confirm(msg_1 + rcv_name + msg_2);
+        if (confirm_status) {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: {
+                    "rcv_name": rcv_name,
+                    "pages[]": pages_selected,
+                    "filename": rcv_filename,
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    window.history.back();
+                },
+            });
+        } else {
+            $("#rcv-name-input").val("RCV").focus();
+        }
     }
     return false;
 }
