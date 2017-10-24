@@ -50,8 +50,7 @@ function submit_edit(e) {
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    window.history.back();
-                    window.location.reload(true);
+                    location.replace(document.referrer);
                 },
             });
         } else {
