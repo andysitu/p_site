@@ -1,0 +1,17 @@
+{% extends 'base_generic.html' %}
+
+{% load i18n %}
+
+{% block generic_page_head %}
+    {% load static %}
+{% endblock %}
+
+{% block navbar_links %}
+<li class="nav-item">
+    <a href="{% url 'warehouse_viewer:index' %}">{% trans "Home" %}</a></li>
+<li class="nav-item">
+    <a href="{% url 'warehouse_map:upload_excel_data' %}">{% trans "Upload Excel" %}</a></li>
+{% endblock %}
+
+{% block sidebar_links %}
+{% endblock %}

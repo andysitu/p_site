@@ -31,6 +31,11 @@
         <a class="navbar-brand" href="{% url 'index' %}">
             <img alt="4PX-logo" src="{% static 'p_site/img/mini-logo.png' %}"></a>
 
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                {% block navbar_links %}{% endblock %}
+            </ul>
+        </div>
         <div class="collapse navbar-collapse d-flex justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item">
