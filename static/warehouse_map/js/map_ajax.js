@@ -192,6 +192,7 @@ var map_ajax = {
                     }
                     canvasMap.make_map(canvasMap.map_data_arr, false, level);
 
+                    sessionStorage.setItem("map_data_entireArr", JSON.stringify(map_data_arr));
                     sessionStorage.setItem("search_level", level);
                     sessionStorage.setItem("search_data_type", data_type);
                     sessionStorage.setItem("search_date_1", date_1_inst_id);
