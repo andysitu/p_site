@@ -11,6 +11,9 @@ from django.utils.timezone import activate
 from django.conf import settings
 from django import db
 
+from django.utils.translation import gettext
+# Used: process_excel_file
+
 def process_excel_file(file):
 
     print(datetime.datetime.now())
@@ -33,7 +36,9 @@ def process_excel_file(file):
     data_date_query = DataDate.objects.filter(date=d)
     if len(data_date_query) > 0:
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
-        return "Excel file with date " + d_time_str + " has uploaded already."
+        m_1 = gettext("Excel file with date ")
+        m_2 = gettext(" has uploaded already.")
+        return m1 + d_time_str + m2
 
     data = file.read()
     workbook = xlrd.open_workbook(file_contents=data)
