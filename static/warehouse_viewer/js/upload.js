@@ -1,4 +1,11 @@
 $( document ).ready(function() {
+    var file_re = /(\d{14}).xlsx/;
+    if (msg.match(file_re) != null) {
+        var disp__msg = gettext("File ") + msg + gettext(" has finished uploading.");
+        write_msg(display_msg);
+    } else if (msg !== "none") {
+        write_msg(msg);
+    }
 
     // Event handler for submitting the upload of excel file.
     $("#upload-form").submit(function(e){

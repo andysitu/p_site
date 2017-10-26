@@ -6,6 +6,10 @@
 {% block head %}
 <script type="text/javascript" src="{% static 'warehouse_viewer/js/upload.js' %}"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+<script type="text/javascript">
+    var msg = "{{ msg }}";
+</script>
 {% endblock %}
 
 {% block content %}
