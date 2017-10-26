@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+
+    // Event handler for submitting the upload of excel file.
     $("#upload-form").submit(function(e){
         var file = $("#fileupload")[0].files[0], result;
 
@@ -9,7 +11,7 @@ $( document ).ready(function() {
 
             var loading_icon_html = "<i class='fa fa-refresh fa-spin' aria-hidden='true'></i>";
 
-            write_msg( "<h1>" + gettext("Currently Uploading") + loading_icon_html) + "</h1>";
+            write_msg( "<h4>" + gettext("Currently Uploading") + loading_icon_html) + "</h4>";
         } else {
             write_msg(result);
             e.preventDefault();
@@ -18,6 +20,12 @@ $( document ).ready(function() {
 });
 
 function check_file(file) {
+    /**
+     * Checks whether a file exists and whether it has the correct
+     *  file format and file name.
+     * File: file type (html)
+     * Returns true if it's correct, otherwise the html message to be displayed.
+     */
     var filename = file.name,
         filetype = file.type,
         file_re = /(\d{14}).xlsx/;
@@ -31,7 +39,6 @@ function check_file(file) {
     } else if (re_result == null || re_result[1].length != 14) {
         return gettext("Incorrect file name. It needs to have 14 numbers for yyyymmddhhmmss[year, month, day, hour, minute, second].")
     }
-
     return true;
 }
 
