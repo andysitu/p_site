@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
@@ -15,6 +14,11 @@ def viewer(request):
 
 def upload(request):
     uploadForm = UploadFile()
+    msg = ""
+
+    if request.method == 'POST':
+        file = request.FILES["excel_file"]
+        msg = file.name
 
     date_inst_list = processor.get_datadates(20)
 
@@ -28,17 +32,13 @@ def upload(request):
         context={
             "date_list": date_list,
             "upload_form": uploadForm,
+            "msg": msg,
         }
     )
 
-def upload_excel(request):
-    if request.method == 'POST':
-        file = request.FILES.getlist("excel_file")
-    return HttpResponse(file)
-
 # @login_required
 # def upload_excel_data(request):
-#
+#Q
 #
 #         response_excel_data_form = UploadExcelData(request.POST, request.FILES)
 #         if response_excel_data_form.is_valid():

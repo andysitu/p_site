@@ -9,8 +9,9 @@
 {% endblock %}
 
 {% block content %}
+{{ msg }}
 
-<form id="upload-form" action="{% url 'warehouse_viewer:upload_excel' %}" method="POST" enctype="multipart/form-data">
+<form id="upload-form" action="{% url 'warehouse_viewer:upload' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
         <label for="fileupload">{% trans "Select an excel file from the WMS" %}</label>

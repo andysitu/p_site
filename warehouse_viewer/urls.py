@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^upload/$', views.upload, name="upload"),
     # url(r'^$', views.view_map, name="index-blank"),
     # url(r'^index/$', views.view_map, name="index"),
-    url(r'upload_excel/$', views.upload_excel, name="upload_excel"),
     # url(r'^reset_db/$', views.reset_db, name="reset_db"),
     # url(r'^reset_db_true/$', views.reset_db_true, name="reset_db_true"),
     # url(r'^reset_grid/$', views.reset_grid_map, name="reset_grid_map"),
