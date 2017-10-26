@@ -4,11 +4,13 @@ from . import views
 
 app_name = "warehouse_viewer"
 urlpatterns = [
-    url(r'^warehouse_viewer$', views.viewer, name="viewer"),
-    url(r'^$', views.viewer, name="index"),
+    url(r'^warehouse_viewer/$', views.viewer, name="viewer"),
+    url(r'^index/$', views.viewer, name="index"),
+    url(r'^$', views.viewer, name="index-blank"),
+    url(r'^upload/$', views.upload, name="upload"),
     # url(r'^$', views.view_map, name="index-blank"),
     # url(r'^index/$', views.view_map, name="index"),
-    # url(r'upload_excel/$', views.upload_excel_data, name="upload_excel_data"),
+    url(r'upload_excel/$', views.upload_excel, name="upload_excel"),
     # url(r'^reset_db/$', views.reset_db, name="reset_db"),
     # url(r'^reset_db_true/$', views.reset_db_true, name="reset_db_true"),
     # url(r'^reset_grid/$', views.reset_grid_map, name="reset_grid_map"),

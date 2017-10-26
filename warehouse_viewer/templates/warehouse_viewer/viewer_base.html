@@ -10,8 +10,9 @@
 <li class="nav-item">
     <a href="{% url 'warehouse_viewer:index' %}">{% trans "Home" %}</a></li>
 <li class="nav-item">
-    <a href="{% url 'warehouse_map:upload_excel_data' %}">{% trans "Upload Excel" %}</a></li>
+    <a href="{% url 'warehouse_viewer:upload' %}">{% trans "Upload Excel" %}</a></li>
 {% endblock %}
 
-{% block sidebar_links %}
-{% endblock %}
+
+{% block home_link %}{% endblock %}
+{% block sidebar_links %}{% endblock %}
