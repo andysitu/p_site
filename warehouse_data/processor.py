@@ -33,7 +33,7 @@ def process_excel_file(file):
     data_date_query = DataDate.objects.filter(date=d)
     if len(data_date_query) > 0:
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
-        return "Excel file with date " + d_time_str + " has been used before."
+        return "Excel file with date " + d_time_str + " has uploaded already."
 
     data = file.read()
     workbook = xlrd.open_workbook(file_contents=data)
@@ -155,7 +155,7 @@ def process_excel_file(file):
     it = Items.objects.bulk_create(items_list, batch_size=2000)
     # db.reset_queries()
     print(datetime.datetime.now())
-    return "Done"
+    return 0
 
 def reset_db(delete_rack = False):
     DataDate.objects.all().delete()
