@@ -1,0 +1,37 @@
+{% extends 'warehouse_map/warehouse_map_base.html' %}
+
+{% load i18n %}
+
+{% block head %}
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<script type="text/javascript" src="{% static 'warehouse_map/js/upload_page.js' %}"></script>
+
+<script>
+    var upload_response = "{{ upload_response }}";
+</script>
+
+<form id="upload-form" action="{% url 'warehouse_map:upload_excel_data' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table>
+        {{ upload_form.as_table }}
+    </table>
+
+    <p><input type="submit" id="upload-button" value="{% trans 'Upload' %}" /></p>
+</form>
+
+<div class="d-block bg-warning" id="upload-msg-div"></div>
+
+{% trans 'Dates Uploaded' %}:
+<ul class="list-group" id="upload-ul">
+    {% for date in date_list %}
+    <li class="list-group-item upload-dates-li">{{ date }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
