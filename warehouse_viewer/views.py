@@ -39,29 +39,3 @@ def upload(request):
             "msg": msg,
         }
     )
-
-# @login_required
-# def upload_excel_data(request):
-#Q
-#
-#         response_excel_data_form = UploadExcelData(request.POST, request.FILES)
-#         if response_excel_data_form.is_valid():
-#             for file in request.FILES.getlist("excel_data_file"):
-#             # file = request.FILES["excel_data_file"]
-#                 upload_response = processor.process_excel_file(file)
-#
-#     upload_excel_data_form = UploadExcelData()
-#
-#     date_list = []
-#     for data_date in date_inst_list:
-#         date_list.append(data_date.date.astimezone().strftime("%m/%d/%Y-%I:%M%p"))
-#
-#     return render(
-#         request,
-#         'warehouse_map/upload_excel_data.html',
-#         context={
-#             "upload_form": upload_excel_data_form,
-#             "date_list": date_list,
-#             "upload_response": upload_response,
-#         }
-#     )
