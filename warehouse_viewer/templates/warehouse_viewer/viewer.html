@@ -1,2 +1,28 @@
 {% extends 'warehouse_viewer/viewer_base.html' %}
 
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/side_menu.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/viewer.js' %}"></script>
+<script type="text/javascript">
+    
+</script>
+{% endblock %}
+
+{% block settings %}
+<form action="" method="get">
+    <div class="form-group">
+        <select class="form-control" id="data-mode">
+            <option value="map">{% trans "Map" %}</option>
+            <option value="chart" selected>{% trans "Chart" %}</option>
+            <option value="graph">{% trans "Graph" %}</option>
+        </select>
+    </div>
+    <div id="mode-settings-div"></div>
+</form>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
