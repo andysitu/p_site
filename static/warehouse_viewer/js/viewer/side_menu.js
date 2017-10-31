@@ -29,7 +29,27 @@ var side_menu = {
     submit: function(e) {
         var $form = $( e.target ),
             data_array = $form.serializeArray(),
-            form_url = $form.attr("action");
+            form_url = $form.attr("action"),
+            form_method = $form.attr("method");
+
+        var form_data = {},
+            i,
+            data_arr_len = data_array.length;
+
+        for (i = 0; i < data_arr_len; i++) {
+             var data_dic = data_array[i];
+             if (data_dic["name"] != "csrfmiddlewaretoken") {
+                 form_data[data_dic["name"]] = data_dic["value"];
+             }
+        }
+        $.ajax({
+            url: form_url,
+            data: form_data,
+            method: form_method,
+            success: function (data) {
+                console.log("success");
+            },
+        });
     },
 };
 
