@@ -1,5 +1,6 @@
 var side_menu = {
-    container_id: "side-menu-div",
+    form_id: "side-menu-form",
+    container_id: "mode-settings-div",
     set_settings_from_mode: function () {
         var mode_type = $("#data-mode").val();
 
@@ -19,12 +20,10 @@ var side_menu = {
             default:
                 return 1;
         };
-        var $menu_div = mode_settingsObj.make_menu(this.container_id);
-        $("#mode-settings-div").append($menu_div);
-        mode_settingsObj.add_submenu_from_dataType();
+        var $menu_div = mode_settingsObj.add_menu(this.container_id);
     },
     clear_settings: function() {
-        $("#mode-settings-div").empty();
+        $("#" + this.container_id).empty();
     },
     submit: function(e) {
         var $form = $( e.target ),
@@ -60,19 +59,28 @@ var map_mode_settings = {
 
 
 var chart_mode_settings = {
-    data_select_id: "data-type-select",
+    container_id: null,
     subsettings_container_id: "settings-container",
-    make_menu: function(container_id) {
+    data_select_id: "data-type-select",
+    date_select_1_id: "date-select-1",
+    date_select_1_name: "date-1",
+    add_menu: function(container_id) {
         var data_select_id = this.data_select_id,
-            $container = $("<div>", {
-                    id: container_id,
-                }),
+            $container = $("#" + container_id),
             data_type_dic = {
                     "item_count": "Item Count",
                 };
 
+        this.container_id = container_id;
+
         var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
         $container.append($dataType_select_div);
+
+        // Make the subcontainer which will contain menu options
+        //  below data type.
+        $("<div>", {
+            id: this.subsettings_container_id,
+        }).appendTo($container);
 
         var $dataType_select = $("#" + data_select_id);
 
@@ -84,16 +92,24 @@ var chart_mode_settings = {
 
         return $container;
     },
-    add_submenu_from_dataType: function() {
-        $("#" + this.subsettings_container_id).empty();
-
+    get_data_type: function() {
         var data_select_id = this.data_select_id,
-            $dataType_select = $("#" + data_select_id),
-            data_type = $dataType_select.val();
+            $dataType_select = $("#" + data_select_id);
 
-        this.data_type_set_menu(data_type);
+        return $dataType_select.val();
     },
-    data_type_set_menu: function(data_type) {
+    add_submenu_from_dataType: function() {
+        var $subcontainer = $("#" + this.subsettings_container_id);
+        $subcontainer.empty();
+
+        var data_type = this.get_data_type();
+
+        this.data_type_set_menu(data_type, $subcontainer);
+    },
+    data_type_set_menu: function(data_type, $sub_container) {
+        var $date_1 = settings_maker.date_input(this.date_select_1_id, this.date_select_1_name);
+        $sub_container.append($date_1);
+
         switch(data_type) {
             case "item_count":
                 console.log("item_count");
@@ -101,7 +117,6 @@ var chart_mode_settings = {
         }
     },
 };
-
 
 var graph_mode_settings = {
     make_menu: function(container_id) {},
@@ -123,12 +138,51 @@ var settings_maker = {
 
         for (var data_type_value in data_type_dic) {
             $("<option>", {
-                "value":  data_type_value
+                "value":  data_type_value,
             }).text(data_type_dic[data_type_value]).appendTo($select);
         }
         return $div
     },
-    date_input: function(id) {
+    date_input: function(select_id, select_name) {
 
+        var $div,
+            $date_select = $("<select>", {
+            id: select_id,
+            name: select_name,
+            "class": "form-control",
+        });
+
+        $.ajax({
+           url: ates_ajax_url,
+            action: "get",
+            data: {
+               "num_dates": 20,
+            },
+            success: function(data){
+               var i, data_len = data.length,
+                    date_id, date_str, date_option;
+
+               for (i = 0; i < data_len; i++){
+                   date_obj = data[i];
+                   date_id = date_obj["date_id"];
+                   date_str = date_obj["date_string"];
+
+                   $date_option = $("<option>",{
+                       value: date_id,
+                       text: date_str,
+                   }).appendTo($date_select);
+               }
+            },
+        });
+
+        $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            for: select_id,
+        }).html("Date").appendTo($div);
+
+        $div.append($date_select);
+
+        return $div;
     },
 };

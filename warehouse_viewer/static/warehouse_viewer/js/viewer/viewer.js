@@ -8,3 +8,4 @@ $( document ).ready(function(){
         e.preventDefault();
         side_menu.submit(e)});
 });
+
