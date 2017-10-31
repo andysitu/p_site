@@ -39,3 +39,6 @@ def upload(request):
             "msg": msg,
         }
     )
+
+def search_ajax(request):
+    return HttpResponse("HELLO")

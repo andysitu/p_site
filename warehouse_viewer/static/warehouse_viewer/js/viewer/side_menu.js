@@ -27,6 +27,10 @@ var side_menu = {
     clear_settings: function() {
         $("#mode-settings-div").empty();
     },
+    submit: function(e) {
+        var $form = $( e.target ),
+            data_array = $form.serializeArray();
+    },
 };
 
 
@@ -94,6 +98,7 @@ var settings_maker = {
         var $select = $("<select>", {
             id: select_id,
             "class": "form-control",
+            name: "data-type",
         }).appendTo($div);
 
         for (var data_type_value in data_type_dic) {

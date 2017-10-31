@@ -13,15 +13,16 @@
 {% endblock %}
 
 {% block settings %}
-<form action="" method="get">
+<form action="" method="get" id="side-menu-form">
     <div class="form-group">
-        <select class="form-control" id="data-mode">
+        <select class="form-control" id="data-mode" name="mode">
             <option value="map">{% trans "Map" %}</option>
             <option value="chart" selected>{% trans "Chart" %}</option>
             <option value="graph">{% trans "Graph" %}</option>
         </select>
     </div>
     <div id="mode-settings-div"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}
 
