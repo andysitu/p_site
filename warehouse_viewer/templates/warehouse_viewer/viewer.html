@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block settings %}
-<form action="" method="get" id="side-menu-form">
+<form action="{% url 'warehouse_viewer:search_ajax' %}" method="get" id="side-menu-form">
     <div class="form-group">
         <select class="form-control" id="data-mode" name="mode">
             <option value="map">{% trans "Map" %}</option>

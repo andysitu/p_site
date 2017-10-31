@@ -18,8 +18,7 @@ var side_menu = {
                 break;
             default:
                 return 1;
-        }
-        ;
+        };
         var $menu_div = mode_settingsObj.make_menu(this.container_id);
         $("#mode-settings-div").append($menu_div);
         mode_settingsObj.add_submenu_from_dataType();
@@ -29,7 +28,8 @@ var side_menu = {
     },
     submit: function(e) {
         var $form = $( e.target ),
-            data_array = $form.serializeArray();
+            data_array = $form.serializeArray(),
+            form_url = $form.attr("action");
     },
 };
 
