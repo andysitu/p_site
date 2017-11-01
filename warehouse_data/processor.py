@@ -4,7 +4,7 @@ from django.core.files.base import ContentFile
 import uuid
 
 from .models import Location, DataDate, Items, DataDate, \
-    make_location, delete_all_rack_location
+    make_location
 
 import re, datetime, time, pytz
 from django.utils.timezone import activate
@@ -80,10 +80,6 @@ def process_excel_file(file):
         (40, "customer_code", int,),
         (42, "avail_quantity", int,),
     }
-
-    # rack_loc_query = Location.objects.all()
-    # if not rack_loc_query:
-    #     populate_rack_location()
 
     location_dict = {}
     item_list = []
@@ -161,6 +157,9 @@ def process_excel_file(file):
     # db.reset_queries()
     print(datetime.datetime.now())
     return 0
+
+def delete_all_rack_location():
+    Location.objects.all().delete()
 
 def reset_db(delete_rack = False):
     DataDate.objects.all().delete()
