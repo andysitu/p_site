@@ -46,7 +46,7 @@ var side_menu = {
             data: form_data,
             method: form_method,
             success: function (data) {
-                console.log("success");
+                console.log(data);
             },
         });
     },
@@ -60,7 +60,7 @@ var map_mode_settings = {
 
 var chart_mode_settings = {
     container_id: null,
-    subsettings_container_id: "settings-container",
+    settings_container_id: "settings-container",
     data_select_id: "data-type-select",
     date_select_1_id: "date-select-1",
     date_select_1_name: "date-1",
@@ -68,7 +68,7 @@ var chart_mode_settings = {
         var data_select_id = this.data_select_id,
             $container = $("#" + container_id),
             data_type_dic = {
-                    "item_count": "Item Count",
+                    "total_item_count": "Total Item Count",
                 };
 
         this.container_id = container_id;
@@ -79,7 +79,7 @@ var chart_mode_settings = {
         // Make the subcontainer which will contain menu options
         //  below data type.
         $("<div>", {
-            id: this.subsettings_container_id,
+            id: this.settings_container_id,
         }).appendTo($container);
 
         var $dataType_select = $("#" + data_select_id);
@@ -99,7 +99,7 @@ var chart_mode_settings = {
         return $dataType_select.val();
     },
     add_submenu_from_dataType: function() {
-        var $subcontainer = $("#" + this.subsettings_container_id);
+        var $subcontainer = $("#" + this.settings_container_id);
         $subcontainer.empty();
 
         var data_type = this.get_data_type();
@@ -182,7 +182,6 @@ var settings_maker = {
         }).html("Date").appendTo($div);
 
         $div.append($date_select);
-
         return $div;
     },
 };

@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from .forms import UploadFile
 
 from warehouse_data import processor as processor
+from warehouse_data import views as data_views
 
 def viewer(request):
     return render(
@@ -41,4 +42,11 @@ def upload(request):
     )
 
 def search_ajax(request):
-    return HttpResponse("HELLO")
+    data_mode = request.GET.get("mode")
+    data_type = request.GET.get("data-type")
+    response = {}
+
+    if data_mode == "chart":
+        if data_type == "total_item_count":
+            response = data_views.total_item_count(request)
+    return response
