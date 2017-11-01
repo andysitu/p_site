@@ -1,147 +1,0 @@
-[1mdiff --git a/combined_doc.pdf b/combined_doc.pdf[m
-[1mdeleted file mode 100644[m
-[1mindex 5420864..0000000[m
-Binary files a/combined_doc.pdf and /dev/null differ
-[1mdiff --git a/p_site/settings.py b/p_site/settings.py[m
-[1mindex 1bb2032..9458afd 100644[m
-[1m--- a/p_site/settings.py[m
-[1m+++ b/p_site/settings.py[m
-[36m@@ -46,6 +46,7 @@[m [mINSTALLED_APPS = [[m
-     'rcv_list.apps.RcvListConfig',[m
-     'warehouse_map.apps.WarehouseMapConfig',[m
-     'warehouse_data.apps.WarehouseDataConfig',[m
-[32m+[m[32m    'warehouse_proc_data.apps.WarehouseProcDataConfig',[m
-     'uploader.apps.UploaderConfig',[m
-     'django.contrib.admin',[m
-     'django.contrib.auth',[m
-[1mdiff --git a/warehouse_proc_data/models.py b/warehouse_proc_data/models.py[m
-[1mindex 71a8362..4fb865e 100644[m
-[1m--- a/warehouse_proc_data/models.py[m
-[1m+++ b/warehouse_proc_data/models.py[m
-[36m@@ -1,3 +1,14 @@[m
- from django.db import models[m
- [m
-[31m-# Create your models here.[m
-[32m+[m[32mversions = {[m
-[32m+[m[32m    "item_total": "1.0.0"[m
-[32m+[m[32m}[m
-[32m+[m
-[32m+[m[32mclass Item_Total(models.Model):[m
-[32m+[m[32m    version = models.CharField(max_length=20, default=versions["item_total"])[m
-[32m+[m[32m    date_id = models.IntegerField()[m
-[32m+[m
-[32m+[m[32m    total = models.IntegerField()[m
-[32m+[m
-[32m+[m[32m    def check_version(self):[m
-[32m+[m[32m        return versions["item_total"] == self.version[m
-\ No newline at end of file[m
-[1mdiff --git a/warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js b/warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js[m
-[1mindex 3756610..378018c 100644[m
-[1m--- a/warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js[m
-[1m+++ b/warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js[m
-[36m@@ -60,12 +60,8 @@[m [mvar map_mode_settings = {[m
- [m
- var chart_mode_settings = {[m
-     container_id: null,[m
-[31m-    settings_container_id: "settings-container",[m
-[31m-    data_select_id: "data-type-select",[m
-[31m-    date_select_1_id: "date-select-1",[m
-[31m-    date_select_1_name: "date-1",[m
-     add_menu: function(container_id) {[m
-[31m-        var data_select_id = this.data_select_id,[m
-[32m+[m[32m        var data_select_id = element_ids.data_select_id,[m[41m[m
-             $container = $("#" + container_id),[m
-             data_type_dic = {[m
-                     "total_item_count": "Total Item Count",[m
-[36m@@ -77,9 +73,8 @@[m [mvar chart_mode_settings = {[m
-         $container.append($dataType_select_div);[m
- [m
-         // Make the subcontainer which will contain menu options[m
-[31m-        //  below data type.[m
-         $("<div>", {[m
-[31m-            id: this.settings_container_id,[m
-[32m+[m[32m            id: element_ids.settings_container_id,[m[41m[m
-         }).appendTo($container);[m
- [m
-         var $dataType_select = $("#" + data_select_id);[m
-[36m@@ -93,13 +88,13 @@[m [mvar chart_mode_settings = {[m
-         return $container;[m
-     },[m
-     get_data_type: function() {[m
-[31m-        var data_select_id = this.data_select_id,[m
-[32m+[m[32m        var data_select_id = element_ids.data_select_id,[m[41m[m
-             $dataType_select = $("#" + data_select_id);[m
- [m
-         return $dataType_select.val();[m
-     },[m
-     add_submenu_from_dataType: function() {[m
-[31m-        var $subcontainer = $("#" + this.settings_container_id);[m
-[32m+[m[32m        var $subcontainer = $("#" + element_ids.settings_container_id);[m[41m[m
-         $subcontainer.empty();[m
- [m
-         var data_type = this.get_data_type();[m
-[36m@@ -107,7 +102,7 @@[m [mvar chart_mode_settings = {[m
-         this.data_type_set_menu(data_type, $subcontainer);[m
-     },[m
-     data_type_set_menu: function(data_type, $sub_container) {[m
-[31m-        var $date_1 = settings_maker.date_input(this.date_select_1_id, this.date_select_1_name);[m
-[32m+[m[32m        var $date_1 = settings_maker.date_input_1();[m[41m[m
-         $sub_container.append($date_1);[m
- [m
-         switch(data_type) {[m
-[36m@@ -122,16 +117,30 @@[m [mvar graph_mode_settings = {[m
-     make_menu: function(container_id) {},[m
- };[m
- [m
-[32m+[m[32mvar element_ids = {[m[41m[m
-[32m+[m[32m    settings_container_id: "settings-container",[m[41m[m
-[32m+[m[32m    data_select_id: "data-type-select",[m[41m[m
-[32m+[m[32m    date_select_1_id: "date-select-1",[m[41m[m
-[32m+[m[32m    date_select_1_name: "date-1",[m[41m[m
-[32m+[m[32m};[m[41m[m
-[32m+[m[41m[m
- var settings_maker = {[m
-[31m-    data_type: function(data_type_dic, select_id) {[m
-[32m+[m[32m    data_select_id: "data-type-select",[m[41m[m
-[32m+[m[32m    data_type: function(data_type_dic) {[m[41m[m
-[32m+[m[32m        /**[m[41m[m
-[32m+[m[32m         * data_type_dic: object with the key being the value for the[m[41m[m
-[32m+[m[32m         *  select html & value of the obj being the text.[m[41m[m
-[32m+[m[32m         * Returns div containing label & select HTML for[m[41m[m
-[32m+[m[32m         *  the data type.[m[41m[m
-[32m+[m[32m         */[m[41m[m
-         var $div = $("<div class='form-group'>");[m
- [m
-         $("<label>", {[m
-[31m-            "for": select_id,[m
-[32m+[m[32m            "for": this.data_select_id,[m[41m[m
-         }).html("Data Type").appendTo($div);[m
- [m
-         var $select = $("<select>", {[m
-[31m-            id: select_id,[m
-[32m+[m[32m            id: this.data_select_id,[m[41m[m
-             "class": "form-control",[m
-             name: "data-type",[m
-         }).appendTo($div);[m
-[36m@@ -143,12 +152,18 @@[m [mvar settings_maker = {[m
-         }[m
-         return $div[m
-     },[m
-[31m-    date_input: function(select_id, select_name) {[m
- [m
-[32m+[m[32m    date_select_1_id: "date-select-1",[m[41m[m
-[32m+[m[32m    date_select_1_name: "date-1",[m[41m[m
-[32m+[m[32m    date_input_1: function() {[m[41m[m
-[32m+[m[32m        /**[m[41m[m
-[32m+[m[32m         * Returns div with bootstrap CSS format containing[m[41m[m
-[32m+[m[32m         *  label & select HTML.[m[41m[m
-[32m+[m[32m         */[m[41m[m
-         var $div,[m
-             $date_select = $("<select>", {[m
-[31m-            id: select_id,[m
-[31m-            name: select_name,[m
-[32m+[m[32m            id: elements_id.date_select_1_id,[m[41m[m
-[32m+[m[32m            name: elemens_id.date_select_1_name,[m[41m[m
-             "class": "form-control",[m
-         });[m
- [m
