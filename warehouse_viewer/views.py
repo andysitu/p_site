@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from .forms import UploadFile
 
 from warehouse_data import processor as processor
-from warehouse_data import views as data_views
+from warehouse_data import views as warehouse_data_views
 
 def viewer(request):
     return render(
@@ -48,5 +48,5 @@ def search_ajax(request):
 
     if data_mode == "chart":
         if data_type == "total_item_count":
-            response = data_views.total_item_count(request)
+            response = warehouse_data_views.get_total_item_info(request)
     return response

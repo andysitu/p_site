@@ -1,3 +1,6 @@
+# Minus the old existing functions,
+# this contains only functions that will directly affect warehouse data.
+
 import openpyxl, xlrd
 from io import BytesIO
 from django.core.files.base import ContentFile
