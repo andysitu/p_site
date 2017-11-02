@@ -160,10 +160,11 @@ var settings_maker = {
          * Returns div with bootstrap CSS format containing
          *  label & select HTML.
          */
+
         var $div,
             $date_select = $("<select>", {
-            id: elements_id.date_select_1_id,
-            name: elemens_id.date_select_1_name,
+            id: element_ids.date_select_1_id,
+            name: element_ids.date_select_1_name,
             "class": "form-control",
         });
 
@@ -193,7 +194,7 @@ var settings_maker = {
         $div = $("<div class='form-group'>");
 
         $("<label>", {
-            for: select_id,
+            "for": element_ids.date_select_1_id,
         }).html("Date").appendTo($div);
 
         $div.append($date_select);
