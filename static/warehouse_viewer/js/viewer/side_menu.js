@@ -20,7 +20,7 @@ var side_menu = {
             default:
                 return 1;
         };
-        var $menu_div = mode_settingsObj.add_menu(this.container_id);
+        var $menu_div = mode_settingsObj.add_dataType(this.container_id);
     },
     clear_settings: function() {
         $("#" + this.container_id).empty();
@@ -60,7 +60,7 @@ var map_mode_settings = {
 
 var chart_mode_settings = {
     container_id: null,
-    add_menu: function(container_id) {
+    add_dataType: function(container_id) {
         var data_select_id = element_ids.data_select_id,
             $container = $("#" + container_id),
             data_type_dic = {
@@ -74,16 +74,16 @@ var chart_mode_settings = {
 
         // Make the subcontainer which will contain menu options
         $("<div>", {
-            id: element_ids.settings_container_id,
+            id: element_ids.options_container_id,
         }).appendTo($container);
 
         var $dataType_select = $("#" + data_select_id);
 
         $dataType_select.change(function(e){
-            this.add_submenu_from_dataType();
+            this.onchange_dataType();
         });
 
-        this.add_submenu_from_dataType();
+        this.onchange_dataType();
 
         return $container;
     },
@@ -93,17 +93,17 @@ var chart_mode_settings = {
 
         return $dataType_select.val();
     },
-    add_submenu_from_dataType: function() {
-        var $subcontainer = $("#" + element_ids.settings_container_id);
-        $subcontainer.empty();
+    onchange_dataType: function() {
+        var $options_container = $("#" + element_ids.options_container_id);
+        $options_container.empty();
 
         var data_type = this.get_data_type();
 
-        this.data_type_set_menu(data_type, $subcontainer);
+        this.set_options(data_type, $options_container);
     },
-    data_type_set_menu: function(data_type, $sub_container) {
+    set_options: function(data_type, $options_container) {
         var $date_1 = settings_maker.date_input_1();
-        $sub_container.append($date_1);
+        $options_container.append($date_1);
 
         switch(data_type) {
             case "item_count":
@@ -118,7 +118,7 @@ var graph_mode_settings = {
 };
 
 var element_ids = {
-    settings_container_id: "settings-container",
+    options_container_id: "options-container",
     data_select_id: "data-type-select",
     date_select_1_id: "date-select-1",
     date_select_1_name: "date-1",
