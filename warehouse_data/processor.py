@@ -85,12 +85,10 @@ def process_excel_file(file):
     }
 
     location_dict = {}
-    item_list = []
 
     loc_regex = re.compile(
         '(?P<warehouse_location>.+)\.(?P<area>.+)\.(?P<aisle_letter>[a-zA-Z]*)(?P<aisle_num>\d+)\.(?P<column>.+)\.(?P<level>.+)')
 
-    # unknown_rack_location = Location.objects.get(loc="Unknown")
 
     items_list = []
     for row in range(1, worksheet.nrows):
@@ -139,7 +137,6 @@ def process_excel_file(file):
                                                      level=level,
                                                      )
             except Location.DoesNotExist:
-                # location_inst = unknown_rack_location
                 location_inst = make_location(warehouse_location=warehouse_location,
                                          area=area,
                                          aisle_letter=aisle_letter,
@@ -154,7 +151,6 @@ def process_excel_file(file):
                   data_date=data_date,
                   **item_data
                   )
-        # i.save()
         items_list.append(i)
     it = Items.objects.bulk_create(items_list, batch_size=2000)
     # db.reset_queries()
