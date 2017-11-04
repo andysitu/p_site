@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location, DataDate, Items, Total_Item_Info
+from .models import Location, DataDate, Items
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('loc', 'warehouse_location', 'area', 'aisle_letter', 'aisle_num', 'level', 'column')
@@ -17,8 +17,3 @@ class DataDateAdmin(admin.ModelAdmin):
     list_display = ("date",)
 
 admin.site.register(DataDate, DataDateAdmin)
-
-class TotalItemInfoAdmin(admin.ModelAdmin):
-    list_dislay = ("total",)
-
-admin.site.register(Total_Item_Info, TotalItemInfoAdmin)

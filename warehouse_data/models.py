@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 import datetime
 from django.dispatch import receiver
@@ -72,18 +73,3 @@ class Items(models.Model):
     item_code = models.CharField(max_length=50, default="")
     customer_code = models.IntegerField(default="0")
     last_out_date = models.DateTimeField(blank=True, null=True, default=None)
-
-
-
-# Processed data
-data_versions = {
-    "total_item_count": "1.0.000"
-}
-
-class Total_Item_Info(models.Model):
-    version = models.CharField(max_length=10, default=data_versions["total_item_count"])
-    total = models.IntegerField()
-    data_date = models.ForeignKey(DataDate, on_delete=models.CASCADE)
-
-    def check_version(self):
-        return self.version == data_versions["total_item_count"]

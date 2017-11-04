@@ -46,6 +46,7 @@ var side_menu = {
             data: form_data,
             method: form_method,
             success: function (data) {
+                console.log("submit");
                 console.log(data);
             },
         });
@@ -169,7 +170,7 @@ var settings_maker = {
         });
 
         $.ajax({
-           url: ates_ajax_url,
+           url: dates_ajax_url,
             action: "get",
             data: {
                "num_dates": 20,
