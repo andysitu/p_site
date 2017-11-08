@@ -216,10 +216,8 @@ msgid "Select a File"
 msgstr "选择RCV PDF文件"
 
 #: uploader/templates/uploader/uploader_base.html:15
-#, fuzzy
-#| msgid "Upload Date"
 msgid "Upload File"
-msgstr "上传日期"
+msgstr "上传文件"
 
 #: warehouse_data/processor.py:42
 msgid "Excel file with date "
@@ -299,10 +297,8 @@ msgid "Upload Excel"
 msgstr "上传日期"
 
 #: warehouse_viewer/templates/warehouse_viewer/upload.html:21
-#, fuzzy
-#| msgid "Select an exported excel file from the WMS."
 msgid "Select an excel file from the WMS"
-msgstr "选择EXCEL文件"
+msgstr "选择一个导出的Excel文件"
 
 #: warehouse_viewer/templates/warehouse_viewer/upload.html:31
 #, fuzzy
@@ -321,15 +317,3 @@ msgstr ""
 #: warehouse_viewer/templates/warehouse_viewer/viewer.html:22
 msgid "Graph"
 msgstr ""
-
-#~ msgid "Year"
-#~ msgstr "年:"
-
-#~ msgid "Month"
-#~ msgstr "月:"
-
-#~ msgid "Hello"
-#~ msgstr "你好"
-
-#~ msgid "Previous Date"
-#~ msgstr "以前的日期"
