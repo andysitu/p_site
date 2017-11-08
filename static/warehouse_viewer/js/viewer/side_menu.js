@@ -41,13 +41,15 @@ var side_menu = {
                  form_data[data_dic["name"]] = data_dic["value"];
              }
         }
+
+        var data_mode = form_data["mode"],
+            data_type = form_data['data-type'];
         $.ajax({
             url: form_url,
             data: form_data,
             method: form_method,
             success: function (data) {
-                console.log("submit");
-                console.log(data);
+                viewer.display(data_mode, data_type, data);
             },
         });
     },
