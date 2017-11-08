@@ -23,12 +23,12 @@ from django.conf.urls.static import static
 from django.views.i18n import javascript_catalog
 
 from . import views
+from django.contrib.auth import views as auth_views
 
 js_info_dict = {
     'packages': ('warehouse_map',),
 }
 
-app_name = "p_site"
 urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
@@ -40,7 +40,8 @@ urlpatterns = [
     url(r'^uploader/', include('uploader.urls')),
     url(r'^$', views.index),
     url(r'^index/$', views.index, name="index"),
-    url(r'^set_language/(?P<language>.+)/$', views.setlanguage, name="set_language"),
+    url(r'^accounts/login/', auth_views.LoginView.as_view(template_name='p_site/registration/login.html'), name="login"),
+    url(r'^accounts/logout/', auth_views.LogoutView.as_view(template_name='p_site/registration/logout.html'), name="logout"),
 ]
 
 urlpatterns += [

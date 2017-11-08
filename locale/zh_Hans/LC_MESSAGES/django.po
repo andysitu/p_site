@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-23 17:10-0700\n"
+"POT-Creation-Date: 2017-11-07 15:40-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,9 +28,11 @@ msgstr "上传日期"
 #: customs_list/templates/customs_list/customs_list_base.html:14
 #: customs_list/templates/customs_list/upload.html:22
 #: rcv_list/templates/rcv_list/rcv_list_base.html:18
-#: rcv_list/templates/rcv_list/upload.html:23
+#: rcv_list/templates/rcv_list/upload.html:21
 #: uploader/templates/uploader/upload.html:17
+#: warehouse_map/templates/warehouse_map/upload.html:25
 #: warehouse_map/templates/warehouse_map/upload_excel_data.html:25
+#: warehouse_viewer/templates/warehouse_viewer/upload.html:25
 msgid "Upload"
 msgstr "上载"
 
@@ -92,13 +94,36 @@ msgstr "删除"
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_site/settings.py:144
+#: p_site/base_generic.html:44 p_site/templates/p_site/base_generic.html:44
+msgid "Logout"
+msgstr "登出"
+
+#: p_site/base_generic.html:44 p_site/templates/p_site/base_generic.html:44
+msgid "User"
+msgstr "用户"
+
+#: p_site/base_generic.html:47 p_site/templates/p_site/base_generic.html:47
+msgid "Login"
+msgstr "登录"
+
+#: p_site/base_generic.html:84 p_site/templates/p_site/base_generic.html:81
+#: rcv_list/templates/rcv_list/rcv_list_base.html:13
+#: uploader/templates/uploader/uploader_base.html:11
+#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:11
+msgid "Home"
+msgstr "家"
+
+#: p_site/settings.py:145
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:145
+#: p_site/settings.py:146
 msgid "Chinese"
 msgstr "中文"
+
+#: p_site/templates/p_site/base_generic.html:53
+msgid "Current language :"
+msgstr ""
 
 #: p_site/templates/p_site/index.html:13
 msgid "Customs Declaration List"
@@ -120,6 +145,34 @@ msgstr "仓库地图"
 #| msgid "Dates Uploaded"
 msgid "File Uploader"
 msgstr "上载"
+
+#: p_site/templates/p_site/index.html:17
+#, fuzzy
+#| msgid "Warehouse Map"
+msgid "Warehouse Viewer"
+msgstr "仓库地图"
+
+#: p_site/templates/p_site/registration/logged_out.html:6
+msgid "You have logged out."
+msgstr "你已经注销了"
+
+#: p_site/templates/p_site/registration/logged_out.html:8
+msgid "Log in again"
+msgstr "再次登录"
+
+#: p_site/templates/p_site/registration/login.html:8
+msgid "Your username and password didn't match. Please try again."
+msgstr "您的用户名和密码不匹配。请再试一次。"
+
+#: p_site/templates/p_site/registration/login.html:13
+msgid ""
+"Your account doesn't have access to this page. To proceed, please login with "
+"one that does."
+msgstr "您的帐户无权访问此页面。要继续，请登录一个。"
+
+#: p_site/templates/p_site/registration/login.html:15
+msgid "Please login to see this page."
+msgstr "请登录查看此页面。"
 
 #: rcv_list/forms.py:8 rcv_list/forms.py:15
 msgid "Select an RCV PDF File"
@@ -143,12 +196,6 @@ msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 msgid "Submit"
 msgstr "提交"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:13
-#: templates/base_generic.html:79 uploader/templates/base_generic.html:79
-#: uploader/templates/uploader/uploader_base.html:11
-msgid "Home"
-msgstr "家"
-
 #: rcv_list/templates/rcv_list/rcv_list_base.html:19
 msgid "All"
 msgstr "所有"
@@ -162,41 +209,7 @@ msgstr "搜索"
 msgid "Total Number of RCV:"
 msgstr "RCV文件总数:"
 
-#: templates/base_generic.html:39 uploader/templates/base_generic.html:39
-msgid "Logout"
-msgstr "登出"
-
-#: templates/base_generic.html:39 uploader/templates/base_generic.html:39
-msgid "User"
-msgstr "用户"
-
-#: templates/base_generic.html:42 uploader/templates/base_generic.html:42
-msgid "Login"
-msgstr "登录"
-
-#: templates/registration/logged_out.html:6
-msgid "You have logged out."
-msgstr "你已经注销了"
-
-#: templates/registration/logged_out.html:8
-msgid "Log in again"
-msgstr "再次登录"
-
-#: templates/registration/login.html:8
-msgid "Your username and password didn't match. Please try again."
-msgstr "您的用户名和密码不匹配。请再试一次。"
-
-#: templates/registration/login.html:13
-msgid ""
-"Your account doesn't have access to this page. To proceed, please login with "
-"one that does."
-msgstr "您的帐户无权访问此页面。要继续，请登录一个。"
-
-#: templates/registration/login.html:15
-msgid "Please login to see this page."
-msgstr "请登录查看此页面。"
-
-#: uploader/forms.py:10
+#: uploader/forms.py:10 warehouse_viewer/forms.py:6
 #, fuzzy
 #| msgid "Select an RCV PDF File"
 msgid "Select a File"
@@ -207,6 +220,14 @@ msgstr "选择RCV PDF文件"
 #| msgid "Upload Date"
 msgid "Upload File"
 msgstr "上传日期"
+
+#: warehouse_data/processor.py:42
+msgid "Excel file with date "
+msgstr ""
+
+#: warehouse_data/processor.py:43
+msgid " has uploaded already."
+msgstr ""
 
 #: warehouse_map/forms.py:7
 msgid "Select an exported excel file from the WMS."
@@ -262,7 +283,9 @@ msgstr ""
 msgid "Delete By Date"
 msgstr "按日期删除"
 
+#: warehouse_map/templates/warehouse_map/upload.html:30
 #: warehouse_map/templates/warehouse_map/upload_excel_data.html:30
+#: warehouse_viewer/templates/warehouse_viewer/upload.html:28
 msgid "Dates Uploaded"
 msgstr "上载"
 
@@ -271,8 +294,33 @@ msgid "Map Home"
 msgstr "家"
 
 #: warehouse_map/templates/warehouse_map/warehouse_map_base.html:16
+#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:13
 msgid "Upload Excel"
 msgstr "上传日期"
+
+#: warehouse_viewer/templates/warehouse_viewer/upload.html:21
+#, fuzzy
+#| msgid "Select an exported excel file from the WMS."
+msgid "Select an excel file from the WMS"
+msgstr "选择EXCEL文件"
+
+#: warehouse_viewer/templates/warehouse_viewer/upload.html:31
+#, fuzzy
+#| msgid "Dates Uploaded"
+msgid "Excel dates uploaded"
+msgstr "上载"
+
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:20
+msgid "Map"
+msgstr ""
+
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:21
+msgid "Chart"
+msgstr ""
+
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:22
+msgid "Graph"
+msgstr ""
 
 #~ msgid "Year"
 #~ msgstr "年:"

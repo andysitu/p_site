@@ -72,7 +72,7 @@ ROOT_URLCONF = 'p_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates', 'p_site/templates',
+        'DIRS': ['p_site/templates', 'p_site',
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -143,7 +143,7 @@ LOCALE_PATHS = (
 
 LANGUAGES = [
     ('en', gettext_lazy('English')),
-    ('zh-cn', gettext_lazy('Chinese')),
+    ('zh-hans', gettext_lazy('Chinese')),
 ]
 
 FILE_UPLOAD_PERMISSIONS = 0o644
