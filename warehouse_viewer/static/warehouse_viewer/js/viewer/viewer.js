@@ -28,20 +28,26 @@ var viewer = {
 
 var chart = {
     "display_info": function(data) {
-        var $table = $("<table>", {
-            "class": "table",
-        }).appendTo($display_container);
+        $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],}).appendTo($display_container);
+        $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],}).appendTo($display_container);
+        $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],}).appendTo($display_container);
 
-        var $tr_item_total = $("<tr>").appendTo($table);
-        $("<td>", {"text": gettext("Total Number of Items"),}).appendTo($tr_item_total);
-        $("<td>", {"text": data["total"],}).appendTo($tr_item_total);
+        var $table = $("<table>"), i, td_amount = data["total"].length;
+        $tr_head = $("<tr>").appendTo($table);
+        $tr_head.append(
+            $("<th>Customer</th>"), $("<th>Items</th>"),
+            $("<th>Customer</th>"), $("<th>Item Types</th>"),
+            $("<th>Item SKU</th>"), $("<th>Count</th>"),
+        );
 
-        var $tr_item_types = $("<tr>").appendTo($table);
-        $("<td>", {"text": gettext("Number of Item Types"),}).appendTo($tr_item_types);
-        $("<td>", {"text": data["item_types"],}).appendTo($tr_item_types);
+        var $tr_info = null;
+        for (i = 0; i < td_amount; i++) {
+            $tr_info = $("<tr>").appendTo($table);
+            $tr_info.append(
+                $("<td>", {text: data["top_customers_items"]})
+            );
+        }
 
-        var $tr_cnum = $("<tr>").appendTo($table);
-        $("<td>", {"text": gettext("Number of Customers"),}).appendTo($tr_cnum);
-        $("<td>", {"text": data["customers_num"],}).appendTo($tr_cnum);
+        $table.appendTo($display_container);
     },
 };
