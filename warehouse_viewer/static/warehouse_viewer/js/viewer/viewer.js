@@ -15,9 +15,10 @@ $( document ).ready(function(){
 });
 
 var viewer = {
-    "chart": chart,
-    "display": function(data_mode, data_type, data) {
+    chart: chart,
+    display: function(data_mode, data_type, data) {
         console.log(data_mode, data_type, data);
+        $display_container.empty();
         if (data_mode == "chart") {
             if (data_type == "total_item_count") {
                 chart.display_info(data);
@@ -32,7 +33,9 @@ var chart = {
         $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],}).appendTo($display_container);
         $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],}).appendTo($display_container);
 
-        var $table = $("<table>"), i, td_amount = data["total"].length;
+        var $table = $("<table class='table table-sm'></table>"), i, td_amount = data["top_item_count"].length;
+        var $tr_info = null;
+
         $tr_head = $("<tr>").appendTo($table);
         $tr_head.append(
             $("<th>Customer</th>"), $("<th>Items</th>"),
@@ -40,11 +43,15 @@ var chart = {
             $("<th>Item SKU</th>"), $("<th>Count</th>"),
         );
 
-        var $tr_info = null;
         for (i = 0; i < td_amount; i++) {
             $tr_info = $("<tr>").appendTo($table);
             $tr_info.append(
-                $("<td>", {text: data["top_customers_items"]})
+                $("<td>", {text: data["top_customers_items"][i][0],}),
+                $("<td>", {text: data["top_customers_items"][i][1],}),
+                $("<td>", {text: data["top_customers_item_type"][i][0],}),
+                $("<td>", {text: data["top_customers_item_type"][i][1],}),
+                $("<td>", {text: data["top_item_count"][i][0],}),
+                $("<td>", {text: data["top_item_count"][i][1],}),
             );
         }
 
