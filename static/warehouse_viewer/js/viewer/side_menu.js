@@ -25,6 +25,14 @@ var side_menu = {
     clear_settings: function() {
         $("#" + this.container_id).empty();
     },
+    make_submitButton_loading: function() {
+        var $submit_button = $("#submit-button");
+        $submit_button.prop("disabled", true);
+        $submit_button.html("<i class='fa fa-spinner fa-pulse fa-2x '></i>");
+    },
+    renew_submitButton: function() {
+        $("#submit-button").html("Submit");
+    },
     submit: function(e) {
         var $form = $( e.target ),
             data_array = $form.serializeArray(),
@@ -44,12 +52,16 @@ var side_menu = {
 
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'];
+
+        this.make_submitButton_loading();
+
         $.ajax({
             url: form_url,
             data: form_data,
             method: form_method,
             success: function (data) {
                 viewer.display(data_mode, data_type, data);
+                side_menu.renew_submitButton();
             },
         });
     },

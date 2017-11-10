@@ -16,8 +16,15 @@ $( document ).ready(function(){
 
 var viewer = {
     chart: chart,
+    show_loading: function() {
+        $display_container.empty();
+        $("#submit-button");
+    },
     display: function(data_mode, data_type, data) {
         console.log(data_mode, data_type, data);
+
+        this.show_loading();
+
         $display_container.empty();
         if (data_mode == "chart") {
             if (data_type == "total_item_count") {
@@ -28,7 +35,7 @@ var viewer = {
 };
 
 var chart = {
-    "display_info": function(data) {
+    display_info: function(data) {
         $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],}).appendTo($display_container);
         $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],}).appendTo($display_container);
         $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],}).appendTo($display_container);
