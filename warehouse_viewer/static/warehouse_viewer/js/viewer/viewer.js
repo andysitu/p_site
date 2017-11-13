@@ -20,6 +20,7 @@ var viewer = {
         $display_container.empty();
         $("#submit-button");
     },
+
     display: function(data_mode, data_type, data) {
         console.log(data_mode, data_type, data);
 
@@ -27,14 +28,15 @@ var viewer = {
 
         $display_container.empty();
         if (data_mode == "chart") {
-            if (data_type == "total_item_count") {
-                chart.display_info(data);
-            }
+            chart.create_page(data_type, data);
         }
     },
 };
 
 var chart = {
+    create_page: function(data_type, data) {
+        this.display_info(data);
+    },
     display_info: function(data) {
         $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],}).appendTo($display_container);
         $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],}).appendTo($display_container);
@@ -63,5 +65,34 @@ var chart = {
         }
 
         $table.appendTo($display_container);
+    },
+
+    make_table: function(header_arr, data_arr) {
+        var $table = $("<table class='table table-sm'></table>"),
+            i, arr_len,
+            td_amount = data_arr.length;
+
+        var $tr_head = $("<tr>").appendTo($table);
+
+        for (i = 0; arr_len < header_arr; i++) {
+            $tr_head.append(
+                $("<th>Customer</th>"), $("<th>Items</th>"),
+                $("<th>Customer</th>"), $("<th>Item Types</th>"),
+                $("<th>Item SKU</th>"), $("<th>Count</th>"),
+            );
+        }
+
+
+        for (i = 0; i < td_amount; i++) {
+            $tr_info = $("<tr>").appendTo($table);
+            $tr_info.append(
+                $("<td>", {text: data["top_customers_items"][i][0],}),
+                $("<td>", {text: data["top_customers_items"][i][1],}),
+                $("<td>", {text: data["top_customers_item_type"][i][0],}),
+                $("<td>", {text: data["top_customers_item_type"][i][1],}),
+                $("<td>", {text: data["top_item_count"][i][0],}),
+                $("<td>", {text: data["top_item_count"][i][1],}),
+            );
+        }
     },
 };
