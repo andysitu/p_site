@@ -35,32 +35,42 @@ var viewer = {
 
 var chart = {
     create_page: function(data_type, data) {
-        this.display_info(data);
+        var $elements_dic = this.display_info(data);
+
+        for (var ele_name in $elements_dic) {
+            $elements_dic[ele_name].appendTo($display_container);
+        }
     },
     display_info: function(data) {
-        var $table;
+        var $table,
+            $elements = {};
 
-        $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],}).appendTo($display_container);
-        $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],}).appendTo($display_container);
-        $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],}).appendTo($display_container);
+        $elements["num-items"] = $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],});
+            // .appendTo( $("<div>", {id: "num-items-div"}) ).appendTo($display_container);
+        $elements["item-types"] = $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],});
+            // .appendTo( $("<div>", {id: "item-types-div"}) ).appendTo($display_container);
+        $elements["num-custs"] = $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],});
+            // .appendTo( $("<div>", {id: "num-cust-div"}) ).appendTo($display_container);
 
-        $table = this.make_table(
+        $elements["top-custs-items"] = this.make_table(
             [gettext("Customer"), gettext("# of Items"),],
             data["top_customers_items"]
         );
-        $table.appendTo($display_container);
+        // $table.appendTo($display_container);
 
-        $table = this.make_table(
+        $elements["top-custs-itemTypes"] = this.make_table(
             [gettext("Customer"), gettext("# of Item Types"),],
             data["top_customers_item_type"]
         );
-        $table.appendTo($display_container);
+        // $table.appendTo($display_container);
 
-        $table = this.make_table(
+        $elements["top-item-count"] = this.make_table(
             [gettext("Item SKU"), gettext("# Items"),],
             data["top_item_count"]
         );
-        $table.appendTo($display_container);
+        // $table.appendTo($display_container);
+
+        return $elements;
     },
 
     make_table: function(header_arr, data_arrs) {
