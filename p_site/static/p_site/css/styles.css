@@ -36,3 +36,12 @@ body {
 #logo-img {
     padding-right: 10px;
 }
+
+.sidebar {
+    position: fixed;
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow-y: auto;
+}
