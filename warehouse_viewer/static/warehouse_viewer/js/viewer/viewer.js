@@ -35,46 +35,69 @@ var viewer = {
 
 var chart = {
     create_page: function(data_type, data) {
-        var $elements_dic = this.display_info(data);
+        var $elements_dic = this.display_info(data),
+            div_name = null;
 
         for (var ele_name in $elements_dic) {
-            $elements_dic[ele_name].appendTo($display_container);
+            div_name = ele_name + '-div';
+            $elements_dic[ele_name].appendTo("<div>", {id: div_name})
+                .appendTo($display_container);
         }
+
+        $("<div>", {
+            "class": "right-sidebar col-sm-2",
+            text: "HELLO",
+        }).appendTo($("#body-div-row"));
     },
     display_info: function(data) {
         var $table,
             $elements = {};
 
-        $elements["num-items"] = $("<p>", {"text": gettext("Total Number of Items") + ": " + data["total"],});
+        $elements["num-items"] = $("<p>", {
+            "text": gettext("Total Number of Items") + ": " + data["total"],
+            id: "num-items",
+        });
             // .appendTo( $("<div>", {id: "num-items-div"}) ).appendTo($display_container);
-        $elements["item-types"] = $("<p>", {"text": gettext("Number of Item Types") + ": " + data["item_types"],});
+        $elements["item-types"] = $("<p>", {
+            "text": gettext("Number of Item Types") + ": " + data["item_types"],
+            id: "item-types",
+        });
             // .appendTo( $("<div>", {id: "item-types-div"}) ).appendTo($display_container);
-        $elements["num-custs"] = $("<p>", {"text": gettext("Number of Customers") + ": " + data["customers_num"],});
+        $elements["num-custs"] = $("<p>", {
+            "text": gettext("Number of Customers") + ": " + data["customers_num"],
+            id: "num-custs",
+        });
             // .appendTo( $("<div>", {id: "num-cust-div"}) ).appendTo($display_container);
 
         $elements["top-custs-items"] = this.make_table(
             [gettext("Customer"), gettext("# of Items"),],
-            data["top_customers_items"]
+            data["top_customers_items"],
+            "top-custs-items"
         );
         // $table.appendTo($display_container);
 
         $elements["top-custs-itemTypes"] = this.make_table(
             [gettext("Customer"), gettext("# of Item Types"),],
-            data["top_customers_item_type"]
+            data["top_customers_item_type"],
+            "top-custs-itemTypes"
         );
         // $table.appendTo($display_container);
 
         $elements["top-item-count"] = this.make_table(
             [gettext("Item SKU"), gettext("# Items"),],
-            data["top_item_count"]
+            data["top_item_count"],
+            "top-item-count"
         );
         // $table.appendTo($display_container);
 
         return $elements;
     },
 
-    make_table: function(header_arr, data_arrs) {
-        var $table = $("<table class='table table-sm'></table>"),
+    make_table: function(header_arr, data_arrs, table_id) {
+        var $table = $("<table>", {
+                "class": 'table table-sm table-fit',
+                id: table_id,
+            }),
             i, j,
             arr_len, $tr_info;
 
