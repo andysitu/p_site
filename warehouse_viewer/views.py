@@ -51,4 +51,4 @@ def search_ajax(request):
             response = warehouse_data_views.get_total_item_info(request)
         elif data_type == "empty_locations":
             response = {}
-    return response
+    return JsonResponse(response)

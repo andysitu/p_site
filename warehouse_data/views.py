@@ -107,4 +107,4 @@ def get_total_item_info(request, num_top=20):
     info_dic["item-count-by-loc"] = top_loc_count
     info_dic["item-type-by-loc"] = top_loc_item_type
 
-    return JsonResponse(info_dic)
+    return info_dic
