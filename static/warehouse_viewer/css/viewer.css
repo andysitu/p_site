@@ -1,3 +1,7 @@
+a:hover {
+    text-decoration: none;
+}
+
 .right-sidebar {
     position: fixed;
     top: 30px;
@@ -11,10 +15,6 @@
     width: auto;
 }
 
-sidebar-li {
-    display:block
-}
-
 li.sidebar-li {
     display: block;
 }
@@ -22,9 +22,14 @@ li.sidebar-li {
 li.sidebar-li > a {
     display: block;
     color: #99979c;
+    padding: .125rem 1.5rem;
 }
 
 li.sidebar-li > a:hover{
     color: blue;
     text-decoration: none;
+}
+
+ul.section-nav {
+    padding-left: 1rem;
 }
