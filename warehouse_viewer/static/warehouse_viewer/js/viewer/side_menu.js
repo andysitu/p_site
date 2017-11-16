@@ -31,7 +31,9 @@ var side_menu = {
         $submit_button.html("<i class='fa fa-spinner fa-pulse fa-2x '></i>");
     },
     renew_submitButton: function() {
-        $("#submit-button").html("Submit");
+        var $submit_button = $("#submit-button");
+        $submit_button.html("Submit");
+        $submit_button.prop("disabled", false);
     },
     submit: function(e) {
         var $form = $( e.target ),
@@ -97,7 +99,7 @@ var chart_mode_settings = {
         var $dataType_select = $("#" + data_select_id);
 
         $dataType_select.change(function(e){
-            this.onchange_dataType();
+            chart_mode_settings.onchange_dataType();
         });
 
         this.onchange_dataType();
