@@ -2,21 +2,18 @@ var $display_container;
 
 var viewer = {
     chart: chart,
-    show_loading: function() {
-        $display_container.empty();
-        $("#submit-button");
-    },
 
     display: function(data_mode, data_type, data) {
         console.log(data_mode, data_type, data);
 
-        this.show_loading();
-
-        $display_container.empty();
+        this.empty_page();
         if (data_mode == "chart") {
             chart.create_page(data_type, data);
         }
     },
+    empty_page: function() {
+        $display_container.empty();
+    }
 };
 
 var chart = {
@@ -24,10 +21,11 @@ var chart = {
         var $elements_dic = this.display_info(data_type, data),
             div_name = null;
 
+        // Display the side bar on the right for html navigation.
         var $side_bar = $("<div>", {
             id: "navigation-sidebar",
             "class": "right-sidebar col-sm-2 list-group",
-        }).appendTo($("#body-div-row"));
+        }).appendTo($display_container);
 
         var $ul_side = $("<ul class='section-nav'></ul>");
         for (var ele_name in $elements_dic) {
@@ -35,7 +33,6 @@ var chart = {
             var $li = $("<li class='sidebar-li'></li>").appendTo($ul_side);
             $("<a>", {
                 href: "#" + ele_name,
-                // "class": "list-group-item list-group-item-action",
                 text: ele_name,
             }).appendTo($li);
         }
