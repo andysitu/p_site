@@ -80,8 +80,9 @@ var chart_mode_settings = {
         var data_select_id = element_ids.data_select_id,
             $container = $("#" + container_id),
             data_type_dic = {
-                    "total_item_count": "Total Item Count",
-                };
+                "total_item_count": "Total Item Count",
+                "empty_locations": "Empty Locations",
+            };
 
         this.container_id = container_id;
 
