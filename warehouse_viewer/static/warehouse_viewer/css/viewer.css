@@ -10,3 +10,21 @@
 .table-fit{
     width: auto;
 }
+
+sidebar-li {
+    display:block
+}
+
+li.sidebar-li {
+    display: block;
+}
+
+li.sidebar-li > a {
+    display: block;
+    color: #99979c;
+}
+
+li.sidebar-li > a:hover{
+    color: blue;
+    text-decoration: none;
+}

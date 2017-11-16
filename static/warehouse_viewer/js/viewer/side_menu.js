@@ -56,6 +56,7 @@ var side_menu = {
         this.make_submitButton_loading();
 
         $.ajax({
+            // warehouse_viewer.search_ajax
             url: form_url,
             data: form_data,
             method: form_method,

@@ -38,49 +38,55 @@ var chart = {
         var $elements_dic = this.display_info(data),
             div_name = null;
 
-        for (var ele_name in $elements_dic) {
-            div_name = ele_name + '-div';
-            $elements_dic[ele_name].appendTo("<div>", {id: div_name})
-                .appendTo($display_container);
-        }
-
-        $("<div>", {
-            "class": "right-sidebar col-sm-2",
-            text: "HELLO",
+        var $side_bar = $("<div>", {
+            id: "navigation-sidebar",
+            "class": "right-sidebar col-sm-2 list-group",
         }).appendTo($("#body-div-row"));
+
+        var $ul_side = $("<ul class='section-nav'></ul>");
+        for (var ele_name in $elements_dic) {
+            $elements_dic[ele_name].appendTo($display_container);
+            var $li = $("<li class='sidebar-li'></li>").appendTo($ul_side);
+            $("<a>", {
+                href: "#" + ele_name,
+                // "class": "list-group-item list-group-item-action",
+                text: ele_name,
+            }).appendTo($li);
+        }
+        $side_bar.append($ul_side);
     },
     display_info: function(data) {
         var $table,
             $elements = {};
 
-        $elements["num-items"] = $("<p>", {
-            "text": gettext("Total Number of Items") + ": " + data["total"],
-            id: "num-items",
+        $elements["item-total"] = $("<p>", {
+            "text": gettext("Total Number of Items") + ": " + data["item-total"],
+            id: "item-total",
         });
-        $elements["item-types"] = $("<p>", {
-            "text": gettext("Number of Item Types") + ": " + data["item_types"],
-            id: "item-types",
+        $elements["number-item-types"] = $("<p>", {
+            "text": gettext("Number of Item Types") + ": " + data["number-item-types"],
+            id: "number-item-types",
         });
-        $elements["num-custs"] = $("<p>", {
-            "text": gettext("Number of Customers") + ": " + data["customers_num"],
-            id: "num-custs",
+        $elements["number-of-customers"] = $("<p>", {
+            "text": gettext("Number of Customers") + ": " + data["number-of-customers"],
+            id: "number-of-customers",
         });
 
-        $elements["top-custs-items"] = this.make_table(
+        $elements["top-customers-by-items"] = this.make_table(
             [gettext("Customer"), gettext("# of Items"),],
-            data["top_customers_items"],
-            "top-custs-items"
+            data["top-customers-by-items"],
+            "top-customers-by-items"
         );
 
-        $elements["top-custs-itemTypes"] = this.make_table(
+        $elements["top-customers-by-item-type"] = this.make_table(
             [gettext("Customer"), gettext("# of Item Types"),],
-            data["top_customers_item_type"],
-            "top-custs-itemTypes"
+            data["top-customers-by-item-type"],
+            "top-customers-by-item-type"
         );
 
         $elements["top-item-count"] = this.make_table(
             [gettext("Item SKU"), gettext("# Items"),],
-            data["top_item_count"],
+            data["top-item-count"],
             "top-item-count"
         );
 

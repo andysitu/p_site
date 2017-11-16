@@ -80,12 +80,12 @@ def get_total_item_info(request, num_top=20):
     top_customers_item_type = sorted(customers_type_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
     top_item_count = sorted(item_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
 
-    info_dic["total"] = total
-    info_dic["item_types"] = item_types
-    info_dic["customers_num"] = customers_num
+    info_dic["item-total"] = total
+    info_dic["number-item-types"] = item_types
+    info_dic["number-of-customers"] = customers_num
 
-    info_dic["top_customers_items"] = top_customers_items
-    info_dic["top_customers_item_type"] = top_customers_item_type
-    info_dic["top_item_count"] = top_item_count
+    info_dic["top-customers-by-items"] = top_customers_items
+    info_dic["top-customers-by-item-type"] = top_customers_item_type
+    info_dic["top-item-count"] = top_item_count
 
     return JsonResponse(info_dic)
