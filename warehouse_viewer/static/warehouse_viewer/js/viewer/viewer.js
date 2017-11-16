@@ -72,6 +72,19 @@ var chart = {
             id: "number-of-customers",
         });
 
+        $elements["item-count-by-loc"] = this.make_table(
+            [gettext("Location"), gettext("# of Items"),],
+            data["item-count-by-loc"],
+            "item-count-by-loc"
+        );
+
+        $elements["item-type-by-loc"] = this.make_table(
+            [gettext("Location"), gettext("# of Item Types"),],
+            data["item-type-by-loc"],
+            "item-type-by-loc"
+        );
+
+
         $elements["top-customers-by-items"] = this.make_table(
             [gettext("Customer"), gettext("# of Items"),],
             data["top-customers-by-items"],

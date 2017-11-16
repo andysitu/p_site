@@ -47,16 +47,21 @@ def get_total_item_info(request, num_top=20):
     customers_num = 0
 
     item_count = {}
+    loc_item_count = {}
+    loc_item_type = {}
+
     customers_item_count = {}
     customers_type_count = {}
     total = 0
     item_types = 0
-    item_query = Items.objects.filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()
+    item_query = Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()
     for item in item_query:
         total_items = item.avail_quantity + item.ship_quantity
         total += total_items
         sku = item.item_code
         customer_code = item.customer_code
+
+        loc = item.rack_location.loc
 
         if customer_code not in customers_item_dic:
             customers_item_dic[customer_code] = {}
@@ -72,13 +77,25 @@ def get_total_item_info(request, num_top=20):
             customer_dic[sku] = total_items
             customers_type_count[customer_code] += 1
             item_types += 1
+
+            if loc not in loc_item_type:
+                loc_item_type[loc] = 1
+            else:
+                loc_item_type[loc] += 1
         else:
             item_count[sku] += total_items
             customer_dic[sku] += total_items
 
+        if loc not in loc_item_count:
+            loc_item_count[loc] = total_items
+        else:
+            loc_item_count[loc] += total_items
+
     top_customers_items = sorted(customers_item_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
     top_customers_item_type = sorted(customers_type_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
     top_item_count = sorted(item_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
+    top_loc_count = sorted(loc_item_count.items(), key=operator.itemgetter(1))[::-1][:num_top:]
+    top_loc_item_type = sorted(loc_item_type.items(), key=operator.itemgetter(1))[::-1][:num_top:]
 
     info_dic["item-total"] = total
     info_dic["number-item-types"] = item_types
@@ -87,5 +104,7 @@ def get_total_item_info(request, num_top=20):
     info_dic["top-customers-by-items"] = top_customers_items
     info_dic["top-customers-by-item-type"] = top_customers_item_type
     info_dic["top-item-count"] = top_item_count
+    info_dic["item-count-by-loc"] = top_loc_count
+    info_dic["item-type-by-loc"] = top_loc_item_type
 
     return JsonResponse(info_dic)
