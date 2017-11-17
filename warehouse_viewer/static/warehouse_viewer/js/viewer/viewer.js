@@ -87,7 +87,6 @@ var chart = {
                 "top-item-count"
             );
         } else if (data_type == "empty_locations") {
-            console.log("empty locations");
         }
 
         return $elements;

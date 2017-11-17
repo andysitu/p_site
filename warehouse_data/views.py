@@ -3,7 +3,7 @@ from django.core import serializers
 
 from django.http import HttpResponse, JsonResponse
 
-from .models import DataDate, Items
+from .models import DataDate, Items, Location
 
 from django.db import IntegrityError
 
@@ -108,3 +108,27 @@ def get_total_item_info(request, num_top=20):
     info_dic["item-type-by-loc"] = top_loc_item_type
 
     return info_dic
+
+def get_locations(request):
+    date_id = request.GET.get("date-1")
+    data_date = DataDate.objects.get(id=date_id)
+
+    data = {}
+    items_in_locations = {}
+
+    items_q = Items.objects.select_related("rack_location").filter(data_date=data_date).exclude(rack_location__loc="").iterator()
+
+    for item in items_q:
+        location = str(item.rack_location)
+        if location in items_in_locations:
+            item_code = item.item_code
+            item_arr = items_in_locations[location]
+            if item_code not in item_arr:
+                item_arr[item_code] = "A"
+        else:
+            items_in_locations[location] = {item.item_code: "A",}
+
+    # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
+    # data["locations"] = locations
+
+    return items_in_locations
