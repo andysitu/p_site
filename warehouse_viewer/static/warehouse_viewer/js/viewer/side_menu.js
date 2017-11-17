@@ -83,7 +83,7 @@ var chart_mode_settings = {
             $container = $("#" + container_id),
             data_type_dic = {
                 "total_item_count": "Total Item Count",
-                "empty_locations": "Empty Locations",
+                "location_filter": "Location Filter",
             };
 
         this.container_id = container_id;
@@ -128,6 +128,10 @@ var chart_mode_settings = {
             case "item_count":
                 console.log("item_count");
                 break;
+            case "location_filter":
+                var $loc_select = settings_maker.loc_select();
+                $options_container.append($loc_select);
+                break;
         }
     },
 };
@@ -139,8 +143,11 @@ var graph_mode_settings = {
 var element_ids = {
     options_container_id: "options-container",
     data_select_id: "data-type-select",
+    data_select_name: "data-type",
     date_select_1_id: "date-select-1",
     date_select_1_name: "date-1",
+    loc_select_name: "loc",
+    loc_select_id: "loc-select",
 };
 
 var settings_maker = {
@@ -152,16 +159,18 @@ var settings_maker = {
          * Returns div containing label & select HTML for
          *  the data type.
          */
-        var $div = $("<div class='form-group'>");
+        var $div = $("<div class='form-group'>"),
+            data_select_id = element_ids.data_select_id,
+            data_select_name = element_ids.data_select_name;
 
         $("<label>", {
-            "for": this.data_select_id,
+            "for": data_select_id,
         }).html("Data Type").appendTo($div);
 
         var $select = $("<select>", {
-            id: this.data_select_id,
+            id: data_select_id,
             "class": "form-control",
-            name: "data-type",
+            name: data_select_name,
         }).appendTo($div);
 
         for (var data_type_value in data_type_dic) {
@@ -182,10 +191,10 @@ var settings_maker = {
 
         var $div,
             $date_select = $("<select>", {
-            id: element_ids.date_select_1_id,
-            name: element_ids.date_select_1_name,
-            "class": "form-control",
-        });
+                id: element_ids.date_select_1_id,
+                name: element_ids.date_select_1_name,
+                "class": "form-control",
+            });
 
         $.ajax({
            url: dates_ajax_url,
@@ -217,6 +226,39 @@ var settings_maker = {
         }).html("Date").appendTo($div);
 
         $div.append($date_select);
+        return $div;
+    },
+    loc_select: function() {
+        /**
+         * Returns HTML input with locs S, P, F, VC.
+         */
+        var $div = $("<div class='form-group'>"),
+            i,
+            loc_select_id = element_ids.loc_select_id,
+            loc_select_name = element_ids.loc_select_name,
+            $loc_select,
+            loc_arr = ["S", "P", "F", "VC",]
+            arr_len = loc_arr.length;
+
+        $("<label>", {
+            "for": loc_select_id,
+        }).html("Data Type").appendTo($div);
+
+        $loc_select = $("<select>", {
+                id: loc_select_id,
+                name: loc_select_name,
+                "class": "form-control",
+            });
+
+        for (i = 0; i < arr_len; i++) {
+            $date_option = $("<option>",{
+               value: loc_arr[i],
+               text: loc_arr[i],
+           }).appendTo($loc_select);
+        }
+
+        $div.append($loc_select);
+
         return $div;
     },
 };

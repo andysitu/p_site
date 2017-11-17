@@ -86,7 +86,7 @@ var chart = {
                 data["top-item-count"],
                 "top-item-count"
             );
-        } else if (data_type == "empty_locations") {
+        } else if (data_type == "location_filter") {
         }
 
         return $elements;
