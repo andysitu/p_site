@@ -165,7 +165,7 @@ var settings_maker = {
 
         $("<label>", {
             "for": data_select_id,
-        }).html("Data Type").appendTo($div);
+        }).html(gettext("Data Type")).appendTo($div);
 
         var $select = $("<select>", {
             id: data_select_id,
@@ -223,7 +223,7 @@ var settings_maker = {
 
         $("<label>", {
             "for": element_ids.date_select_1_id,
-        }).html("Date").appendTo($div);
+        }).html(gettext("Date")).appendTo($div);
 
         $div.append($date_select);
         return $div;
@@ -242,7 +242,7 @@ var settings_maker = {
 
         $("<label>", {
             "for": loc_select_id,
-        }).html("Data Type").appendTo($div);
+        }).html(gettext("Location")).appendTo($div);
 
         $loc_select = $("<select>", {
                 id: loc_select_id,
