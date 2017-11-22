@@ -83,7 +83,7 @@ var chart_mode_settings = {
             $container = $("#" + container_id),
             data_type_dic = {
                 "total_item_count": "Total Item Count",
-                "location_filter": "Location Filter",
+                "empty_location": "Empty Filter",
             };
 
         this.container_id = container_id;
@@ -128,7 +128,7 @@ var chart_mode_settings = {
             case "item_count":
                 console.log("item_count");
                 break;
-            case "location_filter":
+            case "empty_location":
                 var $element_dic = settings_maker.loc_and_level_container();
 
                 var $loc_div = $element_dic["$loc_div"],
@@ -330,6 +330,12 @@ var settings_maker = {
 
         var level = get_loc_level(loc),
             i;
+
+        $("<option>", {
+                "value":  "all",
+                text: "All",
+            }).appendTo($select);
+
         for (i = 1; i < level + 1; i++) {
             $("<option>", {
                 "value":  i,
