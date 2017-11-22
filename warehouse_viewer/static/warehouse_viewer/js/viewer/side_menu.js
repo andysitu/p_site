@@ -129,8 +129,14 @@ var chart_mode_settings = {
                 console.log("item_count");
                 break;
             case "location_filter":
-                var $loc_select = settings_maker.loc_select();
-                $options_container.append($loc_select);
+                var $element_dic = settings_maker.loc_and_level_container();
+
+                var $loc_div = $element_dic["$loc_div"],
+                    $level_container = $element_dic["$level_container"];
+
+                $options_container.append($loc_div);
+                $options_container.append($level_container);
+
                 break;
         }
     },
@@ -148,6 +154,9 @@ var element_ids = {
     date_select_1_name: "date-1",
     loc_select_name: "loc",
     loc_select_id: "loc-select",
+    level_container_id: "level-container",
+    level_select_id: "level-select",
+    level_select_name: "level",
 };
 
 var settings_maker = {
@@ -245,10 +254,10 @@ var settings_maker = {
         }).html(gettext("Location")).appendTo($div);
 
         $loc_select = $("<select>", {
-                id: loc_select_id,
-                name: loc_select_name,
-                "class": "form-control",
-            });
+            id: loc_select_id,
+            name: loc_select_name,
+            "class": "form-control",
+        });
 
         for (i = 0; i < arr_len; i++) {
             $date_option = $("<option>",{
@@ -261,4 +270,87 @@ var settings_maker = {
 
         return $div;
     },
+    loc_and_level_container: function() {
+        var $loc_select_div = this.loc_select(),
+            $loc_select = $loc_select_div.find("#" + element_ids.loc_select_id),
+            $level_container = $("<div>", {
+                id: element_ids.level_container_id,
+            });
+
+        var loc_val = $loc_select.val();
+
+        $level_container.append(this.level_select(loc_val));
+
+        $loc_select.on("change", function() {
+            $level_container.empty();
+            var loc = $(this).val();
+            $level_container.append(settings_maker.level_select(loc));
+        });
+
+        return {
+            "$loc_div": $loc_select_div,
+            "$level_container": $level_container,
+        }
+    },
+    level_select: function(loc) {
+        var select_id = element_ids.level_select_id,
+            select_name = element_ids.level_select_name,
+            $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": select_id,
+            text: gettext("Level"),
+        }).appendTo($div);
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn",
+        });
+
+        $input_group.append(
+            $("<span>", {
+               "class": "input-group-btn"
+            })
+        ).append(
+            $("<button>", {
+                id: "level-minus-btn",
+                "class": "btn- btn-default btn-number",
+
+            }).append($("<i>", {
+                "class": "fa fa-minus",
+                "aria-hidden": "true",
+                })
+            )
+        );
+
+        var $select = $("<select>", {
+            id: select_id,
+            "class": "form-control",
+            name: select_name,
+        }).appendTo($div);
+
+        var level = get_loc_level(loc),
+            i;
+        for (i = 1; i < level + 1; i++) {
+            $("<option>", {
+                "value":  i,
+                text: i,
+            }).appendTo($select);
+        }
+        return $div
+    },
+};
+
+
+function get_loc_level(loc) {
+
+    switch(loc) {
+        case "S":
+            return 6
+        case "F":
+            return 4;
+        case "P":
+            return 4;
+        case "VC":
+            return 5;
+    };
 };
