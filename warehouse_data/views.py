@@ -109,7 +109,7 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
-def get_locations(request):
+def empty_locations(request):
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
 

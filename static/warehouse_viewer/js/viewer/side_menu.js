@@ -83,7 +83,7 @@ var chart_mode_settings = {
             $container = $("#" + container_id),
             data_type_dic = {
                 "total_item_count": "Total Item Count",
-                "empty_location": "Empty Filter",
+                "empty_locations": "Empty Locations",
             };
 
         this.container_id = container_id;
@@ -128,7 +128,7 @@ var chart_mode_settings = {
             case "item_count":
                 console.log("item_count");
                 break;
-            case "empty_location":
+            case "empty_locations":
                 var $element_dic = settings_maker.loc_and_level_container();
 
                 var $loc_div = $element_dic["$loc_div"],
