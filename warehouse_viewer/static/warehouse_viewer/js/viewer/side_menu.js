@@ -279,7 +279,7 @@ var settings_maker = {
 
         var loc_val = $loc_select.val();
 
-        $level_container.append(this.level_select(loc_val));
+        $level_container.append(settings_maker.level_select(loc_val));
 
         $loc_select.on("change", function() {
             $level_container.empty();
