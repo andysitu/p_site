@@ -129,22 +129,10 @@ var chart = {
         return $table;
     },
     make_location_table: function(loc_arr, table_width, table_id) {
-        var $table = $("<table>", {
-                "class": 'table table-sm table-fit',
-                id: table_id,
-            }),
-            i,
-            $tr_info,
-            area, aisle,
-            prev_area, prev_aisle,
-            loc_code,
-            num_items_row_count = 0,
-            loc_re = /^USLA\.(\w)\.(\d{1,2})\./;
-
         function compare_locations(a, b) {
             var re = /^USLA\.(\w)\.(\d+)\.(\d+)\.(\d+)/;
-            var a_re_results = loc_re.exec(a),
-                b_re_results = loc_re.exec(b);
+            var a_re_results = re.exec(a),
+                b_re_results = re.exec(b);
 
             var a_area = a_re_results[1],
                 a_aisle = a_re_results[2],
@@ -170,12 +158,24 @@ var chart = {
 
         loc_arr = loc_arr.sort(compare_locations);
 
+        var $table = $("<table>", {
+                "class": 'table table-sm table-fit',
+                id: table_id,
+            }),
+            i,
+            $tr_info,
+            area, aisle, loc_code,
+            prev_area, prev_aisle, prev_column,
+            num_items_row_count = 0,
+            loc_re = /^USLA\.(\w)\.(\d+)\.(\d+)\./;
+
         for (i = 0; i < loc_arr.length; i++) {
             loc_code = loc_arr[i];
 
             re_results = loc_re.exec(loc_code)
             area = re_results[1];
             aisle = re_results[2];
+            column = re_results[3];
 
             if (num_items_row_count > table_width) {
                 $tr_info = $("<tr></tr>").appendTo($table);
@@ -183,11 +183,18 @@ var chart = {
             } else if (area != prev_area || aisle != prev_aisle) {
                 prev_aisle = aisle;
                 prev_area = area;
+                prev_column = column;
                 $table.append(
                     $("<tr>").append(
                         $("<td>", {text: gettext("AREA: ") + area + gettext(", AISLE: ") + aisle})));
                 $tr_info = $("<tr></tr>").appendTo($table);
                 num_items_row_count = 1
+            } else if (prev_column != column) {
+                $tr_info = $("<tr></tr>").appendTo($table);
+                prev_column = column;
+
+                num_items_row_count = 1
+
             }
             $tr_info.append(
                 $("<td>", {text: loc_code}),
