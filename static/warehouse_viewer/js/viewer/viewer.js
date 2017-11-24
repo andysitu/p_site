@@ -92,7 +92,7 @@ var chart = {
             $elements["empty-locations"] = this.make_location_table(
                 // [gettext("Location"),],
                 data["empty-locations"],
-                5,
+                8,
                 "empty-locations-table"
             );
         }
@@ -129,6 +129,8 @@ var chart = {
         return $table;
     },
     make_location_table: function(loc_arr, table_width, table_id) {
+        loc_arr = loc_arr.sort()
+
         var $table = $("<table>", {
                 "class": 'table table-sm table-fit',
                 id: table_id,
@@ -148,9 +150,15 @@ var chart = {
             area = re_results[1];
             aisle = re_results[2];
 
-            if (num_items_row_count > table_width || area != prev_area || aisle != prev_aisle) {
+            if (num_items_row_count > table_width) {
+                $tr_info = $("<tr></tr>").appendTo($table);
+                num_items_row_count = 1
+            } else if (area != prev_area || aisle != prev_aisle) {
                 prev_aisle = aisle;
                 prev_area = area;
+                $table.append(
+                    $("<tr>").append(
+                        $("<td>", {text: gettext("AREA: ") + area + gettext(", AISLE: ") + aisle})));
                 $tr_info = $("<tr></tr>").appendTo($table);
                 num_items_row_count = 1
             }

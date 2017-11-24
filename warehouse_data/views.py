@@ -164,7 +164,5 @@ def empty_locations(request):
         if len(loc_dic) == 0:
             empty_location_list.append(location)
 
-    sorted_empty_loc_list = sorted(empty_location_list)
-
-    data["empty-locations"] = sorted_empty_loc_list
+    data["empty-locations"] = empty_location_list
     return data
