@@ -155,6 +155,7 @@ var element_ids = {
     loc_select_name: "loc",
     loc_select_id: "loc-select",
     level_container_id: "level-container",
+    level_modifier: "level-modifier",
     level_select_id: "level-select",
     level_select_name: "level",
 };
@@ -306,35 +307,42 @@ var settings_maker = {
            "class": "input-group-btn",
         });
 
-        $input_group.append(
-            $("<span>", {
-               "class": "input-group-btn"
-            })
-        ).append(
-            $("<button>", {
-                id: "level-minus-btn",
-                "class": "btn- btn-default btn-number",
+        var $level_modifier_select = $("<select>", {
+            "class": "form-control",
+            name: element_ids.level_modifier,
+        }).appendTo($input_group);
 
-            }).append($("<i>", {
-                "class": "fa fa-minus",
-                "aria-hidden": "true",
-                })
-            )
-        );
+        $("<option>", {
+            "value": "lt",
+            text: ">=",
+        }).appendTo($level_modifier_select);
+
+        $("<option>", {
+            "value": "gt",
+            text: "<=",
+        }).appendTo($level_modifier_select);
+
+        $("<option>", {
+            "value": "eq",
+            text: "=",
+        }).appendTo($level_modifier_select);
+
 
         var $select = $("<select>", {
             id: select_id,
             "class": "form-control",
             name: select_name,
-        }).appendTo($div);
+        }).appendTo($input_group);
+
+        $input_group.appendTo($div);
 
         var level = get_loc_level(loc),
             i;
 
         $("<option>", {
-                "value":  "all",
-                text: "All",
-            }).appendTo($select);
+            "value":  "all",
+            text: "All",
+        }).appendTo($select);
 
         for (i = 1; i < level + 1; i++) {
             $("<option>", {
