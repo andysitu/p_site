@@ -4,6 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 
 from .models import DataDate, Items, Location
+from .helper_functions import get_location_dic
 
 from django.db import IntegrityError
 
@@ -110,25 +111,60 @@ def get_total_item_info(request, num_top=20):
     return info_dic
 
 def empty_locations(request):
+    # Counts the avail_quantity in each item
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
 
+    loc = request.GET.get("loc")
+
     data = {}
-    items_in_locations = {}
-
-    items_q = Items.objects.select_related("rack_location").filter(data_date=data_date).exclude(rack_location__loc="").iterator()
-
-    for item in items_q:
-        location = str(item.rack_location)
-        if location in items_in_locations:
-            item_code = item.item_code
-            item_arr = items_in_locations[location]
-            if item_code not in item_arr:
-                item_arr[item_code] = "A"
-        else:
-            items_in_locations[location] = {item.item_code: "A",}
+    items_q = Items.objects.select_related("rack_location").filter(data_date=data_date, rack_location__loc=loc).iterator()
 
     # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
-    # data["locations"] = locations
+    locations_dic = get_location_dic(loc)
 
-    return items_in_locations
+    for item in items_q:
+        avail_quantity = item.avail_quantity
+        if avail_quantity <= 0:
+            continue
+
+        location_inst = item.rack_location
+
+        area = location_inst.area
+        aisle_letter = location_inst.aisle_letter
+        aisle_num = location_inst.aisle_num
+        level = location_inst.level
+        column = location_inst.column
+
+        item_code = item.item_code
+
+
+        # Set Area
+        if area == "H" and aisle_letter == "H":
+            area = "S"
+        elif area == "PH" or area == "PA":
+            area = "P"
+        elif area == "VD":
+            area = "VC"
+        elif area == "VB":
+            area = "VA"
+
+        location_code = "USLA." + area + "." + str(aisle_num) + "." + str(column) + "." + str(level)
+        loc_dic = locations_dic[location_code]
+
+        if item_code not in loc_dic:
+            loc_dic[item_code] = avail_quantity
+        else:
+            loc_dic[item_code] += avail_quantity
+
+    empty_location_list = []
+
+    for location in locations_dic:
+        loc_dic = locations_dic[location]
+        if len(loc_dic) == 0:
+            empty_location_list.append(location)
+
+    sorted_empty_loc_list = sorted(empty_location_list)
+
+    data["empty-locations"] = sorted_empty_loc_list
+    return data

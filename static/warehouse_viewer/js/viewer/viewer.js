@@ -87,6 +87,14 @@ var chart = {
                 "top-item-count"
             );
         } else if (data_type == "empty_locations") {
+            var sorted_empty_loc_arr = data["empty-locations"];
+            console.log(sorted_empty_loc_arr);
+            $elements["empty-locations"] = this.make_location_table(
+                // [gettext("Location"),],
+                data["empty-locations"],
+                5,
+                "empty-locations-table"
+            );
         }
 
         return $elements;
@@ -117,6 +125,41 @@ var chart = {
                     $("<td>", {text: data_arr[j]}),
                 );
             }
+        }
+        return $table;
+    },
+    make_location_table: function(loc_arr, table_width, table_id) {
+        var $table = $("<table>", {
+                "class": 'table table-sm table-fit',
+                id: table_id,
+            }),
+            i,
+            $tr_info,
+            area, aisle,
+            prev_area, prev_aisle,
+            loc_code,
+            num_items_row_count = 0,
+            loc_re = /^USLA\.(\w)\.(\d{1,2})\./;
+
+        for (i = 0; i < loc_arr.length; i++) {
+            loc_code = loc_arr[i];
+
+            re_results = loc_re.exec(loc_code)
+            area = re_results[1];
+            aisle = re_results[2];
+
+            if (num_items_row_count > table_width || area != prev_area || aisle != prev_aisle) {
+                prev_aisle = aisle;
+                prev_area = area;
+                $tr_info = $("<tr></tr>").appendTo($table);
+                num_items_row_count = 1
+            }
+            $tr_info.append(
+                $("<td>", {text: loc_code}),
+            );
+
+            num_items_row_count++;
+
         }
         return $table;
     },
