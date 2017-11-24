@@ -62,7 +62,7 @@ var side_menu = {
             url: form_url,
             data: form_data,
             method: form_method,
-            success: function (data) {
+            success: function(data) {
                 viewer.display(data_mode, data_type, data);
                 side_menu.renew_submitButton();
             },
@@ -356,7 +356,6 @@ var settings_maker = {
 
 
 function get_loc_level(loc) {
-
     switch(loc) {
         case "S":
             return 6

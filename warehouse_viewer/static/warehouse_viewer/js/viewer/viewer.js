@@ -88,7 +88,6 @@ var chart = {
             );
         } else if (data_type == "empty_locations") {
             var sorted_empty_loc_arr = data["empty-locations"];
-            console.log(sorted_empty_loc_arr);
             $elements["empty-locations"] = this.make_location_table(
                 // [gettext("Location"),],
                 data["empty-locations"],
@@ -185,8 +184,10 @@ var chart = {
                 prev_area = area;
                 prev_column = column;
                 $table.append(
-                    $("<tr>").append(
-                        $("<td>", {text: gettext("AREA: ") + area + gettext(", AISLE: ") + aisle})));
+                    $("<tr>", {"class": "table-primary",}).append(
+                        $("<td>", {text: gettext("AREA: ") + area,}),
+                        $("<td>", {text: gettext("AISLE: ") + aisle,}),
+                    ));
                 $tr_info = $("<tr></tr>").appendTo($table);
                 num_items_row_count = 1
             } else if (prev_column != column) {
