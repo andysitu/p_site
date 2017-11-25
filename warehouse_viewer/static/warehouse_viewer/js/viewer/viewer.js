@@ -7,8 +7,6 @@ var viewer = {
     chart: chart,
 
     display: function(data_mode, data_type, data) {
-        console.log(data_mode, data_type, data);
-
         this.empty_page();
         if (data_mode == "chart") {
             chart.create_page(data_type, data);

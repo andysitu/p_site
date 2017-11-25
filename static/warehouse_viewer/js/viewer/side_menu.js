@@ -288,12 +288,12 @@ var settings_maker = {
 
         $("<option>", {
             "value": "lt",
-            text: ">=",
+            text: "<=",
         }).appendTo($level_modifier_select);
 
         $("<option>", {
             "value": "gt",
-            text: "<=",
+            text: ">=",
         }).appendTo($level_modifier_select);
 
         $("<option>", {
