@@ -40,7 +40,7 @@ var side_menu = {
 
         viewer_processor.submit_search(e, function() {
             side_menu.renew_submitButton();
-        })
+        });
     },
 };
 

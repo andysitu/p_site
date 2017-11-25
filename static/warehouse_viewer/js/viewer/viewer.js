@@ -1,3 +1,6 @@
+// ONLY THE DISPLAY COMPONENT, LET LOGIC GO IN
+// VIEWER_PROCESSOR
+
 var $display_container;
 
 var viewer = {
@@ -128,35 +131,6 @@ var chart = {
         return $table;
     },
     make_location_table: function(loc_arr, table_width, table_id) {
-        function compare_locations(a, b) {
-            var re = /^USLA\.(\w)\.(\d+)\.(\d+)\.(\d+)/;
-            var a_re_results = re.exec(a),
-                b_re_results = re.exec(b);
-
-            var a_area = a_re_results[1],
-                a_aisle = a_re_results[2],
-                a_column = a_re_results[3],
-                a_level = a_re_results[4],
-                b_area = b_re_results[1],
-                b_aisle = b_re_results[2],
-                b_column = b_re_results[3],
-                b_level = b_re_results[4];
-
-            if (a_area != b_area) {
-                return a_area.localeCompare(b_area);
-            } else if (a_aisle != b_aisle) {
-                return parseInt(a_aisle) - parseInt(b_aisle);
-            } else if (a_column != b_column) {
-                return parseInt(a_column) - parseInt(b_column);
-            } else if (a_level != b_level) {
-                return parseInt(a_level) - parseInt(b_level);
-            } else {
-                return 0;
-            }
-        }
-
-        loc_arr = loc_arr.sort(compare_locations);
-
         var $table = $("<table>", {
                 "class": 'table table-sm table-fit',
                 id: table_id,
