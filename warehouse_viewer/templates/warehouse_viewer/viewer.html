@@ -22,13 +22,13 @@
     {% csrf_token %}
     <div class="form-group">
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-secondary">
+            <label class="btn btn-primary">
                 <input type="radio" name="mode" autocomplete="off" value="map"> {% trans 'Map' %}
             </label>
-            <label class="btn btn-secondary active">
+            <label class="btn btn-primary active">
                 <input type="radio" name="mode" autocomplete="off" value="chart" checked> {% trans 'Chart' %}
             </label>
-            <label class="btn btn-secondary">
+            <label class="btn btn-primary">
                 <input type="radio" name="mode" autocomplete="off" value="graph"> {% trans 'Graph' %}
             </label>
         </div>
