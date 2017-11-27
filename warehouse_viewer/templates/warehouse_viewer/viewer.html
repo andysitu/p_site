@@ -21,11 +21,17 @@
 <form action="{% url 'warehouse_viewer:search_ajax' %}" method="get" id="side-menu-form">
     {% csrf_token %}
     <div class="form-group">
-        <select class="form-control" id="data-mode" name="mode">
-            <option value="map">{% trans "Map" %}</option>
-            <option value="chart" selected>{% trans "Chart" %}</option>
-            <option value="graph">{% trans "Graph" %}</option>
-        </select>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-secondary">
+                <input type="radio" name="mode" autocomplete="off" value="map"> {% trans 'Map' %}
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="radio" name="mode" autocomplete="off" value="chart" checked> {% trans 'Chart' %}
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="mode" autocomplete="off" value="graph"> {% trans 'Graph' %}
+            </label>
+        </div>
     </div>
     <div id="mode-settings-div"></div>
     <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>

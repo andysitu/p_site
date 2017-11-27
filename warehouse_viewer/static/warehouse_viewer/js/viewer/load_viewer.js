@@ -1,6 +1,7 @@
 $( document ).ready(function(){
     $display_container = $("#display-container");
 
+    side_menu.load_side_menu();
     side_menu.set_settings_from_mode();
 
     $("#data-mode").change(function() {

@@ -1,13 +1,22 @@
 var side_menu = {
     form_id: "side-menu-form",
     container_id: "mode-settings-div",
+    load_side_menu: function() {
+        this.set_settings_from_mode();
+
+        $("input:radio[name=mode]").change(
+            function() {
+                side_menu.set_settings_from_mode();
+            }
+        )
+    },
     set_settings_from_mode: function () {
-        var mode_type = $("#data-mode").val();
+        var mode = this.get_mode();
 
         this.clear_settings();
 
         var mode_settingsObj;
-        switch (mode_type) {
+        switch (mode) {
             case "map":
                 mode_settingsObj = map_mode_settings;
                 break;
@@ -20,7 +29,10 @@ var side_menu = {
             default:
                 return 1;
         };
-        var $menu_div = mode_settingsObj.add_dataType(this.container_id);
+        var $menu_div = mode_settingsObj.make_menu(this.container_id);
+    },
+    get_mode: function() {
+        return $("input:radio[name=mode]:checked").val();
     },
     clear_settings: function() {
         $("#" + this.container_id).empty();
@@ -52,7 +64,7 @@ var map_mode_settings = {
 
 var chart_mode_settings = {
     container_id: null,
-    add_dataType: function(container_id) {
+    make_menu: function(container_id) {
         var data_select_id = element_ids.data_select_id,
             $container = $("#" + container_id),
             data_type_dic = {
