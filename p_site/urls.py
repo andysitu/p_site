@@ -24,12 +24,11 @@ from django.views.i18n import javascript_catalog
 
 from . import views
 from django.contrib.auth import views as auth_views
+from django.views.i18n import JavaScriptCatalog
 
-js_info_dict = {
-    'packages': ('warehouse_map',),
-}
 
 urlpatterns = [
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', admin.site.urls),
     url(r'^customs_list/', include('customs_list.urls')),
@@ -48,10 +47,7 @@ urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
 
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += [
-    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
-]
