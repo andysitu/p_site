@@ -94,7 +94,7 @@ var helper_functions = {
 
     },
     compare_locations: function(a, b) {
-        var re = /^USLA\.(\w)\.(\d+)\.(\d+)\.(\d+)/;
+        var re = /^USLA\.(\w+)\.(\d+)\.(\d+)\.(\d+)/;
         var a_re_results = re.exec(a),
             b_re_results = re.exec(b);
 

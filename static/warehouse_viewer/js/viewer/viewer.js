@@ -138,7 +138,7 @@ var chart = {
             area, aisle, loc_code,
             prev_area, prev_aisle, prev_column,
             num_items_row_count = 0,
-            loc_re = /^USLA\.(\w)\.(\d+)\.(\d+)\./;
+            loc_re = /^USLA\.(\w+)\.(\d+)\.(\d+)\./;
 
         for (i = 0; i < loc_arr.length; i++) {
             loc_code = loc_arr[i];
