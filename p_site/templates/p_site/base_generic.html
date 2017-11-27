@@ -79,7 +79,7 @@
 
     <div class="container-fluid">
         <div class="row" id="body-div-row">
-            <div class="col-lg-2 sidebar collapse" id="sidebar-nav-div">
+            <div class="col-sm-2 sidebar" id="sidebar-nav-div">
                 {% block nav_search %}{% endblock %}
                 <ul class="sidebar-nav">
                     {% block home_link %}<li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>{% endblock %}
@@ -88,7 +88,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-10 col-lg-offset-2 ml-lg-auto" id="body-div">
+            <div class="col-sm-10 col-sm-offset-2 ml-auto" id="body-div">
                 {% block content %}{% endblock %}
             </div>
         </div>
