@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-07 15:40-0800\n"
+"POT-Creation-Date: 2017-11-27 12:28-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,36 +94,32 @@ msgstr "删除"
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_site/base_generic.html:44 p_site/templates/p_site/base_generic.html:44
+#: p_site/settings.py:146
+msgid "English"
+msgstr "英文"
+
+#: p_site/settings.py:147
+msgid "Chinese"
+msgstr "中文"
+
+#: p_site/templates/p_site/base_generic.html:44
 msgid "Logout"
 msgstr "登出"
 
-#: p_site/base_generic.html:44 p_site/templates/p_site/base_generic.html:44
+#: p_site/templates/p_site/base_generic.html:44
 msgid "User"
 msgstr "用户"
 
-#: p_site/base_generic.html:47 p_site/templates/p_site/base_generic.html:47
+#: p_site/templates/p_site/base_generic.html:47
 msgid "Login"
 msgstr "登录"
 
-#: p_site/base_generic.html:84 p_site/templates/p_site/base_generic.html:81
+#: p_site/templates/p_site/base_generic.html:85
 #: rcv_list/templates/rcv_list/rcv_list_base.html:13
 #: uploader/templates/uploader/uploader_base.html:11
 #: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:11
 msgid "Home"
 msgstr "家"
-
-#: p_site/settings.py:145
-msgid "English"
-msgstr "英文"
-
-#: p_site/settings.py:146
-msgid "Chinese"
-msgstr "中文"
-
-#: p_site/templates/p_site/base_generic.html:53
-msgid "Current language :"
-msgstr ""
 
 #: p_site/templates/p_site/index.html:13
 msgid "Customs Declaration List"
@@ -193,6 +189,7 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:37
 msgid "Submit"
 msgstr "提交"
 
@@ -221,11 +218,11 @@ msgstr "上传文件"
 
 #: warehouse_data/processor.py:42
 msgid "Excel file with date "
-msgstr ""
+msgstr "带日期的Excel文件 "
 
 #: warehouse_data/processor.py:43
 msgid " has uploaded already."
-msgstr ""
+msgstr " 已经上传了"
 
 #: warehouse_map/forms.py:7
 msgid "Select an exported excel file from the WMS."
@@ -275,7 +272,7 @@ msgstr "重置数据库和位置"
 
 #: warehouse_map/templates/warehouse_map/map.html:90
 msgid "Reset Grid (Image) Map"
-msgstr ""
+msgstr "重置网格图"
 
 #: warehouse_map/templates/warehouse_map/map.html:93
 msgid "Delete By Date"
@@ -306,14 +303,14 @@ msgstr "选择一个导出的Excel文件"
 msgid "Excel dates uploaded"
 msgstr "上载"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:20
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:26
 msgid "Map"
-msgstr ""
+msgstr "地图"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:21
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:29
 msgid "Chart"
-msgstr ""
+msgstr "图表"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:22
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:32
 msgid "Graph"
-msgstr ""
+msgstr "图形"

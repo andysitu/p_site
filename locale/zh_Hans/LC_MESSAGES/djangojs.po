@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-07 15:29-0800\n"
+"POT-Creation-Date: 2017-11-27 12:33-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,9 @@ msgid " is the correct rcv number?"
 msgstr "是正确的rcv号码吗？"
 
 #: warehouse_map/static/warehouse_map/js/page_functions.js:44
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:241
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:61
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:67
 msgid "Location"
 msgstr "位置"
 
@@ -47,7 +50,6 @@ msgid "Items Shipped"
 msgstr "发货数量"
 
 #: warehouse_map/static/warehouse_map/js/page_functions.js:101
-#| msgid "Items Shipped"
 msgid "Items Added"
 msgstr "已添加项目"
 
@@ -60,6 +62,7 @@ msgid "Time Period"
 msgstr "时间段"
 
 #: warehouse_map/static/warehouse_map/js/page_functions.js:230
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:222
 msgid "Date"
 msgstr "日期"
 
@@ -84,14 +87,13 @@ msgstr "该文件的名称不正确。它应该包含14个数字的年，月，�
 
 #: warehouse_viewer/static/warehouse_viewer/js/upload.js:4
 msgid "File "
-msgstr ""
+msgstr "文件"
 
 #: warehouse_viewer/static/warehouse_viewer/js/upload.js:4
 msgid " has finished uploading."
-msgstr ""
+msgstr "已经完成上传"
 
 #: warehouse_viewer/static/warehouse_viewer/js/upload.js:43
-#| msgid "No file was uploaded."
 msgid "No file was uploaded"
 msgstr "没有上传文件。"
 
@@ -100,8 +102,68 @@ msgid "The file needs to be an excel file [.XLSX]"
 msgstr "该文件需要是一个Excel文件[.XLSX]"
 
 #: warehouse_viewer/static/warehouse_viewer/js/upload.js:47
-#| msgid ""
 msgid ""
 "Incorrect file name. It needs to have 14 numbers for yyyymmddhhmmss[year, "
 "month, day, hour, minute, second]."
 msgstr "该文件被错误地命名。它应该包含14个年份，月份，日期，小时，分钟和秒数。"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:71
+#| msgid "Item Count"
+msgid "Total Item Count"
+msgstr "物品数量"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:72
+#| msgid "Location"
+msgid "Empty Locations"
+msgstr "位置"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:164
+msgid "Data Type"
+msgstr "数据类型"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:289
+msgid "Level"
+msgstr "水平"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:48
+msgid "Total Number of Items"
+msgstr "项目总数"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:52
+msgid "Number of Item Types"
+msgstr "项目类型总数"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:56
+msgid "Number of Customers"
+msgstr "客户数量"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:61
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:74
+msgid "# of Items"
+msgstr "东西的个数"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:67
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:80
+msgid "# of Item Types"
+msgstr "项目类型总数"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:74
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:80
+msgid "Customer"
+msgstr "顾客"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:86
+msgid "Item SKU"
+msgstr "商品SKU"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:86
+msgid "# Items"
+msgstr "东西的个数"
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:160
+msgid "AREA: "
+msgstr "区: "
+
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:161
+msgid "AISLE: "
+msgstr "走道: "
