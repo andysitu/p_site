@@ -56,6 +56,20 @@ var side_menu = {
     },
 };
 
+
+var menu_functions = {
+    get_data_type: function() {
+        var data_select_id = element_ids.data_select_id,
+            $dataType_select = $("#" + data_select_id);
+
+        return $dataType_select.val();
+    },
+    set_menu: function() {
+
+    },
+};
+
+
 var map_mode_settings = {
     make_menu: function(container_id) {
         var $container = $("#" + container_id),
@@ -67,26 +81,24 @@ var map_mode_settings = {
         var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
         $container.append($dataType_select_div);
 
+        $("#" + data_select_id).change(function(e){
+            var data_type = menu_functions.get_data_type();
+            chart_mode_settings.set_menu_from_dataType(data_type);
+        });
+
+        // Make the subcontainer which will contain menu options
         var $options_container = settings_maker.options_container();
         $container.append($options_container);
 
+        var data_type = menu_functions.get_data_type();
+        this.set_menu_from_dataType(data_type);
+
         return $container;
     },
-    get_data_type: function() {
-        var data_select_id = element_ids.data_select_id,
-            $dataType_select = $("#" + data_select_id);
-
-        return $dataType_select.val();
-    },
-    set_menu_from_dataType: function() {
+    set_menu_from_dataType: function(data_type) {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
 
-        var data_type = this.get_data_type();
-
-        this.set_options(data_type, $options_container);
-    },
-    set_options: function(data_type, $options_container) {
         var $date_1 = settings_maker.date_input_1();
         $options_container.append($date_1);
 
@@ -99,7 +111,6 @@ var map_mode_settings = {
 
                 $options_container.append($loc_div);
                 $options_container.append($level_container);
-
                 break;
         }
     },
@@ -123,25 +134,19 @@ var chart_mode_settings = {
         $container.append($options_container);
 
         $("#" + data_select_id).change(function(e){
-            var data_type = chart_mode_settings.get_data_type();
+            var data_type = menu_functions.get_data_type();
             chart_mode_settings.set_menu_from_dataType(data_type);
         });
 
-        var data_type = this.get_data_type();
+        var data_type = menu_functions.get_data_type();
         this.set_menu_from_dataType(data_type);
 
         return $container;
     },
-    get_data_type: function() {
-        var data_select_id = element_ids.data_select_id,
-            $dataType_select = $("#" + data_select_id);
-
-        return $dataType_select.val();
-    },
     set_menu_from_dataType: function(data_type) {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
-        
+
         var $date_1 = settings_maker.date_input_1();
         $options_container.append($date_1);
 
@@ -157,18 +162,17 @@ var chart_mode_settings = {
 
                 $options_container.append($loc_div);
                 $options_container.append($level_container);
-
                 break;
         }
     },
 };
+
 
 var graph_mode_settings = {
     make_menu: function(container_id) {},
 };
 
 var element_ids = {
-    options_container_id: "options-container",
     data_select_id: "data-type-select",
     data_select_name: "data-type",
     date_select_1_id: "date-select-1",
@@ -179,6 +183,7 @@ var element_ids = {
     level_modifier: "level-modifier",
     level_select_id: "level-select",
     level_select_name: "level",
+    options_container_id: "options-container",
 };
 
 var settings_maker = {
@@ -209,11 +214,6 @@ var settings_maker = {
             }).text(data_type_dic[data_type_value]).appendTo($select);
         }
         return $div
-    },
-    options_container: function() {
-        return $("<div>", {
-            id: element_ids.options_container_id,
-        })
     },
     date_input_1: function() {
         /**
@@ -373,6 +373,11 @@ var settings_maker = {
             }).appendTo($select);
         }
         return $div
+    },
+    options_container: function() {
+        return $("<div>", {
+            id: element_ids.options_container_id,
+        })
     },
 };
 
