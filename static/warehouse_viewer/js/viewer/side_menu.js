@@ -56,7 +56,6 @@ var side_menu = {
     },
 };
 
-
 var map_mode_settings = {
     make_menu: function(container_id) {
         var $container = $("#" + container_id),
@@ -142,10 +141,7 @@ var chart_mode_settings = {
     set_menu_from_dataType: function(data_type) {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
-
-        this.set_options(data_type, $options_container);
-    },
-    set_options: function(data_type, $options_container) {
+        
         var $date_1 = settings_maker.date_input_1();
         $options_container.append($date_1);
 
