@@ -10,6 +10,38 @@ from django.db import IntegrityError
 
 import operator
 
+def loc_inst_to_jsloccode(loc_inst):
+    # Returns the loc_code used in js component
+    #   (Location code, without the level implemented).
+    warehouse_code = "USLA"
+    area_code = ""
+    aisle_code = str(loc_inst.aisle_num)
+    column_code = str(loc_inst.column)
+
+    loc = loc_inst.loc
+    area = loc_inst.area
+    aisle_letter = loc_inst.aisle_letter
+    if loc == "P":
+        area_code = "P"
+    elif loc == "S":
+        if area == "H" and aisle_letter == "H" or area == "S":
+            area_code = "S"
+        else:
+            area_code = "H"
+    elif loc == "VC":
+        if area == "VC" or area == "VD":
+            area_code = "VC"
+        elif area == "VA" or area == "VB":
+            area_code = "VA"
+        else:
+            area_code = "H"
+    else:
+        if area == "F":
+            area_code = "F"
+        else:
+            area_code = "VA"
+    return warehouse_code + "." + area_code + "." + aisle_code + "." + column_code
+
 def get_dates(request):
     num_dates = int(request.GET.get("num_dates"))
     dates = DataDate.objects.order_by('-date')
@@ -38,6 +70,39 @@ def separate_list_of_tupe(sorted_list):
         list_a.append(list_tup[0])
         list_a.append(list_tup[1])
     return [list_a, list_b]
+
+def get_item_count(request):
+    data_dic = {}
+
+    date_id = request.GET.get("date-1")
+    loc = request.GET.get("loc")
+
+
+    data_date_inst = DataDate.objects.get(pk=date_id)
+
+    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc)
+    i_q = i_q.select_related('rack_location')
+
+    for item_inst in i_q:
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}, "total": 0}
+
+        location = item_inst.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
+
+        item_code = item_inst.item_code
+        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+        data_dic[js_loc_code]["total"] += item_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity
+        else:
+            cur_item_dic[item_code] += item_quantity
+
+    return data_dic
 
 def get_total_item_info(request, num_top=20):
     date_id = request.GET.get("date-1")
