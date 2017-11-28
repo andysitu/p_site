@@ -73,6 +73,37 @@ var map_mode_settings = {
 
         return $container;
     },
+    get_data_type: function() {
+        var data_select_id = element_ids.data_select_id,
+            $dataType_select = $("#" + data_select_id);
+
+        return $dataType_select.val();
+    },
+    set_menu_from_dataType: function() {
+        var $options_container = $("#" + element_ids.options_container_id);
+        $options_container.empty();
+
+        var data_type = this.get_data_type();
+
+        this.set_options(data_type, $options_container);
+    },
+    set_options: function(data_type, $options_container) {
+        var $date_1 = settings_maker.date_input_1();
+        $options_container.append($date_1);
+
+        switch(data_type) {
+            case "item_count":
+                var $element_dic = settings_maker.loc_and_level_container();
+
+                var $loc_div = $element_dic["$loc_div"],
+                    $level_container = $element_dic["$level_container"];
+
+                $options_container.append($loc_div);
+                $options_container.append($level_container);
+
+                break;
+        }
+    },
 };
 
 
