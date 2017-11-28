@@ -41,7 +41,7 @@ def process_excel_file(file):
         d_time_str =  d.strftime('%m/%d/%Y %I:%M %p')
         m_1 = gettext("Excel file with date ")
         m_2 = gettext(" has uploaded already.")
-        return m1 + d_time_str + m2
+        return m_1 + d_time_str + m_2
 
     data = file.read()
     workbook = xlrd.open_workbook(file_contents=data)
