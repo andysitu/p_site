@@ -155,7 +155,6 @@ var element_ids = {
 };
 
 var settings_maker = {
-    data_select_id: "data-type-select",
     data_type: function(data_type_dic) {
         /**
          * data_type_dic: object with the key being the value for the
@@ -184,9 +183,6 @@ var settings_maker = {
         }
         return $div
     },
-
-    date_select_1_id: "date-select-1",
-    date_select_1_name: "date-1",
     date_input_1: function() {
         /**
          * Returns div with bootstrap CSS format containing
