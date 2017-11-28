@@ -123,13 +123,13 @@ var chart_mode_settings = {
         var $options_container = settings_maker.options_container();
         $container.append($options_container);
 
-        var $dataType_select = $("#" + data_select_id);
-
-        $dataType_select.change(function(e){
-            chart_mode_settings.set_menu_from_dataType();
+        $("#" + data_select_id).change(function(e){
+            var data_type = chart_mode_settings.get_data_type();
+            chart_mode_settings.set_menu_from_dataType(data_type);
         });
 
-        this.set_menu_from_dataType();
+        var data_type = this.get_data_type();
+        this.set_menu_from_dataType(data_type);
 
         return $container;
     },
@@ -139,11 +139,9 @@ var chart_mode_settings = {
 
         return $dataType_select.val();
     },
-    set_menu_from_dataType: function() {
+    set_menu_from_dataType: function(data_type) {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
-
-        var data_type = this.get_data_type();
 
         this.set_options(data_type, $options_container);
     },
