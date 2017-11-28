@@ -68,6 +68,9 @@ var map_mode_settings = {
         var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
         $container.append($dataType_select_div);
 
+        var $options_container = settings_maker.options_container();
+        $container.append($options_container);
+
         return $container;
     },
 };
@@ -86,9 +89,8 @@ var chart_mode_settings = {
         $container.append($dataType_select_div);
 
         // Make the subcontainer which will contain menu options
-        $("<div>", {
-            id: element_ids.options_container_id,
-        }).appendTo($container);
+        var $options_container = settings_maker.options_container();
+        $container.append($options_container);
 
         var $dataType_select = $("#" + data_select_id);
 
@@ -182,6 +184,11 @@ var settings_maker = {
             }).text(data_type_dic[data_type_value]).appendTo($select);
         }
         return $div
+    },
+    options_container: function() {
+        return $("<div>", {
+            id: element_ids.options_container_id,
+        })
     },
     date_input_1: function() {
         /**
