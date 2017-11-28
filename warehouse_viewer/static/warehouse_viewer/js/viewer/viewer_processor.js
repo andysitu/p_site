@@ -1,4 +1,6 @@
 var viewer_processor = {
+    prev_search_form_data: null,
+    prev_search_data: null,
     submit_search: function(form_element, callback_function) {
         var $form = $( form_element.target ),
             data_array = $form.serializeArray(),
@@ -17,8 +19,10 @@ var viewer_processor = {
         }
 
         var data_mode = form_data["mode"],
-            data_type = form_data['data-type'];
+            data_type = form_data['data-type'],
+            prev_form_data;
 
+        prev_form_data = this.prev_search_form_data;
         $.ajax({
             // warehouse_viewer.search_ajax
             url: form_url,

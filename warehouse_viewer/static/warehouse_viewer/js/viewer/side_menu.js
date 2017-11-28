@@ -58,21 +58,29 @@ var side_menu = {
 
 
 var map_mode_settings = {
-    make_menu: function(container_id) {},
+    make_menu: function(container_id) {
+        var $container = $("#" + container_id),
+            data_select_id = element_ids.data_select_id,
+            data_type_dic = {
+                "item_count": gettext("Item Count"),
+            };
+
+        var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
+        $container.append($dataType_select_div);
+
+        return $container;
+    },
 };
 
 
 var chart_mode_settings = {
-    container_id: null,
     make_menu: function(container_id) {
-        var data_select_id = element_ids.data_select_id,
-            $container = $("#" + container_id),
+        var $container = $("#" + container_id),
+            data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "total_item_count": gettext("Total Item Count"),
                 "empty_locations": gettext("Empty Locations"),
             };
-
-        this.container_id = container_id;
 
         var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
         $container.append($dataType_select_div);
@@ -85,10 +93,10 @@ var chart_mode_settings = {
         var $dataType_select = $("#" + data_select_id);
 
         $dataType_select.change(function(e){
-            chart_mode_settings.onchange_dataType();
+            chart_mode_settings.set_menu_from_dataType();
         });
 
-        this.onchange_dataType();
+        this.set_menu_from_dataType();
 
         return $container;
     },
@@ -98,7 +106,7 @@ var chart_mode_settings = {
 
         return $dataType_select.val();
     },
-    onchange_dataType: function() {
+    set_menu_from_dataType: function() {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
 
