@@ -12,7 +12,11 @@ var map_ctx_obj = {
 };
 
 var grid_map_obj = {
+    create_grid: function(loc) {
+        var grid = [];
 
+        return grid;
+    },
 };
 
 var color_map_obj = {

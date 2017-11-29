@@ -29,12 +29,11 @@ var viewer_processor = {
             data: form_data,
             method: form_method,
             success: function(data) {
-                var proccessed_data = viewer_processor.process(form_data, data);
-
                 // TODO SAVE PROCESSED DATA
 
-                var filtered_proc_data = viewer_processor.filter(form_data, proccessed_data);
-                viewer.display(data_mode, data_type, filtered_proc_data);
+                var proccessed_data = viewer_processor.process(form_data, data);
+
+                viewer.display(data_mode, data_type, proccessed_data);
                 callback_function();
             },
         });
@@ -47,32 +46,25 @@ var viewer_processor = {
         console.log(form_data);
 
         var mode = form_data["mode"],
-            data_type = form_data["data-type"];
+            data_type = form_data["data-type"],
+            level = form_data["level"],
+            level_modifier = form_data["level-modifier"];
+
         if (mode == "chart") {
             if (data_type == "empty_locations") {
+                if (level != "all") {
+                    data["empty-locations"] = helper_functions.filter_locations_arr_by_level(
+                        data["empty-locations"],
+                        level,
+                        level_modifier,
+                    );
+                }
+
                 data["empty-locations"] = data["empty-locations"].sort(
                     helper_functions.compare_locations);
             }
         }
 
-        return data;
-    },
-    filter: function(form_data, data) {
-        var mode = form_data["mode"],
-            data_type = form_data["data-type"];
-
-        var level = form_data["level"],
-            level_modifier = form_data["level-modifier"];
-        if (mode == "chart") {
-            if (data_type == "empty_locations") {
-                if (level != "all")
-                data["empty-locations"] = helper_functions.filter_locations_arr_by_level(
-                    data["empty-locations"],
-                    level,
-                    level_modifier,
-                );
-            }
-        }
         return data;
     },
 };
