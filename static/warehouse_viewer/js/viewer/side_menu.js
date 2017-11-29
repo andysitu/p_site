@@ -1,3 +1,18 @@
+var element_ids = {
+    container_id: "mode-settings-div",
+    data_select_id: "data-type-select",
+    data_select_name: "data-type",
+    date_select_1_id: "date-select-1",
+    date_select_1_name: "date-1",
+    loc_select_name: "loc",
+    loc_select_id: "loc-select",
+    level_container_id: "level-container",
+    level_modifier: "level-modifier",
+    level_select_id: "level-select",
+    level_select_name: "level",
+    options_container_id: "options-container",
+};
+
 var side_menu = {
     form_id: "side-menu-form",
     container_id: "mode-settings-div",
@@ -67,12 +82,18 @@ var menu_functions = {
     set_menu: function() {
 
     },
+    add_options_container: function() {
+        var $container = $("#" + element_ids.container_id),
+            $options_container = settings_maker.options_container();
+
+        $container.append($options_container);
+    },
 };
 
 
 var map_mode_settings = {
-    make_menu: function(container_id) {
-        var $container = $("#" + container_id),
+    make_menu: function() {
+        var $container = $("#" + element_ids.container_id),
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "item_count": gettext("Item Count"),
@@ -83,12 +104,11 @@ var map_mode_settings = {
 
         $("#" + data_select_id).change(function(e){
             var data_type = menu_functions.get_data_type();
-            chart_mode_settings.set_menu_from_dataType(data_type);
+            map_mode_settings.set_menu_from_dataType(data_type);
         });
 
         // Make the subcontainer which will contain menu options
-        var $options_container = settings_maker.options_container();
-        $container.append($options_container);
+        menu_functions.add_options_container();
 
         var data_type = menu_functions.get_data_type();
         this.set_menu_from_dataType(data_type);
@@ -130,8 +150,7 @@ var chart_mode_settings = {
         $container.append($dataType_select_div);
 
         // Make the subcontainer which will contain menu options
-        var $options_container = settings_maker.options_container();
-        $container.append($options_container);
+        menu_functions.add_options_container();
 
         $("#" + data_select_id).change(function(e){
             var data_type = menu_functions.get_data_type();
@@ -172,19 +191,6 @@ var graph_mode_settings = {
     make_menu: function(container_id) {},
 };
 
-var element_ids = {
-    data_select_id: "data-type-select",
-    data_select_name: "data-type",
-    date_select_1_id: "date-select-1",
-    date_select_1_name: "date-1",
-    loc_select_name: "loc",
-    loc_select_id: "loc-select",
-    level_container_id: "level-container",
-    level_modifier: "level-modifier",
-    level_select_id: "level-select",
-    level_select_name: "level",
-    options_container_id: "options-container",
-};
 
 var settings_maker = {
     data_type: function(data_type_dic) {

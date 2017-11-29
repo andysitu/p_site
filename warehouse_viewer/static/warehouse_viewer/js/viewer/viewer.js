@@ -9,7 +9,9 @@ var viewer = {
     display: function(data_mode, data_type, data) {
         console.log(data);
         this.empty_page();
-        if (data_mode == "chart") {
+        if (data_mode == "map") {
+            map_cpu.start(data_type, data);
+        } else if (data_mode == "chart") {
             chart.create_page(data_type, data);
         }
     },
