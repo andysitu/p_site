@@ -73,6 +73,9 @@ var side_menu = {
 
 
 var menu_functions = {
+    empty_options_container: function() {
+
+    },
     get_data_type: function() {
         var data_select_id = element_ids.data_select_id,
             $dataType_select = $("#" + data_select_id);
@@ -85,15 +88,17 @@ var menu_functions = {
     get_options_container: function() {
         return $("#" + element_ids.options_container_id);
     },
-    set_menu: function() {
-
-    },
     add_options_container: function() {
         var $container = this.get_container(),
             $options_container = settings_maker.options_container();
 
         $container.append($options_container);
         return $options_container;
+    },
+    add_dataType_select: function(data_type_dic) {
+        var $container = this.get_container();
+        var $dataType_select_div = settings_maker.data_type(data_type_dic);
+        $container.append($dataType_select_div);
     },
     add_date1: function() {
         var $options_container = this.get_options_container(),
@@ -122,25 +127,22 @@ var map_mode_settings = {
                 "item_count": gettext("Item Count"),
             };
 
-        var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
-        $container.append($dataType_select_div);
+        menu_functions.add_dataType_select(data_type_dic);
 
         $("#" + data_select_id).change(function(e){
-            var data_type = menu_functions.get_data_type();
-            map_mode_settings.set_menu_from_dataType(data_type);
+            map_mode_settings.set_menu_from_dataType();
         });
 
         // Make the subcontainer which will contain menu options
         menu_functions.add_options_container();
 
-        var data_type = menu_functions.get_data_type();
-        this.set_menu_from_dataType(data_type);
+        this.set_menu_from_dataType();
 
         return $container;
     },
     set_menu_from_dataType: function(data_type) {
-        var $options_container = $("#" + element_ids.options_container_id);
-        $options_container.empty();
+        var data_type = menu_functions.get_data_type();
+        menu_functions.empty_options_container()
 
         menu_functions.add_date1();
 
@@ -162,25 +164,22 @@ var chart_mode_settings = {
                 "empty_locations": gettext("Empty Locations"),
             };
 
-        var $dataType_select_div = settings_maker.data_type(data_type_dic, data_select_id);
-        $container.append($dataType_select_div);
+        menu_functions.add_dataType_select(data_type_dic);
 
         // Make the subcontainer which will contain menu options
         menu_functions.add_options_container();
 
         $("#" + data_select_id).change(function(e){
-            var data_type = menu_functions.get_data_type();
-            chart_mode_settings.set_menu_from_dataType(data_type);
+            chart_mode_settings.set_menu_from_dataType();
         });
 
-        var data_type = menu_functions.get_data_type();
-        this.set_menu_from_dataType(data_type);
+        this.set_menu_from_dataType();
 
         return $container;
     },
     set_menu_from_dataType: function(data_type) {
-        var $options_container = $("#" + element_ids.options_container_id);
-        $options_container.empty();
+        var data_type = menu_functions.get_data_type();
+        menu_functions.empty_options_container();
 
         menu_functions.add_date1();
 
@@ -189,13 +188,7 @@ var chart_mode_settings = {
                 console.log("item_count");
                 break;
             case "empty_locations":
-                var $element_dic = settings_maker.loc_and_level_container();
-
-                var $loc_div = $element_dic["$loc_div"],
-                    $level_container = $element_dic["$level_container"];
-
-                $options_container.append($loc_div);
-                $options_container.append($level_container);
+                menu_functions.add_loc_select_and_level_container();;
                 break;
         }
     },
