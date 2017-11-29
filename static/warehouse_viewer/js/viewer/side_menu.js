@@ -79,14 +79,37 @@ var menu_functions = {
 
         return $dataType_select.val();
     },
+    get_container: function() {
+        return $("#" + element_ids.container_id);
+    },
+    get_options_container: function() {
+        return $("#" + element_ids.options_container_id);
+    },
     set_menu: function() {
 
     },
     add_options_container: function() {
-        var $container = $("#" + element_ids.container_id),
+        var $container = this.get_container(),
             $options_container = settings_maker.options_container();
 
         $container.append($options_container);
+        return $options_container;
+    },
+    add_date1: function() {
+        var $options_container = this.get_options_container(),
+            $date_1 = settings_maker.date_input_1();
+        $options_container.append($date_1);
+        return $date_1;
+    },
+    add_loc_select_and_level_container: function() {
+        var $options_container =this.get_options_container(),
+        $element_dic = settings_maker.loc_and_level_container();
+
+        var $loc_div = $element_dic["$loc_div"],
+            $level_container = $element_dic["$level_container"];
+
+        $options_container.append($loc_div);
+        $options_container.append($level_container);
     },
 };
 
@@ -119,18 +142,11 @@ var map_mode_settings = {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
 
-        var $date_1 = settings_maker.date_input_1();
-        $options_container.append($date_1);
+        menu_functions.add_date1();
 
         switch(data_type) {
             case "item_count":
-                var $element_dic = settings_maker.loc_and_level_container();
-
-                var $loc_div = $element_dic["$loc_div"],
-                    $level_container = $element_dic["$level_container"];
-
-                $options_container.append($loc_div);
-                $options_container.append($level_container);
+                menu_functions.add_loc_select_and_level_container();
                 break;
         }
     },
@@ -166,8 +182,7 @@ var chart_mode_settings = {
         var $options_container = $("#" + element_ids.options_container_id);
         $options_container.empty();
 
-        var $date_1 = settings_maker.date_input_1();
-        $options_container.append($date_1);
+        menu_functions.add_date1();
 
         switch(data_type) {
             case "item_count":
