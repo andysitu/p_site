@@ -257,7 +257,7 @@ def create_grids():
         rack_loc_sub = "USLA.VA."
         h_loc_sub = "USLA.H."
         width = 35
-        height = 72
+        height = 99
 
         vc_grid = GridMap(loc="VC", width=width, height=height)
         vc_grid.create_grids()
@@ -288,7 +288,7 @@ def create_grids():
         double_rack_status = False
         prev_y = 23
 
-        for i in range(32):
+        for i in range(50):
             if double_rack_status:
                 next_y = prev_y + 1
                 prev_y = next_y
