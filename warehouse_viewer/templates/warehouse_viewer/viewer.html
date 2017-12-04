@@ -12,7 +12,8 @@
 <script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/load_viewer.js' %}"></script>
 <script type="text/javascript" src="{% static 'warehouse_viewer/js/map/map.js' %}"></script>
 <script type="text/javascript">
-    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}";
+    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}",
+        get_grid_ajax_url = "{% url 'warehouse_map:request_grid_map_ajax' %}";
 </script>
 
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>

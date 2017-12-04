@@ -33,7 +33,7 @@ var viewer_processor = {
 
                 var proccessed_data = viewer_processor.process(form_data, data);
 
-                viewer.display(data_mode, data_type, proccessed_data);
+                viewer.display(data_mode, data_type, proccessed_data, form_data);
                 callback_function();
             },
         });
@@ -50,7 +50,9 @@ var viewer_processor = {
             level = form_data["level"],
             level_modifier = form_data["level-modifier"];
 
-        if (mode == "chart") {
+        if (mode == "map") {
+
+        } else if (mode == "chart") {
             if (data_type == "empty_locations") {
                 if (level != "all") {
                     data["empty-locations"] = helper_functions.filter_locations_arr_by_level(

@@ -6,11 +6,10 @@ var $display_container;
 var viewer = {
     chart: chart,
 
-    display: function(data_mode, data_type, data) {
-        console.log(data);
+    display: function(data_mode, data_type, data, form_data) {
         this.empty_page();
         if (data_mode == "map") {
-            map_cpu.start(data_type, data);
+            map_cpu.start(data_type, data, form_data);
         } else if (data_mode == "chart") {
             chart.create_page(data_type, data);
         }
