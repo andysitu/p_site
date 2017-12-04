@@ -74,7 +74,7 @@ var side_menu = {
 
 var menu_functions = {
     empty_options_container: function() {
-
+        $("#" + element_ids.options_container_id).empty();
     },
     get_data_type: function() {
         var data_select_id = element_ids.data_select_id,
