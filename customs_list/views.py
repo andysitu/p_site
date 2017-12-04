@@ -10,8 +10,6 @@ from django.core.files import File
 from django.conf import settings
 from django.utils.encoding import smart_str
 
-from django.core.urlresolvers import reverse
-
 from .forms import EditCustomsDeclarationForm
 
 def test(request, file_name):
