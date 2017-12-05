@@ -1,18 +1,3 @@
-var element_ids = {
-    container_id: "mode-settings-div",
-    data_select_id: "data-type-select",
-    data_select_name: "data-type",
-    date_select_1_id: "date-select-1",
-    date_select_1_name: "date-1",
-    loc_select_name: "loc",
-    loc_select_id: "loc-select",
-    level_container_id: "level-container",
-    level_modifier: "level-modifier",
-    level_select_id: "level-select",
-    level_select_name: "level",
-    options_container_id: "options-container",
-};
-
 var side_menu = {
     form_id: "side-menu-form",
     container_id: "mode-settings-div",
@@ -82,21 +67,21 @@ var menu_functions = {
 
         return $dataType_select.val();
     },
-    get_container: function() {
+    get_menu_container: function() {
         return $("#" + element_ids.container_id);
     },
     get_options_container: function() {
         return $("#" + element_ids.options_container_id);
     },
     add_options_container: function() {
-        var $container = this.get_container(),
+        var $container = this.get_menu_container(),
             $options_container = settings_maker.options_container();
 
         $container.append($options_container);
         return $options_container;
     },
     add_dataType_select: function(data_type_dic) {
-        var $container = this.get_container();
+        var $container = this.get_menu_container();
         var $dataType_select_div = settings_maker.data_type(data_type_dic);
         $container.append($dataType_select_div);
     },

@@ -1,7 +1,7 @@
 var viewer_processor = {
     prev_search_form_data: null,
     prev_search_data: null,
-    submit_search: function(form_element, callback_function) {
+    submit_search: function(form_element, sidemenu_callback_function) {
         var $form = $( form_element.target ),
             data_array = $form.serializeArray(),
             form_url = $form.attr("action"),
@@ -34,7 +34,7 @@ var viewer_processor = {
                 var proccessed_data = viewer_processor.process(form_data, data);
 
                 viewer.display(data_mode, data_type, proccessed_data, form_data);
-                callback_function();
+                sidemenu_callback_function();
             },
         });
     },
