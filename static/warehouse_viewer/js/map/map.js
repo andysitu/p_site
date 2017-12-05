@@ -1,10 +1,29 @@
 var map_processor = {
+    map_canvas_id: "map-canvas",
+    map_data: null,
+    ctx: null,
+    map_canvas: null,
+
     start: function(data_type, data, form_data) {
         var loc = form_data["loc"];
+
+        this.map_canvas = this.create_canvas();
 
         var color_map = color_map_functions.mapify(data_type, data);
 
         imageMap_obj.imageMap_ajax(loc);
+    },
+    create_canvas: function() {
+        var $canvas = $("<canvas>", {
+            id: this.map_canvas_id,
+        });
+
+        var side_menu_width = $()
+
+        return $canvas[0];
+    },
+    draw_map: function() {
+
     },
 };
 
@@ -28,6 +47,10 @@ var imageMap_obj = {
 
 var color_map_functions = {
     mapify: function(data_type, data) {
+        /**
+         * Create a dictionary consisting of location as key &
+         *  the rgb value as the value,
+         */
         if (data_type == "item_count") {
             color_map = this.item_count_map(data);
         }
