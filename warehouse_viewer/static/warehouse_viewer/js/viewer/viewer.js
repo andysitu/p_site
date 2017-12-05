@@ -1,10 +1,12 @@
 // ONLY THE DISPLAY COMPONENT, LET LOGIC GO IN
 // VIEWER_PROCESSOR
 
+// $display_container is pointed to the actual display_container
+//  in load_viewer.js
 var $display_container;
 
 var element_ids = {
-
+    main_navbar_id: "main-navbar",
     sidebar_nav_id: "sidebar-nav-div",
 
     menu_container_id: "mode-settings-div",
@@ -39,7 +41,10 @@ var viewer = {
     },
     empty_page: function() {
         $display_container.empty();
-    }
+    },
+    get_$display_container: function() {
+        return $("#display-container");
+    },
 };
 
 var chart = {
