@@ -18,7 +18,8 @@ var map_processor = {
             id: this.map_canvas_id,
         });
 
-        var side_menu_width = $()
+        var side_menu_width = $("#" + element_ids.sidebar_nav_id).outerWidth();
+        console.log(side_menu_width);
 
         return $canvas[0];
     },

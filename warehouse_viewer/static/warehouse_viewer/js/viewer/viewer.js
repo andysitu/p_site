@@ -4,8 +4,12 @@
 var $display_container;
 
 var element_ids = {
-    display_container_id: "display-container",
+
+    sidebar_nav_id: "sidebar-nav-div",
+
     menu_container_id: "mode-settings-div",
+    display_container_id: "display-container",
+
     data_select_id: "data-type-select",
     data_select_name: "data-type",
     date_select_1_id: "date-select-1",
