@@ -9,7 +9,7 @@ var viewer = {
     display: function(data_mode, data_type, data, form_data) {
         this.empty_page();
         if (data_mode == "map") {
-            map_cpu.start(data_type, data, form_data);
+            map_processor.start(data_type, data, form_data);
         } else if (data_mode == "chart") {
             chart.create_page(data_type, data);
         }
@@ -110,7 +110,8 @@ var chart = {
             i, j,
             arr_len, $tr_info;
 
-        var $tr_head = $("<tr>").appendTo($table);
+        var
+            $tr_head = $("<tr>").appendTo($table);
         for (i = 0; i < header_arr.length; i++) {
             $tr_head.append(
                 $("<th>", {
