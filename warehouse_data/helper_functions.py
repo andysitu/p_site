@@ -1,4 +1,4 @@
-def get_location_dic(loc):
+def get_all_location_dic(loc):
     """
     Return dictionary with location code as key & empty dict as the value
     :param loc: string

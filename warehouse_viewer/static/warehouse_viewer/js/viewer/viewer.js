@@ -22,7 +22,7 @@ var element_ids = {
     level_select_name: "level",
     options_container_id: "options-container",
     num_item_type_input_id: "item-type-input-id",
-    num_item_type_input_name: "num-item-type",
+    num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",
 };
 

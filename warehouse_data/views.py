@@ -4,7 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 
 from .models import DataDate, Items, Location
-from .helper_functions import get_location_dic
+from .helper_functions import get_all_location_dic
 
 from django.db import IntegrityError
 
@@ -180,13 +180,16 @@ def item_type_filter(request):
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
 
+    num_item_types = int(request.GET.get("num-item-types"))
+    num_item_type_modifier = request.GET.get("num-item-type-modifier")
+
     loc = request.GET.get("loc")
 
     data = {}
     items_q = Items.objects.select_related("rack_location").filter(data_date=data_date, rack_location__loc=loc).iterator()
 
     # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
-    locations_dic = get_location_dic(loc)
+    locations_dic = get_all_location_dic(loc)
 
     for item in items_q:
         avail_quantity = item.avail_quantity
@@ -224,10 +227,19 @@ def item_type_filter(request):
 
     location_list = []
 
+    # Place matching location codes into locatin_list
     for location in locations_dic:
         loc_dic = locations_dic[location]
-        if len(loc_dic) == 0:
-            location_list.append(location)
+        loc_dic_len = len(loc_dic)
+        if num_item_type_modifier == "lt":
+            if loc_dic_len <= num_item_types:
+                location_list.append(location)
+        elif num_item_type_modifier == "gt":
+            if loc_dic_len >= num_item_types:
+                location_list.append(location)
+        elif num_item_type_modifier == "eq":
+            if loc_dic_len == num_item_types:
+                location_list.append(location)
 
     data["item-type-filter"] = location_list
     return data

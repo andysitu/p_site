@@ -30,9 +30,11 @@ var viewer_processor = {
             method: form_method,
             success: function(data) {
                 // TODO SAVE PROCESSED DATA
+                console.log(data);
 
                 var proccessed_data = viewer_processor.process(form_data, data);
 
+                console.log(proccessed_data);
                 viewer.display(data_mode, data_type, proccessed_data, form_data);
                 sidemenu_callback_function();
             },
