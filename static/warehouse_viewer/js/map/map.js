@@ -11,7 +11,7 @@ var map_processor = {
         var loc = form_data["loc"],
             $display_container = viewer.get_$display_container();
 
-        this.map_canvas = this.add_canvas();
+        this.map_canvas = this.create_canvas();
         $display_container.append(this.map_canvas);
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
@@ -20,7 +20,7 @@ var map_processor = {
 
         imageMap_obj.imageMap_ajax(loc);
    },
-    add_canvas: function() {
+    create_canvas: function() {
         var $canvas = $("<canvas>", {
                 id: this.map_canvas_id,
             }),
@@ -28,8 +28,6 @@ var map_processor = {
 
         var main_navbar_height = $("#" + element_ids.main_navbar_id).outerHeight(),
             side_menu_width = $("#" + element_ids.sidebar_nav_id).outerWidth();
-
-        console.log(main_navbar_height, side_menu_width);
 
         var canvas_width = $(window).width() - side_menu_width - 15,
             canvas_height = $(window).height() - main_navbar_height - 15;
