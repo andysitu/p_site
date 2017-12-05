@@ -52,6 +52,6 @@ def search_ajax(request):
     elif data_mode == "chart":
         if data_type == "total_item_count":
             response = warehouse_data_views.get_total_item_info(request)
-        elif data_type == "empty_locations":
-            response = warehouse_data_views.empty_locations(request)
+        elif data_type == "item_type_filter":
+            response = warehouse_data_views.item_type_filter(request)
     return JsonResponse(response)

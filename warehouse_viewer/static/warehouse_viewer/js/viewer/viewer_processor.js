@@ -53,16 +53,16 @@ var viewer_processor = {
         if (mode == "map") {
 
         } else if (mode == "chart") {
-            if (data_type == "empty_locations") {
+            if (data_type == "item_type_filter") {
                 if (level != "all") {
-                    data["empty-locations"] = helper_functions.filter_locations_arr_by_level(
-                        data["empty-locations"],
+                    data["item-type-filter"] = helper_functions.filter_locations_arr_by_level(
+                        data["item-type-filter"],
                         level,
                         level_modifier,
                     );
                 }
 
-                data["empty-locations"] = data["empty-locations"].sort(
+                data["item-type-filter"] = data["item-type-filter"].sort(
                     helper_functions.compare_locations);
             }
         }

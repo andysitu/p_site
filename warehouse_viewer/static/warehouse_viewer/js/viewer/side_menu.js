@@ -92,7 +92,7 @@ var menu_functions = {
         return $date_1;
     },
     add_loc_select_and_level_container: function() {
-        var $options_container =this.get_options_container(),
+        var $options_container = this.get_options_container(),
         $element_dic = settings_maker.loc_and_level_container();
 
         var $loc_div = $element_dic["$loc_div"],
@@ -146,7 +146,7 @@ var chart_mode_settings = {
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "total_item_count": gettext("Total Item Count"),
-                "empty_locations": gettext("Empty Locations"),
+                "item_type_filter": gettext("Item Type Filter"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -167,13 +167,14 @@ var chart_mode_settings = {
         menu_functions.empty_options_container();
 
         menu_functions.add_date1();
+        console.log(data_type);
 
         switch(data_type) {
             case "item_count":
                 console.log("item_count");
                 break;
-            case "empty_locations":
-                menu_functions.add_loc_select_and_level_container();;
+            case "item_type_filter":
+                menu_functions.add_loc_select_and_level_container();
                 break;
         }
     },
@@ -372,6 +373,9 @@ var settings_maker = {
             }).appendTo($select);
         }
         return $div
+    },
+    num_item_types: function() {
+
     },
     options_container: function() {
         return $("<div>", {

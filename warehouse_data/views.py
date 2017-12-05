@@ -175,7 +175,7 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
-def empty_locations(request):
+def item_type_filter(request):
     # Counts the avail_quantity in each item
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
@@ -222,12 +222,12 @@ def empty_locations(request):
         else:
             loc_dic[item_code] += avail_quantity
 
-    empty_location_list = []
+    location_list = []
 
     for location in locations_dic:
         loc_dic = locations_dic[location]
         if len(loc_dic) == 0:
-            empty_location_list.append(location)
+            location_list.append(location)
 
-    data["empty-locations"] = empty_location_list
+    data["item-type-filter"] = location_list
     return data

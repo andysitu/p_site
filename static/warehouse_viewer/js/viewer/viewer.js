@@ -109,13 +109,13 @@ var chart = {
                 data["top-item-count"],
                 "top-item-count"
             );
-        } else if (data_type == "empty_locations") {
-            var sorted_empty_loc_arr = data["empty-locations"];
-            $elements["empty-locations"] = this.make_location_table(
+        } else if (data_type == "item_type_filter") {
+            var sorted_empty_loc_arr = data["item-type-filter"];
+            $elements["item-type-filter"] = this.make_location_table(
                 // [gettext("Location"),],
-                data["empty-locations"],
+                data["item-type-filter"],
                 8,
-                "empty-locations-table"
+                "item-type-filter-table"
             );
         }
 
