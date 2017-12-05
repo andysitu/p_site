@@ -58,6 +58,10 @@ var side_menu = {
 
 
 var menu_functions = {
+    add_element_to_options: function($element_container) {
+        var $options_container = this.get_options_container();
+        $options_container.append($element_container);
+    },
     empty_options_container: function() {
         $("#" + element_ids.options_container_id).empty();
     },
@@ -101,6 +105,10 @@ var menu_functions = {
         $options_container.append($loc_div);
         $options_container.append($level_container);
     },
+    add_item_type_div: function() {
+        var $num_item_type_div = settings_maker.num_item_types();
+        this.add_element_to_options($num_item_type_div);
+    }
 };
 
 
@@ -167,7 +175,6 @@ var chart_mode_settings = {
         menu_functions.empty_options_container();
 
         menu_functions.add_date1();
-        console.log(data_type);
 
         switch(data_type) {
             case "item_count":
@@ -175,6 +182,7 @@ var chart_mode_settings = {
                 break;
             case "item_type_filter":
                 menu_functions.add_loc_select_and_level_container();
+                menu_functions.add_item_type_div();
                 break;
         }
     },
@@ -375,7 +383,51 @@ var settings_maker = {
         return $div
     },
     num_item_types: function() {
+        var input_id = element_ids.num_item_type_input_id,
+            input_name = element_ids.num_item_type_input_name,
+            $div = $("<div class='form-group'>");
 
+        $("<label>", {
+            "for": input_id,
+            text: gettext("Item Types"),
+        }).appendTo($div);
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn",
+        });
+
+        var $item_type_modifier_select = $("<select>", {
+            "class": "form-control",
+            name: element_ids.num_item_type_modifier,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "lt",
+            text: "<=",
+        }).appendTo($item_type_modifier_select);
+
+        $("<option>", {
+            "value": "gt",
+            text: ">=",
+        }).appendTo($item_type_modifier_select);
+
+        $("<option>", {
+            "value": "eq",
+            text: "=",
+        }).appendTo($item_type_modifier_select);
+
+
+        var $input = $("<input>", {
+            id: input_id,
+            "class": "form-control",
+            name: input_name,
+            type: "number",
+            value: 0,
+        }).appendTo($input_group);
+
+        $input_group.appendTo($div);
+
+        return $div
     },
     options_container: function() {
         return $("<div>", {
