@@ -5,7 +5,7 @@ var $display_container;
 
 var element_ids = {
     display_container_id: "display-container",
-    container_id: "mode-settings-div",
+    menu_container_id: "mode-settings-div",
     data_select_id: "data-type-select",
     data_select_name: "data-type",
     date_select_1_id: "date-select-1",

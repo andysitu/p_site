@@ -68,7 +68,7 @@ var menu_functions = {
         return $dataType_select.val();
     },
     get_menu_container: function() {
-        return $("#" + element_ids.container_id);
+        return $("#" + element_ids.menu_container_id);
     },
     get_options_container: function() {
         return $("#" + element_ids.options_container_id);
