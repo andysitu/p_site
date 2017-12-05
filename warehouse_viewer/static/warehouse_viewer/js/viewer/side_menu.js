@@ -29,7 +29,7 @@ var side_menu = {
             default:
                 return 1;
         };
-        var $menu_div = mode_settingsObj.make_menu(this.container_id);
+        var $menu_div = mode_settingsObj.make_menu();
     },
     get_mode: function() {
         return $("input:radio[name=mode]:checked").val();
@@ -106,7 +106,7 @@ var menu_functions = {
 
 var map_mode_settings = {
     make_menu: function() {
-        var $container = $("#" + element_ids.container_id),
+        var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "item_count": gettext("Item Count"),
@@ -141,8 +141,8 @@ var map_mode_settings = {
 
 
 var chart_mode_settings = {
-    make_menu: function(container_id) {
-        var $container = $("#" + container_id),
+    make_menu: function() {
+        var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "total_item_count": gettext("Total Item Count"),
