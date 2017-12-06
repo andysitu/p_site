@@ -397,7 +397,7 @@ var settings_maker = {
         });
 
         var $item_type_modifier_select = $("<select>", {
-            "class": "form-control",
+            "class": "form-control col-sm-4",
             name: element_ids.num_item_type_modifier,
         }).appendTo($input_group);
 
@@ -419,7 +419,7 @@ var settings_maker = {
 
         var $input = $("<input>", {
             id: input_id,
-            "class": "form-control",
+            "class": "form-control col-sm-8",
             name: input_name,
             type: "number",
             value: 0,
