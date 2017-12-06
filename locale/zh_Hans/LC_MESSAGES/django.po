@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-27 12:28-0800\n"
+"POT-Creation-Date: 2017-12-05 18:05-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,10 +143,8 @@ msgid "File Uploader"
 msgstr "上载"
 
 #: p_site/templates/p_site/index.html:17
-#, fuzzy
-#| msgid "Warehouse Map"
 msgid "Warehouse Viewer"
-msgstr "仓库地图"
+msgstr "仓库查看器"
 
 #: p_site/templates/p_site/registration/logged_out.html:6
 msgid "You have logged out."
@@ -175,8 +173,6 @@ msgid "Select an RCV PDF File"
 msgstr "选择RCV PDF文件"
 
 #: rcv_list/forms.py:22 rcv_list/forms.py:25
-#, fuzzy
-#| msgid "First Date"
 msgid "Input Date"
 msgstr "第一次约会"
 
@@ -189,7 +185,7 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:37
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:39
 msgid "Submit"
 msgstr "提交"
 
@@ -303,14 +299,14 @@ msgstr "选择一个导出的Excel文件"
 msgid "Excel dates uploaded"
 msgstr "上载"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:26
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:28
 msgid "Map"
 msgstr "地图"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:29
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:31
 msgid "Chart"
 msgstr "图表"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:32
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:34
 msgid "Graph"
 msgstr "图形"

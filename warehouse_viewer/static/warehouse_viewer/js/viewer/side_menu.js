@@ -338,29 +338,29 @@ var settings_maker = {
         });
 
         var $level_modifier_select = $("<select>", {
-            "class": "form-control col-sm-6",
+            "class": "form-control col-sm-7",
             name: element_ids.level_modifier,
         }).appendTo($input_group);
 
         $("<option>", {
             "value": "lt",
-            text: "<=",
+            text: gettext("<="),
         }).appendTo($level_modifier_select);
 
         $("<option>", {
             "value": "gt",
-            text: ">=",
+            text: gettext(">="),
         }).appendTo($level_modifier_select);
 
         $("<option>", {
             "value": "eq",
-            text: "=",
+            text: gettext("="),
         }).appendTo($level_modifier_select);
 
 
         var $select = $("<select>", {
             id: select_id,
-            "class": "form-control col-sm-6",
+            "class": "form-control col-sm-5",
             name: select_name,
         }).appendTo($input_group);
 
@@ -397,29 +397,29 @@ var settings_maker = {
         });
 
         var $item_type_modifier_select = $("<select>", {
-            "class": "form-control col-sm-6",
+            "class": "form-control col-sm-7",
             name: element_ids.num_item_type_modifier,
         }).appendTo($input_group);
 
         $("<option>", {
             "value": "lt",
-            text: "<=",
+            text: gettext("<="),
         }).appendTo($item_type_modifier_select);
 
         $("<option>", {
             "value": "gt",
-            text: ">=",
+            text: gettext(">="),
         }).appendTo($item_type_modifier_select);
 
         $("<option>", {
             "value": "eq",
-            text: "=",
+            text: gettext("="),
         }).appendTo($item_type_modifier_select);
 
 
         var $input = $("<input>", {
             id: input_id,
-            "class": "form-control col-sm-6",
+            "class": "form-control col-sm-5",
             name: input_name,
             type: "number",
             value: 0,
