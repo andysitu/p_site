@@ -12,7 +12,7 @@ var map_processor = {
             $display_container = viewer.get_$display_container();
 
         var map_canvas = this.create_canvas();
-        this.set_canvas(map_canvas);
+        this.set_map_processor(map_canvas);
 
         this.ctx = map_canvas.getContext('2d');
 
@@ -37,21 +37,23 @@ var map_processor = {
 
         return $canvas[0];
     },
-    set_canvas: function(map_canvas) {
+    set_map_processor: function(map_canvas) {
         this.map_canvas = map_canvas;
         $display_container.append(this.map_canvas);
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
     },
-    draw_map: function() {
+    draw_map: function(loc) {
+        // Get grid_map
         $.ajax({
             url: get_grid_ajax_url,
             datatype: "GET",
             data: {
                 "loc[]": [loc],
             },
-            success: function(data) {
-                console.log(data);
+            success: function(grid_data) {
+                var image_map = grid_data["image_map"],
+                    location_map = grid_data["location_map"];
             }
         });
     },
@@ -67,7 +69,7 @@ var color_map_functions = {
             color_map = this.item_count_map(data);
         }
 
-        console.log(color_map);
+        return color_map;
     },
     item_count_map: function(data_map) {
     /*
