@@ -43,7 +43,32 @@ var map_functions = {
         } else if (area == "F") {
         }
         return true;
+    },
+
+    get_map_index_by_xy: function(e, map_data_dic) {
+    /**
+     * Uses the map_data_arr in outerscope.
+     * Return
+     * i [int]: (representing index in map_data_arr
+     *   to get map_data_dict),
+     * x[int], y[int]: use in [y][x] format in location map
+     *   or other maps.
+     */
+    var offset_y = e.offsetY,
+        offset_x = e.offsetX,
+        i, box_length;
+
+    box_length = map_data_dic.box_length;
+    if (offset_x >= map_data_dic.start_x && offset_x <= map_data_dic.end_x &&
+        offset_y >= map_data_dic.start_y && offset_y <= map_data_dic.end_y) {
+        location_map = map_data_dic["location_map"];
+        var y = Math.floor((offset_y - map_data_dic.start_y ) / box_length),
+            x = Math.floor((offset_x - map_data_dic.start_x ) / box_length);
+
+        return [i, x, y];
     }
+    return 0;
+}
 };
 
 var mouseHandlers = {

@@ -11,6 +11,8 @@ var map_processor = {
     image_map: null,
     location_map: null,
 
+    saved_canvas_img: null,
+
     start: function(data_type, data, form_data) {
         // Create & add canvas element & ctx
         this.map_data = data;
@@ -25,7 +27,7 @@ var map_processor = {
 
         map_processor.color_map = color_map_functions.mapify(data_type, data);
 
-        this.create_canvas_map(loc);
+        this.create_map(loc);
    },
     create_canvas: function() {
         var $canvas = $("<canvas>", {
@@ -53,9 +55,8 @@ var map_processor = {
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
     },
-    create_canvas_map: function(loc) {
+    create_map: function(loc) {
         // Get grid_map
-
         $.ajax({
             url: get_grid_ajax_url,
             datatype: "GET",
@@ -110,8 +111,11 @@ var map_processor = {
                             color = blank_rack_color;
 
                         map_processor.draw_box(x, y, box_length, box_length, map_key, color);
+                    }
                 }
-            }
+
+                map_processor.save_canvas();
+                map_processor.set_click_handler();
             },
         });
     },
@@ -170,6 +174,242 @@ var map_processor = {
                 ctx.fillRect(x + 1, y, width - 1, height);
                 break;
         }
+    },
+
+    set_click_handler: function(e) {
+        var $map_canvas = $("#" +this.map_canvas_id);
+        $map_canvas.click(function(e){
+            var location_map = map_processor.location_map,
+                map_data = map_processor.map_data;
+
+            var map_index_arr = map_processor.get_map_index_by_xy(e);
+
+            map_processor.restore_canvas();
+
+            console.log(map_index_arr);
+
+            if (map_index_arr === 0)
+                return 0;
+
+            var i = map_index_arr[0],
+                x = map_index_arr[1],
+                y = map_index_arr[2];
+
+
+            if (typeof location_map[y] !== 'undefined') {
+                var location = location_map[y][x];
+                if (location !== '' && typeof location !== 'undefined') {
+                    if (typeof map_data !== "undefined" ) {
+                        var data = map_data[location];
+                        map_processor.display_info(location, data);
+                    } else {
+                        map_processor.display_info(location);
+                    }
+                    map_processor.highlight_map(i, x, y);
+                } else {
+                    map_processor.restore_canvas();
+                }
+            }
+        });
+    },
+    highlight_map: function(i ,x, y) {
+        var locations_info_dic = this.get_similar_locations(i, x, y)
+            image_map = map_processor.image_map,
+            loc_info_arr = null,
+            i, x, y;
+
+        for (location_str in locations_info_dic) {
+            loc_info_arr = locations_info_dic[location_str];
+            i = loc_info_arr[0];
+            x = loc_info_arr[1];
+            y = loc_info_arr[2];
+
+            this.highlight_box(i, x, y);
+        }
+    },
+    save_canvas: function() {
+        this.saved_canvas_img = this.ctx.getImageData(0, 0,
+            this.canvas_width, this.canvas_height);
+    },
+    restore_canvas: function() {
+        this.ctx.putImageData(this.saved_canvas_img, 0, 0);
+        this.clear_highlight();
+    },
+
+    clear_highlight: function() {
+        // this.highlighted = "";
+        // page_functions.write_msg("");
+    },
+
+    get_similar_locations: function(i, x, y, location, loc_dic) {
+        var location_map = this.location_map,
+            cur_loc = location_map[y][x],
+            key_loc = String(i) + "_" + String(x) + "_" + String(y);
+
+
+        if (location === undefined) {
+            location = cur_loc;
+        }
+        if (loc_dic === undefined) {
+            loc_dic = {};
+        }
+        if (key_loc in loc_dic) {
+            return 0;
+        }
+
+        if (cur_loc == location) {
+            loc_dic[ key_loc ] = [i,x,y];
+
+            // left
+            if (x-1 >= 0) {
+                this.get_similar_locations(i, x-1, y, location, loc_dic);
+            }
+            //right
+            var right_y_len = location_map[y].length;
+            if (x+1 < right_y_len) {
+                this.get_similar_locations(i, x+1, y, location, loc_dic);
+            }
+            //up
+            if (y - 1 >= 0) {
+                this.get_similar_locations(i, x, y-1, location, loc_dic);
+            }
+            //down
+            var down_len = location_map.length;
+            if (y + 1 < down_len) {
+                this.get_similar_locations(i, x, y+1, location, loc_dic);
+            }
+        }
+
+        return loc_dic;
+    },
+    display_info: function(location, info_dic) {
+        console.log("location:", location);
+        console.log("info_dic:", info_dic);
+    },
+    highlight_box: function(i, x, y) {
+        /**
+         * Highlights the edges of the boxes
+         * i [int]: the index in the map_data_arr to get the dict.
+         * x[int], y[int]: the indexes in the maps to get that location.
+         */
+        var image_key = this.image_map[y][x],
+            loc_start_x = 0,
+            loc_start_y = 0,
+            ctx = this.ctx,
+            box_length = this.box_length;
+
+        var start_x = loc_start_x + x * box_length,
+            start_y = loc_start_y + y * box_length;
+
+        ctx.save();
+
+        ctx.strokeStyle = "red";
+
+        switch(image_key) {
+            case "e":
+                break;
+            case "sl":
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case "sr":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+
+            case 'st':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'sb':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+
+            case "rtl":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+            case "rbl":
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rtr':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rbr':
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+
+            case 'rt':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x+box_length, start_y);
+                break;
+            case 'rb':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y+box_length);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rr':
+                ctx.beginPath();
+                ctx.moveTo(start_x+box_length, start_y);
+                ctx.lineTo(start_x+box_length, start_y+box_length);
+                break;
+            case 'rl':
+                ctx.beginPath();
+                ctx.moveTo(start_x, start_y);
+                ctx.lineTo(start_x, start_y+box_length);
+                break;
+        }
+        ctx.stroke();
+        ctx.restore();
+    },
+    get_map_index_by_xy: function(e) {
+        /**
+         * Uses the map_data_arr in outerscope.
+         * Return
+         * i [int]: (representing index in map_data_arr
+         *   to get map_data_dict),
+         * x[int], y[int]: use in [y][x] format in location map
+         *   or other maps.
+         */
+        var offset_y = e.offsetY,
+            offset_x = e.offsetX,
+            i, box_length;
+
+        box_length = this.box_length;
+        if (offset_x >= 0 && offset_x <= this.canvas_width &&
+            offset_y >= 0 && offset_y <= this.canvas_height) {
+            location_map = this.location_map;
+            var y = Math.floor((offset_y - 0 ) / box_length),
+                x = Math.floor((offset_x - 0 ) / box_length);
+
+            return [i, x, y];
+        }
+        return 0;
     },
 };
 
