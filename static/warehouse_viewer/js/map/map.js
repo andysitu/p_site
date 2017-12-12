@@ -6,8 +6,15 @@ var map_processor = {
     ctx: null,
     map_canvas: null,
 
+    box_length: 5,
+    color_map: null,
+    image_map: null,
+    location_map: null,
+
     start: function(data_type, data, form_data) {
         // Create & add canvas element & ctx
+        this.map_data = data;
+
         var loc = form_data["loc"],
             $display_container = viewer.get_$display_container();
 
@@ -16,9 +23,9 @@ var map_processor = {
 
         this.ctx = map_canvas.getContext('2d');
 
-        var color_map = color_map_functions.mapify(data_type, data);
+        map_processor.color_map = color_map_functions.mapify(data_type, data);
 
-        this.draw_map(loc);
+        this.create_canvas_map(loc);
    },
     create_canvas: function() {
         var $canvas = $("<canvas>", {
@@ -38,24 +45,131 @@ var map_processor = {
         return $canvas[0];
     },
     set_map_processor: function(map_canvas) {
+        /**
+         * Sets the values in map processor obj.
+         */
         this.map_canvas = map_canvas;
         $display_container.append(this.map_canvas);
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
     },
-    draw_map: function(loc) {
+    create_canvas_map: function(loc) {
         // Get grid_map
+
         $.ajax({
             url: get_grid_ajax_url,
             datatype: "GET",
             data: {
                 "loc[]": [loc],
             },
-            success: function(grid_data) {
-                var image_map = grid_data["image_map"],
-                    location_map = grid_data["location_map"];
+            success: function(grid_data_arr) {
+                var grid_data = grid_data_arr[0];
+
+                var color_map = map_processor.color_map,
+                    image_map = grid_data["image_map"],
+                    location_map = grid_data["location_map"],
+                    num_across = grid_data["num_across"],
+                    num_down = grid_data["num_down"],
+
+                    i, j,
+                    x, y,
+                    location,
+                    image_map_length = image_map.length,
+                    blank_rack_color = "rgb(102, 102, 153)";
+
+                map_processor.image_map = image_map;
+                map_processor.location_map = location_map;
+
+                var box_width = Math.floor((map_processor.canvas_width + 1) / num_across),
+                    box_height = Math.floor((map_processor.canvas_height + 1) / num_down),
+                    box_length;
+
+                box_length = (box_width > box_height) ? box_height: box_width;
+                map_processor.box_length = box_length;
+
+                for (i = 0; i < image_map_length; i++) {
+                    var sub_image_map_len = image_map[i].length;
+
+                    for (j = 0; j < sub_image_map_len; j++) {
+                        map_key = image_map[i][j];
+                        x = box_length * j;
+                        y = box_length * i;
+
+                        location = location_map[i][j];
+
+                        if (location == "")
+                            continue;
+
+                        // // Checks whether that level exists
+                        // if ( ! map_functions.proc_level_from_location(location, level))
+                        //     continue;
+
+                        if (location in color_map)
+                            color = color_map[location];
+                        else
+                            color = blank_rack_color;
+
+                        map_processor.draw_box(x, y, box_length, box_length, map_key, color);
+                }
             }
+            },
         });
+    },
+
+    draw_box: function(x, y, width, height, map_key, color) {
+        var ctx = map_processor.ctx;
+
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = color;
+        if (map_key != "e") {
+            original_color = ctx.fillStyle;
+            ctx.fillStyle = "black";
+            ctx.fillRect(x, y, width, height);
+            ctx.fillStyle = original_color;
+        }
+        switch (map_key) {
+            case "e":
+                break;
+            case "sl":
+                ctx.fillRect(x + 1, y + 1, width - 1, height - 2);
+                break;
+            case "sr":
+                ctx.fillRect(x, y + 1, width - 1, height - 2);
+                break;
+
+            case 'st':
+                ctx.fillRect(x + 1, y + 1, width - 2, height - 1);
+                break;
+            case 'sb':
+                ctx.fillRect(x + 1, y, width - 2, height - 1);
+                break;
+
+            case "rtl":
+                ctx.fillRect(x + 1, y + 1, width - 1, height - 1);
+                break;
+            case "rbl":
+                ctx.fillRect(x + 1, y, width - 1, height - 1);
+                break;
+            case 'rtr':
+                ctx.fillRect(x, y + 1, width - 1, height - 1);
+                break;
+            case 'rbr':
+                ctx.fillRect(x, y, width - 1, height - 1);
+                break;
+
+            case 'rt':
+                ctx.fillRect(x, y + 1, width, height - 1);
+                break;
+            case 'rb':
+                ctx.fillRect(x, y, width, height - 1);
+                break;
+            case 'rr':
+                ctx.fillRect(x, y, width - 1, height);
+                break;
+            case 'rl':
+                ctx.fillRect(x + 1, y, width - 1, height);
+                break;
+        }
     },
 };
 
