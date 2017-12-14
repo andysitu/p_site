@@ -33,3 +33,21 @@ li.sidebar-li > a:hover{
 ul.section-nav {
     padding-left: 1rem;
 }
+
+#display-msg-div {
+    position: absolute;
+    top: 5%;
+    left: 75%;
+    height: 90%;
+    width: 24%;
+    z-index: 900;
+    overflow-y: auto;
+}
+
+#display-msg-text {
+    white-space: normal;
+}
+
+.underline {
+    text-decoration: underline;
+}

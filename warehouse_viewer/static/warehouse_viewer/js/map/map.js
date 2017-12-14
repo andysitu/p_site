@@ -283,8 +283,13 @@ var map_processor = {
         return loc_dic;
     },
     display_info: function(location, info_dic) {
-        console.log("location:", location);
-        console.log("info_dic:", info_dic);
+        var msg = page_functions.make_underline_div(gettext("Location") + ": " + location);
+
+        if (info_dic != undefined) {
+            msg += page_functions.make_underline_div(gettext("Total") + ": " + info_dic["total"]);
+            msg += page_functions.make_msg(info_dic["items"], true);
+        }
+        page_functions.display_msg(msg);
     },
     highlight_box: function(i, x, y) {
         /**
