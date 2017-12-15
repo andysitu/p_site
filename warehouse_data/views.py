@@ -225,21 +225,5 @@ def item_type_filter(request):
         else:
             loc_dic[item_code] += avail_quantity
 
-    location_list = []
-
-    # Place matching location codes into locatin_list
-    for location in locations_dic:
-        loc_dic = locations_dic[location]
-        loc_dic_len = len(loc_dic)
-        if num_item_type_modifier == "lt":
-            if loc_dic_len <= num_item_types:
-                location_list.append(location)
-        elif num_item_type_modifier == "gt":
-            if loc_dic_len >= num_item_types:
-                location_list.append(location)
-        elif num_item_type_modifier == "eq":
-            if loc_dic_len == num_item_types:
-                location_list.append(location)
-
-    data["item-type-filter"] = location_list
+    data["item-type-filter_unfiltered"] = locations_dic
     return data

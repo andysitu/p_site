@@ -25,7 +25,7 @@ var viewer_processor = {
             data_type = form_data['data-type'];
 
         var proccessed_data = viewer_processor.process_raw_data(form_data, raw_data);
-        
+
         console.log(proccessed_data);
         viewer.display(data_mode, data_type, proccessed_data, form_data);
 
@@ -38,6 +38,8 @@ var viewer_processor = {
          */
         console.log(form_data);
 
+        var processed_data = {}
+
         var mode = form_data["mode"],
             data_type = form_data["data-type"],
             level = form_data["level"],
@@ -47,20 +49,16 @@ var viewer_processor = {
 
         } else if (mode == "chart") {
             if (data_type == "item_type_filter") {
-                if (level != "all") {
-                    raw_data["item-type-filter"] = helper_functions.filter_locations_arr_by_level(
-                        raw_data["item-type-filter"],
-                        level,
-                        level_modifier,
-                    );
-                }
+                processed_data["item-type-filter"] = helper_functions.filter_item_type_filter(
+                    raw_data["item-type-filter_unfiltered"],
+                    form_data,
+                );
 
-                raw_data["item-type-filter"] = raw_data["item-type-filter"].sort(
+                processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
                     helper_functions.compare_locations);
             }
         }
-
-        return raw_data;
+        return processed_data;
     },
     retrieve_data: function(form_data) {
 
@@ -71,9 +69,6 @@ var viewer_processor = {
 };
 
 var helper_functions = {
-    filter_location_arr: function() {
-
-    },
     compare_locations: function(a, b) {
         var re = /^USLA\.(\w+)\.(\d+)\.(\d+)\.(\d+)/;
         var a_re_results = re.exec(a),
@@ -100,7 +95,33 @@ var helper_functions = {
             return 0;
         }
     },
-    filter_locations_arr_by_level: function(locations_arr, level, level_modification) {
+    filter_item_type_filter: function(unfiltered_locations_dic, form_data) {
+        var locations_arr = [],
+            loc_dic = null, loc_dic_len,
+            num_item_types = form_data["num-item-types"],
+            num_item_type_modifier = form_data["num-item-type-modifier"];
+
+        for (var location in unfiltered_locations_dic) {
+            loc_dic = unfiltered_locations_dic[location];
+            loc_dic_len = Object.keys(loc_dic).length;
+            if (num_item_type_modifier == "lt") {
+                if (loc_dic_len <= num_item_types)
+                    locations_arr.push(location)
+            } else if (num_item_type_modifier == "gt") {
+                if (loc_dic_len >= num_item_types)
+                    locations_arr.push(location)
+            } else if (num_item_type_modifier == "eq") {
+                if (loc_dic_len == num_item_types)
+                    locations_arr.push(location)
+            }
+        }
+
+        var level = form_data["level"],
+            level_modifier = form_data["level-modifier"];
+
+        if (level == "all")
+            return locations_arr;
+
         var filterer = (function compare_function() {
             if (level_modification == "lt") {
                 return function(loc_level) {
