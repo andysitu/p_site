@@ -10,6 +10,7 @@ var map_processor = {
     color_map: null,
     image_map: null,
     location_map: null,
+    highlighted: "",
 
     saved_canvas_img: null,
 
@@ -186,8 +187,6 @@ var map_processor = {
 
             map_processor.restore_canvas();
 
-            console.log(map_index_arr);
-
             if (map_index_arr === 0)
                 return 0;
 
@@ -197,6 +196,7 @@ var map_processor = {
 
             if (typeof location_map[y] !== 'undefined') {
                 var location = location_map[y][x];
+                map_processor.highlighted = location;
                 if (location !== '' && typeof location !== 'undefined') {
                     if (typeof map_data !== "undefined" ) {
                         var data = map_data[location];
@@ -205,8 +205,6 @@ var map_processor = {
                         map_processor.display_info(location);
                     }
                     map_processor.highlight_map(x, y);
-                } else {
-                    map_processor.restore_canvas();
                 }
             }
         });
@@ -235,8 +233,8 @@ var map_processor = {
     },
 
     clear_highlight: function() {
-        // this.highlighted = "";
-        // page_functions.write_msg("");
+        this.highlighted = "";
+        page_functions.display_msg("");
     },
 
     get_similar_locations: function(x, y, location, loc_dic) {
