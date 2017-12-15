@@ -2,21 +2,9 @@ var viewer_processor = {
     prev_search_form_data: null,
     prev_search_data: null,
     submit_search: function(form_element) {
-        var $form = $( form_element.target ),
-            data_array = $form.serializeArray(),
-            form_url = $form.attr("action"),
-            form_method = $form.attr("method");
-
-        var form_data = {},
-            i,
-            data_arr_len = data_array.length;
-
-        for (i = 0; i < data_arr_len; i++) {
-             var data_dic = data_array[i];
-             if (data_dic["name"] != "csrfmiddlewaretoken") {
-                 form_data[data_dic["name"]] = data_dic["value"];
-             }
-        }
+        var form_data = helper_functions.form_element_to_form_data(form_element),
+            form_url = form_element.target.action,
+            form_method = form_element.target.method;
 
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'],
@@ -71,6 +59,12 @@ var viewer_processor = {
         }
 
         return data;
+    },
+    retrieve_data: function(form_data) {
+
+    },
+    save_data: function(form_data, data) {
+
     },
 };
 
@@ -134,5 +128,21 @@ var helper_functions = {
             }
         }
         return new_loc_arr;
+    },
+    form_element_to_form_data: function(form_element) {
+        var $form = $( form_element.target ),
+            data_array = $form.serializeArray();
+
+        var form_data = {},
+            i,
+            data_arr_len = data_array.length;
+
+        for (i = 0; i < data_arr_len; i++) {
+             var data_dic = data_array[i];
+             if (data_dic["name"] != "csrfmiddlewaretoken") {
+                 form_data[data_dic["name"]] = data_dic["value"];
+             }
+        }
+        return form_data;
     }
 }
