@@ -1,7 +1,7 @@
 var viewer_processor = {
     prev_search_form_data: null,
     prev_search_data: null,
-    submit_search: function(form_element, sidemenu_callback_function) {
+    submit_search: function(form_element) {
         var $form = $( form_element.target ),
             data_array = $form.serializeArray(),
             form_url = $form.attr("action"),
@@ -36,7 +36,8 @@ var viewer_processor = {
 
                 console.log(proccessed_data);
                 viewer.display(data_mode, data_type, proccessed_data, form_data);
-                sidemenu_callback_function();
+
+                side_menu.renew_submitButton();
             },
         });
     },
@@ -71,22 +72,6 @@ var viewer_processor = {
 
         return data;
     },
-};
-
-var viewer_storage = {
-    retrieve: function() {
-
-    },
-    save: function() {
-
-    },
-
-    store: function() {
-
-    },
-    get: function() {
-
-    }
 };
 
 var helper_functions = {

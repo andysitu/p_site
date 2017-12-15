@@ -50,9 +50,7 @@ var side_menu = {
     submit: function(e) {
         this.make_submitButton_loading();
 
-        viewer_processor.submit_search(e, function() {
-            side_menu.renew_submitButton();
-        });
+        viewer_processor.submit_search(e);
     },
 };
 
