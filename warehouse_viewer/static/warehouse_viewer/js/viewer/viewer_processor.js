@@ -1,6 +1,4 @@
 var viewer_processor = {
-    prev_search_form_data: null,
-    prev_search_data: null,
     submit_search: function(form_element) {
         var form_data = helper_functions.form_element_to_form_data(form_element),
             form_url = form_element.target.action,
@@ -8,22 +6,27 @@ var viewer_processor = {
 
         var prev_form_data;
 
-        prev_form_data = this.prev_search_form_data;
-        $.ajax({
-            // warehouse_viewer.search_ajax
-            url: form_url,
-            data: form_data,
-            method: form_method,
-            success: function(raw_data) {
-                // TODO SAVE PROCESSED DATA
-                viewer_processor.create_map(form_data, raw_data);
-            },
-        });
+        prev_raw_data = this.get_raw_data(form_data);
+        if (prev_raw_data) {
+            this.create_map(form_data, prev_raw_data);
+        } else {
+            $.ajax({
+                // warehouse_viewer.search_ajax
+                url: form_url,
+                data: form_data,
+                method: form_method,
+                success: function(raw_data) {
+                    viewer_processor.save_data(form_data, raw_data);
+                    viewer_processor.create_map(form_data, raw_data);
+                },
+            });
+        }
+
     },
     create_map: function(form_data, raw_data) {
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'];
-
+Q
         var proccessed_data = viewer_processor.process_raw_data(form_data, raw_data);
 
         console.log(proccessed_data);
@@ -60,10 +63,14 @@ var viewer_processor = {
         }
         return processed_data;
     },
-    retrieve_data: function(form_data) {
+    __prev_search_form_data: null,
+    _prev_search_raw_data: null,
+    get_raw_data: function(form_data) {
 
     },
-    save_data: function(form_data, data) {
+    save_data: function(form_data, raw_data) {
+        this._prev_search_form_data = form_data;
+        this._prev_search_raw_data = raw_data;
 
     },
 };
