@@ -6,9 +6,7 @@ var viewer_processor = {
             form_url = form_element.target.action,
             form_method = form_element.target.method;
 
-        var data_mode = form_data["mode"],
-            data_type = form_data['data-type'],
-            prev_form_data;
+        var prev_form_data;
 
         prev_form_data = this.prev_search_form_data;
         $.ajax({
@@ -18,16 +16,20 @@ var viewer_processor = {
             method: form_method,
             success: function(data) {
                 // TODO SAVE PROCESSED DATA
-                console.log(data);
-
-                var proccessed_data = viewer_processor.process(form_data, data);
-
-                console.log(proccessed_data);
-                viewer.display(data_mode, data_type, proccessed_data, form_data);
-
-                side_menu.renew_submitButton();
+                viewer_processor.create_map(form_data, data);
             },
         });
+    },
+    create_map: function(form_data, data) {
+        var data_mode = form_data["mode"],
+            data_type = form_data['data-type'];
+
+        var proccessed_data = viewer_processor.process(form_data, data);
+
+        console.log(proccessed_data);
+        viewer.display(data_mode, data_type, proccessed_data, form_data);
+
+        side_menu.renew_submitButton();
     },
     process: function(form_data, data) {
         /**
