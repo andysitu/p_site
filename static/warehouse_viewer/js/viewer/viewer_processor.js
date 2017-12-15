@@ -26,10 +26,11 @@ var viewer_processor = {
     create_map: function(form_data, raw_data) {
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'];
-Q
+
         var proccessed_data = viewer_processor.process_raw_data(form_data, raw_data);
 
-        console.log(proccessed_data);
+        console.log("raw_data", raw_data);
+        console.log("processed_data", proccessed_data);
         viewer.display(data_mode, data_type, proccessed_data, form_data);
 
         side_menu.renew_submitButton();
@@ -39,8 +40,6 @@ Q
          * Handles processing thru JS,
          *  after retrieving the data
          */
-        console.log(form_data);
-
         var processed_data = {}
 
         var mode = form_data["mode"],
@@ -48,25 +47,44 @@ Q
             level = form_data["level"],
             level_modifier = form_data["level-modifier"];
 
-        if (mode == "map") {
+        if (mode == "chart" && data_type == "item_type_filter") {
+            processed_data["item-type-filter"] = helper_functions.filter_item_type_filter(
+                raw_data["item-type-filter_unfiltered"],
+                form_data,
+            );
 
-        } else if (mode == "chart") {
-            if (data_type == "item_type_filter") {
-                processed_data["item-type-filter"] = helper_functions.filter_item_type_filter(
-                    raw_data["item-type-filter_unfiltered"],
-                    form_data,
-                );
-
-                processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
-                    helper_functions.compare_locations);
-            }
+            processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
+                helper_functions.compare_locations);
+        } else {
+            processed_data = raw_data;
         }
         return processed_data;
     },
     __prev_search_form_data: null,
     _prev_search_raw_data: null,
     get_raw_data: function(form_data) {
+        var prev_form_data = this._prev_search_form_data;
 
+        if (prev_form_data) {
+            var data_mode = form_data["mode"],
+                data_type = form_data['data-type'],
+                date1 = form_data["date-1"],
+                prev_data_mode = prev_form_data["mode"],
+                prev_data_type = prev_form_data['data-type'],
+                prev_date1 = form_data["date-1"];
+
+            if (
+                data_mode === prev_data_mode &&
+                data_type === prev_data_type && date1 === prev_date1
+            ) {
+                var loc = form_data["loc"],
+                    prev_loc = prev_form_data["loc"];
+                if (loc === prev_loc) {
+                    return this._prev_search_raw_data;
+                }
+            }
+        } else
+            return null;
     },
     save_data: function(form_data, raw_data) {
         this._prev_search_form_data = form_data;
@@ -126,15 +144,16 @@ var helper_functions = {
         var level = form_data["level"],
             level_modifier = form_data["level-modifier"];
 
-        if (level == "all")
-            return locations_arr;
-
         var filterer = (function compare_function() {
-            if (level_modification == "lt") {
+            if (level == "all") {
+                return function(loc_level) {
+                    return true;
+                }
+            } else if (level_modifier == "lt") {
                 return function(loc_level) {
                     return loc_level <= level;
                 }
-            } else if (level_modification == "gt") {
+            } else if (level_modifier == "gt") {
                 return function(loc_level) {
                     return loc_level >= level;
                 }
