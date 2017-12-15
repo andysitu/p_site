@@ -191,9 +191,8 @@ var map_processor = {
             if (map_index_arr === 0)
                 return 0;
 
-            var i = map_index_arr[0],
-                x = map_index_arr[1],
-                y = map_index_arr[2];
+            var x = map_index_arr[0],
+                y = map_index_arr[1];
 
 
             if (typeof location_map[y] !== 'undefined') {
@@ -205,26 +204,25 @@ var map_processor = {
                     } else {
                         map_processor.display_info(location);
                     }
-                    map_processor.highlight_map(i, x, y);
+                    map_processor.highlight_map(x, y);
                 } else {
                     map_processor.restore_canvas();
                 }
             }
         });
     },
-    highlight_map: function(i ,x, y) {
-        var locations_info_dic = this.get_similar_locations(i, x, y)
+    highlight_map: function(x, y) {
+        var locations_info_dic = this.get_similar_locations(x, y)
             image_map = map_processor.image_map,
             loc_info_arr = null,
-            i, x, y;
+            x, y;
 
         for (location_str in locations_info_dic) {
             loc_info_arr = locations_info_dic[location_str];
-            i = loc_info_arr[0];
-            x = loc_info_arr[1];
-            y = loc_info_arr[2];
+            x = loc_info_arr[0];
+            y = loc_info_arr[1];
 
-            this.highlight_box(i, x, y);
+            this.highlight_box(x, y);
         }
     },
     save_canvas: function() {
@@ -241,10 +239,10 @@ var map_processor = {
         // page_functions.write_msg("");
     },
 
-    get_similar_locations: function(i, x, y, location, loc_dic) {
+    get_similar_locations: function(x, y, location, loc_dic) {
         var location_map = this.location_map,
             cur_loc = location_map[y][x],
-            key_loc = String(i) + "_" + String(x) + "_" + String(y);
+            key_loc = String(x) + "_" + String(y);
 
 
         if (location === undefined) {
@@ -258,25 +256,25 @@ var map_processor = {
         }
 
         if (cur_loc == location) {
-            loc_dic[ key_loc ] = [i,x,y];
+            loc_dic[ key_loc ] = [x,y];
 
             // left
             if (x-1 >= 0) {
-                this.get_similar_locations(i, x-1, y, location, loc_dic);
+                this.get_similar_locations(x-1, y, location, loc_dic);
             }
             //right
             var right_y_len = location_map[y].length;
             if (x+1 < right_y_len) {
-                this.get_similar_locations(i, x+1, y, location, loc_dic);
+                this.get_similar_locations(x+1, y, location, loc_dic);
             }
             //up
             if (y - 1 >= 0) {
-                this.get_similar_locations(i, x, y-1, location, loc_dic);
+                this.get_similar_locations(x, y-1, location, loc_dic);
             }
             //down
             var down_len = location_map.length;
             if (y + 1 < down_len) {
-                this.get_similar_locations(i, x, y+1, location, loc_dic);
+                this.get_similar_locations(x, y+1, location, loc_dic);
             }
         }
 
@@ -291,7 +289,7 @@ var map_processor = {
         }
         page_functions.display_msg(msg);
     },
-    highlight_box: function(i, x, y) {
+    highlight_box: function(x, y) {
         /**
          * Highlights the edges of the boxes
          * i [int]: the index in the map_data_arr to get the dict.
@@ -396,14 +394,12 @@ var map_processor = {
         /**
          * Uses the map_data_arr in outerscope.
          * Return
-         * i [int]: (representing index in map_data_arr
-         *   to get map_data_dict),
          * x[int], y[int]: use in [y][x] format in location map
          *   or other maps.
          */
         var offset_y = e.offsetY,
             offset_x = e.offsetX,
-            i, box_length;
+            box_length;
 
         box_length = this.box_length;
         if (offset_x >= 0 && offset_x <= this.canvas_width &&
@@ -412,7 +408,7 @@ var map_processor = {
             var y = Math.floor((offset_y - 0 ) / box_length),
                 x = Math.floor((offset_x - 0 ) / box_length);
 
-            return [i, x, y];
+            return [x, y];
         }
         return 0;
     },
