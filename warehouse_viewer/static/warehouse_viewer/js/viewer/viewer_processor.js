@@ -14,24 +14,24 @@ var viewer_processor = {
             url: form_url,
             data: form_data,
             method: form_method,
-            success: function(data) {
+            success: function(raw_data) {
                 // TODO SAVE PROCESSED DATA
-                viewer_processor.create_map(form_data, data);
+                viewer_processor.create_map(form_data, raw_data);
             },
         });
     },
-    create_map: function(form_data, data) {
+    create_map: function(form_data, raw_data) {
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'];
 
-        var proccessed_data = viewer_processor.process(form_data, data);
-
+        var proccessed_data = viewer_processor.process_raw_data(form_data, raw_data);
+        
         console.log(proccessed_data);
         viewer.display(data_mode, data_type, proccessed_data, form_data);
 
         side_menu.renew_submitButton();
     },
-    process: function(form_data, data) {
+    process_raw_data: function(form_data, raw_data) {
         /**
          * Handles processing thru JS,
          *  after retrieving the data
@@ -48,19 +48,19 @@ var viewer_processor = {
         } else if (mode == "chart") {
             if (data_type == "item_type_filter") {
                 if (level != "all") {
-                    data["item-type-filter"] = helper_functions.filter_locations_arr_by_level(
-                        data["item-type-filter"],
+                    raw_data["item-type-filter"] = helper_functions.filter_locations_arr_by_level(
+                        raw_data["item-type-filter"],
                         level,
                         level_modifier,
                     );
                 }
 
-                data["item-type-filter"] = data["item-type-filter"].sort(
+                raw_data["item-type-filter"] = raw_data["item-type-filter"].sort(
                     helper_functions.compare_locations);
             }
         }
 
-        return data;
+        return raw_data;
     },
     retrieve_data: function(form_data) {
 
