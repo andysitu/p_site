@@ -341,13 +341,13 @@ var settings_maker = {
         }).appendTo($input_group);
 
         $("<option>", {
-            "value": "lte",
-            text: gettext("<="),
+            "value": "gte",
+            text: gettext(">="),
         }).appendTo($level_modifier_select);
 
         $("<option>", {
-            "value": "gte",
-            text: gettext(">="),
+            "value": "lte",
+            text: gettext("<="),
         }).appendTo($level_modifier_select);
 
         $("<option>", {
@@ -400,13 +400,13 @@ var settings_maker = {
         }).appendTo($input_group);
 
         $("<option>", {
-            "value": "lte",
-            text: gettext("<="),
+            "value": "gte",
+            text: gettext(">="),
         }).appendTo($item_type_modifier_select);
 
         $("<option>", {
-            "value": "gte",
-            text: gettext(">="),
+            "value": "lte",
+            text: gettext("<="),
         }).appendTo($item_type_modifier_select);
 
         $("<option>", {
