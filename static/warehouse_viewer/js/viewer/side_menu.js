@@ -23,9 +23,6 @@ var side_menu = {
             case "chart":
                 mode_settingsObj = chart_mode_settings;
                 break;
-            case "graph":
-                mode_settingsObj = graph_mode_settings;
-                break;
             default:
                 return 1;
         };
@@ -184,11 +181,6 @@ var chart_mode_settings = {
                 break;
         }
     },
-};
-
-
-var graph_mode_settings = {
-    make_menu: function(container_id) {},
 };
 
 
