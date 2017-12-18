@@ -73,7 +73,7 @@ var chart = {
         var $table,
             $elements = {};
 
-        if (data_type == "total_item_count") {
+        if (data_type == "total_item_info") {
             $elements["item-total"] = $("<p>", {
                 "text": gettext("Total Number of Items") + ": " + data["item-total"],
                 id: "item-total",
@@ -138,8 +138,7 @@ var chart = {
             i, j,
             arr_len, $tr_info;
 
-        var
-            $tr_head = $("<tr>").appendTo($table);
+        var $tr_head = $("<tr>").appendTo($table);
         for (i = 0; i < header_arr.length; i++) {
             $tr_head.append(
                 $("<th>", {

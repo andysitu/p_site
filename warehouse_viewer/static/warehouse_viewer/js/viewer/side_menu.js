@@ -148,7 +148,7 @@ var chart_mode_settings = {
         var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
-                "total_item_count": gettext("Total Item Count"),
+                "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type Filter"),
             };
 
