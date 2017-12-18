@@ -86,7 +86,7 @@ def get_item_count(request):
     for item_inst in i_q:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
-            data_dic[js_loc_code] = {"items": {}, "total": 0}
+            data_dic[js_loc_code] = {"items": {}}
 
         location = item_inst.location_code
         if location not in data_dic[js_loc_code]["items"]:
@@ -95,7 +95,6 @@ def get_item_count(request):
 
         item_code = item_inst.item_code
         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
-        data_dic[js_loc_code]["total"] += item_quantity
 
         if item_code not in cur_item_dic:
             cur_item_dic[item_code] = item_quantity

@@ -55,6 +55,10 @@ var viewer_processor = {
 
             processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
                 helper_functions.compare_locations);
+        } else if (mode == "map") {
+            if (data_type == "item_count") {
+                processed_data = helper_functions.process_item_count(raw_data, form_data);
+            }
         } else {
             processed_data = raw_data;
         }
@@ -89,11 +93,53 @@ var viewer_processor = {
     save_data: function(form_data, raw_data) {
         this._prev_search_form_data = form_data;
         this._prev_search_raw_data = raw_data;
-
     },
 };
 
 var helper_functions = {
+    process_item_count: function(raw_data, form_data) {
+        var processed_data = {},
+            level = form_data["level"],
+            level_modifier = form_data["level-modifier"],
+            re = /\.(\d+)$/;;
+
+        console.log(level, level_modifier);
+
+        var filterer = this.make_level_filterer(level, level_modifier),
+            js_loc_code, location,
+            item_dic,
+            proc_loc_dic, proc_item_dic, proc_items,
+            items, item_sku,
+            total, item_quantity;
+
+        for (js_loc_code in raw_data) {
+            total = 0;
+            item_dic = raw_data[js_loc_code]["items"];
+            for (location in item_dic) {
+                re_result = re.exec(location);
+                loc_level = re_result[1];
+                if (filterer(loc_level)) {
+                    // Fill values in processed_data
+                    if (!(js_loc_code in processed_data)) {
+                        processed_data[js_loc_code] = {"items": {}, "total": 0};
+                    }
+                    proc_loc_dic = processed_data[js_loc_code];
+                    proc_item_dic = proc_loc_dic["items"];
+
+                    proc_items = proc_item_dic[location] = {};
+
+                    items = item_dic[location];
+                    for (item_sku in items) {
+                        item_quantity = items[item_sku]
+                        total += item_quantity;
+                        proc_items[item_sku] = item_quantity;
+                    }
+                    proc_loc_dic["total"] = total;
+                }
+            }
+        }
+        return processed_data;
+    },
     compare_locations: function(a, b) {
         var re = /^USLA\.(\w+)\.(\d+)\.(\d+)\.(\d+)/;
         var a_re_results = re.exec(a),
@@ -120,6 +166,25 @@ var helper_functions = {
             return 0;
         }
     },
+    make_level_filterer: function(level, level_modifier) {
+        if (level == "all") {
+            return function(loc_level) {
+                return true;
+            }
+        } else if (level_modifier == "lt") {
+            return function(loc_level) {
+                return loc_level <= level;
+            }
+        } else if (level_modifier == "gt") {
+            return function(loc_level) {
+                return loc_level >= level;
+            }
+        } else {
+            return function(loc_level) {
+                return loc_level == level;
+            }
+        }
+    },
     filter_item_type_filter: function(unfiltered_locations_dic, form_data) {
         var locations_arr = [],
             loc_dic = null, loc_dic_len,
@@ -144,25 +209,7 @@ var helper_functions = {
         var level = form_data["level"],
             level_modifier = form_data["level-modifier"];
 
-        var filterer = (function compare_function() {
-            if (level == "all") {
-                return function(loc_level) {
-                    return true;
-                }
-            } else if (level_modifier == "lt") {
-                return function(loc_level) {
-                    return loc_level <= level;
-                }
-            } else if (level_modifier == "gt") {
-                return function(loc_level) {
-                    return loc_level >= level;
-                }
-            } else {
-                return function(loc_level) {
-                    return loc_level == level;
-                }
-            }
-        })();
+        var filterer = this.make_level_filterer(level, level_modifier);
 
         var i, re_result, level,
             locations_len = locations_arr.length,
