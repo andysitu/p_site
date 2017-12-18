@@ -101,9 +101,7 @@ var helper_functions = {
         var processed_data = {},
             level = form_data["level"],
             level_modifier = form_data["level-modifier"],
-            re = /\.(\d+)$/;;
-
-        console.log(level, level_modifier);
+            re = /\.(\d+)$/;
 
         var filterer = this.make_level_filterer(level, level_modifier),
             js_loc_code, location,
@@ -171,11 +169,11 @@ var helper_functions = {
             return function(loc_level) {
                 return true;
             }
-        } else if (level_modifier == "lt") {
+        } else if (level_modifier == "lte") {
             return function(loc_level) {
                 return loc_level <= level;
             }
-        } else if (level_modifier == "gt") {
+        } else if (level_modifier == "gte") {
             return function(loc_level) {
                 return loc_level >= level;
             }
@@ -194,10 +192,10 @@ var helper_functions = {
         for (var location in unfiltered_locations_dic) {
             loc_dic = unfiltered_locations_dic[location];
             loc_dic_len = Object.keys(loc_dic).length;
-            if (num_item_type_modifier == "lt") {
+            if (num_item_type_modifier == "lte") {
                 if (loc_dic_len <= num_item_types)
                     locations_arr.push(location)
-            } else if (num_item_type_modifier == "gt") {
+            } else if (num_item_type_modifier == "gte") {
                 if (loc_dic_len >= num_item_types)
                     locations_arr.push(location)
             } else if (num_item_type_modifier == "eq") {

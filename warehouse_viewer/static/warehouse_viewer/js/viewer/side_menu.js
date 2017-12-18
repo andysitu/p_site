@@ -341,12 +341,12 @@ var settings_maker = {
         }).appendTo($input_group);
 
         $("<option>", {
-            "value": "lt",
+            "value": "lte",
             text: gettext("<="),
         }).appendTo($level_modifier_select);
 
         $("<option>", {
-            "value": "gt",
+            "value": "gte",
             text: gettext(">="),
         }).appendTo($level_modifier_select);
 
@@ -400,12 +400,12 @@ var settings_maker = {
         }).appendTo($input_group);
 
         $("<option>", {
-            "value": "lt",
+            "value": "lte",
             text: gettext("<="),
         }).appendTo($item_type_modifier_select);
 
         $("<option>", {
-            "value": "gt",
+            "value": "gte",
             text: gettext(">="),
         }).appendTo($item_type_modifier_select);
 

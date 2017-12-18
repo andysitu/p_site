@@ -16,7 +16,7 @@ var map_functions = {
          * Returns boolean on whether that location exists
          *   at that level.
          */
-        if (level_str == 'All' || level_str == undefined || level_modifier == "lt")
+        if (level_str == 'All' || level_str == undefined || level_modifier == "lte")
             return true;
 
         var re = /(\w+)\.(\w+)\.(\w+)\.(\w+)/;
