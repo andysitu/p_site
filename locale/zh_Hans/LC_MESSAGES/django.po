@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-05 18:05-0800\n"
+"POT-Creation-Date: 2017-12-18 12:46-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,10 +137,8 @@ msgid "Warehouse Map"
 msgstr "仓库地图"
 
 #: p_site/templates/p_site/index.html:16
-#, fuzzy
-#| msgid "Dates Uploaded"
 msgid "File Uploader"
-msgstr "上载"
+msgstr "文件上传器"
 
 #: p_site/templates/p_site/index.html:17
 msgid "Warehouse Viewer"
@@ -185,7 +183,7 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:39
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:40
 msgid "Submit"
 msgstr "提交"
 
@@ -203,10 +201,9 @@ msgid "Total Number of RCV:"
 msgstr "RCV文件总数:"
 
 #: uploader/forms.py:10 warehouse_viewer/forms.py:6
-#, fuzzy
 #| msgid "Select an RCV PDF File"
 msgid "Select a File"
-msgstr "选择RCV PDF文件"
+msgstr "选择一个文件件"
 
 #: uploader/templates/uploader/uploader_base.html:15
 msgid "Upload File"
@@ -294,19 +291,17 @@ msgid "Select an excel file from the WMS"
 msgstr "选择一个导出的Excel文件"
 
 #: warehouse_viewer/templates/warehouse_viewer/upload.html:31
-#, fuzzy
-#| msgid "Dates Uploaded"
 msgid "Excel dates uploaded"
-msgstr "上载"
+msgstr "Excel日期上传"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:28
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:29
 msgid "Map"
 msgstr "地图"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:31
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:32
 msgid "Chart"
 msgstr "图表"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:34
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:35
 msgid "Graph"
 msgstr "图形"
