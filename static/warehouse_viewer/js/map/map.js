@@ -19,6 +19,8 @@ var map_processor = {
         this.map_data = data;
 
         var loc = form_data["loc"],
+            level = form_data["level"],
+            level_modifier = form_data["level-modifier"],
             $display_container = viewer.get_$display_container();
 
         var map_canvas = this.create_canvas();
@@ -28,7 +30,7 @@ var map_processor = {
 
         map_processor.color_map = color_map_functions.mapify(data_type, data);
 
-        this.create_map(loc);
+        this.create_map(loc, level, level_modifier);
    },
     create_canvas: function() {
         var $canvas = $("<canvas>", {
@@ -56,7 +58,7 @@ var map_processor = {
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
     },
-    create_map: function(loc) {
+    create_map: function(loc, level) {
         // Get grid_map
         $.ajax({
             url: get_grid_ajax_url,
@@ -102,9 +104,9 @@ var map_processor = {
                         if (location == "")
                             continue;
 
-                        // // Checks whether that level exists
-                        // if ( ! map_functions.proc_level_from_location(location, level))
-                        //     continue;
+                        // Checks whether that level exists
+                        if ( ! map_functions.proc_level_from_location(location, level))
+                            continue;
 
                         if (location in color_map)
                             color = color_map[location];

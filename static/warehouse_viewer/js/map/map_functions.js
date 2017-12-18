@@ -10,13 +10,13 @@ var map_functions = {
         }
     },
 
-    proc_level_from_location: function(location, level_str) {
+    proc_level_from_location: function(location, level_str, level_modifier) {
         /**
          * Input: locaation[string], level[string]
          * Returns boolean on whether that location exists
          *   at that level.
          */
-        if (level_str == 'All' || level_str == undefined)
+        if (level_str == 'All' || level_str == undefined || level_modifier == "lt")
             return true;
 
         var re = /(\w+)\.(\w+)\.(\w+)\.(\w+)/;
