@@ -58,7 +58,7 @@ var map_processor = {
         this.canvas_width = this.map_canvas.width;
         this.canvas_height = this.map_canvas.height;
     },
-    create_map: function(loc, level) {
+    create_map: function(loc, level, level_modifier) {
         // Get grid_map
         $.ajax({
             url: get_grid_ajax_url,
@@ -105,7 +105,7 @@ var map_processor = {
                             continue;
 
                         // Checks whether that level exists
-                        if ( ! map_functions.proc_level_from_location(location, level))
+                        if ( ! map_functions.proc_level_from_location(location, level, level_modifier))
                             continue;
 
                         if (location in color_map)
