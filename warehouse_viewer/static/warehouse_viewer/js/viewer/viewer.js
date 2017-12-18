@@ -23,6 +23,8 @@ var element_ids = {
     level_select_id: "level-select",
     level_select_name: "level",
     options_container_id: "options-container",
+    mutiple_dates_select_id: "multiple-dates-select",
+    mutiple_dates_select_name: "mutiple-dates",
     num_item_type_input_id: "item-type-input-id",
     num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",

@@ -88,7 +88,7 @@ var menu_functions = {
         var $options_container = this.get_options_container(),
             $date_1 = settings_maker.date_input_1();
         $options_container.append($date_1);
-        return $date_1;
+        return $options_container;
     },
     add_loc_select_and_level_container: function() {
         var $options_container = this.get_options_container(),
@@ -103,7 +103,13 @@ var menu_functions = {
     add_item_type_div: function() {
         var $num_item_type_div = settings_maker.num_item_types();
         this.add_element_to_options($num_item_type_div);
-    }
+    },
+    add_multiple_date_select: function() {
+        var $options_container = this.get_options_container(),
+            $date = settings_maker.multiple_date_select();
+        $options_container.append($date);
+        return $options_container;
+    },
 };
 
 
@@ -150,6 +156,7 @@ var chart_mode_settings = {
             data_type_dic = {
                 "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type Filter"),
+                "total_item_over_time": gettext("Total Item Over Time"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -169,15 +176,17 @@ var chart_mode_settings = {
         var data_type = menu_functions.get_data_type();
         menu_functions.empty_options_container();
 
-        menu_functions.add_date1();
-
         switch(data_type) {
-            case "item_count":
-                console.log("item_count");
+            case "total_item_info":
+                menu_functions.add_date1();
                 break;
             case "item_type_filter":
+                menu_functions.add_date1();
                 menu_functions.add_loc_select_and_level_container();
                 menu_functions.add_item_type_div();
+                break;
+            case "total_item_over_time":
+                menu_functions.add_multiple_date_select();
                 break;
         }
     },
@@ -371,6 +380,52 @@ var settings_maker = {
             }).appendTo($select);
         }
         return $div
+    },
+    multiple_date_select: function() {
+        /**
+         * Returns div with bootstrap CSS format containing
+         *  label & select HTML.
+         */
+
+        var $div,
+            $date_select = $("<select></select>", {
+                multiple: true,
+                id: element_ids.mutiple_dates_select_id,
+                name: element_ids.mutiple_dates_select_name,
+                "class": "form-control",
+            });
+
+        $.ajax({
+           url: dates_ajax_url,
+            action: "get",
+            data: {
+               "num_dates": 50,
+            },
+            success: function(data){
+               var i, data_len = data.length,
+                    date_id, date_str, date_option;
+
+               for (i = 0; i < data_len; i++){
+                   date_obj = data[i];
+                   date_id = date_obj["date_id"];
+                   date_str = date_obj["date_string"];
+
+                   $date_option = $("<option>",{
+                       value: date_id,
+                       text: date_str,
+                   }).appendTo($date_select);
+               }
+            },
+        });
+
+        $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": element_ids.mutiple_dates_select_id,
+        }).html(gettext("Date")).appendTo($div);
+
+        $div.append($date_select);
+        return $div;
     },
     num_item_types: function() {
         var input_id = element_ids.num_item_type_input_id,
