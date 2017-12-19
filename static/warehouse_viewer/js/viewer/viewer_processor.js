@@ -5,6 +5,7 @@ var viewer_processor = {
             form_method = form_element.target.method;
 
         var prev_form_data;
+        console.log(form_data);
 
         prev_raw_data = this.get_raw_data(form_data);
         if (prev_raw_data) {

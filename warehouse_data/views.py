@@ -174,6 +174,9 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
+def number_item_over_time(request):
+    return {}
+
 def item_type_filter(request):
     # Counts the avail_quantity in each item
     date_id = request.GET.get("date-1")
@@ -226,3 +229,4 @@ def item_type_filter(request):
 
     data["item-type-filter_unfiltered"] = locations_dic
     return data
+
