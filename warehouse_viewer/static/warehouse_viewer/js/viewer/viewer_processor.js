@@ -240,10 +240,10 @@ var helper_functions = {
              }
         }
 
-        if (form_data["data_type"] == element_ids.mutiple_dates_select_name) {
+        // Get multiple dates from multiple select if present.
+        if (element_ids.mutiple_dates_select_name in form_data) {
             var multiple_dates_name = element_ids.mutiple_dates_select_name;
             form_data[multiple_dates_name] = this.get_multiple_select_dates();
-            console.log(this.get_multiple_select_dates());
         }
         return form_data;
     }
