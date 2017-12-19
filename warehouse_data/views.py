@@ -174,7 +174,7 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
-def number_item_over_time(request):
+def number_items_over_time(request):
     return {}
 
 def item_type_filter(request):

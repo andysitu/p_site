@@ -4,10 +4,7 @@ var viewer_processor = {
             form_url = form_element.target.action,
             form_method = form_element.target.method;
 
-        var prev_form_data;
-        console.log(form_data);
-
-        prev_raw_data = this.get_raw_data(form_data);
+        var prev_raw_data = this.get_raw_data(form_data);
         if (prev_raw_data) {
             this.create_map(form_data, prev_raw_data);
         } else {
@@ -22,7 +19,6 @@ var viewer_processor = {
                 },
             });
         }
-
     },
     create_map: function(form_data, raw_data) {
         var data_mode = form_data["mode"],
@@ -224,6 +220,11 @@ var helper_functions = {
         }
         return new_loc_arr;
     },
+    get_multiple_select_dates: function() {
+        var dates_select_id = element_ids.mutiple_dates_select_id;
+
+        return $("#" + dates_select_id).val();
+    },
     form_element_to_form_data: function(form_element) {
         var $form = $( form_element.target ),
             data_array = $form.serializeArray();
@@ -237,6 +238,12 @@ var helper_functions = {
              if (data_dic["name"] != "csrfmiddlewaretoken") {
                  form_data[data_dic["name"]] = data_dic["value"];
              }
+        }
+
+        if (form_data["data_type"] == element_ids.mutiple_dates_select_name) {
+            var multiple_dates_name = element_ids.mutiple_dates_select_name;
+            form_data[multiple_dates_name] = this.get_multiple_select_dates();
+            console.log(this.get_multiple_select_dates());
         }
         return form_data;
     }

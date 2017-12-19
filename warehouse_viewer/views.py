@@ -53,7 +53,7 @@ def search_ajax(request):
         if data_type == "total_item_info":
             response = warehouse_data_views.get_total_item_info(request)
         elif data_type == "total_item_over_time":
-            response = warehouse_data.views.number_item_over_time(request)
+            response = warehouse_data_views.number_items_over_time(request)
         elif data_type == "item_type_filter":
             response = warehouse_data_views.item_type_filter(request)
     return JsonResponse(response)
