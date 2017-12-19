@@ -386,6 +386,7 @@ var settings_maker = {
          * Returns div with bootstrap CSS format containing
          *  label & select HTML.
          */
+        var select_size = 10;
 
         var $div,
             $date_select = $("<select></select>", {
@@ -393,6 +394,7 @@ var settings_maker = {
                 id: element_ids.mutiple_dates_select_id,
                 name: element_ids.mutiple_dates_select_name,
                 "class": "form-control",
+                size: select_size,
             });
 
         $.ajax({
