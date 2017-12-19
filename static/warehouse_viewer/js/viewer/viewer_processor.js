@@ -5,6 +5,7 @@ var viewer_processor = {
             form_method = form_element.target.method;
 
         var prev_raw_data = this.get_raw_data(form_data);
+        console.log(form_data);
         if (prev_raw_data) {
             this.create_map(form_data, prev_raw_data);
         } else {
@@ -243,7 +244,7 @@ var helper_functions = {
         // Get multiple dates from multiple select if present.
         if (element_ids.mutiple_dates_select_name in form_data) {
             var multiple_dates_name = element_ids.mutiple_dates_select_name;
-            form_data[multiple_dates_name] = this.get_multiple_select_dates();
+            form_data[multiple_dates_name + "[]"] = this.get_multiple_select_dates();
         }
         return form_data;
     }

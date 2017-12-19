@@ -10,6 +10,10 @@ from django.db import IntegrityError
 
 import operator
 
+elements_dictionary = {
+    "multiple_dates": "dates",
+}
+
 def loc_inst_to_jsloccode(loc_inst):
     # Returns the loc_code used in js component
     #   (Location code, without the level implemented).
@@ -175,7 +179,10 @@ def get_total_item_info(request, num_top=20):
     return info_dic
 
 def number_items_over_time(request):
-    return {}
+    dates = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+    return {
+        elements_dictionary["multiple_dates"] + "[]": dates,
+    }
 
 def item_type_filter(request):
     # Counts the avail_quantity in each item
