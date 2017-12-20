@@ -61,20 +61,6 @@ def get_dates(request):
         date_list.append({"date_id":date_id, "date_string": date_str,})
     return JsonResponse(date_list, safe=False)
 
-def separate_list_of_tupe(sorted_list):
-    """
-    Takes in a sorted lists of tuples of length 2
-    :return: a lists of two lists of the separated tuple of length 2
-    """
-    sorted_list_len = len(sorted_list)
-    list_a = []
-    list_b = []
-    for i in range(sorted_list_len):
-        list_tup = sorted_list[i]
-        list_a.append(list_tup[0])
-        list_a.append(list_tup[1])
-    return [list_a, list_b]
-
 def get_item_count(request):
     data_dic = {}
 
@@ -179,10 +165,23 @@ def get_total_item_info(request, num_top=20):
     return info_dic
 
 def number_items_over_time(request):
-    dates = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
-    return {
-        elements_dictionary["multiple_dates"] + "[]": dates,
-    }
+    data = {}
+
+    date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+        date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
+        total = 0
+
+        item_query = Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()
+        for item in item_query:
+            total_items = item.avail_quantity + item.ship_quantity
+            total += total_items
+
+        data[date_str] = total
+
+    return data
 
 def item_type_filter(request):
     # Counts the avail_quantity in each item
