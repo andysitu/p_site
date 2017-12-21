@@ -221,13 +221,18 @@ var chart = {
             }),
             ctx = $canvas[0].getContext('2d'),
             labels_arr = [],
-            data_arr = [];
+            data_arr = [],
+            i;
 
-        for (var milliseconds in time_data_dic) {
+        var milliseconds_arr = Object.keys(time_data_dic).sort(),
+            milliseconds_length = milliseconds_arr.length, milliseconds;
+
+        for (i=0; i < milliseconds_length; i++) {
+            milliseconds = milliseconds_arr[i];
             labels_arr.push(new Date(parseFloat(milliseconds)));
             data_arr.push(time_data_dic[milliseconds]);
         }
-
+        
         var data = {
             labels: labels_arr,
             datasets: [{
@@ -236,7 +241,6 @@ var chart = {
                 data: data_arr,
             }],
         }
-
 
         var chart = new Chart(ctx, {
             type: 'line',
