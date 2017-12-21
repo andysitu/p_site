@@ -76,7 +76,7 @@ var viewer_processor = {
                 date1 = form_data["date-1"],
                 prev_data_mode = prev_form_data["mode"],
                 prev_data_type = prev_form_data['data-type'],
-                prev_date1 = form_data["date-1"],
+                prev_date1 = form_data["date-1"];
 
             if (
                 data_mode === prev_data_mode &&
