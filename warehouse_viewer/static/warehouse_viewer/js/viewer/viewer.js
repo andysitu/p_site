@@ -28,6 +28,9 @@ var element_ids = {
     num_item_type_input_id: "item-type-input-id",
     num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",
+
+    // For Chart.js
+    total_item_over_time_chart: "item-over-time-chart",
 };
 
 var viewer = {
@@ -127,6 +130,10 @@ var chart = {
                 8,
                 "item-type-filter-table"
             );
+        } else if (data_type == "total_item_over_time") {
+            // $elements["total-item-over-time"] =
+            console.log(data);
+            chart.make_time_chart(data);
         }
 
         return $elements;
@@ -206,8 +213,19 @@ var chart = {
             );
 
             num_items_row_count++;
-
         }
         return $table;
+    },
+    make_time_chart: function(time_data_dic) {
+        var $canvas = $("<canvas />",{
+            id: element_ids.total_item_over_time_chart,
+        });
+
+        var ctx = $canvas[0].getContext('2d');
+
+        var chart = new Chart(ctx, {
+            type: 'line',
+
+        });
     },
 };
