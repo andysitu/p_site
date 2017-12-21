@@ -171,7 +171,8 @@ def number_items_over_time(request):
 
     for date_id in date_ids:
         data_date = DataDate.objects.get(id=date_id)
-        date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
+        # date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
+        date_str = data_date.date.timestamp() * 1000
         total = 0
 
         item_query = Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()

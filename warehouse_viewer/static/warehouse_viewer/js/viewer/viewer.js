@@ -131,9 +131,8 @@ var chart = {
                 "item-type-filter-table"
             );
         } else if (data_type == "total_item_over_time") {
-            // $elements["total-item-over-time"] =
-            console.log(data);
-            chart.make_time_chart(data);
+            var $chart = chart.make_time_chart(data);
+            $elements["total-item-over-time"] = $chart;
         }
 
         return $elements;
@@ -218,14 +217,54 @@ var chart = {
     },
     make_time_chart: function(time_data_dic) {
         var $canvas = $("<canvas />",{
-            id: element_ids.total_item_over_time_chart,
-        });
+                id: element_ids.total_item_over_time_chart,
+            }),
+            ctx = $canvas[0].getContext('2d'),
+            labels_arr = [],
+            data_arr = [];
 
-        var ctx = $canvas[0].getContext('2d');
+        for (var milliseconds in time_data_dic) {
+            labels_arr.push(new Date(parseFloat(milliseconds)));
+            data_arr.push(time_data_dic[milliseconds]);
+        }
+
+        var data = {
+            labels: labels_arr,
+            datasets: [{
+                fill: false,
+                label: gettext("Total Number of Items"),
+                data: data_arr,
+            }],
+        }
+
 
         var chart = new Chart(ctx, {
             type: 'line',
-
+            data: data,
+            options: {
+                responsive: true,
+                scales: [{
+                    xAxes: [{
+                        type: "time",
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: gettext("Date"),
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: gettext("Total Number of Items"),
+                        }
+                    }],
+                }],
+            }
         });
+
+        console.log(chart);
+
+        return $canvas;
     },
 };
