@@ -67,13 +67,16 @@ var viewer_processor = {
     get_raw_data: function(form_data) {
         var prev_form_data = this._prev_search_form_data;
 
+        if (form_data[element_ids.mutiple_dates_select_name])
+            return null;
+
         if (prev_form_data) {
             var data_mode = form_data["mode"],
                 data_type = form_data['data-type'],
                 date1 = form_data["date-1"],
                 prev_data_mode = prev_form_data["mode"],
                 prev_data_type = prev_form_data['data-type'],
-                prev_date1 = form_data["date-1"];
+                prev_date1 = form_data["date-1"],
 
             if (
                 data_mode === prev_data_mode &&
