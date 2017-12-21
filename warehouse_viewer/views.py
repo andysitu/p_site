@@ -25,7 +25,7 @@ def upload(request):
         else:
             msg = response
 
-    date_inst_list = processor.get_datadates(20)
+    date_inst_list = processor.get_datadates(100)
 
     date_list = []
     for data_date in date_inst_list:
