@@ -93,6 +93,9 @@ def get_item_count(request):
 
     return data_dic
 
+def get_normal_item_query(data_date):
+    return Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").exclude(customer_code=900135)
+
 def get_total_item_info(request, num_top=20):
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
@@ -109,7 +112,7 @@ def get_total_item_info(request, num_top=20):
     customers_type_count = {}
     total = 0
     item_types = 0
-    item_query = Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()
+    item_query = get_normal_item_query(data_date).iterator()
     for item in item_query:
         total_items = item.avail_quantity + item.ship_quantity
         total += total_items
@@ -175,7 +178,7 @@ def number_items_over_time(request):
         date_str = data_date.date.timestamp() * 1000
         total = 0
 
-        item_query = Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").iterator()
+        item_query = get_normal_item_query(data_date).iterator()
         for item in item_query:
             total_items = item.avail_quantity + item.ship_quantity
             total += total_items
@@ -195,7 +198,7 @@ def item_type_filter(request):
     loc = request.GET.get("loc")
 
     data = {}
-    items_q = Items.objects.select_related("rack_location").filter(data_date=data_date, rack_location__loc=loc).iterator()
+    items_q = get_normal_item_query(data_date).filter(rack_location__loc=loc).iterator()
 
     # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
     locations_dic = get_all_location_dic(loc)
