@@ -232,7 +232,7 @@ var chart = {
             labels_arr.push(new Date(parseFloat(milliseconds)));
             data_arr.push(time_data_dic[milliseconds]);
         }
-        
+
         var data = {
             labels: labels_arr,
             datasets: [{
@@ -247,7 +247,7 @@ var chart = {
             data: data,
             options: {
                 responsive: true,
-                scales: [{
+                scales: {
                     xAxes: [{
                         type: "time",
                         display: true,
@@ -257,13 +257,12 @@ var chart = {
                         }
                     }],
                     yAxes: [{
-                        display: true,
                         scaleLabel: {
                             display: true,
                             labelString: gettext("Total Number of Items"),
                         }
                     }],
-                }],
+                },
             }
         });
 
