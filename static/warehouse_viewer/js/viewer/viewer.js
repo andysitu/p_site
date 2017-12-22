@@ -63,16 +63,9 @@ var chart = {
             "class": "right-sidebar col-sm-2 list-group",
         }).appendTo($display_container);
 
-        var $ul_side = $("<ul class='section-nav'></ul>");
         for (var ele_name in $elements_dic) {
             $elements_dic[ele_name].appendTo($display_container);
-            var $li = $("<li class='sidebar-li'></li>").appendTo($ul_side);
-            $("<a>", {
-                href: "#" + ele_name,
-                text: ele_name,
-            }).appendTo($li);
         }
-        $side_bar.append($ul_side);
     },
     display_info: function(data_type, data) {
         var $table,
