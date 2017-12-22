@@ -50,7 +50,9 @@ def search_ajax(request):
         if data_type == "item_count":
             response = warehouse_data_views.get_item_count(request)
     elif data_mode == "chart":
-        if data_type == "total_item_info":
+        if data_type == "added_item_over_time":
+            response = warehouse_data_views.get_added_items_over_time(request)
+        elif data_type == "total_item_info":
             response = warehouse_data_views.get_total_item_info(request)
         elif data_type == "total_item_over_time":
             response = warehouse_data_views.number_items_over_time(request)

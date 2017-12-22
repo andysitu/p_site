@@ -167,6 +167,26 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
+def get_added_items_over_time(request):
+    data = {}
+
+    date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+        # date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
+        date_str = data_date.date.timestamp() * 1000
+        total = 0
+
+        item_query = get_normal_item_query(data_date).iterator()
+        for item in item_query:
+            total_items = item.avail_quantity + item.ship_quantity
+            total += total_items
+
+        data[date_str] = total
+
+    return data
+
 def number_items_over_time(request):
     data = {}
 

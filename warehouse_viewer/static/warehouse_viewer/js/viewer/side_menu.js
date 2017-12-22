@@ -157,6 +157,7 @@ var chart_mode_settings = {
                 "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type Filter"),
                 "total_item_over_time": gettext("Total Item Over Time"),
+                "added_item_over_time": gettext("Items Added Over Time"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -186,6 +187,9 @@ var chart_mode_settings = {
                 menu_functions.add_item_type_div();
                 break;
             case "total_item_over_time":
+                menu_functions.add_multiple_date_select();
+                break;
+            case "added_item_over_time":
                 menu_functions.add_multiple_date_select();
                 break;
         }
