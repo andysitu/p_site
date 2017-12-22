@@ -244,7 +244,7 @@ var chart = {
             });
 
         }
-        
+
         var data = {
             labels: labels_arr,
             datasets: dataset_arr,

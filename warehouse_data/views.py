@@ -190,6 +190,7 @@ def get_added_items_over_time(request):
 
 def number_items_over_time(request):
     data = {}
+    dates = []
 
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
     locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
@@ -197,25 +198,32 @@ def number_items_over_time(request):
     if len(locs) == 0:
         locs = ["All",]
 
+    if "All" in locs:
+        all_status = True
+    else:
+        all_status = False
+
     for i in range(len(locs)):
         loc = locs[i]
         data[loc] = {}
-        loc_dict = data[loc]
-        for date_id in date_ids:
-            data_date = DataDate.objects.get(id=date_id)
-            # date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
-            date_str = data_date.date.timestamp() * 1000
-            total = 0
 
-            item_query = get_normal_item_query(data_date)
-            if loc != "All":
-                item_query = item_query.filter(rack_location__loc=loc)
-            item_query = item_query.iterator()
-            for item in item_query:
-                total_items = item.avail_quantity + item.ship_quantity
-                total += total_items
+    loc_dict = data[loc]
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+        date_str = data_date.date.timestamp() * 1000
 
-            loc_dict[date_str] = total
+        for loc in data:
+            data[loc][date_str] = 0
+
+        item_query = get_normal_item_query(data_date)
+        item_query = item_query.iterator()
+        for item in item_query:
+            item_loc = item.rack_location.loc
+            total_items = item.avail_quantity + item.ship_quantity
+            if all_status:
+                data["All"][date_str] += total_items
+            if item_loc in data:
+                data[item_loc][date_str] += total_items
     return data
 
 def item_type_filter(request):
