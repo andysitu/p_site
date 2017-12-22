@@ -224,6 +224,11 @@ var helper_functions = {
         }
         return new_loc_arr;
     },
+    get_multiple_select_locs: function() {
+        var locs_select_id = element_ids.multiple_loc_select_id;
+
+        return $("#" + locs_select_id).val();
+    },
     get_multiple_select_dates: function() {
         var dates_select_id = element_ids.mutiple_dates_select_id;
 
@@ -248,6 +253,11 @@ var helper_functions = {
         if (element_ids.mutiple_dates_select_name in form_data) {
             var multiple_dates_name = element_ids.mutiple_dates_select_name;
             form_data[multiple_dates_name + "[]"] = this.get_multiple_select_dates();
+        }
+        if (element_ids.multiple_loc_select_name in form_data) {
+            var multiple_locs_name = element_ids.multiple_loc_select_name;
+            form_data[multiple_locs_name + "[]"] = this.get_multiple_select_locs();
+
         }
         return form_data;
     }

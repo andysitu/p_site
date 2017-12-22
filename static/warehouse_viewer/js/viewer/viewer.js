@@ -214,25 +214,40 @@ var chart = {
             }),
             ctx = $canvas[0].getContext('2d'),
             labels_arr = [],
-            data_arr = [],
+            data_arr,
             i;
 
-        var milliseconds_arr = Object.keys(time_data_dic).sort(),
-            milliseconds_length = milliseconds_arr.length, milliseconds;
+        console.log(time_data_dic);
 
-        for (i=0; i < milliseconds_length; i++) {
+        var milliseconds,
+            dataset_arr = [],
+            first_loc = Object.keys(time_data_dic)[0]
+            milliseconds_arr = Object.keys(time_data_dic[first_loc]).sort(),
+            milliseconds_length = milliseconds_arr.length;
+
+        for (i = 0; i < milliseconds_length; i++) {
             milliseconds = milliseconds_arr[i];
             labels_arr.push(new Date(parseFloat(milliseconds)));
-            data_arr.push(time_data_dic[milliseconds]);
         }
 
+        for (var loc in time_data_dic) {
+            data_arr = [];
+            for (i = 0; i < milliseconds_length; i++) {
+                milliseconds = milliseconds_arr[i];
+                data_arr.push(time_data_dic[loc][milliseconds]);
+            }
+
+            dataset_arr.push({
+                fill: false,
+                label: loc,
+                data: data_arr,
+            });
+
+        }
+        
         var data = {
             labels: labels_arr,
-            datasets: [{
-                fill: false,
-                label: gettext("Total Number of Items"),
-                data: data_arr,
-            }],
+            datasets: dataset_arr,
         }
 
         var chart = new Chart(ctx, {

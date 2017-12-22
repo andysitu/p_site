@@ -12,6 +12,7 @@ import operator
 
 elements_dictionary = {
     "multiple_dates": "dates",
+    "multiple_locs": "locs",
 }
 
 def loc_inst_to_jsloccode(loc_inst):
@@ -191,24 +192,30 @@ def number_items_over_time(request):
     data = {}
 
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
-    loc = request.GET.get("loc")
+    locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
 
-    for date_id in date_ids:
-        data_date = DataDate.objects.get(id=date_id)
-        # date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
-        date_str = data_date.date.timestamp() * 1000
-        total = 0
+    if len(locs) == 0:
+        locs = ["All",]
 
-        item_query = get_normal_item_query(data_date)
-        if loc != "All":
-            item_query = item_query.filter(rack_location__loc=loc)
-        item_query = item_query.iterator()
-        for item in item_query:
-            total_items = item.avail_quantity + item.ship_quantity
-            total += total_items
+    for i in range(len(locs)):
+        loc = locs[i]
+        data[loc] = {}
+        loc_dict = data[loc]
+        for date_id in date_ids:
+            data_date = DataDate.objects.get(id=date_id)
+            # date_str = data_date.date.astimezone().strftime("%m/%d/%y-%I:%M%p")
+            date_str = data_date.date.timestamp() * 1000
+            total = 0
 
-        data[date_str] = total
+            item_query = get_normal_item_query(data_date)
+            if loc != "All":
+                item_query = item_query.filter(rack_location__loc=loc)
+            item_query = item_query.iterator()
+            for item in item_query:
+                total_items = item.avail_quantity + item.ship_quantity
+                total += total_items
 
+            loc_dict[date_str] = total
     return data
 
 def item_type_filter(request):
