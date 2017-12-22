@@ -289,11 +289,12 @@ var settings_maker = {
             loc_select_id = element_ids.loc_select_id,
             loc_select_name = element_ids.loc_select_name,
             $loc_select,
-            loc_arr = ["S", "P", "F", "VC",]
-            arr_len = loc_arr.length;
+            loc_arr = ["S", "P", "F", "VC",];
 
         if (all_status === true)
             loc_arr.unshift("All");
+
+        var arr_len = loc_arr.length;
 
         $("<label>", {
             "for": loc_select_id,
