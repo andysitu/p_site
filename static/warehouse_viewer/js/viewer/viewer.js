@@ -57,12 +57,6 @@ var chart = {
         var $elements_dic = this.display_info(data_type, data),
             div_name = null;
 
-        // Display the side bar on the right for html navigation.
-        var $side_bar = $("<div>", {
-            id: "navigation-sidebar",
-            "class": "right-sidebar col-sm-2 list-group",
-        }).appendTo($display_container);
-
         for (var ele_name in $elements_dic) {
             $elements_dic[ele_name].appendTo($display_container);
         }
@@ -269,8 +263,6 @@ var chart = {
                 },
             }
         });
-
-        console.log(chart);
 
         return $canvas;
     },
