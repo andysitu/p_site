@@ -117,6 +117,12 @@ var menu_functions = {
         $options_container.append($date);
         return $options_container;
     },
+    add_multiple_loc_select: function() {
+        var $options_container = this.get_options_container(),
+            $locs = settings_maker.multiple_loc_select();
+        $options_container.append($locs);
+        return $options_container;
+    },
 };
 
 
@@ -195,11 +201,11 @@ var chart_mode_settings = {
                 break;
             case "total_item_over_time":
                 menu_functions.add_multiple_date_select();
-                menu_functions.add_loc_select(true);
+                menu_functions.add_multiple_loc_select();
                 break;
             case "added_item_over_time":
                 menu_functions.add_multiple_date_select();
-                menu_functions.add_loc_select(true);
+                menu_functions.add_multiple_loc_select();
                 break;
         }
     },
@@ -444,6 +450,41 @@ var settings_maker = {
         }).html(gettext("Date")).appendTo($div);
 
         $div.append($date_select);
+        return $div;
+    },
+    multiple_loc_select: function() {
+        /**
+         * Returns div with bootstrap CSS format containing
+         *  label & select HTML.
+         */
+        var select_size = 5;
+
+        var $div,
+            $loc_select = $("<select></select>", {
+                multiple: true,
+                id: element_ids.multiple_loc_select_id,
+                name: element_ids.multiple_loc_select_name,
+                "class": "form-control",
+                size: select_size,
+            });
+
+       var locs = ["All", "S", "P", "F", "VC",],
+           i, locs_len = locs.length;
+
+       for (i = 0; i < locs_len; i++) {
+           $loc_option = $("<option>", {
+               value: locs[i],
+               text: locs[i],
+           }).appendTo($loc_select);
+       }
+
+        $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": element_ids.multiple_loc_select_id,
+        }).html(gettext("Date")).appendTo($div);
+
+        $div.append($loc_select);
         return $div;
     },
     num_item_types: function() {

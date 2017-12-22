@@ -25,6 +25,8 @@ var element_ids = {
     options_container_id: "options-container",
     mutiple_dates_select_id: "multiple-dates-select",
     mutiple_dates_select_name: "dates",
+    multiple_loc_select_id: "multiple-loc-select",
+    multiple_loc_select_name: "locs",
     num_item_type_input_id: "item-type-input-id",
     num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",
