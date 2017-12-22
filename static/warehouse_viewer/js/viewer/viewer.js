@@ -31,6 +31,10 @@ var element_ids = {
 
     // For Chart.js
     total_item_over_time_chart: "item-over-time-chart",
+
+    // For Map
+    msg_div: "display-msg-div",
+    msg_text_div: "display-msg-text",
 };
 
 var viewer = {

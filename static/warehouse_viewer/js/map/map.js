@@ -21,10 +21,15 @@ var map_processor = {
         var loc = form_data["loc"],
             level = form_data["level"],
             level_modifier = form_data["level-modifier"],
-            $display_container = viewer.get_$display_container();
+            $display_container = viewer.get_$display_container(),
+            $msg_div = page_functions.create_msg_div();
 
         var map_canvas = this.create_canvas();
         this.set_map_processor(map_canvas);
+
+        $display_container.append($msg_div);
+
+        console.log($msg_div);
 
         this.ctx = map_canvas.getContext('2d');
 
@@ -53,6 +58,7 @@ var map_processor = {
         /**
          * Sets the values in map processor obj.
          */
+        var $display_container = viewer.get_$display_container();
         this.map_canvas = map_canvas;
         $display_container.append(this.map_canvas);
         this.canvas_width = this.map_canvas.width;

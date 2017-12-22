@@ -92,8 +92,19 @@ var page_functions = {
                 msg += key + ": " + info_dict[key] + "<br>";
             }
         }
-        return msg
+        return msg;
     },
+    create_msg_div: function() {
+        var $msg_div = $("<div>", {
+            id: element_ids.msg_div,
+            "class": "container collapse show",
+        });
+
+        $msg_div.append($("<div>", {
+            id: element_ids.msg_text_div,
+        }));
+        return $msg_div;
+    }
 };
 
 var mouseHandlers = {
