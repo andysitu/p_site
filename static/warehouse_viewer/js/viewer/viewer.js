@@ -247,6 +247,14 @@ var chart = {
             data: data,
             options: {
                 responsive: true,
+                tooltips: {
+                    mode: "index",
+                    intersect: false,
+                },
+                hover: {
+                    mode: "nearest",
+                    intersect: true,
+                },
                 scales: {
                     xAxes: [{
                         type: "time",
@@ -260,6 +268,9 @@ var chart = {
                         scaleLabel: {
                             display: true,
                             labelString: gettext("Total Number of Items"),
+                        },
+                        ticks: {
+                            beginAtZero: true,
                         }
                     }],
                 },
