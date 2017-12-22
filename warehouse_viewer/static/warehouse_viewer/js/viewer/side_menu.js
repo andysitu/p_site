@@ -100,6 +100,13 @@ var menu_functions = {
         $options_container.append($loc_div);
         $options_container.append($level_container);
     },
+    add_loc_select: function(all_status) {
+        var $options_container = this.get_options_container();
+
+        var $loc_div = settings_maker.loc_select(all_status);
+
+        $options_container.append($loc_div);
+    },
     add_item_type_div: function() {
         var $num_item_type_div = settings_maker.num_item_types();
         this.add_element_to_options($num_item_type_div);
@@ -188,9 +195,11 @@ var chart_mode_settings = {
                 break;
             case "total_item_over_time":
                 menu_functions.add_multiple_date_select();
+                menu_functions.add_loc_select(true);
                 break;
             case "added_item_over_time":
                 menu_functions.add_multiple_date_select();
+                menu_functions.add_loc_select(true);
                 break;
         }
     },
@@ -271,7 +280,7 @@ var settings_maker = {
         $div.append($date_select);
         return $div;
     },
-    loc_select: function() {
+    loc_select: function(all_status) {
         /**
          * Returns HTML input with locs S, P, F, VC.
          */
@@ -282,6 +291,9 @@ var settings_maker = {
             $loc_select,
             loc_arr = ["S", "P", "F", "VC",]
             arr_len = loc_arr.length;
+
+        if (all_status === true)
+            loc_arr.unshift("All");
 
         $("<label>", {
             "for": loc_select_id,
