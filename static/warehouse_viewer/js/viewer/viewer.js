@@ -217,13 +217,19 @@ var chart = {
             data_arr,
             i;
 
-        console.log(time_data_dic);
-
         var milliseconds,
             dataset_arr = [],
             first_loc = Object.keys(time_data_dic)[0]
             milliseconds_arr = Object.keys(time_data_dic[first_loc]).sort(),
             milliseconds_length = milliseconds_arr.length;
+
+        var colors = {
+            "All": "rgb(255, 99, 132)",
+            "S": "rgb(54, 162, 235)",
+            "P": "rgb(75, 192, 192)",
+            "F": "rgb(255, 159, 64)",
+            "VC": "rgb(153, 102, 255)",
+        }
 
         for (i = 0; i < milliseconds_length; i++) {
             milliseconds = milliseconds_arr[i];
@@ -238,11 +244,12 @@ var chart = {
             }
 
             dataset_arr.push({
+                backgroundColor: colors[loc],
+                borderColor: colors[loc],
                 fill: false,
                 label: loc,
                 data: data_arr,
             });
-
         }
 
         var data = {
