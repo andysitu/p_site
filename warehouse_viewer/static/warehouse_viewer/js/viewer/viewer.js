@@ -30,6 +30,8 @@ var element_ids = {
     num_item_type_input_id: "item-type-input-id",
     num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",
+    time_period_input_id: "time-period-input",
+    time_period_input_name: "time-period",
 
     // For Chart.js
     total_item_over_time_chart: "item-over-time-chart",

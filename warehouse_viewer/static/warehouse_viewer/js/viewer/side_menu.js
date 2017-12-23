@@ -548,11 +548,10 @@ var settings_maker = {
     },
     prev_time_period: function() {
         var $div = $("<div>", {
-            "class": "form-group",
-            id: "date-select-2-div",
-            })
+                "class": "form-group",
+            });
         $("<label>", {
-           "for": "prev-dateAmount-input",
+           "for": element_ids.time_period_input_id,
             text: gettext("Time Period"),
             }).appendTo($div);
 
@@ -561,7 +560,8 @@ var settings_maker = {
             }).appendTo($div);
         $("<input>", {
             "class": "form-control",
-            id: "prev-dateAmount-input",
+            id: element_ids.time_period_input_id,
+            name: element_ids.time_period_input_name,
             type: "number",
             value: 1,
             }).appendTo($div_input);
