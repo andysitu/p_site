@@ -123,6 +123,12 @@ var menu_functions = {
         $options_container.append($locs);
         return $options_container;
     },
+    add_prev_time_period: function() {
+        var $options_container = this.get_options_container(),
+            $locs = settings_maker.prev_time_period();
+        $options_container.append($locs);
+        return $options_container;
+    }
 };
 
 
@@ -206,6 +212,7 @@ var chart_mode_settings = {
             case "added_item_over_time":
                 menu_functions.add_multiple_date_select();
                 menu_functions.add_multiple_loc_select();
+                menu_functions.add_prev_time_period();
                 break;
         }
     },
@@ -409,7 +416,7 @@ var settings_maker = {
          * Returns div with bootstrap CSS format containing
          *  label & select HTML.
          */
-        var select_size = 10;
+        var select_size = 8;
 
         var $div,
             $date_select = $("<select></select>", {
@@ -538,6 +545,32 @@ var settings_maker = {
         return $("<div>", {
             id: element_ids.options_container_id,
         })
+    },
+    prev_time_period: function() {
+        var $div = $("<div>", {
+            "class": "form-group",
+            id: "date-select-2-div",
+            })
+        $("<label>", {
+           "for": "prev-dateAmount-input",
+            text: gettext("Time Period"),
+            }).appendTo($div);
+
+        var $div_input = $("<div>", {
+                "class": "input-group",
+            }).appendTo($div);
+        $("<input>", {
+            "class": "form-control",
+            id: "prev-dateAmount-input",
+            type: "number",
+            value: 1,
+            }).appendTo($div_input);
+        $("<span>", {
+            "class": "input-group-addon",
+            text: "Days"
+            }).appendTo($div_input);
+
+        return $div;
     },
 };
 
