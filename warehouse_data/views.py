@@ -65,6 +65,18 @@ def get_dates(request):
     return JsonResponse(date_list, safe=False)
 
 def get_item_count(request):
+    """
+    Gets item_count of a specific location
+    :param request: request [ date_id[int] & loc [String] ]
+    :return: data_dic
+        {
+            location Code [string]: {
+                "items": {
+                    item_sku [string]: item_count [ int]
+                }
+            }
+        }
+    """
     data_dic = {}
 
     date_id = request.GET.get("date-1")
@@ -77,6 +89,64 @@ def get_item_count(request):
     i_q = i_q.select_related('rack_location')
 
     for item_inst in i_q:
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}}
+
+        location = item_inst.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
+
+        item_code = item_inst.item_code
+        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity
+        else:
+            cur_item_dic[item_code] += item_quantity
+
+    return data_dic
+
+def get_item_added(request):
+    """
+    Gets items_added of a specific location
+    :param request: request [ date_id[int] & loc [String] ]
+    :return: data_dic
+        {
+            location Code [string]: {
+                "items": {
+                    item_sku [string]: item_count [ int]
+                }
+            }
+        }
+    """
+    data_dic = {}
+
+    date_id = request.GET.get("date-1")
+    loc = request.GET.get("loc")
+
+    data_date_inst = DataDate.objects.get(pk=date_id)
+
+    time_period = request.GET.get(elements_dictionary["time_period"])
+    t_delta = datetime.timedelta(days=int(time_period))
+    prev_date = data_date_inst.date - t_delta
+
+    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc)
+    i_q = i_q.select_related('rack_location')
+
+    for item_inst in i_q:
+        rcv = item_inst.rcv
+        recv_re = re.compile("^RECV")
+
+        # If RECV item
+        if recv_re.match(rcv):
+            if item_inst.iv_create_date < prev_date:
+                continue
+        else:
+            if item_inst.fifo_date < prev_date:
+                continue
+
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}}

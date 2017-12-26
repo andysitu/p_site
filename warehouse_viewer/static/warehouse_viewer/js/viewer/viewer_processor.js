@@ -6,6 +6,7 @@ var viewer_processor = {
 
         var prev_raw_data = this.get_raw_data(form_data);
         console.log(form_data);
+        console.log(prev_raw_data);
         if (prev_raw_data) {
             this.create_map(form_data, prev_raw_data);
         } else {
@@ -54,7 +55,7 @@ var viewer_processor = {
             processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
                 helper_functions.compare_locations);
         } else if (mode == "map") {
-            if (data_type == "item_count") {
+            if (data_type == "item_count" || data_type == "item_added") {
                 processed_data = helper_functions.process_item_count(raw_data, form_data);
             }
         } else {
@@ -76,16 +77,21 @@ var viewer_processor = {
                 date1 = form_data["date-1"],
                 prev_data_mode = prev_form_data["mode"],
                 prev_data_type = prev_form_data['data-type'],
-                prev_date1 = form_data["date-1"];
+                prev_date1 = form_data["date-1"],
+                time_period = form_data["time-period"],
+                prev_time_period = prev_form_data["time-period"];
 
             if (
                 data_mode === prev_data_mode &&
-                data_type === prev_data_type && date1 === prev_date1
+                data_type === prev_data_type && date1 === prev_date1 &&
+                time_period == prev_time_period
             ) {
                 var loc = form_data["loc"],
                     prev_loc = prev_form_data["loc"];
                 if (loc === prev_loc) {
                     return this._prev_search_raw_data;
+                } else {
+                    return null;
                 }
             }
         } else

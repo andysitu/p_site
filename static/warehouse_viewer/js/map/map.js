@@ -426,7 +426,7 @@ var color_map_functions = {
          * Create a dictionary consisting of location as key &
          *  the rgb value as the value,
          */
-        if (data_type == "item_count") {
+        if (data_type == "item_count" || data_type == "item_added") {
             color_map = this.item_count_map(data);
         }
 

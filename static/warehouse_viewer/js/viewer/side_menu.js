@@ -138,6 +138,7 @@ var map_mode_settings = {
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
                 "item_count": gettext("Item Count"),
+                "item_added": gettext("Item Added"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -162,6 +163,10 @@ var map_mode_settings = {
         switch(data_type) {
             case "item_count":
                 menu_functions.add_loc_select_and_level_container();
+                break;
+            case "item_added":
+                menu_functions.add_loc_select_and_level_container();
+                menu_functions.add_prev_time_period();
                 break;
         }
     },
