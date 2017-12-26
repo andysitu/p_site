@@ -58,4 +58,6 @@ def search_ajax(request):
             response = warehouse_data_views.number_items_over_time(request)
         elif data_type == "item_type_filter":
             response = warehouse_data_views.item_type_filter(request)
+        elif data_type == "item_type_over_time":
+            response = warehouse_data_views.item_type_over_time(request)
     return JsonResponse(response)

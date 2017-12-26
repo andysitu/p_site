@@ -125,7 +125,8 @@ var chart = {
                 8,
                 "item-type-filter-table"
             );
-        } else if (data_type == "total_item_over_time" || data_type == "added_item_over_time") {
+        } else if (data_type == "total_item_over_time" || data_type == "added_item_over_time" ||
+                    data_type == "item_type_over_time") {
             var $chart = chart.make_time_chart(data);
             $elements["total-item-over-time"] = $chart;
         }
