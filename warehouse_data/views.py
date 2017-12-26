@@ -353,3 +353,46 @@ def item_type_over_time(request):
             data[loc][date_str] = len(item_sku_dic[loc][date_str])
 
     return data
+
+def num_customers_over_time(request):
+    item_sku_dic = {}
+    data = {}
+
+    date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+    locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
+
+    if len(locs) == 0:
+        locs = ["All", ]
+
+    if "All" in locs:
+        all_status = True
+    else:
+        all_status = False
+
+    for i in range(len(locs)):
+        loc = locs[i]
+        item_sku_dic[loc] = {}
+        data[loc] = {}
+
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+        date_str = data_date.date.timestamp() * 1000
+        for loc in data:
+            item_sku_dic[loc][date_str] = {}
+            data[loc][date_str] = 0
+
+        item_query = get_normal_item_query(data_date)
+        item_query = item_query.iterator()
+        for item in item_query:
+            item_loc = item.rack_location.loc
+            customer_code = item.customer_code
+            if all_status:
+                item_sku_dic["All"][date_str][customer_code] = True
+            if item_loc in data:
+                item_sku_dic[item_loc][date_str][customer_code] = True
+
+    for loc in item_sku_dic:
+        for date_str in item_sku_dic[loc]:
+            data[loc][date_str] = len(item_sku_dic[loc][date_str])
+
+    return data
