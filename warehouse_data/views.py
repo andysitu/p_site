@@ -85,8 +85,7 @@ def get_item_count(request):
 
     data_date_inst = DataDate.objects.get(pk=date_id)
 
-    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc)
-    i_q = i_q.select_related('rack_location')
+    i_q = get_normal_item_query(data_date_inst).filter(rack_location__loc=loc)
 
     for item_inst in i_q:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -132,8 +131,7 @@ def get_item_added(request):
     t_delta = datetime.timedelta(days=int(time_period))
     prev_date = data_date_inst.date - t_delta
 
-    i_q = Items.objects.filter(data_date=data_date_inst, rack_location__loc=loc)
-    i_q = i_q.select_related('rack_location')
+    i_q = get_normal_item_query(data_date_inst).filter(rack_location__loc=loc)
 
     for item_inst in i_q:
         rcv = item_inst.rcv
