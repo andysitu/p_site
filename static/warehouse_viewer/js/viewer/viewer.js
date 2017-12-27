@@ -16,6 +16,8 @@ var element_ids = {
     data_select_name: "data-type",
     date_select_1_id: "date-select-1",
     date_select_1_name: "date-1",
+    date_select_2_id: "date-select-2",
+    date_select_2_name: "date-2",
     loc_select_name: "loc",
     loc_select_id: "loc-select",
     level_container_id: "level-container",

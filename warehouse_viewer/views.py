@@ -51,6 +51,8 @@ def search_ajax(request):
             response = warehouse_data_views.get_item_count(request)
         elif data_type == "item_added":
             response = warehouse_data_views.get_item_added(request)
+        elif data_type == "item_shipped":
+            response = warehouse_data_views.get_item_shipped(request)
     elif data_mode == "chart":
         if data_type == "added_item_over_time":
             response = warehouse_data_views.get_added_items_over_time(request)

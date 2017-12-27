@@ -90,6 +90,12 @@ var menu_functions = {
         $options_container.append($date_1);
         return $options_container;
     },
+    add_date2: function() {
+        var $options_container = this.get_options_container(),
+            $date_2 = settings_maker.date_input_2();
+        $options_container.append($date_2);
+        return $options_container;
+    },
     add_loc_select_and_level_container: function() {
         var $options_container = this.get_options_container(),
         $element_dic = settings_maker.loc_and_level_container();
@@ -139,6 +145,7 @@ var map_mode_settings = {
             data_type_dic = {
                 "item_count": gettext("Item Count"),
                 "item_added": gettext("Item Added"),
+                "item_shipped": gettext("Item Shipped"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -167,6 +174,10 @@ var map_mode_settings = {
             case "item_added":
                 menu_functions.add_loc_select_and_level_container();
                 menu_functions.add_prev_time_period();
+                break;
+            case "item_shipped":
+                menu_functions.add_date2();
+                menu_functions.add_loc_select_and_level_container();
                 break;
         }
     },
@@ -280,7 +291,7 @@ var settings_maker = {
            url: dates_ajax_url,
             action: "get",
             data: {
-               "num_dates": 20,
+               "num_dates": 50,
             },
             success: function(data){
                var i, data_len = data.length,
@@ -304,6 +315,51 @@ var settings_maker = {
         $("<label>", {
             "for": element_ids.date_select_1_id,
         }).html(gettext("Date")).appendTo($div);
+
+        $div.append($date_select);
+        return $div;
+    },
+    date_input_2: function() {
+        /**
+         * Returns div with bootstrap CSS format containing
+         *  label & select HTML.
+         */
+
+        var $div,
+            $date_select = $("<select>", {
+                id: element_ids.date_select_2_id,
+                name: element_ids.date_select_2_name,
+                "class": "form-control",
+            });
+
+        $.ajax({
+           url: dates_ajax_url,
+            action: "get",
+            data: {
+               "num_dates": 50,
+            },
+            success: function(data){
+               var i, data_len = data.length,
+                    date_id, date_str, date_option;
+
+               for (i = 0; i < data_len; i++){
+                   date_obj = data[i];
+                   date_id = date_obj["date_id"];
+                   date_str = date_obj["date_string"];
+
+                   $date_option = $("<option>",{
+                       value: date_id,
+                       text: date_str,
+                   }).appendTo($date_select);
+               }
+            },
+        });
+
+        $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": element_ids.date_select_2_id,
+        }).html(gettext("Start Date")).appendTo($div);
 
         $div.append($date_select);
         return $div;

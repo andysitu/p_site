@@ -166,6 +166,75 @@ def get_item_added(request):
 
     return data_dic
 
+def get_item_shipped(request):
+    """
+    Gets shipped of a specific location
+    :param request: request [ date_id[int] & loc [String] ]
+    :return: data_dic
+        {
+            location Code [string]: {
+                "items": {
+                    item_sku [string]: item_count [ int]
+                }
+            }
+        }
+    """
+    data_dic = {}
+
+    loc = request.GET.get("loc")
+
+    date_1_id = request.GET.get("date-1")
+    data_date_1 = DataDate.objects.get(pk=date_1_id)
+    date_1 = data_date_1.date
+
+    date_2_id = request.GET.get("date-1")
+    data_date_2 = DataDate.objects.get(pk=date_2_id)
+    date_2 = data_date_2.data
+
+    # Check whether date_1 or date_2 is older.
+    if d_1 == d_2:
+        return {}
+    if d_1 > d_2:
+        newer_datadate = datadate_1
+        older_datadate = datadate_2
+    else:
+        newer_datadate = datadate_2
+        older_datadate = datadate_1
+
+    item_query_older = get_normal_item_query(older_datadate).filter(rack_location__loc=loc).iterator()
+    item_query_newer = get_normal_item_query(newer_datadate).filter(fifo_date__lte=older_datadate.date).iterator()
+
+    for item_inst in i_q:
+        rcv = item_inst.rcv
+        recv_re = re.compile("^RECV")
+
+        # If RECV item
+        if recv_re.match(rcv):
+            if item_inst.iv_create_date < prev_date:
+                continue
+        else:
+            if item_inst.fifo_date < prev_date:
+                continue
+
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}}
+
+        location = item_inst.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
+
+        item_code = item_inst.item_code
+        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity
+        else:
+            cur_item_dic[item_code] += item_quantity
+
+    return data_dic
+
 def get_normal_item_query(data_date):
     return Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").exclude(customer_code=900135)
 
