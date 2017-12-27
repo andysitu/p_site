@@ -245,6 +245,7 @@ def get_item_shipped(request):
             item_q = Items.objects.filter(data_date=older_datadate, lab_id=lab_id)
             total = 0
             for i in item_q:
+                total += i.avail_quantity + i.ship_quantity
                 difference = total - labId_newerItem_dic[lab_id]
             if difference == 0:
                 continue

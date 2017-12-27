@@ -72,6 +72,12 @@ var menu_functions = {
     get_options_container: function() {
         return $("#" + element_ids.options_container_id);
     },
+    add_filter_div: function() {
+        var $options_container = this.get_options_container(),
+            $filter_div = settings_maker.filter_div();
+        $options_container.append($filter_div);
+        return $options_container;
+    },
     add_options_container: function() {
         var $container = this.get_menu_container(),
             $options_container = settings_maker.options_container();
@@ -226,6 +232,7 @@ var chart_mode_settings = {
             case "total_item_over_time":
                 menu_functions.add_multiple_date_select();
                 menu_functions.add_multiple_loc_select();
+                menu_functions.add_filter_div();
                 break;
             case "added_item_over_time":
                 menu_functions.add_multiple_date_select();
@@ -364,6 +371,40 @@ var settings_maker = {
         $div.append($date_select);
         return $div;
     },
+    filter_div: function() {
+        var filter_input_id = element_ids.filter_input_id,
+            filter_input_name = element_ids.filter_input_name,
+            $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": filter_input_id,
+            text: gettext("Filter"),
+        }).appendTo($div);
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn",
+        });
+        
+        var $input = $("<input>", {
+            id: filter_input_id,
+            "class": "form-control col-sm-5",
+            name: filter_input_name,
+        }).appendTo($input_group);
+
+        var $filter_option_select = $("<select>", {
+            "class": "form-control col-sm-7",
+            name: element_ids.filter_option_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "customer_code",
+            text: gettext("Customer"),
+        }).appendTo($filter_option_select);
+
+        $input_group.appendTo($div);
+
+        return $div
+    },
     loc_select: function(all_status) {
         /**
          * Returns HTML input with locs S, P, F, VC.
@@ -487,7 +528,7 @@ var settings_maker = {
          * Returns div with bootstrap CSS format containing
          *  label & select HTML.
          */
-        var select_size = 8;
+        var select_size = 6;
 
         var $div,
             $date_select = $("<select></select>", {
