@@ -185,36 +185,71 @@ def get_item_shipped(request):
     data_date_1 = DataDate.objects.get(pk=date_1_id)
     date_1 = data_date_1.date
 
-    date_2_id = request.GET.get("date-1")
+    date_2_id = request.GET.get("date-2")
     data_date_2 = DataDate.objects.get(pk=date_2_id)
-    date_2 = data_date_2.data
+    date_2 = data_date_2.date
 
     # Check whether date_1 or date_2 is older.
-    if d_1 == d_2:
+    if date_1 == date_2:
         return {}
-    if d_1 > d_2:
-        newer_datadate = datadate_1
-        older_datadate = datadate_2
+    if date_1 > date_2:
+        newer_datadate = data_date_1
+        older_datadate = data_date_2
     else:
-        newer_datadate = datadate_2
-        older_datadate = datadate_1
+        newer_datadate = data_date_2
+        older_datadate = data_date_1
 
     item_query_older = get_normal_item_query(older_datadate).filter(rack_location__loc=loc).iterator()
     item_query_newer = get_normal_item_query(newer_datadate).filter(fifo_date__lte=older_datadate.date).iterator()
 
-    for item_inst in i_q:
-        rcv = item_inst.rcv
-        recv_re = re.compile("^RECV")
+    labId_newerItem_dic = {}
+    labId_olderItem_dic = {}
+    labId_older_iteminst_dic = {}
 
-        # If RECV item
-        if recv_re.match(rcv):
-            if item_inst.iv_create_date < prev_date:
-                continue
+    # lab_id is kept constant among items even when separated (such as when
+    #   items in one location is split into two locations.
+    for item_1 in item_query_newer:
+        lid = item_1.lab_id
+        if lid in labId_newerItem_dic:
+            labId_newerItem_dic[lid] += item_1.avail_quantity + item_1.ship_quantity
         else:
-            if item_inst.fifo_date < prev_date:
-                continue
+            labId_newerItem_dic[lid] = item_1.avail_quantity + item_1.ship_quantity
+
+    for item_2 in item_query_older:
+        lid = item_2.lab_id
+        if lid in labId_olderItem_dic:
+            labId_olderItem_dic[lid] += item_2.avail_quantity + item_2.ship_quantity
+        else:
+            labId_olderItem_dic[lid] = item_2.avail_quantity + item_2.ship_quantity
+        # New items in excel are read first, so older items will replace older
+        #   ones in lab_id_loc_dic. Because older items should go first
+        #   (It's actually by RCV date).
+
+        labId_older_iteminst_dic[lid] = item_2
+
+    for lab_id in labId_olderItem_dic:
+        item_inst = labId_older_iteminst_dic[lab_id]
 
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+
+        item_code = item_inst.item_code
+        item_quantity = labId_olderItem_dic[lab_id]
+
+        if lab_id in labId_newerItem_dic:
+            difference = item_quantity - labId_newerItem_dic[lab_id]
+        else:
+            difference = item_quantity
+        if difference == 0:
+            continue
+        # elif difference < 0:
+        #     item_q = Items.objects.filter(data_date=older_datadate, lab_id=lab_id)
+        #     total = 0
+        #     for i in item_q:
+        #         total += i.avail_quantity + i.ship_quantity
+        #         differeQnce = total - labId_newerItem_dic[lab_id]
+        #     if difference == 0:
+        #         continue
+
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}}
 
@@ -223,13 +258,10 @@ def get_item_shipped(request):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        item_code = item_inst.item_code
-        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
-
         if item_code not in cur_item_dic:
-            cur_item_dic[item_code] = item_quantity
+            cur_item_dic[item_code] = difference
         else:
-            cur_item_dic[item_code] += item_quantity
+            cur_item_dic[item_code] += difference
 
     return data_dic
 

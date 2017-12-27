@@ -422,11 +422,14 @@ var map_processor = {
 
 var color_map_functions = {
     mapify: function(data_type, data) {
+        color_map = {}
         /**
          * Create a dictionary consisting of location as key &
          *  the rgb value as the value,
          */
-        if (data_type == "item_count" || data_type == "item_added") {
+        if (data_type == "item_count" ||
+            data_type == "item_added" ||
+            data_type == "item_shipped") {
             color_map = this.item_count_map(data);
         }
 

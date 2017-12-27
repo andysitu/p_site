@@ -6,7 +6,6 @@ var viewer_processor = {
 
         var prev_raw_data = this.get_raw_data(form_data);
         console.log(form_data);
-        console.log(prev_raw_data);
         if (prev_raw_data) {
             this.create_map(form_data, prev_raw_data);
         } else {
@@ -55,7 +54,9 @@ var viewer_processor = {
             processed_data["item-type-filter"] = processed_data["item-type-filter"].sort(
                 helper_functions.compare_locations);
         } else if (mode == "map") {
-            if (data_type == "item_count" || data_type == "item_added") {
+            if (data_type == "item_count" ||
+                data_type == "item_added" ||
+                data_type == "item_shipped") {
                 processed_data = helper_functions.process_item_count(raw_data, form_data);
             }
         } else {
