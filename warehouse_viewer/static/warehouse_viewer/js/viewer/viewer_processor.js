@@ -73,26 +73,27 @@ var viewer_processor = {
 
         if (prev_form_data) {
             var data_mode = form_data["mode"],
-                data_type = form_data['data-type'],
-                date1 = form_data["date-1"],
                 prev_data_mode = prev_form_data["mode"],
-                prev_data_type = prev_form_data['data-type'],
-                prev_date1 = form_data["date-1"],
-                time_period = form_data["time-period"],
-                prev_time_period = prev_form_data["time-period"];
 
+                data_type = form_data['data-type'],
+                prev_data_type = prev_form_data['data-type'],
+
+                date1 = form_data["date-1"],
+                prev_date1 = prev_form_data["date-1"],
+
+                time_period = form_data["time-period"],
+                prev_time_period = prev_form_data["time-period"],
+
+                loc = form_data["loc"],
+                prev_loc = prev_form_data["loc"];
             if (
                 data_mode === prev_data_mode &&
                 data_type === prev_data_type && date1 === prev_date1 &&
-                time_period == prev_time_period
+                time_period == prev_time_period && loc == prev_loc
             ) {
-                var loc = form_data["loc"],
-                    prev_loc = prev_form_data["loc"];
-                if (loc === prev_loc) {
-                    return this._prev_search_raw_data;
-                } else {
-                    return null;
-                }
+                return this._prev_search_raw_data;
+            } else {
+                return null;
             }
         } else
             return null;
