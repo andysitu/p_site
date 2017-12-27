@@ -241,14 +241,13 @@ def get_item_shipped(request):
             difference = item_quantity
         if difference == 0:
             continue
-        # elif difference < 0:
-        #     item_q = Items.objects.filter(data_date=older_datadate, lab_id=lab_id)
-        #     total = 0
-        #     for i in item_q:
-        #         total += i.avail_quantity + i.ship_quantity
-        #         differeQnce = total - labId_newerItem_dic[lab_id]
-        #     if difference == 0:
-        #         continue
+        elif difference < 0:
+            item_q = Items.objects.filter(data_date=older_datadate, lab_id=lab_id)
+            total = 0
+            for i in item_q:
+                difference = total - labId_newerItem_dic[lab_id]
+            if difference == 0:
+                continue
 
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}}
