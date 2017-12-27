@@ -15,6 +15,8 @@ elements_dictionary = {
     "multiple_dates": "dates",
     "multiple_locs": "locs",
     "time_period": "time-period",
+    "filter_value": "filter_value",
+    "filter_option": "filter_option",
 }
 
 def loc_inst_to_jsloccode(loc_inst):
@@ -265,8 +267,14 @@ def get_item_shipped(request):
 
     return data_dic
 
-def get_normal_item_query(data_date):
-    return Items.objects.select_related('rack_location').filter(data_date=data_date, ).exclude(rack_location__loc="").exclude(customer_code=900135)
+def get_normal_item_query(data_date, filter_option=None, filter_value=None):
+    query = Items.objects.select_related('rack_location').filter(data_date=data_date, )
+    if filter_value:
+        if filter_option == "customer_code":
+            customer = int(filter_value)
+            query = query.filter(customer_code=filter_value)
+    return query.exclude(rack_location__loc="").exclude(customer_code=900135)
+
 
 def get_total_item_info(request, num_top=20):
     date_id = request.GET.get("date-1")
@@ -398,6 +406,9 @@ def number_items_over_time(request):
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
     locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
 
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
     if len(locs) == 0:
         locs = ["All",]
 
@@ -416,7 +427,7 @@ def number_items_over_time(request):
         for loc in data:
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date)
+        item_query = get_normal_item_query(data_date, filter_option, filter_value)
         item_query = item_query.iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
