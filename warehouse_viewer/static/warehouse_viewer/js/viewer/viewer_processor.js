@@ -82,14 +82,17 @@ var viewer_processor = {
                 date1 = form_data["date-1"],
                 prev_date1 = prev_form_data["date-1"],
 
+                date2 = form_data["date-2"],
+                prev_date2 = prev_form_data["date-2"],
+
                 time_period = form_data["time-period"],
                 prev_time_period = prev_form_data["time-period"],
 
                 loc = form_data["loc"],
                 prev_loc = prev_form_data["loc"];
             if (
-                data_mode === prev_data_mode &&
-                data_type === prev_data_type && date1 === prev_date1 &&
+                data_mode === prev_data_mode && data_type === prev_data_type &&
+                date1 === prev_date1 && date2 === prev_date2 &&
                 time_period == prev_time_period && loc == prev_loc
             ) {
                 return this._prev_search_raw_data;
