@@ -73,28 +73,7 @@ var viewer_processor = {
             return null;
 
         if (prev_form_data) {
-            var data_mode = form_data["mode"],
-                prev_data_mode = prev_form_data["mode"],
-
-                data_type = form_data['data-type'],
-                prev_data_type = prev_form_data['data-type'],
-
-                date1 = form_data["date-1"],
-                prev_date1 = prev_form_data["date-1"],
-
-                date2 = form_data["date-2"],
-                prev_date2 = prev_form_data["date-2"],
-
-                time_period = form_data["time-period"],
-                prev_time_period = prev_form_data["time-period"],
-
-                loc = form_data["loc"],
-                prev_loc = prev_form_data["loc"];
-            if (
-                data_mode === prev_data_mode && data_type === prev_data_type &&
-                date1 === prev_date1 && date2 === prev_date2 &&
-                time_period == prev_time_period && loc == prev_loc
-            ) {
+            if (helper_functions.compare_prev_form_data(form_data, prev_form_data)) {
                 return this._prev_search_raw_data;
             } else {
                 return null;
@@ -175,6 +154,38 @@ var helper_functions = {
         } else {
             return 0;
         }
+    },
+    compare_prev_form_data: function(form_data, prev_form_data) {
+        var data_mode = form_data["mode"],
+            prev_data_mode = prev_form_data["mode"],
+
+            data_type = form_data['data-type'],
+            prev_data_type = prev_form_data['data-type'],
+
+            date1 = form_data["date-1"],
+            prev_date1 = prev_form_data["date-1"],
+
+            date2 = form_data["date-2"],
+            prev_date2 = prev_form_data["date-2"],
+
+            time_period = form_data["time-period"],
+            prev_time_period = prev_form_data["time-period"],
+
+            loc = form_data["loc"],
+            prev_loc = prev_form_data["loc"]
+
+            filter_value = form_data["filter_value"],
+            prev_filter_value = prev_form_data["filter_value"],
+
+            filter_option = form_data["filter_option"],
+            prev_filter_option = prev_form_data["filter_option"];
+
+        return data_mode === prev_data_mode && data_type === prev_data_type &&
+                date1 === prev_date1 && date2 === prev_date2 &&
+                time_period == prev_time_period && loc == prev_loc &&
+                filter_value === prev_filter_value &&
+                filter_option === prev_filter_option;
+
     },
     make_level_filterer: function(level, level_modifier) {
         if (level == "all") {
