@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 12:46-0800\n"
+"POT-Creation-Date: 2017-12-27 16:25-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:40
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:39
 msgid "Submit"
 msgstr "提交"
 
@@ -201,7 +201,6 @@ msgid "Total Number of RCV:"
 msgstr "RCV文件总数:"
 
 #: uploader/forms.py:10 warehouse_viewer/forms.py:6
-#| msgid "Select an RCV PDF File"
 msgid "Select a File"
 msgstr "选择一个文件件"
 
@@ -294,14 +293,10 @@ msgstr "选择一个导出的Excel文件"
 msgid "Excel dates uploaded"
 msgstr "Excel日期上传"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:29
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:31
 msgid "Map"
 msgstr "地图"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:32
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:34
 msgid "Chart"
 msgstr "图表"
-
-#: warehouse_viewer/templates/warehouse_viewer/viewer.html:35
-msgid "Graph"
-msgstr "图形"
