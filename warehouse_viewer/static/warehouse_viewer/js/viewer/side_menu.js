@@ -401,6 +401,11 @@ var settings_maker = {
             text: gettext("Customer"),
         }).appendTo($filter_option_select);
 
+        $("<option>", {
+            "value": "item_code",
+            text: gettext("SKU"),
+        }).appendTo($filter_option_select);
+
         $input_group.appendTo($div);
 
         return $div

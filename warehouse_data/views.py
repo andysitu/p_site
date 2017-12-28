@@ -272,7 +272,9 @@ def get_normal_item_query(data_date, filter_option=None, filter_value=None):
     if filter_value:
         if filter_option == "customer_code":
             customer = int(filter_value)
-            query = query.filter(customer_code=filter_value)
+            query = query.filter(customer_code=customer)
+        elif filter_option == "item_code":
+            query = query.filter(item_code=filter_value)
     return query.exclude(rack_location__loc="").exclude(customer_code=900135)
 
 
