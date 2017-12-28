@@ -599,6 +599,7 @@ var settings_maker = {
            $loc_option = $("<option>", {
                value: locs[i],
                text: locs[i],
+               selected: true,
            }).appendTo($loc_select);
        }
 
