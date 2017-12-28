@@ -238,10 +238,12 @@ var chart_mode_settings = {
                 menu_functions.add_multiple_date_select();
                 menu_functions.add_multiple_loc_select();
                 menu_functions.add_prev_time_period();
+                menu_functions.add_filter_div();
                 break;
             case "item_type_over_time":
                 menu_functions.add_multiple_date_select();
                 menu_functions.add_multiple_loc_select();
+                menu_functions.add_filter_div();
                 break;
             case "num_customers_over_time":
                 menu_functions.add_multiple_date_select();

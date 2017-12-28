@@ -356,6 +356,9 @@ def get_added_items_over_time(request):
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
     locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
 
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
     t_delta = datetime.timedelta(days=int(time_period))
 
     if len(locs) == 0:
@@ -379,7 +382,7 @@ def get_added_items_over_time(request):
         for loc in data:
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date)
+        item_query = get_normal_item_query(data_date, filter_option, filter_value)
         item_query = item_query.filter(iv_create_date__gte=prev_date)
         item_query = item_query.iterator()
         for item in item_query:
@@ -499,6 +502,8 @@ def item_type_over_time(request):
 
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
     locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
 
     if len(locs) == 0:
         locs = ["All", ]
@@ -520,7 +525,7 @@ def item_type_over_time(request):
             item_sku_dic[loc][date_str] = {}
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date)
+        item_query = get_normal_item_query(data_date, filter_option, filter_value)
         item_query = item_query.iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
