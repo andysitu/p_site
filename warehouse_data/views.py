@@ -83,11 +83,12 @@ def get_item_count(request):
 
     date_id = request.GET.get("date-1")
     loc = request.GET.get("loc")
-
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
 
     data_date_inst = DataDate.objects.get(pk=date_id)
 
-    i_q = get_normal_item_query(data_date_inst).filter(rack_location__loc=loc)
+    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
 
     for item_inst in i_q:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -126,6 +127,8 @@ def get_item_added(request):
 
     date_id = request.GET.get("date-1")
     loc = request.GET.get("loc")
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
 
     data_date_inst = DataDate.objects.get(pk=date_id)
 
@@ -133,7 +136,7 @@ def get_item_added(request):
     t_delta = datetime.timedelta(days=int(time_period))
     prev_date = data_date_inst.date - t_delta
 
-    i_q = get_normal_item_query(data_date_inst).filter(rack_location__loc=loc)
+    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
 
     for item_inst in i_q:
         rcv = item_inst.rcv
@@ -191,6 +194,9 @@ def get_item_shipped(request):
     data_date_2 = DataDate.objects.get(pk=date_2_id)
     date_2 = data_date_2.date
 
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
     # Check whether date_1 or date_2 is older.
     if date_1 == date_2:
         return {}
@@ -201,8 +207,8 @@ def get_item_shipped(request):
         newer_datadate = data_date_2
         older_datadate = data_date_1
 
-    item_query_older = get_normal_item_query(older_datadate).filter(rack_location__loc=loc).iterator()
-    item_query_newer = get_normal_item_query(newer_datadate).filter(fifo_date__lte=older_datadate.date).iterator()
+    item_query_older = get_normal_item_query(older_datadate, filter_option, filter_value).filter(rack_location__loc=loc).iterator()
+    item_query_newer = get_normal_item_query(newer_datadate, filter_option, filter_value).filter(fifo_date__lte=older_datadate.date).iterator()
 
     labId_newerItem_dic = {}
     labId_olderItem_dic = {}

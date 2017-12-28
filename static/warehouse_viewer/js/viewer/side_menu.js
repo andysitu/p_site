@@ -176,14 +176,17 @@ var map_mode_settings = {
         switch(data_type) {
             case "item_count":
                 menu_functions.add_loc_select_and_level_container();
+                menu_functions.add_filter_div();
                 break;
             case "item_added":
                 menu_functions.add_loc_select_and_level_container();
                 menu_functions.add_prev_time_period();
+                menu_functions.add_filter_div();
                 break;
             case "item_shipped":
                 menu_functions.add_date2();
                 menu_functions.add_loc_select_and_level_container();
+                menu_functions.add_filter_div();
                 break;
         }
     },
