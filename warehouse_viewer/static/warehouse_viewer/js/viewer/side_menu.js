@@ -275,7 +275,7 @@ var settings_maker = {
 
         var $select = $("<select>", {
             id: data_select_id,
-            "class": "form-control",
+            "class": "form-control form-control-sm",
             name: data_select_name,
         }).appendTo($div);
 
@@ -296,7 +296,7 @@ var settings_maker = {
             $date_select = $("<select>", {
                 id: element_ids.date_select_1_id,
                 name: element_ids.date_select_1_name,
-                "class": "form-control",
+                "class": "form-control form-control-sm",
             });
 
         $.ajax({
@@ -341,7 +341,7 @@ var settings_maker = {
             $date_select = $("<select>", {
                 id: element_ids.date_select_2_id,
                 name: element_ids.date_select_2_name,
-                "class": "form-control",
+                "class": "form-control form-control-sm",
             });
 
         $.ajax({
@@ -392,12 +392,12 @@ var settings_maker = {
         
         var $input = $("<input>", {
             id: filter_input_id,
-            "class": "form-control col-sm-5",
+            "class": "form-control form-control-sm col-sm-5",
             name: filter_input_name,
         }).appendTo($input_group);
 
         var $filter_option_select = $("<select>", {
-            "class": "form-control col-sm-7",
+            "class": "form-control form-control-sm col-sm-7",
             name: element_ids.filter_option_name,
         }).appendTo($input_group);
 
@@ -438,7 +438,7 @@ var settings_maker = {
         $loc_select = $("<select>", {
             id: loc_select_id,
             name: loc_select_name,
-            "class": "form-control",
+            "class": "form-control form-control-sm",
         });
 
         for (i = 0; i < arr_len; i++) {
@@ -489,7 +489,7 @@ var settings_maker = {
         });
 
         var $level_modifier_select = $("<select>", {
-            "class": "form-control col-sm-7",
+            "class": "form-control form-control-sm col-sm-7",
             name: element_ids.level_modifier,
         }).appendTo($input_group);
 
@@ -511,7 +511,7 @@ var settings_maker = {
 
         var $select = $("<select>", {
             id: select_id,
-            "class": "form-control col-sm-5",
+            "class": "form-control form-control-sm col-sm-5",
             name: select_name,
         }).appendTo($input_group);
 
@@ -545,7 +545,7 @@ var settings_maker = {
                 multiple: true,
                 id: element_ids.mutiple_dates_select_id,
                 name: element_ids.mutiple_dates_select_name,
-                "class": "form-control",
+                "class": "form-control form-control-sm",
                 size: select_size,
             });
 
@@ -593,7 +593,7 @@ var settings_maker = {
                 multiple: true,
                 id: element_ids.multiple_loc_select_id,
                 name: element_ids.multiple_loc_select_name,
-                "class": "form-control",
+                "class": "form-control form-control-sm",
                 size: select_size,
             });
 
@@ -632,7 +632,7 @@ var settings_maker = {
         });
 
         var $item_type_modifier_select = $("<select>", {
-            "class": "form-control col-sm-7",
+            "class": "form-control form-control-sm col-sm-7",
             name: element_ids.num_item_type_modifier,
         }).appendTo($input_group);
 
@@ -654,7 +654,7 @@ var settings_maker = {
 
         var $input = $("<input>", {
             id: input_id,
-            "class": "form-control col-sm-5",
+            "class": "form-control form-control-sm col-sm-5",
             name: input_name,
             type: "number",
             value: 0,
@@ -682,7 +682,7 @@ var settings_maker = {
                 "class": "input-group",
             }).appendTo($div);
         $("<input>", {
-            "class": "form-control",
+            "class": "form-control form-control-sm",
             id: element_ids.time_period_input_id,
             name: element_ids.time_period_input_name,
             type: "number",
