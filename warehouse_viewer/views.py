@@ -49,6 +49,8 @@ def search_ajax(request):
     if data_mode == "map":
         if data_type == "item_count":
             response = warehouse_data_views.get_item_count(request)
+        elif data_type == "item_weight":
+            response = warehouse_data_views.get_item_weight(request)
         elif data_type == "item_added":
             response = warehouse_data_views.get_item_added(request)
         elif data_type == "item_shipped":

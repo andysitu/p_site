@@ -55,8 +55,9 @@ var viewer_processor = {
                 helper_functions.compare_locations);
         } else if (mode == "map") {
             if (data_type == "item_count" ||
-                data_type == "item_added" ||
-                data_type == "item_shipped") {
+                    data_type == "item_added" ||
+                    data_type == "item_shipped" ||
+                    data_type == "item_weight" ) {
                 processed_data = helper_functions.process_item_count(raw_data, form_data);
             }
         } else {

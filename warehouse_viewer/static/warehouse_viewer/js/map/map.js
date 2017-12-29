@@ -429,7 +429,8 @@ var color_map_functions = {
          */
         if (data_type == "item_count" ||
             data_type == "item_added" ||
-            data_type == "item_shipped") {
+            data_type == "item_shipped" ||
+            data_type == "item_weight" ) {
             color_map = this.item_count_map(data);
         }
 

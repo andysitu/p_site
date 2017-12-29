@@ -110,6 +110,51 @@ def get_item_count(request):
 
     return data_dic
 
+def get_item_weight(request):
+    """
+    Gets item_weight of a specific location
+    :param request: request [ date_id[int] & loc [String] ]
+    :return: data_dic
+        {
+            location Code [string]: {
+                "items": {
+                    item_sku [string]: item_count [ int]
+                }
+            }
+        }
+    """
+    data_dic = {}
+
+    date_id = request.GET.get("date-1")
+    loc = request.GET.get("loc")
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
+    data_date_inst = DataDate.objects.get(pk=date_id)
+
+    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
+
+    for item_inst in i_q:
+        js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
+        if js_loc_code not in data_dic:
+            data_dic[js_loc_code] = {"items": {}}
+
+        location = item_inst.location_code
+        if location not in data_dic[js_loc_code]["items"]:
+            data_dic[js_loc_code]["items"][location] = {}
+        cur_item_dic = data_dic[js_loc_code]["items"][location]
+
+        item_code = item_inst.item_code
+        item_weight = item_inst.item_weight
+        item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+
+        if item_code not in cur_item_dic:
+            cur_item_dic[item_code] = item_quantity * item_weight
+        else:
+            cur_item_dic[item_code] += item_quantity * item_weight
+
+    return data_dic
+
 def get_item_added(request):
     """
     Gets items_added of a specific location

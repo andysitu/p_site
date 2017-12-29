@@ -152,6 +152,7 @@ var map_mode_settings = {
                 "item_count": gettext("Item Count"),
                 "item_added": gettext("Item Added"),
                 "item_shipped": gettext("Item Shipped"),
+                "item_weight": gettext("Item Weight"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -175,6 +176,7 @@ var map_mode_settings = {
 
         switch(data_type) {
             case "item_count":
+            case "item_weight":
                 menu_functions.add_loc_select_and_level_container();
                 menu_functions.add_filter_div();
                 break;
