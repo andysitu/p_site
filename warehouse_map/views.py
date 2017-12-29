@@ -288,7 +288,7 @@ def create_grids():
         double_rack_status = False
         prev_y = 23
 
-        for i in range(50):
+        for i in range(48):
             if double_rack_status:
                 next_y = prev_y + 1
                 prev_y = next_y
@@ -298,7 +298,7 @@ def create_grids():
                 prev_y = next_y
                 double_rack_status = True
 
-            vc_grid.add_shelf_aisle(0, next_y, False, vc_loc_sub + str(i), 15, 15, True)
+            vc_grid.add_shelf_aisle(0, next_y, False, vc_loc_sub + str(i+1), 15, 15, True)
 
 
         vc_grid.save()
