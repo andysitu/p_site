@@ -1,7 +1,7 @@
 # Minus the old existing functions,
 # this contains only functions that will directly affect warehouse data.
 
-import openpyxl, xlrd
+import xlrd
 from io import BytesIO
 from django.core.files.base import ContentFile
 import uuid
@@ -53,6 +53,17 @@ def process_excel_file(file):
     def convert_lab_id(id_string):
         return int(float(id_string))
 
+    def convert_item_code(item_code):
+        """
+        xlrd (or excel) reads integers as floats (thus this converts any potential floats
+            that should be an int for the item code into an item before converting it into a
+            string.
+        """
+        item_type = type(item_code)
+        if item_type == float and int(item_code) == item_code:
+            return str(int(item_code))
+        else:
+            return str(item_code)
 
     def get_date_from_xlrd(date_string):
         if date_string == "":
@@ -75,7 +86,7 @@ def process_excel_file(file):
         (9, "fifo_date", get_date_from_xlrd,),
         (18, "iv_create_date", get_date_from_xlrd),
         (13, "rcv", str,),
-        (27, "item_code", str,),
+        (27, "item_code", convert_item_code,),
         (28, "ship_quantity", int,),
         (31, "item_weight", float,),
         (36, "last_out_date", get_date_from_xlrd,),
