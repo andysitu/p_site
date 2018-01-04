@@ -178,8 +178,15 @@ def get_item_added(request):
     data_date_inst = DataDate.objects.get(pk=date_id)
 
     time_period = request.GET.get(elements_dictionary["time_period"])
+
     t_delta = datetime.timedelta(days=int(time_period))
-    prev_date = data_date_inst.date - t_delta
+
+
+    if data_date_inst.date.weekday() == 0:
+        monday_t_delta = datetime.timedelta(days=int(time_period) + 1)
+        prev_date = data_date_inst.date - monday_t_delta
+    else:
+        prev_date = data_date_inst.date - t_delta
 
     i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
 
