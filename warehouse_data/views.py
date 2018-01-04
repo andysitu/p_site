@@ -412,6 +412,8 @@ def get_added_items_over_time(request):
 
     t_delta = datetime.timedelta(days=int(time_period))
 
+    monday_t_delta = datetime.timedelta(days=int(time_period) + 1)
+
     if len(locs) == 0:
         locs = ["All", ]
 
@@ -427,7 +429,10 @@ def get_added_items_over_time(request):
     for date_id in date_ids:
         data_date = DataDate.objects.get(id=date_id)
 
-        prev_date = data_date.date - t_delta
+        if data_date.date.weekday() == 0:
+            prev_date = data_date.date - monday_t_delta
+        else:
+            prev_date = data_date.date - t_delta
 
         date_str = data_date.date.timestamp() * 1000
         for loc in data:

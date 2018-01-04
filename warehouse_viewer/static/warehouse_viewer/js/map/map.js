@@ -29,8 +29,6 @@ var map_processor = {
 
         $display_container.append($msg_div);
 
-        console.log($msg_div);
-
         this.ctx = map_canvas.getContext('2d');
 
         map_processor.color_map = color_map_functions.mapify(data_type, data);
