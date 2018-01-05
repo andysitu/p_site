@@ -413,6 +413,11 @@ var settings_maker = {
             text: gettext("SKU"),
         }).appendTo($filter_option_select);
 
+        $("<option>", {
+            "value": "rcv",
+            text: gettext("RCV"),
+        }).appendTo($filter_option_select);
+
         $input_group.appendTo($div);
 
         return $div

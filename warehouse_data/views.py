@@ -333,6 +333,8 @@ def get_normal_item_query(data_date, filter_option=None, filter_value=None):
             query = query.filter(customer_code=customer)
         elif filter_option == "item_code":
             query = query.filter(item_code=filter_value)
+        elif filter_option == "rcv":
+            query = query.filter(rcv=filter_value)
     return query.exclude(rack_location__loc="").exclude(customer_code=900135)
 
 
