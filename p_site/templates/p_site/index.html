@@ -12,16 +12,16 @@ Index
 <link rel="stylesheet" href="{% static 'p_site/css/psite_index.css' %}">
 
 <div class="list-group">
-    <a href="{% url 'customs_list:index' %}" class="index_links list-group-item list-group-item-action">
-        {% trans "Customs Declaration List" %}</a>
+    <a href="{% url 'warehouse_viewer:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "Warehouse Viewer" %}</a></a>
     <a href="{% url 'rcv_list:index' %}" class="index_links list-group-item list-group-item-action">
         {% trans "RCV List" %}</a>
     <a href="{% url 'warehouse_map:index' %}" class="index_links list-group-item list-group-item-action">
         {% trans "Warehouse Map" %}</a></a>
     <a href="{% url 'uploader:index' %}" class="index_links list-group-item list-group-item-action">
         {% trans "File Uploader" %}</a></a>
-    <a href="{% url 'warehouse_viewer:index' %}" class="index_links list-group-item list-group-item-action">
-        {% trans "Warehouse Viewer" %}</a></a>
+    <a href="{% url 'customs_list:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "Customs Declaration List" %}</a>
 </div>
 
 {% endblock %}
