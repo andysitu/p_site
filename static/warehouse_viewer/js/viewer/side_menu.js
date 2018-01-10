@@ -206,6 +206,7 @@ var chart_mode_settings = {
                 "added_item_over_time": gettext("Items Added Over Time"),
                 "item_type_over_time": gettext("Item Types Over Time"),
                 "num_customers_over_time": gettext("Number of Customers Over Time"),
+                "items_shipped_over_time": gettext("Items_Shipped Over Time"),
             };
 
         menu_functions.add_dataType_select(data_type_dic);
@@ -253,6 +254,11 @@ var chart_mode_settings = {
             case "num_customers_over_time":
                 menu_functions.add_multiple_date_select();
                 menu_functions.add_multiple_loc_select();
+                break;
+            case "items_shipped_over_time":
+                menu_functions.add_multiple_date_select();
+                menu_functions.add_multiple_loc_select();
+                menu_functions.add_filter_div();
                 break;
         }
     },

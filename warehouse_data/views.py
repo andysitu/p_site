@@ -648,3 +648,41 @@ def num_customers_over_time(request):
             data[loc][date_str] = len(item_sku_dic[loc][date_str])
 
     return data
+
+def items_shipped_over_time(request):
+    data = {}
+
+    date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+    locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
+
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
+    if len(locs) == 0:
+        locs = ["All", ]
+
+    if "All" in locs:
+        all_status = True
+    else:
+        all_status = False
+
+    for i in range(len(locs)):
+        loc = locs[i]
+        data[loc] = {}
+
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+        date_str = data_date.date.timestamp() * 1000
+        for loc in data:
+            data[loc][date_str] = 0
+
+        item_query = get_normal_item_query(data_date, filter_option, filter_value)
+        item_query = item_query.iterator()
+        for item in item_query:
+            item_loc = item.rack_location.loc
+            total_items = item.ship_quantity
+            if all_status:
+                data["All"][date_str] += total_items
+            if item_loc in data:
+                data[item_loc][date_str] += total_items
+    return data
