@@ -8,13 +8,20 @@ Index
 
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'p_site/css/psite_index.css' %}">
 
-<ul class="list-unstyled">
-    <li><a href="{% url 'customs_list:index' %}">{% trans "Customs Declaration List" %}</li>
-    <li><a href="{% url 'rcv_list:index' %}">{% trans "RCV List" %}</li>
-    <li><a href="{% url 'warehouse_map:index' %}">{% trans "Warehouse Map" %}</a></a></li>
-    <li><a href="{% url 'uploader:index' %}">{% trans "File Uploader" %}</a></a></li>
-    <li><a href="{% url 'warehouse_viewer:index' %}">{% trans "Warehouse Viewer" %}</a></a></li>
-</ul>
+<div class="list-group">
+    <a href="{% url 'customs_list:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "Customs Declaration List" %}</a>
+    <a href="{% url 'rcv_list:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "RCV List" %}</a>
+    <a href="{% url 'warehouse_map:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "Warehouse Map" %}</a></a>
+    <a href="{% url 'uploader:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "File Uploader" %}</a></a>
+    <a href="{% url 'warehouse_viewer:index' %}" class="index_links list-group-item list-group-item-action">
+        {% trans "Warehouse Viewer" %}</a></a>
+</div>
 
 {% endblock %}
