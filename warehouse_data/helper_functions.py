@@ -50,7 +50,7 @@ def get_all_location_dic(loc):
                 locations["USLA.VA.44." + str(column) + "." + str(level)] = {}
 
         # VC Area
-        for aisle in range(1, 33):
+        for aisle in range(1, 49):
             for column in range(1, 16):
                 for level in range(1,6):
                     locations["USLA.VC." + str(aisle) + "." + str(column) + "." + str(level)] = {}
