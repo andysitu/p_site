@@ -16,3 +16,8 @@ def setlanguage(request, language):
     next = request.POST.get('next', '/')
     return HttpResponseRedirect(next)
 
+def help(request):
+    return render(
+        request,
+        'p_site/help/help_main.html',
+    )
