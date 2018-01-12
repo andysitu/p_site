@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [   '127.0.0.1',
 # Application definition
 
 INSTALLED_APPS = [
+    'help.apps.HelpConfig',
     'customs_list.apps.CustomsListConfig',
     'warehouse_viewer.apps.WarehouseViewerConfig',
     'rcv_list.apps.RcvListConfig',

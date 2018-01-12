@@ -40,7 +40,8 @@ urlpatterns = [
     url(r'^accounts/login/', auth_views.LoginView.as_view(template_name='p_site/registration/login.html'), name="login"),
     url(r'^accounts/logout/', auth_views.LogoutView.as_view(template_name='p_site/registration/logout.html'), name="logout"),
 
-    re_path('help/', views.help),
+    re_path(r'help/', include('help.urls')),
+
 ]
 
 urlpatterns += [
