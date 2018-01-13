@@ -3,6 +3,6 @@ from . import views
 
 app_name = "help"
 urlpatterns = [
-    re_path('^$', views.help, name="help"),
-    re_path("help/warehouse_viewer/$", views.help_warehouse_viewer, name="warehouse_viewer_help"),
+    re_path('^$', views.help, name="home"),
+    re_path("^warehouse_viewer/$", views.help_warehouse_viewer, name="warehouse_viewer"),
 ]

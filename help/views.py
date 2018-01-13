@@ -10,5 +10,5 @@ def help(request):
 def help_warehouse_viewer(request):
     return render(
         request,
-        'help/h.html',
+        'help/warehouse_viewer.html',
     )

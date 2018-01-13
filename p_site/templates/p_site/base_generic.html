@@ -82,8 +82,10 @@
             <div class="col-sm-2 sidebar" id="sidebar-nav-div">
                 {% block nav_search %}{% endblock %}
                 <ul class="sidebar-nav">
-                    {% block home_link %}<li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>{% endblock %}
-                    {% block sidebar_links %}{% endblock %}
+                    {% block home_link %}
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>{% endblock %}
+                    {% block sidebar_links %}
+                    <li><a href="{% url 'help:home' %}">Help</a></li>{% endblock %}
                     {% block settings %}{% endblock %}
                 </ul>
             </div>
