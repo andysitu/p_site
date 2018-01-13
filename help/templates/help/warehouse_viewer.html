@@ -1,7 +1,11 @@
 {% extends 'help/help_base.html' %}
 
+{% load i18n %}
 {% load static %}
 
 {% block content %}
-<img src="{% static 'help/warehouse_viewer/viewer_upload.jpg' %}" alt="Upload Screen" border="1">
+<p>
+    {% trans "Click on Choose File to select your Excel file (XLSX). The filename should have the filename given from the WMS. It should be in the format of yyyymmddhhmmss.xlsx (year,month,date,hour,minute,seconds)." %}
+</p>
+<img class="disp-img" src="{% static 'help/img/warehouse_viewer/viewer_upload.jpg' %}" alt="Upload Screen">
 {% endblock %}
