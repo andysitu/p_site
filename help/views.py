@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 def help(request):
@@ -11,4 +12,10 @@ def warehouse_viewer_upload(request):
     return render(
         request,
         'help/warehouse_viewer_upload.html',
+    )
+
+def warehouse_viewer(request):
+    return render(
+        request,
+        'help/warehouse_viewer.html',
     )
