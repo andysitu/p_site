@@ -1,0 +1,91 @@
+{% extends 'help/help_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div id="save-area">
+    <h3>
+        {% trans "Save the file" %}
+    </h3>
+    <p>
+        {% trans "Open the WMS by right clicking on the icon and selecting 'Run as Administrator'" %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/run_wms.jpg' %}" alt="Run as adminsistrator">
+    <p>
+        Click on the inventory button.
+    </p>
+
+        <img class="display-img" src="{% static 'help/img/warehouse_viewer/item_button.jpg' %}" alt="Inventory">
+    <p>
+        Then click on 'Inventory List.'
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/item_menu.jpg' %}" alt="Inventory List">
+    <p>
+        Click on 'Inventory Detail.'
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/item_detail.jpg' %}" alt="Item Detail">
+    <p>
+         Click on 'Search' to search for all items available.
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/item_search.jpg' %}" alt="Search">
+    <p>
+        When the items finish loading in the WMS screen, click on the 'Export' button to export it to an Excel file.
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/export_button.jpg' %}" alt="Export">
+    <p>
+        Let it finish loading and then a save window should appear, asking you to save as an Excel file. Save it as it is in the correct location.
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/save_screen.jpg' %}" alt="Save Screen">
+</div>
+
+<div id="change-excel-format-area">
+    <h3>
+        {% trans "Change the XLS file into an XLSX file." %}
+    </h3>
+    <p>
+        {% trans "Open Excel. Open the XLS file (that you created with the WMS) with Excel by pressing the buttons [Ctrl] and 'O'. Select the file. "  %}
+        {% trans "A popup menu will appear saying that the file format and extension don't match. Click on 'Yes' to open it anyway." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/open_wrong_format.jpg' %}" alt="Open Wrong Format Screen">
+    <p>
+        {% trans "An import menu will appear. Select the 'File origin' as '54936: Chinese Simplified(GB18030).' Then, click on the 'Finish' button." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/text_import.jpg' %}" alt="Text Import Screen, save as Chinese Simplified">Q
+    <p>
+        {% trans "Save the Excel file and select the file type as 'Excel Workbook(*.xlsx)' under 'Save as type:'" %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/save_format.jpg' %}" alt="Save as .xlsx file">
+</div>
+
+<div id="upload-area">
+    <h3>
+        {% trans "Upload the file" %}
+    </h3>
+    <p>
+        {% trans "On the home menu, click on the 'Warehouse Viewer' link." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/viewer_link.jpg' %}" alt="Warehouse Viewer Link">
+    <p>
+        {% trans "Click on the 'Upload Excel' link on the top-left menu bar" %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/upload_link.jpg' %}" alt="Upload Link">
+    <p>
+        {% trans "Select the 'Choose File' button to upload your .xlsx file. " %}
+        {% trans "The filename should have the filename given from the WMS. It should be in the format of yyyymmddhhmmss.xlsx (year,month,date,hour,minute,seconds)." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/choose_file.jpg' %}" alt="Choose File">
+    <p>
+        {% trans "Upload the .xlsx file by select the 'Upload' button." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/upload.jpg' %}" alt="Upload the file">
+    <p>
+        {% trans "The file is now being uploaded. There will be a spinning icon." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/uploading.jpg' %}" alt="Uploading File">
+    <p>
+        {% trans "A message will tell you when the file has been finished uploading." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/warehouse_viewer/uploaded.jpg' %}" alt="File finished uploading">
+</div>
+{% endblock %}
