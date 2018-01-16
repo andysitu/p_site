@@ -7,7 +7,7 @@ def help(request):
         'help/help_main.html',
     )
 
-def help_warehouse_viewer_upload(request):
+def warehouse_viewer_upload(request):
     return render(
         request,
         'help/warehouse_viewer_upload.html',
