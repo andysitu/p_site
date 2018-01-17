@@ -66,6 +66,13 @@ def get_dates(request):
         date_list.append({"date_id":date_id, "date_string": date_str,})
     return JsonResponse(date_list, safe=False)
 
+def make_item_name_for_map(item_inst):
+    item_code = item_inst.item_code
+    customer_code = item_inst.customer_code
+    item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+    return str(customer_code) + "-" + item_code
+
+
 def get_item_count(request):
     """
     Gets item_count of a specific location
@@ -100,13 +107,13 @@ def get_item_count(request):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        item_code = item_inst.item_code
+        item_name = make_item_name_for_map(item_inst)
         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
 
-        if item_code not in cur_item_dic:
-            cur_item_dic[item_code] = item_quantity
+        if item_name not in cur_item_dic:
+            cur_item_dic[item_name] = item_quantity
         else:
-            cur_item_dic[item_code] += item_quantity
+            cur_item_dic[item_name] += item_quantity
 
     return data_dic
 
@@ -144,14 +151,14 @@ def get_item_weight(request):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        item_code = item_inst.item_code
         item_weight = item_inst.item_weight
         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+        item_name = make_item_name_for_map(item_inst)
 
-        if item_code not in cur_item_dic:
-            cur_item_dic[item_code] = item_quantity * item_weight
+        if item_name not in cur_item_dic:
+            cur_item_dic[item_name] = item_quantity * item_weight
         else:
-            cur_item_dic[item_code] += item_quantity * item_weight
+            cur_item_dic[item_name] += item_quantity * item_weight
 
     return data_dic
 
@@ -211,13 +218,13 @@ def get_item_added(request):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        item_code = item_inst.item_code
         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity
+        item_name = make_item_name_for_map(item_inst)
 
-        if item_code not in cur_item_dic:
-            cur_item_dic[item_code] = item_quantity
+        if item_name not in cur_item_dic:
+            cur_item_dic[item_name] = item_quantity
         else:
-            cur_item_dic[item_code] += item_quantity
+            cur_item_dic[item_name] += item_quantity
 
     return data_dic
 
@@ -292,8 +299,8 @@ def get_item_shipped(request):
 
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
 
-        item_code = item_inst.item_code
         item_quantity = labId_olderItem_dic[lab_id]
+        item_name = make_item_name_for_map(item_inst)
 
         if lab_id in labId_newerItem_dic:
             difference = item_quantity - labId_newerItem_dic[lab_id]
@@ -318,10 +325,10 @@ def get_item_shipped(request):
             data_dic[js_loc_code]["items"][location] = {}
         cur_item_dic = data_dic[js_loc_code]["items"][location]
 
-        if item_code not in cur_item_dic:
-            cur_item_dic[item_code] = difference
+        if item_name not in cur_item_dic:
+            cur_item_dic[item_name] = difference
         else:
-            cur_item_dic[item_code] += difference
+            cur_item_dic[item_name] += difference
 
     return data_dic
 
