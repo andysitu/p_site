@@ -19,3 +19,9 @@ def warehouse_viewer(request):
         request,
         'help/warehouse_viewer.html',
     )
+
+def forklift(request):
+    return render(
+        request,
+        'help/forklift.html'
+    )
