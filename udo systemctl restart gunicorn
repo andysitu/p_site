@@ -1,97 +1,0 @@
-[1mdiff --git a/warehouse_data/views.py b/warehouse_data/views.py[m
-[1mindex f92aba7..cea60f6 100644[m
-[1m--- a/warehouse_data/views.py[m
-[1m+++ b/warehouse_data/views.py[m
-[36m@@ -66,6 +66,13 @@[m [mdef get_dates(request):[m
-         date_list.append({"date_id":date_id, "date_string": date_str,})[m
-     return JsonResponse(date_list, safe=False)[m
- [m
-[32m+[m[32mdef make_item_name_for_map(item_inst):[m[41m[m
-[32m+[m[32m    item_code = item_inst.item_code[m[41m[m
-[32m+[m[32m    customer_code = item_inst.customer_code[m[41m[m
-[32m+[m[32m    item_quantity = item_inst.avail_quantity + item_inst.ship_quantity[m[41m[m
-[32m+[m[32m    return str(customer_code) + "-" + item_code[m[41m[m
-[32m+[m[41m[m
-[32m+[m[41m[m
- def get_item_count(request):[m
-     """[m
-     Gets item_count of a specific location[m
-[36m@@ -100,13 +107,13 @@[m [mdef get_item_count(request):[m
-             data_dic[js_loc_code]["items"][location] = {}[m
-         cur_item_dic = data_dic[js_loc_code]["items"][location][m
- [m
-[31m-        item_code = item_inst.item_code[m
-[32m+[m[32m        item_name = make_item_name_for_map(item_inst)[m[41m[m
-         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity[m
- [m
-[31m-        if item_code not in cur_item_dic:[m
-[31m-            cur_item_dic[item_code] = item_quantity[m
-[32m+[m[32m        if item_name not in cur_item_dic:[m[41m[m
-[32m+[m[32m            cur_item_dic[item_name] = item_quantity[m[41m[m
-         else:[m
-[31m-            cur_item_dic[item_code] += item_quantity[m
-[32m+[m[32m            cur_item_dic[item_name] += item_quantity[m[41m[m
- [m
-     return data_dic[m
- [m
-[36m@@ -144,14 +151,14 @@[m [mdef get_item_weight(request):[m
-             data_dic[js_loc_code]["items"][location] = {}[m
-         cur_item_dic = data_dic[js_loc_code]["items"][location][m
- [m
-[31m-        item_code = item_inst.item_code[m
-         item_weight = item_inst.item_weight[m
-         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity[m
-[32m+[m[32m        item_name = make_item_name_for_map(item_inst)[m[41m[m
- [m
-[31m-        if item_code not in cur_item_dic:[m
-[31m-            cur_item_dic[item_code] = item_quantity * item_weight[m
-[32m+[m[32m        if item_name not in cur_item_dic:[m[41m[m
-[32m+[m[32m            cur_item_dic[item_name] = item_quantity * item_weight[m[41m[m
-         else:[m
-[31m-            cur_item_dic[item_code] += item_quantity * item_weight[m
-[32m+[m[32m            cur_item_dic[item_name] += item_quantity * item_weight[m[41m[m
- [m
-     return data_dic[m
- [m
-[36m@@ -211,13 +218,13 @@[m [mdef get_item_added(request):[m
-             data_dic[js_loc_code]["items"][location] = {}[m
-         cur_item_dic = data_dic[js_loc_code]["items"][location][m
- [m
-[31m-        item_code = item_inst.item_code[m
-         item_quantity = item_inst.avail_quantity + item_inst.ship_quantity[m
-[32m+[m[32m        item_name = make_item_name_for_map(item_inst)[m[41m[m
- [m
-[31m-        if item_code not in cur_item_dic:[m
-[31m-            cur_item_dic[item_code] = item_quantity[m
-[32m+[m[32m        if item_name not in cur_item_dic:[m[41m[m
-[32m+[m[32m            cur_item_dic[item_name] = item_quantity[m[41m[m
-         else:[m
-[31m-            cur_item_dic[item_code] += item_quantity[m
-[32m+[m[32m            cur_item_dic[item_name] += item_quantity[m[41m[m
- [m
-     return data_dic[m
- [m
-[36m@@ -292,8 +299,8 @@[m [mdef get_item_shipped(request):[m
- [m
-         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)[m
- [m
-[31m-        item_code = item_inst.item_code[m
-         item_quantity = labId_olderItem_dic[lab_id][m
-[32m+[m[32m        item_name = make_item_name_for_map(item_inst)[m[41m[m
- [m
-         if lab_id in labId_newerItem_dic:[m
-             difference = item_quantity - labId_newerItem_dic[lab_id][m
-[36m@@ -318,10 +325,10 @@[m [mdef get_item_shipped(request):[m
-             data_dic[js_loc_code]["items"][location] = {}[m
-         cur_item_dic = data_dic[js_loc_code]["items"][location][m
- [m
-[31m-        if item_code not in cur_item_dic:[m
-[31m-            cur_item_dic[item_code] = difference[m
-[32m+[m[32m        if item_name not in cur_item_dic:[m[41m[m
-[32m+[m[32m            cur_item_dic[item_name] = difference[m[41m[m
-         else:[m
-[31m-            cur_item_dic[item_code] += difference[m
-[32m+[m[32m            cur_item_dic[item_name] += difference[m[41m[m
- [m
-     return data_dic[m
- [m
