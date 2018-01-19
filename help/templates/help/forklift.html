@@ -4,4 +4,51 @@
 {% load static %}
 
 {% block content %}
+<div id="equalize-charge">
+    <p>
+        {% trans "Every lead acid battery needs an equalizing charge every month." %}
+    </p>
+    <p>
+        {% trans "This 24V charger needs to be attached to the battery, and while it charging, the green button needs to be pressed." %}
+        {% trans "The 'EQUALIZE' light should turn on" %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/24volt_console.jpg' %}" alt="24V charger console">
+    <p>
+        {% trans "This is the console for the small green Toyota Chargers." %}
+        {% trans "While the battery is connected to the charger, the right button should be pressed." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/enersys_eur_console.jpg' %}" alt="Green Toyota charger console">
+    <p>
+        {% trans "This is the console for the Enersys larger chargers." %}
+        {% trans "While the battery is connected to the charger, press the right arrow button." %}
+        {% trans "A equalize symbol (similar to the equalize button for the small green Enersys charger) should show up in the top left corner of the screen." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/enersys_console.jpg' %}" alt="The larger Enersys charger console">
+    <p>
+        {% trans "This is for the small black chargers from Crown." %}
+        {% trans "This charger only allows you to charge the settings while it is currently connected to a battery." %}
+        {% trans "And changing this setting allows it for the next charge to be equalize, Not this one." %}
+        {% trans "Thus it is recommended to charge the same types of Crown forklifts at the same time, and have them be equalized the same next time also." %}
+    </p>
+    <p>
+        {% trans "While it is on this screen (Figure A), press to down button to get the message on Figure B." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/crown_console_1.jpg' %}" alt="main screen of Crown chargers">
+    <p>
+        Figure A
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/crown_console_2.jpg' %}" alt="charger screen of Crown chargers">
+    <p>
+        Figure B
+    </p>
+    <p>
+        {% trans 'Press Enter (Middle Button) and there will be an arrow key next the "DISABLED" on the screen.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/crown_console_3.jpg' %}" alt="charger screen with arrow">
+    <p>
+        {% trans 'Press the up or down button to change it from "DISABLED" to "ENABLED."' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/forklift/crown_console_4.jpg' %}" alt="charger screen with ENABLED">
+</div>
+
 {% endblock %}
