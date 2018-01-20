@@ -6,7 +6,12 @@
 {% block content %}
 <div id="equalize-charge">
     <p>
+        {% trans "Before removing the charger connector from the battery, turn off the charger first or else it may harm the battery or charger." %}
+        {% trans "You can do this by pressing either the red button or the button the middle" %}
+    </p>
+    <p>
         {% trans "Every lead acid battery needs an equalizing charge every month." %}
+        {% trans "Equalize charging should be done preferrably when the battery level is lower." %}
     </p>
     <p>
         {% trans "This 24V charger needs to be attached to the battery, and while it charging, the green button needs to be pressed." %}
@@ -47,6 +52,7 @@
     <img class="disp-img" src="{% static 'help/img/forklift/crown_console_3.jpg' %}" alt="charger screen with arrow">
     <p>
         {% trans 'Press the up or down button to change it from "DISABLED" to "ENABLED."' %}
+        {% trans "The charger will equalize charger the next time the battery is plugged in." %}
     </p>
     <img class="disp-img" src="{% static 'help/img/forklift/crown_console_4.jpg' %}" alt="charger screen with ENABLED">
 </div>

@@ -25,3 +25,9 @@ def forklift(request):
         request,
         'help/forklift.html'
     )
+
+def rcv_upload(request):
+    return render(
+        request,
+        'help/rcv_upload.html'
+    )
