@@ -4,4 +4,97 @@
 {% load static %}
 
 {% block content %}
+<div id="scansnap-settings">
+    <p>
+        {% trans 'Open "ScanSnap Manager" in the start menu.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_start.jpg' %}">
+    <p>
+        {% trans "Right click on the ScanSnap icon on the taskbar." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_icon.jpg' %}">
+    <p>
+        {% trans 'Click on the "Scan Button Settings" option.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_contextmenu_settings.jpg' %}">
+    <p>
+        {% trans 'In the "Scanning" option, set the options as so.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_setting1.jpg' %}">
+    <p>
+        {% trans 'In the "File option" option, set the options as so.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_setting2.jpg' %}">
+    <p>
+        {% trans 'In the "Paper" option, set the options as so.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_setting3.jpg' %}">
+
+</div>
+<div id="scansnap-scanning">
+    <p>
+        {% trans 'Open "ScanSnap Manager" in the start menu.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_start.jpg' %}">
+    <p>
+        {% trans "Open the cover flaps of the Scansnap scanner." %}
+        {% trans "Place the paper into the scanner facing down." %}
+        {% trans "Press the blue button on the scanner to begin scanning." %}
+        {% trans "An window will pop up." %}
+    </p>
+    <p>
+        {% trans "Don't scan too much paper at once or else it will jam." %}
+        {% trans "Once you are done with one batch of paper and want to scan the next, press the scan or blue button again to continue scanning." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_page.jpg' %}">
+    <p>
+        {% trans 'Finally, once you are done scanning the pages, click "Finish Scanning."' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_finish_scan.jpg' %}">
+    <p>
+        {% trans "Another window will pop up, asking you how to save the file." %}
+        {% trans 'Click on "Scan to Folder" to save as a PDF.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_save_option.jpg' %}">
+    <p>
+        {% trans "Another window will pop to name the PDF." %}
+        {% trans "The naming scheme I currently use is the month, date, year." %}
+        {% trans "As an example, 01192018." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_save_file.jpg' %}">
+    <p>
+        {% trans "Press OK or the enter key to save. A success window will pop up." %}
+        {% trans "Click OK." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_save_success.jpg' %}">
+</div>
+<div id="scansnap-paperjam-div">
+    <p>
+        {% trans "If there is a paper jam, click on the page in the popup window to see the last page that was successfully scanned." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_last_page.jpg' %}">
+    <p>
+        {% trans "Pull the latch/ button on the scanner to open the scanner" %}
+        {% trans "to release the jammed paper." %}
+        {% trans "Then place the paper back into the scanner, beginning with the page after the last page that was scanned." %}
+        {% trans 'Continue on "Continue Scanning on the window."' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_paperjam.jpg' %}">
+</div>
+<div id="scansnap-cancel-div">
+    <p>
+        {% trans "If you want to cancel or stop the scanning, you can click on the 'X' or on 'Quit'" %}
+        {% trans "A popup window will ask you if you want to delete the file." %}
+        {% trans 'If you click on "Yes", the scanned pages will be deleted.' %}
+        {% trans 'If you click "No", you will be able to save the scanned pages.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_delete_confirm.jpg' %}">
+</div>
+<div id="scansnap-dupex-div">
+    <p>
+        {% trans "If you want to scan both sides of the paper with the same settings, right click on the scansnap icon." %}
+        {% trans "Then click on Duplex Scan." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/scansnap_duplex_contextmenu.jpg' %}">
+</div>
 {% endblock %}
