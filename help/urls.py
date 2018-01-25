@@ -7,5 +7,5 @@ urlpatterns = [
     path('warehouse_viewer', views.warehouse_viewer, name="warehouse_viewer"),
     re_path("^warehouse_viewer_upload/$", views.warehouse_viewer_upload, name="warehouse_viewer_upload"),
     path('forklift', views.forklift, name="forklift"),
-    path('rcv_upload', views.rcv_upload, name="rcv_upload"),
+    path('scansnap', views.scansnap, name="scansnap"),
 ]

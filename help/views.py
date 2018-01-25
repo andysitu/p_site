@@ -26,8 +26,8 @@ def forklift(request):
         'help/forklift.html'
     )
 
-def rcv_upload(request):
+def scansnap(request):
     return render(
         request,
-        'help/rcv_upload.html'
+        'help/scansnap.html'
     )
