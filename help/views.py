@@ -23,11 +23,17 @@ def warehouse_viewer(request):
 def forklift(request):
     return render(
         request,
-        'help/forklift.html'
+        'help/forklift.html',
     )
 
 def scansnap(request):
     return render(
         request,
-        'help/scansnap.html'
+        'help/scansnap.html',
+    )
+
+def rcv_upload(request):
+    return render(
+        request,
+        'help/rcv_upload.html',
     )

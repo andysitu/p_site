@@ -8,4 +8,5 @@ urlpatterns = [
     re_path("^warehouse_viewer_upload/$", views.warehouse_viewer_upload, name="warehouse_viewer_upload"),
     path('forklift', views.forklift, name="forklift"),
     path('scansnap', views.scansnap, name="scansnap"),
+    path("rcv_upload", views.rcv_upload, name="rcv_upload"),
 ]
