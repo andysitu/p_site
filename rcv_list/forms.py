@@ -17,8 +17,11 @@ class UploadRCVs(forms.Form):
         widget=forms.ClearableFileInput(attrs={'multiple': True}),
     )
 
+    d = datetime.date.today()
+    datetoday_string = d.isoformat()
+
     input_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}),
-                                  initial=datetime.date.today,
+                                  initial=datetoday_string,
                                   label=gettext_lazy("Input Date"))
 
     input_date_status = forms.BooleanField(
