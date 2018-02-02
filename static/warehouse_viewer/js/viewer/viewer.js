@@ -36,6 +36,8 @@ var element_ids = {
     num_item_type_input_id: "item-type-input-id",
     num_item_type_input_name: "num-item-types",
     num_item_type_modifier: "num-item-type-modifier",
+    single_date_select_id: "date-select",
+    single_date_select_name: "date",
     time_period_input_id: "time-period-input",
     time_period_input_name: "time-period",
 

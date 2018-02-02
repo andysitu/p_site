@@ -416,6 +416,67 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
+def item_search(request):
+    data = {}
+
+    time_period = request.GET.get(elements_dictionary["time_period"])
+    date_id = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
+    locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
+
+    filter_value = request.GET.get(elements_dictionary["filter_value"])
+    filter_option = request.GET.get(elements_dictionary["filter_option"])
+
+    t_delta = datetime.timedelta(days=int(time_period))
+
+    monday_t_delta = datetime.timedelta(days=int(time_period) + 1)
+
+    if len(locs) == 0:
+        locs = ["All", ]
+
+    if "All" in locs:
+        all_status = True
+    else:
+        all_status = False
+
+    for i in range(len(locs)):
+        loc = locs[i]
+        data[loc] = {}
+
+    for date_id in date_ids:
+        data_date = DataDate.objects.get(id=date_id)
+
+        if data_date.date.weekday() == 0:
+            prev_date = data_date.date - monday_t_delta
+        else:
+            prev_date = data_date.date - t_delta
+
+        date_str = data_date.date.timestamp() * 1000
+        for loc in data:
+            data[loc][date_str] = 0
+
+        item_query = get_normal_item_query(data_date, filter_option, filter_value)
+        item_query = item_query.filter(iv_create_date__gte=prev_date)
+        item_query = item_query.iterator()
+        for item in item_query:
+            item_loc = item.rack_location.loc
+            rcv = item.rcv
+            recv_re = re.compile("^RECV")
+
+            if recv_re.match(rcv):
+                if item.iv_create_date < prev_date:
+                    continue
+            else:
+                if item.fifo_date < prev_date:
+                    continue
+
+            total_items = item.avail_quantity + item.ship_quantity
+
+            if all_status:
+                data["All"][date_str] += total_items
+            if item_loc in data:
+                data[item_loc][date_str] += total_items
+    return data
+
 def get_added_items_over_time(request):
     data = {}
 

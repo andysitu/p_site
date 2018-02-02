@@ -236,6 +236,7 @@ var chart_mode_settings = {
         switch(data_type) {
             case "item_search":
                 menu_functions.add_filter_div();
+                menu_functions.add_multiple_loc_select();
                 menu_functions.add_single_date_select();
                 break;
             case "total_item_info":
@@ -567,8 +568,8 @@ var settings_maker = {
         var $div,
             $date_select = $("<select></select>", {
                 multiple: false,
-                id: element_ids.mutiple_dates_select_id,
-                name: element_ids.mutiple_dates_select_name,
+                id: element_ids.single_date_select_id,
+                name: element_ids.single_date_select_name,
                 "class": "form-control form-control-sm",
                 size: select_size,
             });
@@ -599,7 +600,7 @@ var settings_maker = {
         $div = $("<div class='form-group'>");
 
         $("<label>", {
-            "for": element_ids.mutiple_dates_select_id,
+            "for": element_ids.single_date_select_id,
         }).html(gettext("Date")).appendTo($div);
 
         $div.append($date_select);
