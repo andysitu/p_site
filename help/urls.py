@@ -9,4 +9,5 @@ urlpatterns = [
     path('forklift', views.forklift, name="forklift"),
     path('scansnap', views.scansnap, name="scansnap"),
     path("rcv_upload", views.rcv_upload, name="rcv_upload"),
+    path("pda", views.pda, name="pda"),
 ]

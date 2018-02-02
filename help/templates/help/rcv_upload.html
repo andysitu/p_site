@@ -4,4 +4,41 @@
 {% load static %}
 
 {% block content %}
+<div id="uploading-div">
+    <h2>{% trans "Upload RCV's" %}</h2>
+    <p>
+        {% trans "Click on the Upload RCV link on the side." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/side_links.jpg' %}" alt="RCV Upload Link">
+
+    <p>
+        {% trans 'Select the RC file by clicking on the "Chose Files" button.' %}
+        {% trans "The PDF files have been named by using month, day, and year." %}
+        {% trans "For example, 01282018.pdf." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/select_file.jpg' %}" alt="Choose your RCV file">
+    <p>
+        {% trans "If the input date is not known, then leave it unchecked." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/no_input_date.jpg' %}">
+</div>
+<div id="editing-div">
+    <h2>{% trans "Editing RCV's" %}</h2>
+    <p>
+        {% trans 'To edit an RCVs with incorrect filename format, click on the View To-Edit Files link on the side menu.' %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/edit_files_link.jpg' %}">
+    <p>
+
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/edit_files_link.jpg' %}">
+    <p>
+        {% trans "It'll lead you to a page listing all the RCVs that need to be edited." %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/edit_files_view.jpg' %}">
+    <p>
+        {% trans "The edit page " %}
+    </p>
+    <img class="disp-img" src="{% static 'help/img/rcv/upload/edit_files_view.jpg' %}">
+</div>
 {% endblock content %}

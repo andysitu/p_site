@@ -37,3 +37,9 @@ def rcv_upload(request):
         request,
         'help/rcv_upload.html',
     )
+
+def pda(request):
+    return render(
+        request,
+        "help/pda.html",
+    )
