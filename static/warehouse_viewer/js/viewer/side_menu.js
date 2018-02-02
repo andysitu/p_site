@@ -123,6 +123,12 @@ var menu_functions = {
         var $num_item_type_div = settings_maker.num_item_types();
         this.add_element_to_options($num_item_type_div);
     },
+    add_single_date_select: function() {
+        var $options_container = this.get_options_container(),
+            $date = settings_maker.single_date_select();
+        $options_container.append($date);
+        return $options_container;
+    },
     add_multiple_date_select: function() {
         var $options_container = this.get_options_container(),
             $date = settings_maker.multiple_date_select();
@@ -200,6 +206,7 @@ var chart_mode_settings = {
         var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
             data_type_dic = {
+                "item_search": gettext("Item Search"),
                 "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type Filter"),
                 "total_item_over_time": gettext("Total Item Over Time"),
@@ -227,6 +234,10 @@ var chart_mode_settings = {
         menu_functions.empty_options_container();
 
         switch(data_type) {
+            case "item_search":
+                menu_functions.add_filter_div();
+                menu_functions.add_single_date_select();
+                break;
             case "total_item_info":
                 menu_functions.add_date1();
                 break;
@@ -545,6 +556,54 @@ var settings_maker = {
             }).appendTo($select);
         }
         return $div
+    },
+    single_date_select: function() {
+        /**
+         * Returns div with bootstrap CSS format containing
+         *  label & select HTML.
+         */
+        var select_size = 6;
+
+        var $div,
+            $date_select = $("<select></select>", {
+                multiple: false,
+                id: element_ids.mutiple_dates_select_id,
+                name: element_ids.mutiple_dates_select_name,
+                "class": "form-control form-control-sm",
+                size: select_size,
+            });
+
+        $.ajax({
+           url: dates_ajax_url,
+            action: "get",
+            data: {
+               "num_dates": 50,
+            },
+            success: function(data){
+               var i, data_len = data.length,
+                    date_id, date_str, date_option;
+
+               for (i = 0; i < data_len; i++){
+                   date_obj = data[i];
+                   date_id = date_obj["date_id"];
+                   date_str = date_obj["date_string"];
+
+                   $date_option = $("<option>",{
+                       value: date_id,
+                       text: date_str,
+                   }).appendTo($date_select);
+               }
+            },
+        });
+
+        $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": element_ids.mutiple_dates_select_id,
+        }).html(gettext("Date")).appendTo($div);
+
+        $div.append($date_select);
+        return $div;
     },
     multiple_date_select: function() {
         /**
