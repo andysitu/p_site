@@ -426,55 +426,51 @@ def item_search(request):
     filter_value = request.GET.get(elements_dictionary["filter_value"])
     filter_option = request.GET.get(elements_dictionary["filter_option"])
 
-    # t_delta = datetime.timedelta(days=int(time_period))
-    #
-    # monday_t_delta = datetime.timedelta(days=int(time_period) + 1)
-    #
-    # if len(locs) == 0:
-    #     locs = ["All", ]
-    #
-    # if "All" in locs:
-    #     all_status = True
-    # else:
-    #     all_status = False
-    #
-    # for i in range(len(locs)):
-    #     loc = locs[i]
-    #     data[loc] = {}
-    #
-    # for date_id in date_ids:
-    #     data_date = DataDate.objects.get(id=date_id)
-    #
-    #     if data_date.date.weekday() == 0:
-    #         prev_date = data_date.date - monday_t_delta
-    #     else:
-    #         prev_date = data_date.date - t_delta
-    #
-    #     date_str = data_date.date.timestamp() * 1000
-    #     for loc in data:
-    #         data[loc][date_str] = 0
-    #
-    #     item_query = get_normal_item_query(data_date, filter_option, filter_value)
-    #     item_query = item_query.filter(iv_create_date__gte=prev_date)
-    #     item_query = item_query.iterator()
-    #     for item in item_query:
-    #         item_loc = item.rack_location.loc
-    #         rcv = item.rcv
-    #         recv_re = re.compile("^RECV")
-    #
-    #         if recv_re.match(rcv):
-    #             if item.iv_create_date < prev_date:
-    #                 continue
-    #         else:
-    #             if item.fifo_date < prev_date:
-    #                 continue
-    #
-    #         total_items = item.avail_quantity + item.ship_quantity
-    #
-    #         if all_status:
-    #             data["All"][date_str] += total_items
-    #         if item_loc in data:
-    #             data[item_loc][date_str] += total_items
+    if len(locs) == 0:
+        locs = ["All", ]
+
+    if "All" in locs:
+        all_status = True
+    else:
+        all_status = False
+
+    data_date = DataDate.objects.get(id=date_id)
+
+    date_str = data_date.date.timestamp() * 1000
+#
+    item_query = get_normal_item_query(data_date, filter_option, filter_value)
+    item_query = item_query.iterator()
+    for item in item_query:
+        item_loc = item.rack_location.loc
+        rcv = item.rcv
+        item_code = item.item_code
+        description = item.description
+        avail_quantity = item.avail_quantity
+        ship_quantity = item.ship_quantity
+
+
+
+        total_items = item.avail_quantity + item.ship_quantity
+
+        # if all_status:
+        #     data["All"][date_str] += total_items
+        # if item_loc in data:
+        #     data[item_loc][date_str] += total_items
+        if item_code not in data:
+            data[item_code] = {}
+        d = data[item_code]
+        if item_loc not in d:
+            d[item_loc] = {
+                "avail_quantity" : avail_quantity,
+                "ship_quantity": ship_quantity,
+                "description": description,
+                "item_code": item_code,
+                "rcv": rcv,
+                "location": item_loc,
+            }
+        else:
+            d[item_loc]["avail_quantity"] += avail_quantity
+            d[item_loc]["ship_quantity"] += ship_quantity
     return data
 
 def get_added_items_over_time(request):

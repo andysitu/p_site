@@ -41,13 +41,6 @@ def upload(request):
         }
     )
 
-def search(request):
-    return render(
-        request,
-        'warehouse_viewer/search.html',
-        context={}
-    )
-
 def search_ajax(request):
     data_mode = request.GET.get("mode")
     data_type = request.GET.get("data-type")
