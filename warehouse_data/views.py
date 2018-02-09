@@ -417,7 +417,7 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
-def item_search(request):
+def search(request):
     data = {}
 
     date_id = request.GET.get(elements_dictionary["single_date"])
@@ -441,7 +441,7 @@ def item_search(request):
     item_query = get_normal_item_query(data_date, filter_option, filter_value)
     item_query = item_query.iterator()
     for item in item_query:
-        item_loc = item.rack_location.loc
+        item_loc = str(item.rack_location)
         rcv = item.rcv
         item_code = item.item_code
         description = item.description

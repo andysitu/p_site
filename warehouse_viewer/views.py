@@ -56,8 +56,8 @@ def search_ajax(request):
         elif data_type == "item_shipped":
             response = warehouse_data_views.get_item_shipped(request)
     elif data_mode == "chart":
-        if data_type == "item_search":
-            response = warehouse_data_views.item_search(request)
+        if data_type == "search":
+            response = warehouse_data_views.search(request)
         elif data_type == "added_item_over_time":
             response = warehouse_data_views.get_added_items_over_time(request)
         elif data_type == "total_item_info":

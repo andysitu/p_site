@@ -22,6 +22,9 @@ var viewer_processor = {
         }
     },
     create_map: function(form_data, raw_data) {
+        /**
+         * Creates a mapping of the data and then displays it.
+         */
         var data_mode = form_data["mode"],
             data_type = form_data['data-type'];
 

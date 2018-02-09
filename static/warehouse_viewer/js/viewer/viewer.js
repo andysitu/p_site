@@ -125,6 +125,16 @@ var chart = {
                 data["top-item-count"],
                 "top-item-count"
             );
+        } else if (data_type == "total_item_over_time" || data_type == "added_item_over_time" ||
+                    data_type == "item_type_over_time" || data_type == "num_customers_over_time" ||
+                    data_type == "items_shipped_over_time"
+        ) {
+            var $chart = chart.make_time_chart(data);
+            $elements["total-item-over-time"] = $chart;
+        } else if (data_type == "search") {
+            var $table = this.make_data_table(data);
+            console.log($table);
+            $elements["data-table"] = $table;
         } else if (data_type == "item_type_filter") {
             var sorted_empty_loc_arr = data["item-type-filter"];
             $elements["item-type-filter"] = this.make_location_table(
@@ -133,17 +143,69 @@ var chart = {
                 8,
                 "item-type-filter-table"
             );
-        } else if (data_type == "total_item_over_time" || data_type == "added_item_over_time" ||
-                    data_type == "item_type_over_time" || data_type == "num_customers_over_time" ||
-                    data_type == "items_shipped_over_time"
-        ) {
-            var $chart = chart.make_time_chart(data);
-            $elements["total-item-over-time"] = $chart;
         }
 
         return $elements;
     },
+    make_data_table: function(data) {
+        /**
+         * Accepts a dictionary in the form of {[item_code] { [loc]: {item_data}}}
+         * Returns a $table displaying this data.
+         */
+        var $table = $("<table>", {
+           "class": "table table-sm table-striped",
+        });
 
+        var $tr, item_data, i, hlen;
+
+        var header_arr = [
+            "Item Code",
+            "Location",
+            "Description",
+            "Available Quantity",
+            "Shipped Quantity",
+            "RCV",
+        ],
+        header_map = {
+            "Item Code": "item_code",
+            "Location": "location",
+            "Description": "description",
+            "Available Quantity": "avail_quantity",
+            "Shipped Quantity": "ship_quantity",
+            "RCV": "rcv",
+        };
+
+
+        var $thead = $("<thead>").appendTo($table);
+        $tr = $("<tr>").appendTo($thead);
+
+        hlen = header_arr.length
+        for (i = 0; i < hlen; i++) {
+            $tr.append($("<th>", {
+                "class": "col",
+                text: header_arr[i],
+            }));
+        }
+
+        var  header, hkey;
+
+        var $tbody = $("<tbody>").appendTo($table);
+        for (var item_code in data) {
+            for (var location in data[item_code]) {
+                $tr = $("<tr>").appendTo($tbody);
+                item_data = data[item_code][location];
+                for (i = 0; i < hlen; i++) {
+                    header = header_arr[i];
+                    hkey = header_map[header];
+                    $tr.append($("<th>", {
+                        text: item_data[hkey],
+                    }));
+                }
+            }
+        }
+
+        return $table;
+    },
     make_table: function(header_arr, data_arrs, table_id) {
         var $table = $("<table>", {
                 "class": 'table table-sm table-fit',
