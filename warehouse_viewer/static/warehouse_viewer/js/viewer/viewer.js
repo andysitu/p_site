@@ -182,7 +182,6 @@ var chart = {
         hlen = header_arr.length
         for (i = 0; i < hlen; i++) {
             $tr.append($("<th>", {
-                "class": "col",
                 text: header_arr[i],
             }));
         }
