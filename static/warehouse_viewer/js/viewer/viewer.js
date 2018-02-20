@@ -150,6 +150,7 @@ var chart = {
     make_data_table: function(data) {
         /**
          * Accepts a dictionary in the form of {[item_code] { [loc]: {item_data}}}
+         * Makes table related to item_search.
          * Returns a $table displaying this data.
          */
         var $table = $("<table>", {
@@ -202,6 +203,10 @@ var chart = {
                 }
             }
         }
+
+        $table.DataTable({
+            paging: false,
+        });
 
         return $table;
     },

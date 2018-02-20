@@ -440,6 +440,7 @@ def search(request):
 #
     item_query = get_normal_item_query(data_date, filter_option, filter_value)
     item_query = item_query.iterator()
+
     for item in item_query:
         item_loc = str(item.rack_location)
         rcv = item.rcv
