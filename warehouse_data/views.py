@@ -437,8 +437,17 @@ def search(request):
     data_date = DataDate.objects.get(id=date_id)
 
     date_str = data_date.date.timestamp() * 1000
-#
-    item_query = get_normal_item_query(data_date, filter_option, filter_value)
+
+    item_query = get_normal_item_query(data_date)
+
+    if filter_option == "customer_code":
+        customer = int(filter_value)
+        item_query = item_query.filter(customer_code=customer)
+    elif filter_option == "item_code":
+        item_query = item_query.filter(item_code__icontains=filter_value)
+    elif filter_option == "rcv":
+        item_query = item_query.filter(rcv__icontains=filter_value)
+
     item_query = item_query.iterator()
 
     for item in item_query:
