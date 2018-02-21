@@ -237,7 +237,7 @@ var chart_mode_settings = {
             case "search":
                 menu_functions.add_filter_div();
                 menu_functions.add_multiple_loc_select();
-                menu_functions.add_single_date_select();
+                menu_functions.add_date1();
                 break;
             case "total_item_info":
                 menu_functions.add_date1();
@@ -434,6 +434,11 @@ var settings_maker = {
         $("<option>", {
             "value": "rcv",
             text: gettext("RCV"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "description",
+            text: gettext("Item Description"),
         }).appendTo($filter_option_select);
 
         $input_group.appendTo($div);

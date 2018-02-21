@@ -12,7 +12,7 @@ from django.db import IntegrityError
 import operator
 
 elements_dictionary = {
-    "single_date": "date",
+    "single_date": "date-1",
     "multiple_dates": "dates",
     "multiple_locs": "locs",
     "time_period": "time-period",
@@ -447,6 +447,8 @@ def search(request):
         item_query = item_query.filter(item_code__icontains=filter_value)
     elif filter_option == "rcv":
         item_query = item_query.filter(rcv__icontains=filter_value)
+    elif filter_option == "description":
+        item_query = item_query.filter(description__icontains=filter_value)
 
     item_query = item_query.iterator()
 
@@ -457,8 +459,6 @@ def search(request):
         description = item.description
         avail_quantity = item.avail_quantity
         ship_quantity = item.ship_quantity
-
-
 
         total_items = item.avail_quantity + item.ship_quantity
 
