@@ -437,6 +437,11 @@ var settings_maker = {
         }).appendTo($filter_option_select);
 
         $("<option>", {
+            "value": "item_code",
+            text: gettext("Item Code"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
             "value": "description",
             text: gettext("Item Description"),
         }).appendTo($filter_option_select);

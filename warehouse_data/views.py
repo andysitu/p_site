@@ -449,6 +449,8 @@ def search(request):
         item_query = item_query.filter(rcv__icontains=filter_value)
     elif filter_option == "description":
         item_query = item_query.filter(description__icontains=filter_value)
+    elif filter_option == "item_code":
+        item_query = item_query.filter(item_code__icontains=filter_value)
 
     item_query = item_query.iterator()
 
