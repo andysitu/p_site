@@ -96,9 +96,11 @@ def get_item_count(request):
 
     data_date_inst = DataDate.objects.get(pk=date_id)
 
-    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
+    item_query = get_normal_item_query(data_date_inst)
+    item_query = get_item_query_filter(item_query, filter_option, filter_value)
+    item_query = item_query.filter(rack_location__loc=loc)
 
-    for item_inst in i_q:
+    for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}}
@@ -138,11 +140,13 @@ def get_item_weight(request):
     filter_value = request.GET.get(elements_dictionary["filter_value"])
     filter_option = request.GET.get(elements_dictionary["filter_option"])
 
-    data_date_inst = DataDate.objects.get(pk=date_id)
+    data_date = DataDate.objects.get(pk=date_id)
 
-    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
+    item_query = get_normal_item_query(data_date)
+    item_query = get_item_query_filter(item_query, filter_option, filter_value)
+    item_query = item_query.filter(rack_location__loc=loc).iterator()
 
-    for item_inst in i_q:
+    for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
             data_dic[js_loc_code] = {"items": {}}
@@ -196,9 +200,12 @@ def get_item_added(request):
     else:
         prev_date = data_date_inst.date - t_delta
 
-    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)
+    item_query = get_normal_item_query(data_date_inst)
+    item_query = get_item_query_filter(item_query, filter_option, filter_value)
+    item_query = item_query.filter(rack_location__loc=loc).iterator()
 
-    for item_inst in i_q:
+
+    for item_inst in item_query:
         rcv = item_inst.rcv
         recv_re = re.compile("^RECV")
 
@@ -267,8 +274,13 @@ def get_item_shipped(request):
         newer_datadate = data_date_2
         older_datadate = data_date_1
 
-    item_query_older = get_normal_item_query(older_datadate, filter_option, filter_value).filter(rack_location__loc=loc).iterator()
-    item_query_newer = get_normal_item_query(newer_datadate, filter_option, filter_value).filter(fifo_date__lte=older_datadate.date).iterator()
+    item_query_older = get_normal_item_query(older_datadate)
+    item_query_older = get_item_query_filter(item_query_older, filter_option, filter_value)
+    item_query_older = item_query_older.filter(rack_location__loc=loc).iterator()
+
+    item_query_newer = get_normal_item_query(newer_datadate)
+    item_query_newer = get_item_query_filter(item_query_newer, filter_option, filter_value)
+    item_query_newer = item_query_newer.filter(fifo_date__lte=older_datadate.date).iterator()
 
     labId_newerItem_dic = {}
     labId_olderItem_dic = {}
@@ -333,18 +345,24 @@ def get_item_shipped(request):
 
     return data_dic
 
-def get_normal_item_query(data_date, filter_option=None, filter_value=None):
+def get_normal_item_query(data_date):
     query = Items.objects.select_related('rack_location').filter(data_date=data_date, )
-    if filter_value:
-        if filter_option == "customer_code":
-            customer = int(filter_value)
-            query = query.filter(customer_code=customer)
-        elif filter_option == "item_code":
-            query = query.filter(item_code=filter_value)
-        elif filter_option == "rcv":
-            query = query.filter(rcv=filter_value)
     return query.exclude(rack_location__loc="").exclude(customer_code=900135)
 
+def get_item_query_filter(item_query, filter_option, filter_value):
+    if filter_option == "customer_code":
+        customer = int(filter_value)
+        item_query = item_query.filter(customer_code=customer)
+    elif filter_option == "item_code":
+        item_query = item_query.filter(item_code__icontains=filter_value)
+    elif filter_option == "rcv":
+        item_query = item_query.filter(rcv__icontains=filter_value)
+    elif filter_option == "description":
+        item_query = item_query.filter(description__icontains=filter_value)
+    elif filter_option == "item_code":
+        item_query = item_query.filter(item_code__icontains=filter_value)
+
+    return item_query
 
 def get_total_item_info(request, num_top=20):
     date_id = request.GET.get("date-1")
@@ -523,9 +541,9 @@ def get_added_items_over_time(request):
         for loc in data:
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date, filter_option, filter_value)
-        item_query = item_query.filter(iv_create_date__gte=prev_date)
-        item_query = item_query.iterator()
+        item_query = get_normal_item_query(data_date)
+        item_query = get_item_query_filter(item_query, filter_option, filter_value)
+        item_query = item_query.filter(iv_create_date__gte=prev_date).iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
             rcv = item.rcv
@@ -573,7 +591,8 @@ def number_items_over_time(request):
         for loc in data:
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date, filter_option, filter_value)
+        item_query = get_normal_item_query(data_date)
+        item_query = get_item_query_filter(item_query, filter_option, filter_value)
         item_query = item_query.iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
@@ -666,7 +685,8 @@ def item_type_over_time(request):
             item_sku_dic[loc][date_str] = {}
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date, filter_option, filter_value)
+        item_query = get_normal_item_query(data_date)
+        item_query = get_item_query_filter(item_query, filter_option, filter_value)
         item_query = item_query.iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
@@ -752,7 +772,8 @@ def items_shipped_over_time(request):
         for loc in data:
             data[loc][date_str] = 0
 
-        item_query = get_normal_item_query(data_date, filter_option, filter_value)
+        item_query = get_normal_item_query(data_date)
+        item_query = get_item_query_filter(item_query, filter_option, filter_value)
         item_query = item_query.iterator()
         for item in item_query:
             item_loc = item.rack_location.loc

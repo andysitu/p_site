@@ -1,0 +1,108 @@
+[1mdiff --git a/warehouse_data/views.py b/warehouse_data/views.py[m
+[1mindex e836a87..044633c 100644[m
+[1m--- a/warehouse_data/views.py[m
+[1m+++ b/warehouse_data/views.py[m
+[36m@@ -96,9 +96,11 @@[m [mdef get_item_count(request):[m
+ [m
+     data_date_inst = DataDate.objects.get(pk=date_id)[m
+ [m
+[31m-    i_q = get_normal_item_query(data_date_inst, filter_option, filter_value).filter(rack_location__loc=loc)[m
+[32m+[m[32m    item_query = get_normal_item_query(data_date_inst)[m[41m[m
+[32m+[m[32m    item_query = get_item_query_filter(item_query, filter_option, filter_value)[m[41m[m
+[32m+[m[32m    item_query = item_query.filter(rack_location__loc=loc)[m[41m[m
+ [m
+[31m-    for item_inst in i_q:[m
+[32m+[m[32m    for item_inst in item_query:[m[41m[m
+         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)[m
+         if js_loc_code not in data_dic:[m
+             data_dic[js_loc_code] = {"items": {}}[m
+[36m@@ -267,8 +269,13 @@[m [mdef get_item_shipped(request):[m
+         newer_datadate = data_date_2[m
+         older_datadate = data_date_1[m
+ [m
+[31m-    item_query_older = get_normal_item_query(older_datadate, filter_option, filter_value).filter(rack_location__loc=loc).iterator()[m
+[31m-    item_query_newer = get_normal_item_query(newer_datadate, filter_option, filter_value).filter(fifo_date__lte=older_datadate.date).iterator()[m
+[32m+[m[32m    item_query_older = get_normal_item_query(older_datadate)[m[41m[m
+[32m+[m[32m    item_query_older = get_item_query_filter(item_query_older, filter_option, filter_value)[m[41m[m
+[32m+[m[32m    item_query_older = item_query_older.filter(rack_location__loc=loc).iterator()[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    item_query_newer = get_normal_item_query(data_date)[m[41m[m
+[32m+[m[32m    item_query_newer = get_item_query_filter(item_query_newer, filter_option, filter_value)[m[41m[m
+[32m+[m[32m    item_query_newer = item_query.filter(fifo_date__lte=older_datadate.date).iterator()[m[41m[m
+ [m
+     labId_newerItem_dic = {}[m
+     labId_olderItem_dic = {}[m
+[36m@@ -333,18 +340,24 @@[m [mdef get_item_shipped(request):[m
+ [m
+     return data_dic[m
+ [m
+[31m-def get_normal_item_query(data_date, filter_option=None, filter_value=None):[m
+[32m+[m[32mdef get_normal_item_query(data_date):[m[41m[m
+     query = Items.objects.select_related('rack_location').filter(data_date=data_date, )[m
+[31m-    if filter_value:[m
+[31m-        if filter_option == "customer_code":[m
+[31m-            customer = int(filter_value)[m
+[31m-            query = query.filter(customer_code=customer)[m
+[31m-        elif filter_option == "item_code":[m
+[31m-            query = query.filter(item_code=filter_value)[m
+[31m-        elif filter_option == "rcv":[m
+[31m-            query = query.filter(rcv=filter_value)[m
+     return query.exclude(rack_location__loc="").exclude(customer_code=900135)[m
+ [m
+[32m+[m[32mdef get_item_query_filter(item_query, filter_option, filter_value):[m[41m[m
+[32m+[m[32m    if filter_option == "customer_code":[m[41m[m
+[32m+[m[32m        customer = int(filter_value)[m[41m[m
+[32m+[m[32m        item_query = item_query.filter(customer_code=customer)[m[41m[m
+[32m+[m[32m    elif filter_option == "item_code":[m[41m[m
+[32m+[m[32m        item_query = item_query.filter(item_code__icontains=filter_value)[m[41m[m
+[32m+[m[32m    elif filter_option == "rcv":[m[41m[m
+[32m+[m[32m        item_query = item_query.filter(rcv__icontains=filter_value)[m[41m[m
+[32m+[m[32m    elif filter_option == "description":[m[41m[m
+[32m+[m[32m        item_query = item_query.filter(description__icontains=filter_value)[m[41m[m
+[32m+[m[32m    elif filter_option == "item_code":[m[41m[m
+[32m+[m[32m        item_query = item_query.filter(item_code__icontains=filter_value)[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m    return item_query[m[41m[m
+ [m
+ def get_total_item_info(request, num_top=20):[m
+     date_id = request.GET.get("date-1")[m
+[36m@@ -523,7 +536,8 @@[m [mdef get_added_items_over_time(request):[m
+         for loc in data:[m
+             data[loc][date_str] = 0[m
+ [m
+[31m-        item_query = get_normal_item_query(data_date, filter_option, filter_value)[m
+[32m+[m[32m        item_query = get_normal_item_query(data_date)[m[41m[m
+[32m+[m[32m        item_query = get_item_query_filter(item_query, filter_option, filter_value)[m[41m[m
+         item_query = item_query.filter(iv_create_date__gte=prev_date)[m
+         item_query = item_query.iterator()[m
+         for item in item_query:[m
+[36m@@ -573,7 +587,8 @@[m [mdef number_items_over_time(request):[m
+         for loc in data:[m
+             data[loc][date_str] = 0[m
+ [m
+[31m-        item_query = get_normal_item_query(data_date, filter_option, filter_value)[m
+[32m+[m[32m        item_query = get_normal_item_query(data_date)[m[41m[m
+[32m+[m[32m        item_query = get_item_query_filter(item_query, filter_option, filter_value)[m[41m[m
+         item_query = item_query.iterator()[m
+         for item in item_query:[m
+             item_loc = item.rack_location.loc[m
+[36m@@ -666,7 +681,8 @@[m [mdef item_type_over_time(request):[m
+             item_sku_dic[loc][date_str] = {}[m
+             data[loc][date_str] = 0[m
+ [m
+[31m-        item_query = get_normal_item_query(data_date, filter_option, filter_value)[m
+[32m+[m[32m        item_query = get_normal_item_query(data_date)[m[41m[m
+[32m+[m[32m        item_query = get_item_query_filter(item_query, filter_option, filter_value)[m[41m[m
+         item_query = item_query.iterator()[m
+         for item in item_query:[m
+             item_loc = item.rack_location.loc[m
+[36m@@ -752,7 +768,8 @@[m [mdef items_shipped_over_time(request):[m
+         for loc in data:[m
+             data[loc][date_str] = 0[m
+ [m
+[31m-        item_query = get_normal_item_query(data_date, filter_option, filter_value)[m
+[32m+[m[32m        item_query = get_normal_item_query(data_date)[m[41m[m
+[32m+[m[32m        item_query = get_item_query_filter(item_query, filter_option, filter_value)[m[41m[m
+         item_query = item_query.iterator()[m
+         for item in item_query:[m
+             item_loc = item.rack_location.loc[m
