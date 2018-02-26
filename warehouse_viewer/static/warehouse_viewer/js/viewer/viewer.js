@@ -157,6 +157,7 @@ var chart = {
          */
         var $table = $("<table>", {
            "class": "table table-sm table-striped",
+            id: "data-table"
         });
 
         var $tr, item_data, i, hlen;
@@ -199,16 +200,16 @@ var chart = {
                 for (i = 0; i < hlen; i++) {
                     header = header_arr[i];
                     hkey = header_map[header];
-                    $tr.append($("<th>", {
+                    $tr.append($("<td>", {
                         text: item_data[hkey],
                     }));
                 }
             }
         }
-
-        $table.DataTable({
-            paging: false,
-        });
+        //
+        // $table.DataTable({
+        //     paging: false,
+        // });
 
         return $table;
     },
