@@ -135,7 +135,6 @@ var chart = {
             var item_searcher = new Item_Searcher(data);
             var proc_data = item_searcher.data;
             var $table = this.make_data_table(proc_data);
-            console.log($table);
             $elements["data-table"] = $table;
         } else if (data_type == "item_type_filter") {
             var sorted_empty_loc_arr = data["item-type-filter"];
@@ -149,7 +148,7 @@ var chart = {
 
         return $elements;
     },
-    make_data_table: function(data) {
+    make_data_table: function(proc_data) {
         /**
          * Accepts a dictionary in the form of {[item_code] { [loc]: {item_data}}}
          * Makes table related to item_search.
@@ -200,17 +199,15 @@ var chart = {
         var  header, hkey;
 
         var $tbody = $("<tbody>").appendTo($table);
-        for (var item_code in data) {
-            for (var location in data[item_code]) {
-                $tr = $("<tr>").appendTo($tbody);
-                item_data = data[item_code][location];
-                for (i = 0; i < hlen; i++) {
-                    header = header_arr[i];
-                    hkey = header_map[header];
-                    $tr.append($("<td>", {
-                        text: item_data[hkey],
-                    }));
-                }
+        for (var itemsearch_id in proc_data) {
+            $tr = $("<tr>").appendTo($tbody);
+            item_data = proc_data[itemsearch_id];
+            for (i = 0; i < hlen; i++) {
+                header = header_arr[i];
+                hkey = header_map[header];
+                $tr.append($("<td>", {
+                    text: item_data[hkey],
+                }));
             }
         }
 
@@ -393,6 +390,25 @@ var Item_Searcher = class {
 
     process_data() {
         var raw_data = this.raw_data;
-        return raw_data;
+        var i=0,
+            item_sku,
+            location,
+            items_dic,
+            item_dic,
+            proc_data = {};
+        for (item_sku in raw_data) {
+            items_dic = raw_data[item_sku]
+            for (location in items_dic) {
+                item_dic = items_dic[location];
+                proc_data[i] = item_dic;
+                item_dic["itemsearcher_id"] = i
+                i++;
+            }
+        }
+        return proc_data;
+    }
+
+    sort(name) {
+
     }
 }
