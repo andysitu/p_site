@@ -51,3 +51,7 @@ ul.section-nav {
 .underline {
     text-decoration: underline;
 }
+
+#data-table > thead  {
+    cursor: pointer;
+ }
