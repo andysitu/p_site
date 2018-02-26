@@ -160,7 +160,7 @@ var chart = {
             id: "data-table"
         });
 
-        var $tr, item_data, i, hlen;
+        var $tr, $th, item_data, i, hlen;
 
         var header_arr = [
             "Item Code",
@@ -184,10 +184,17 @@ var chart = {
         $tr = $("<tr>").appendTo($thead);
 
         hlen = header_arr.length
+
         for (i = 0; i < hlen; i++) {
-            $tr.append($("<th>", {
+            $th = $("<th>", {
                 text: header_arr[i],
-            }));
+            })
+
+            $th.click(function(e) {
+                var th_name = e.target.textContent;
+                console.log(header_map[th_name]);
+            });
+            $tr.append($th);
         }
 
         var  header, hkey;
