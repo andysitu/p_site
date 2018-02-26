@@ -206,10 +206,6 @@ var chart = {
                 }
             }
         }
-        //
-        // $table.DataTable({
-        //     paging: false,
-        // });
 
         return $table;
     },
