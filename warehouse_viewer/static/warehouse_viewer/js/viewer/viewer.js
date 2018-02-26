@@ -132,7 +132,9 @@ var chart = {
             var $chart = chart.make_time_chart(data);
             $elements["total-item-over-time"] = $chart;
         } else if (data_type == "search") {
-            var $table = this.make_data_table(data);
+            var item_searcher = new Item_Searcher(data);
+            var proc_data = item_searcher.data;
+            var $table = this.make_data_table(proc_data);
             console.log($table);
             $elements["data-table"] = $table;
         } else if (data_type == "item_type_filter") {
@@ -374,3 +376,19 @@ var chart = {
         return $canvas;
     },
 };
+
+var Item_Searcher = class {
+    constructor(raw_data) {
+        this.raw_data = raw_data;
+        this.proc_data = this.process_data();
+    }
+
+    get data() {
+        return this.proc_data;
+    }
+
+    process_data() {
+        var raw_data = this.raw_data;
+        return raw_data;
+    }
+}
