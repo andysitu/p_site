@@ -162,6 +162,7 @@ var chart = {
         var $tr, $th, item_data, i, hlen;
 
         var header_arr = [
+            "Customer_Code",
             "Item Code",
             "Location",
             "Description",
@@ -170,6 +171,7 @@ var chart = {
             "RCV",
         ],
         header_map = {
+            "Customer_Code": "customer_code",
             "Item Code": "item_code",
             "Location": "location",
             "Description": "description",

@@ -482,6 +482,7 @@ def search(request):
         description = item.description
         avail_quantity = item.avail_quantity
         ship_quantity = item.ship_quantity
+        customer_code = item.customer_code
 
         total_items = item.avail_quantity + item.ship_quantity
 
@@ -500,6 +501,7 @@ def search(request):
                 "item_code": item_code,
                 "rcv": rcv,
                 "location": item_loc,
+                "customer_code": customer_code,
             }
         else:
             d[item_loc]["avail_quantity"] += avail_quantity
