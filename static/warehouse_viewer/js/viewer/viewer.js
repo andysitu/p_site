@@ -191,7 +191,7 @@ var chart = {
 
             $th.click(function(e) {
                 var th_name = e.target.textContent;
-                var sorted_data = item_searcher_inst.sort(header_map[th_name]);
+                var sorted_data = item_searcher_inst.sort_data(header_map[th_name]);
                 console.log(sorted_data);
                 $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
                 viewer.empty_page();
@@ -387,7 +387,7 @@ var Item_Searcher = class {
     constructor(raw_data) {
         this.proc_data = this.process_data(raw_data);
         this.sorted = null;
-        this.descending = null;
+        this.ascending = false;
     }
 
     get data() {
@@ -410,11 +410,20 @@ var Item_Searcher = class {
         return proc_data;
     }
 
-    sort(name) {
+    sort_data(name) {
+        console.log(this);
         console.log("Sorting", name);
+        this.ascending = !(this.ascending)
+        var ascending_status = this.ascending
+
         function compareFunction(a, b) {
-            var a_value = a[name],
+            if (ascending_status) {
+                var a_value = a[name],
                 b_value = b[name];
+            } else {
+                var a_value = b[name],
+                    b_value = a[name];
+            }
 
             if (a_value < b_value)
                 return -1
