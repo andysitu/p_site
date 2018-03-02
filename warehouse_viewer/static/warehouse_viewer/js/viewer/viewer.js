@@ -134,7 +134,7 @@ var chart = {
         } else if (data_type == "search") {
             var item_searcher = new Item_Searcher(data);
             var proc_data = item_searcher.data;
-            var $table = this.make_data_table(proc_data);
+            var $table = this.make_data_table(item_searcher, proc_data);
             $elements["data-table"] = $table;
         } else if (data_type == "item_type_filter") {
             var sorted_empty_loc_arr = data["item-type-filter"];
@@ -148,7 +148,7 @@ var chart = {
 
         return $elements;
     },
-    make_data_table: function(proc_data) {
+    make_data_table: function(item_searcher_inst, proc_data) {
         /**
          * Accepts a dictionary in the form of {[item_code] { [loc]: {item_data}}}
          * Makes table related to item_search.
@@ -191,7 +191,12 @@ var chart = {
 
             $th.click(function(e) {
                 var th_name = e.target.textContent;
-                console.log(header_map[th_name]);
+                var sorted_data = item_searcher_inst.sort(header_map[th_name]);
+                console.log(sorted_data);
+                $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
+                viewer.empty_page();
+                $data_table.appendTo($display_container);
+
             });
             $tr.append($th);
         }
@@ -380,35 +385,46 @@ var chart = {
 
 var Item_Searcher = class {
     constructor(raw_data) {
-        this.raw_data = raw_data;
-        this.proc_data = this.process_data();
+        this.proc_data = this.process_data(raw_data);
+        this.sorted = null;
+        this.descending = null;
     }
 
     get data() {
         return this.proc_data;
     }
 
-    process_data() {
-        var raw_data = this.raw_data;
-        var i=0,
-            item_sku,
+    process_data(raw_data) {
+        var item_sku,
             location,
             items_dic,
             item_dic,
-            proc_data = {};
+            proc_data = [];
         for (item_sku in raw_data) {
             items_dic = raw_data[item_sku]
             for (location in items_dic) {
                 item_dic = items_dic[location];
-                proc_data[i] = item_dic;
-                item_dic["itemsearcher_id"] = i
-                i++;
+                proc_data.push(item_dic);
             }
         }
         return proc_data;
     }
 
     sort(name) {
+        console.log("Sorting", name);
+        function compareFunction(a, b) {
+            var a_value = a[name],
+                b_value = b[name];
 
+            if (a_value < b_value)
+                return -1
+            if (a_value > b_value)
+                return 1
+            return 0;
+        }
+
+        this.sorted = name;
+        this.proc_data = this.proc_data.sort(compareFunction);
+        return this.proc_data;
     }
 }
