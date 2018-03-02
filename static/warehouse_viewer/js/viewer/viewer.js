@@ -425,11 +425,20 @@ var Item_Searcher = class {
                     b_value = a[name];
             }
 
-            if (a_value < b_value)
-                return -1
-            if (a_value > b_value)
-                return 1
-            return 0;
+            if (name == "location") {
+                var re = /(\w+)\.(\w+)\.([A-Za-z]*)(\d+)\.(\d+)\.(\d+)/;
+
+
+
+                return 0;
+            } else {
+                if (a_value < b_value)
+                    return -1
+                if (a_value > b_value)
+                    return 1
+                return 0;
+            }
+
         }
 
         this.sorted = name;
