@@ -446,10 +446,42 @@ var Item_Searcher = class {
                     level_a = re_result_a[6],
                     level_b = re_result_b[6];
 
-                if (area_b > area_b) {
+                if (warehouse_location_a > warehouse_location_b) {
                     return 1;
-                } else if (area_a < area_b) {
+                } else if (warehouse_location_a < warehouse_location_b) {
                     return -1;
+                } else {
+                    if (area_a > area_b) {
+                        return 1;
+                    } else if (area_a < area_b) {
+                        return -1;
+                    } else {
+                        if (area_modifier_a > area_modifier_b) {
+                            return 1;
+                        } else if (area_modifier_a < area_modifier_b) {
+                            return -1;
+                        } else {
+                            if (aisle_a > aisle_b) {
+                                return 1;
+                            } else if (aisle_a < aisle_b) {
+                                return -1;
+                            } else {
+                                if (column_a > column_b) {
+                                    return 1;
+                                } else if (column_a < column_b) {
+                                    return -1;
+                                } else {
+                                    if (level_a > level_b) {
+                                        return 1;
+                                    } else if (level_a < level_b) {
+                                        return -1;
+                                    } else {
+                                        return 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 return 0;
