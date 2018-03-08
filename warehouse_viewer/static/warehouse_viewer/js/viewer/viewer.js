@@ -430,14 +430,34 @@ var Item_Searcher = class {
             if (name == "location") {
                 var re = /(\w+)\.(\w+)\.([A-Za-z]*)(\d+)\.(\d+)\.(\d+)/;
 
+                var re_result_a = a_value.match(re),
+                    re_result_b = b_value.match(re);
 
+                var warehouse_location_a = re_result_a[1],
+                    warehouse_location_b = re_result_b[1],
+                    area_a = re_result_a[2],
+                    area_b = re_result_b[2],
+                    area_modifier_a = re_result_a[3],
+                    area_modifier_b = re_result_b[3],
+                    aisle_a = re_result_a[4],
+                    aisle_b = re_result_b[4],
+                    column_a = re_result_a[5],
+                    column_b = re_result_b[5],
+                    level_a = re_result_a[6],
+                    level_b = re_result_b[6];
+
+                if (area_b > area_b) {
+                    return 1;
+                } else if (area_a < area_b) {
+                    return -1;
+                }
 
                 return 0;
             } else {
                 if (a_value < b_value)
-                    return -1
+                    return -1;
                 if (a_value > b_value)
-                    return 1
+                    return 1;
                 return 0;
             }
 
