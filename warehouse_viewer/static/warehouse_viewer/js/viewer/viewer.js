@@ -442,12 +442,12 @@ var Item_Searcher = class {
                     area_b = re_result_b[2],
                     area_modifier_a = re_result_a[3],
                     area_modifier_b = re_result_b[3],
-                    aisle_a = re_result_a[4],
-                    aisle_b = re_result_b[4],
-                    column_a = re_result_a[5],
-                    column_b = re_result_b[5],
-                    level_a = re_result_a[6],
-                    level_b = re_result_b[6];
+                    aisle_a = parseInt(re_result_a[4]),
+                    aisle_b = parseInt(re_result_b[4]),
+                    column_a = parseInt(re_result_a[5]),
+                    column_b = parseInt(re_result_b[5]),
+                    level_a = parseInt(re_result_a[6]),
+                    level_b = parseInt(re_result_b[6]);
 
                 if (warehouse_location_a > warehouse_location_b) {
                     return 1;
