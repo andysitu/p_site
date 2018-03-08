@@ -413,9 +413,12 @@ var Item_Searcher = class {
     }
 
     sort_data(name) {
-        console.log(this);
-        console.log("Sorting", name);
-        this.ascending = !(this.ascending)
+
+        if (this.sorted != name) {
+            this.ascending = true;
+        } else {
+            this.ascending = !(this.ascending)
+        }
         var ascending_status = this.ascending
 
         function compareFunction(a, b) {
@@ -483,8 +486,6 @@ var Item_Searcher = class {
                         }
                     }
                 }
-
-                return 0;
             } else {
                 if (a_value < b_value)
                     return -1;
