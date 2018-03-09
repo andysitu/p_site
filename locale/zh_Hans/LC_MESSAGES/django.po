@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 16:25-0800\n"
+"POT-Creation-Date: 2018-03-08 17:22-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,11 +94,400 @@ msgstr "删除"
 msgid "No customs declaration notes have been uploaded."
 msgstr "沒有 CUSTOMS DECLARATION PDF"
 
-#: p_site/settings.py:146
+#: help/templates/help/forklift.html:9
+msgid ""
+"Before removing the charger connector from the battery, turn off the charger "
+"first or else it may harm the battery or charger."
+msgstr "从电池中取出充电器连接器之前，请先关闭充电器，否则可能会损坏电池或充电器。"
+
+#: help/templates/help/forklift.html:10
+msgid ""
+"You can do this by pressing either the red button or the button the middle"
+msgstr "您可以通过按下红色按钮或中间的按钮来完成此操作"
+
+#: help/templates/help/forklift.html:13
+msgid "Every lead acid battery needs an equalizing charge every month."
+msgstr "每个铅酸电池每个月都需要一个均衡充电。"
+
+#: help/templates/help/forklift.html:14
+msgid ""
+"Equalize charging should be done preferrably when the battery level is lower."
+msgstr "当电池电量较低时，均衡充电应该优先进行。"
+
+#: help/templates/help/forklift.html:17
+msgid ""
+"This 24V charger needs to be attached to the battery, and while it charging, "
+"the green button needs to be pressed."
+msgstr "此24V充电器需要连接到电池，并在充电时需要按下绿色按钮。"
+
+#: help/templates/help/forklift.html:18
+msgid "The 'EQUALIZE' light should turn on"
+msgstr "'EQUALIZE'指示灯应亮起"
+
+#: help/templates/help/forklift.html:22
+msgid "This is the console for the small green Toyota Chargers."
+msgstr "这是小型绿色丰田充电器的控制台。"
+
+#: help/templates/help/forklift.html:23
+msgid ""
+"While the battery is connected to the charger, the right button should be "
+"pressed."
+msgstr "当电池连接到充电器时，应该按下右键。"
+
+#: help/templates/help/forklift.html:27
+msgid "This is the console for the Enersys larger chargers."
+msgstr "这是Enersys大型充电器的控制台。"
+
+#: help/templates/help/forklift.html:28
+msgid ""
+"While the battery is connected to the charger, press the right arrow button."
+msgstr "在电池连接到充电器时，按下右箭头按钮。"
+
+#: help/templates/help/forklift.html:29
+msgid ""
+"A equalize symbol (similar to the equalize button for the small green "
+"Enersys charger) should show up in the top left corner of the screen."
+msgstr "均衡符号（类似于绿色Enersys充电器的均衡按钮）应显示在屏幕的左上角。"
+
+#: help/templates/help/forklift.html:33
+msgid "This is for the small black chargers from Crown."
+msgstr "这是来自皇冠的小黑色充电器。"
+
+#: help/templates/help/forklift.html:34
+msgid ""
+"This charger only allows you to charge the settings while it is currently "
+"connected to a battery."
+msgstr "此充电器仅允许您在设置当前连接到电池时为其充电。"
+
+#: help/templates/help/forklift.html:35
+msgid ""
+"And changing this setting allows it for the next charge to be equalize, Not "
+"this one."
+msgstr "而改变这个设置可以让下一次收费相等，而不是这一次。"
+
+#: help/templates/help/forklift.html:36
+msgid ""
+"Thus it is recommended to charge the same types of Crown forklifts at the "
+"same time, and have them be equalized the same next time also."
+msgstr "因此，建议同时对相同类型的叉车进行充电，并在下一次同样的时间进行均衡。"
+
+#: help/templates/help/forklift.html:39
+msgid ""
+"While it is on this screen (Figure A), press to down button to get the "
+"message on Figure B."
+msgstr "当它在这个屏幕上（图A）时，按下按钮以获得图B上的消息。"
+
+#: help/templates/help/forklift.html:50
+msgid ""
+"Press Enter (Middle Button) and there will be an arrow key next the "
+"\"DISABLED\" on the screen."
+msgstr "按下Enter键（中间按钮），屏幕上的\"DISABLED \"旁边将出现一个箭头键。"
+
+#: help/templates/help/forklift.html:54
+msgid ""
+"Press the up or down button to change it from \"DISABLED\" to \"ENABLED.\""
+msgstr "按向上或向下按钮将其从\"DISABLED \"更改为\"ENABLED\"。"
+
+#: help/templates/help/forklift.html:55
+msgid ""
+"The charger will equalize charger the next time the battery is plugged in."
+msgstr "下次电池插入时，充电器将均衡充电器。"
+
+#: help/templates/help/help_base.html:11
+msgid "Help Home"
+msgstr "帮助主页"
+
+#: help/templates/help/help_main.html:7
+msgid "Section"
+msgstr "部分"
+
+#: help/templates/help/help_main.html:9 help/templates/help/rcv_upload.html:8
+msgid "Upload RCV's"
+msgstr "上载RCV"
+
+#: help/templates/help/help_main.html:10 help/templates/help/scansnap.html:36
+msgid "Using the ScanSnap Scanner"
+msgstr "使用ScanSnap扫描仪"
+
+#: help/templates/help/help_main.html:11 p_site/templates/p_site/index.html:16
+msgid "Warehouse Viewer"
+msgstr "仓库查看器"
+
+#: help/templates/help/help_main.html:12
+msgid "Upload files to Warehouse Viewer & Warehouse Map"
+msgstr "将文件上传到仓库查看器和仓库地图"
+
+#: help/templates/help/help_main.html:13
+msgid "Forklift"
+msgstr "叉车"
+
+#: help/templates/help/rcv_upload.html:10
+msgid "Click on the Upload RCV link on the side."
+msgstr "点击侧面的上传RCV链接。"
+
+#: help/templates/help/rcv_upload.html:15
+msgid "Select the RC file by clicking on the \"Chose Files\" button."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:16
+msgid "The PDF files have been named by using month, day, and year."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:17
+msgid "For example, 01282018.pdf."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:21
+msgid "If the input date is not known, then leave it unchecked."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:26
+msgid "Editing RCV's"
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:28
+msgid ""
+"To edit an RCVs with incorrect filename format, click on the View To-Edit "
+"Files link on the side menu."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:36
+msgid "It'll lead you to a page listing all the RCVs that need to be edited."
+msgstr ""
+
+#: help/templates/help/rcv_upload.html:40
+msgid "The edit page "
+msgstr ""
+
+#: help/templates/help/scansnap.html:8
+msgid "ScanSnap Settings"
+msgstr ""
+
+#: help/templates/help/scansnap.html:10 help/templates/help/scansnap.html:38
+msgid "Open \"ScanSnap Manager\" in the start menu."
+msgstr ""
+
+#: help/templates/help/scansnap.html:14
+msgid "Right click on the ScanSnap icon on the taskbar."
+msgstr ""
+
+#: help/templates/help/scansnap.html:18
+msgid "Click on the \"Scan Button Settings\" option."
+msgstr ""
+
+#: help/templates/help/scansnap.html:22
+msgid "In the \"Scanning\" option, set the options as so."
+msgstr ""
+
+#: help/templates/help/scansnap.html:26
+msgid "In the \"File option\" option, set the options as so."
+msgstr ""
+
+#: help/templates/help/scansnap.html:30
+msgid "In the \"Paper\" option, set the options as so."
+msgstr ""
+
+#: help/templates/help/scansnap.html:42
+msgid "Open the cover flaps of the Scansnap scanner."
+msgstr ""
+
+#: help/templates/help/scansnap.html:43
+msgid "Place the paper into the scanner facing down."
+msgstr ""
+
+#: help/templates/help/scansnap.html:44
+msgid "Press the blue button on the scanner to begin scanning."
+msgstr ""
+
+#: help/templates/help/scansnap.html:45
+msgid "An window will pop up."
+msgstr ""
+
+#: help/templates/help/scansnap.html:48
+msgid "Don't scan too much paper at once or else it will jam."
+msgstr ""
+
+#: help/templates/help/scansnap.html:49
+msgid ""
+"Once you are done with one batch of paper and want to scan the next, press "
+"the scan or blue button again to continue scanning."
+msgstr ""
+
+#: help/templates/help/scansnap.html:53
+msgid ""
+"Finally, once you are done scanning the pages, click \"Finish Scanning.\""
+msgstr ""
+
+#: help/templates/help/scansnap.html:57
+msgid "Another window will pop up, asking you how to save the file."
+msgstr ""
+
+#: help/templates/help/scansnap.html:58
+msgid "Click on \"Scan to Folder\" to save as a PDF."
+msgstr ""
+
+#: help/templates/help/scansnap.html:62
+msgid "Another window will pop to name the PDF."
+msgstr ""
+
+#: help/templates/help/scansnap.html:63
+msgid "The naming scheme I currently use is the month, date, year."
+msgstr ""
+
+#: help/templates/help/scansnap.html:64
+msgid "As an example, 01192018."
+msgstr ""
+
+#: help/templates/help/scansnap.html:68
+msgid "Press OK or the enter key to save. A success window will pop up."
+msgstr ""
+
+#: help/templates/help/scansnap.html:69
+msgid "Click OK."
+msgstr ""
+
+#: help/templates/help/scansnap.html:74
+msgid "ScanSnap Paperjam"
+msgstr ""
+
+#: help/templates/help/scansnap.html:76
+msgid ""
+"If there is a paper jam, click on the page in the popup window to see the "
+"last page that was successfully scanned."
+msgstr ""
+
+#: help/templates/help/scansnap.html:80
+msgid "Pull the latch/ button on the scanner to open the scanner"
+msgstr ""
+
+#: help/templates/help/scansnap.html:81
+msgid "to release the jammed paper."
+msgstr ""
+
+#: help/templates/help/scansnap.html:82
+msgid ""
+"Then place the paper back into the scanner, beginning with the page after "
+"the last page that was scanned."
+msgstr ""
+
+#: help/templates/help/scansnap.html:83
+msgid "Continue on \"Continue Scanning on the window.\""
+msgstr ""
+
+#: help/templates/help/scansnap.html:88
+msgid "Canceling Scanning"
+msgstr ""
+
+#: help/templates/help/scansnap.html:90
+msgid ""
+"If you want to cancel or stop the scanning, you can click on the 'X' or on "
+"'Quit'"
+msgstr ""
+
+#: help/templates/help/scansnap.html:91
+msgid "A popup window will ask you if you want to delete the file."
+msgstr ""
+
+#: help/templates/help/scansnap.html:92
+msgid "If you click on \"Yes\", the scanned pages will be deleted."
+msgstr ""
+
+#: help/templates/help/scansnap.html:93
+msgid "If you click \"No\", you will be able to save the scanned pages."
+msgstr ""
+
+#: help/templates/help/scansnap.html:98
+msgid "Double Sided Scanning"
+msgstr ""
+
+#: help/templates/help/scansnap.html:100
+msgid ""
+"If you want to scan both sides of the paper with the same settings, right "
+"click on the scansnap icon."
+msgstr ""
+
+#: help/templates/help/scansnap.html:101
+msgid "Then click on Duplex Scan."
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:9
+msgid "Save the file"
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:12
+msgid ""
+"Open the WMS by right clicking on the icon and selecting 'Run as "
+"Administrator'"
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:44
+msgid "Change the XLS file into an XLSX file."
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:47
+msgid ""
+"Open Excel. Open the XLS file (that you created with the WMS) with Excel by "
+"pressing the buttons [Ctrl] and 'O'. Select the file. "
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:48
+msgid ""
+"A popup menu will appear saying that the file format and extension don't "
+"match. Click on 'Yes' to open it anyway."
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:52
+msgid ""
+"An import menu will appear. Select the 'File origin' as '54936: Chinese "
+"Simplified(GB18030).' Then, click on the 'Finish' button."
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:56
+msgid ""
+"Save the Excel file and select the file type as 'Excel Workbook(*.xlsx)' "
+"under 'Save as type:'"
+msgstr ""
+
+#: help/templates/help/warehouse_viewer_upload.html:63
+msgid "Upload the file"
+msgstr "上传文件"
+
+#: help/templates/help/warehouse_viewer_upload.html:66
+msgid "On the home menu, click on the 'Warehouse Viewer' link."
+msgstr "在主菜单上，点击'Warehouse Viewer'链接。"
+
+#: help/templates/help/warehouse_viewer_upload.html:70
+msgid "Click on the 'Upload Excel' link on the top-left menu bar"
+msgstr "点击左上角菜单栏上的“Upload Excel”链接"
+
+#: help/templates/help/warehouse_viewer_upload.html:74
+msgid "Select the 'Choose File' button to upload your .xlsx file. "
+msgstr "选择“Choose File”按钮上传您的.xlsx文件。"
+
+#: help/templates/help/warehouse_viewer_upload.html:75
+msgid ""
+"The filename should have the filename given from the WMS. It should be in "
+"the format of yyyymmddhhmmss.xlsx (year,month,date,hour,minute,seconds)."
+msgstr ""
+"文件名应该有WMS给出的文件名。它应该采用yyyymmddhhmmss.xlsx（年，月，日，时，分，秒）的格式。"
+
+#: help/templates/help/warehouse_viewer_upload.html:79
+msgid "Upload the .xlsx file by select the 'Upload' button."
+msgstr "通过选择“Upload”按钮来上传.xlsx文件。"
+
+#: help/templates/help/warehouse_viewer_upload.html:83
+msgid "The file is now being uploaded. There will be a spinning icon."
+msgstr "该文件现在正在上传。会有一个旋转图标。"
+
+#: help/templates/help/warehouse_viewer_upload.html:87
+msgid "A message will tell you when the file has been finished uploading."
+msgstr "一条消息会告诉你什么时候文件已经完成上传。"
+
+#: p_site/settings.py:147
 msgid "English"
 msgstr "英文"
 
-#: p_site/settings.py:147
+#: p_site/settings.py:148
 msgid "Chinese"
 msgstr "中文"
 
@@ -114,35 +503,31 @@ msgstr "用户"
 msgid "Login"
 msgstr "登录"
 
-#: p_site/templates/p_site/base_generic.html:85
+#: p_site/templates/p_site/base_generic.html:86
 #: rcv_list/templates/rcv_list/rcv_list_base.html:13
 #: uploader/templates/uploader/uploader_base.html:11
 #: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:11
 msgid "Home"
 msgstr "家"
 
-#: p_site/templates/p_site/index.html:13
-msgid "Customs Declaration List"
-msgstr "选择CUSTOMS DECLARATION PDF文件"
-
-#: p_site/templates/p_site/index.html:14
+#: p_site/templates/p_site/index.html:18
 #: rcv_list/templates/rcv_list/view_dates.html:7
 #: rcv_list/templates/rcv_list/view_files.html:11
 #: uploader/templates/uploader/view_files.html:13
 msgid "RCV List"
 msgstr "RCV 列表"
 
-#: p_site/templates/p_site/index.html:15
-msgid "Warehouse Map"
-msgstr "仓库地图"
+#: p_site/templates/p_site/index.html:20
+msgid "Warehouse Map (Outdated)"
+msgstr "仓库地图（过时）"
 
-#: p_site/templates/p_site/index.html:16
+#: p_site/templates/p_site/index.html:22
 msgid "File Uploader"
 msgstr "文件上传器"
 
-#: p_site/templates/p_site/index.html:17
-msgid "Warehouse Viewer"
-msgstr "仓库查看器"
+#: p_site/templates/p_site/index.html:24
+msgid "Customs Declaration List"
+msgstr "选择CUSTOMS DECLARATION PDF文件"
 
 #: p_site/templates/p_site/registration/logged_out.html:6
 msgid "You have logged out."
@@ -170,7 +555,7 @@ msgstr "请登录查看此页面。"
 msgid "Select an RCV PDF File"
 msgstr "选择RCV PDF文件"
 
-#: rcv_list/forms.py:22 rcv_list/forms.py:25
+#: rcv_list/forms.py:25 rcv_list/forms.py:28
 msgid "Input Date"
 msgstr "第一次约会"
 
