@@ -461,17 +461,18 @@ def search(request):
 
     item_query = get_normal_item_query(data_date)
 
-    if filter_option == "customer_code":
-        customer = int(filter_value)
-        item_query = item_query.filter(customer_code=customer)
-    elif filter_option == "item_code":
-        item_query = item_query.filter(item_code__icontains=filter_value)
-    elif filter_option == "rcv":
-        item_query = item_query.filter(rcv__icontains=filter_value)
-    elif filter_option == "description":
-        item_query = item_query.filter(description__icontains=filter_value)
-    elif filter_option == "item_code":
-        item_query = item_query.filter(item_code__icontains=filter_value)
+    if filter_value != "":
+        if filter_option == "customer_code":
+            customer = int(filter_value)
+            item_query = item_query.filter(customer_code=customer)
+        elif filter_option == "item_code":
+            item_query = item_query.filter(item_code__icontains=filter_value)
+        elif filter_option == "rcv":
+            item_query = item_query.filter(rcv__icontains=filter_value)
+        elif filter_option == "description":
+            item_query = item_query.filter(description__icontains=filter_value)
+        elif filter_option == "item_code":
+            item_query = item_query.filter(item_code__icontains=filter_value)
 
     item_query = item_query.iterator()
 
