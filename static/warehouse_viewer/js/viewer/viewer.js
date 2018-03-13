@@ -162,7 +162,7 @@ var chart = {
         var $tr, $th, item_data, i, hlen;
 
         var header_arr = [
-            "Customer_Code",
+            "Customer Code",
             "Item Code",
             "Location",
             "Description",
@@ -171,14 +171,48 @@ var chart = {
             "RCV",
         ],
         header_map = {
-            "Customer_Code": "customer_code",
+            "Customer Code": "customer_code",
             "Item Code": "item_code",
             "Location": "location",
             "Description": "description",
             "Available Quantity": "avail_quantity",
             "Shipped Quantity": "ship_quantity",
             "RCV": "rcv",
+        },
+        totals_dic = {
+            "item_code": {},
+            "avail_quantity": 0,
+            "ship_quantity": 0,
         };
+
+        function add_to_total(data_type, value) {
+            switch(data_type) {
+                case "item_code":
+                    totals_dic["item_code"][value] = true;
+                    break;
+                case "avail_quantity":
+                    totals_dic.avail_quantity += value;
+                    break;
+                case "ship_quantity":
+                    totals_dic.ship_quantity += value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function total_dic_to_tablevalue(data_type) {
+            switch(data_type) {
+                case "item_code":
+                    return Object.keys(totals_dic["item_code"]).length;
+                case "avail_quantity":
+                    return totals_dic.avail_quantity;
+                case "ship_quantity":
+                    return totals_dic.ship_quantity;
+                default:
+                    return "";
+            }
+        }
 
 
         var $thead = $("<thead>").appendTo($table);
@@ -198,7 +232,6 @@ var chart = {
                 $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
                 viewer.empty_page();
                 $data_table.appendTo($display_container);
-
             });
             $tr.append($th);
         }
@@ -215,7 +248,17 @@ var chart = {
                 $tr.append($("<td>", {
                     text: item_data[hkey],
                 }));
+                add_to_total(hkey, item_data[hkey])
             }
+        }
+
+        $tr = $("<tr>").appendTo($tbody);
+        for (i = 0; i < hlen; i++) {
+            header = header_arr[i];
+            hkey = header_map[header];
+            $tr.append($("<td>", {
+                text: total_dic_to_tablevalue(hkey),
+            }));
         }
 
         return $table;
