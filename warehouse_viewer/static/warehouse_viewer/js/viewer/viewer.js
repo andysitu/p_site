@@ -180,15 +180,23 @@ var chart = {
             "RCV": "rcv",
         },
         totals_dic = {
+            "customer_code": {},
             "item_code": {},
+            "location": {},
             "avail_quantity": 0,
             "ship_quantity": 0,
         };
 
         function add_to_total(data_type, value) {
             switch(data_type) {
+                case "customer_code":
+                    totals_dic["customer_code"][value] = true;
+                    break;
                 case "item_code":
                     totals_dic["item_code"][value] = true;
+                    break;
+                case "location":
+                    totals_dic["location"][value] = true;
                     break;
                 case "avail_quantity":
                     totals_dic.avail_quantity += value;
@@ -203,8 +211,12 @@ var chart = {
 
         function total_dic_to_tablevalue(data_type) {
             switch(data_type) {
+                case "customer_code":
+                    return Object.keys(totals_dic["customer_code"]).length;
                 case "item_code":
                     return Object.keys(totals_dic["item_code"]).length;
+                case "location":
+                    return Object.keys(totals_dic["location"]).length;
                 case "avail_quantity":
                     return totals_dic.avail_quantity;
                 case "ship_quantity":
