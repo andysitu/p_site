@@ -187,26 +187,12 @@ var chart = {
             "ship_quantity": 0,
         };
 
-        function add_to_total(data_type, value) {
-            switch(data_type) {
-                case "customer_code":
-                    totals_dic["customer_code"][value] = true;
-                    break;
-                case "item_code":
-                    totals_dic["item_code"][value] = true;
-                    break;
-                case "location":
-                    totals_dic["location"][value] = true;
-                    break;
-                case "avail_quantity":
-                    totals_dic.avail_quantity += value;
-                    break;
-                case "ship_quantity":
-                    totals_dic.ship_quantity += value;
-                    break;
-                default:
-                    break;
-            }
+        function add_to_total(item_data) {
+            totals_dic["customer_code"][item_data.customer_code] = true
+            totals_dic["item_code"][item_data.item_code] = true;
+            totals_dic["location"][item_data.location] = true;
+            totals_dic.avail_quantity += item_data.avail_quantity;
+            totals_dic.ship_quantity += item_data.ship_quantity;
         }
 
         function total_dic_to_tablevalue(data_type) {
@@ -254,13 +240,13 @@ var chart = {
         for (var itemsearch_id in proc_data) {
             $tr = $("<tr>").appendTo($tbody);
             item_data = proc_data[itemsearch_id];
+            add_to_total(item_data);
             for (i = 0; i < hlen; i++) {
                 header = header_arr[i];
                 hkey = header_map[header];
                 $tr.append($("<td>", {
                     text: item_data[hkey],
                 }));
-                add_to_total(hkey, item_data[hkey])
             }
         }
 
