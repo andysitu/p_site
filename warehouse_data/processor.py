@@ -91,7 +91,7 @@ def process_excel_file(file):
         (31, "item_weight", float,),
         (36, "last_out_date", get_date_from_xlrd,),
         (39, "description", cut_description_length,),
-        (40, "customer_code", int,),
+        (33, "customer_code", int,),
         (42, "avail_quantity", int,),
     }
 
