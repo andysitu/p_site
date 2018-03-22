@@ -1,9 +1,9 @@
 {% extends 'p_site/base_generic.html' %}
 
 {% load i18n %}
+{% load static %}
 
 {% block generic_page_head %}
-    {% load static %}
 {% endblock %}
 
 {% block navbar_links %}
@@ -11,6 +11,8 @@
     <a href="{% url 'warehouse_viewer:index' %}">{% trans "Home" %}</a></li>
 <li class="nav-item">
     <a href="{% url 'warehouse_viewer:upload' %}">{% trans "Upload Excel" %}</a></li>
+{% block viewer_navbar_links %}{% endblock viewer_navbar_links%}
+
 {% endblock %}
 
 

@@ -10,7 +10,12 @@ $( document ).ready(function(){
 
     $("#side-menu-form").submit(function(e) {
         e.preventDefault();
-        side_menu.submit(e)});
+        side_menu.submit(e)
+    });
+
+    $("#print-button").click(function(e) {
+        console.log("Print");
+    });
 });
 
 // Jquery to account for nav bar & HTML anchoring
