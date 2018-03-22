@@ -14,7 +14,8 @@ $( document ).ready(function(){
     });
 
     $("#print-button").click(function(e) {
-        console.log("Print");
+        var disp_content = viewer.get_display_content();
+        viewer.open_new_page(disp_content);
     });
 });
 

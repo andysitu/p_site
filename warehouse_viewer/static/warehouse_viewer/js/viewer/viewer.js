@@ -66,6 +66,18 @@ var viewer = {
     get_$display_container: function() {
         return $("#display-container");
     },
+    get_display_content: function() {
+        var $disp_container = this.get_$display_container();
+        return $disp_container[0];
+    },
+    open_new_page: function(content) {
+        var html = "<html><body>" + content.outerHTML + "</body></html>";
+
+        var windowObject = window.open("", "_blank");
+        windowObject.document.writeln(html);
+        windowObject.document.close();
+        windowObject.focus();
+    },
 };
 
 var chart = {
