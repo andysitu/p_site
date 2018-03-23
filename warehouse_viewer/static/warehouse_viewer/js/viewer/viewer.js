@@ -67,14 +67,26 @@ var viewer = {
         return $("#display-container");
     },
     get_display_content: function() {
+        var $canvas_search = $("#display-container > canvas"),
+            content = "";
+
         var $disp_container = this.get_$display_container();
-        return $disp_container[0];
+        content += $disp_container.html();
+
+        if ($canvas_search.length != 0) {
+            var image_url = $canvas_search[0].toDataURL("image/png"),
+                i = "<img src='" + image_url + "'/>";
+            var r = /\<canvas.*\/canvas\>/i;
+            content = content.replace(r, i);
+            console.log(i.search(r));
+            console.log("canvas");
+        }
+        return content;
     },
     open_new_page: function(content) {
-        var html = "<html><body>" + content.outerHTML + "</body></html>";
-
+        console.log(content);
         var windowObject = window.open("", "_blank");
-        windowObject.document.writeln(html);
+        windowObject.document.writeln(content);
         windowObject.document.close();
         windowObject.focus();
     },
