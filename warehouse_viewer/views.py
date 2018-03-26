@@ -10,7 +10,14 @@ def viewer(request):
     return render(
         request,
         'warehouse_viewer/viewer.html',
-        context={}
+        context={},
+    )
+
+def adv_search(request):
+    return render(
+        request,
+        'warehouse_viewer/adv_search.html',
+        context={},
     )
 
 def upload(request):

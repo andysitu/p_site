@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^index/$', views.viewer, name="index"),
     url(r'^$', views.viewer, name="index-blank"),
     url(r'^upload/$', views.upload, name="upload"),
+    url(r'^adv_search/$', views.adv_search, name="adv_search"),
 
     url(r'^search_ajax/$', views.search_ajax, name="search_ajax"),
     # url(r'^request_grid_map_ajax/$', ajax_func.get_grid_ajax, name="request_grid_map_ajax"),
