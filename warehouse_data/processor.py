@@ -349,16 +349,8 @@ def get_item_added_map(loc, date_1_id, time_period, level):
     item_query = item_query.select_related('rack_location')
 
     for item in item_query:
-        rcv = item.rcv
-        recv_re = re.compile("^RECV")
-
-        # If RECV item
-        if recv_re.match(rcv):
-            if item.iv_create_date < prev_date:
-                continue
-        else:
-            if item.fifo_date < prev_date:
-                continue
+        if item.get_input_date() < prev_date:
+            continue
 
         js_loc_code = loc_inst_to_jsloccode(item.rack_location)
 

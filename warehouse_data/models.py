@@ -4,6 +4,8 @@ from django.contrib.postgres.fields import ArrayField
 import datetime
 from django.dispatch import receiver
 
+import re
+
 class Location(models.Model):
     # loc is my own classification of location
     loc = models.CharField(max_length=20)
@@ -73,3 +75,11 @@ class Items(models.Model):
     item_code = models.CharField(max_length=50, default="")
     customer_code = models.IntegerField(default="0")
     last_out_date = models.DateTimeField(blank=True, null=True, default=None)
+
+    def get_input_date(self):
+        rcv = self.rcv
+        recv_re = re.compile("^RECV")
+        if recv_re.match(rcv):
+            return self.iv_create_date
+        else:
+            return self.fifo_date

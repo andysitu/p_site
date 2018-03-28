@@ -206,16 +206,8 @@ def get_item_added(request):
 
 
     for item_inst in item_query:
-        rcv = item_inst.rcv
-        recv_re = re.compile("^RECV")
-
-        # If RECV item
-        if recv_re.match(rcv):
-            if item_inst.iv_create_date < prev_date:
-                continue
-        else:
-            if item_inst.fifo_date < prev_date:
-                continue
+        if item_inst.get_input_date() < prev_date:
+            continue
 
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
         if js_loc_code not in data_dic:
@@ -552,15 +544,9 @@ def get_added_items_over_time(request):
         item_query = item_query.filter(iv_create_date__gte=prev_date).iterator()
         for item in item_query:
             item_loc = item.rack_location.loc
-            rcv = item.rcv
-            recv_re = re.compile("^RECV")
 
-            if recv_re.match(rcv):
-                if item.iv_create_date < prev_date:
-                    continue
-            else:
-                if item.fifo_date < prev_date:
-                    continue
+            if item.get_input_date() < prev_date:
+                continue
 
             total_items = item.avail_quantity + item.ship_quantity
 
