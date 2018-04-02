@@ -1,1 +1,21 @@
 {% extends 'warehouse_viewer/viewer_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/adv_search.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/viewer.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/side_menu.js' %}"></script>
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+<script>
+    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="form_div" class="form-group"></div>
+<div id="display-container"></div>
+{% endblock %}

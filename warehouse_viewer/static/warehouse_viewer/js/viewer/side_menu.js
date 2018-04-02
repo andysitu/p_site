@@ -205,6 +205,7 @@ var chart_mode_settings = {
     make_menu: function() {
         var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
+
             data_type_dic = {
                 "search": gettext("Search"),
                 "total_item_info": gettext("Total Item Info"),
