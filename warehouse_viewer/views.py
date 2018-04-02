@@ -80,3 +80,8 @@ def search_ajax(request):
         elif data_type == "items_shipped_over_time":
             response = warehouse_data_views.items_shipped_over_time(request)
     return JsonResponse(response)
+
+def adv_search_ajax(request):
+    response = {}
+
+    return JsonResponse(response)

@@ -16,6 +16,10 @@
 {% endblock %}
 
 {% block content %}
-<div id="form_div" class="form-group"></div>
+<form id="form_div" class="form-group" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
+    {% csrf_token %}
+    <div id="form-container"></div>
+    <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>
+</form>
 <div id="display-container"></div>
 {% endblock %}
