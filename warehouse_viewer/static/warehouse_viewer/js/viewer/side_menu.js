@@ -407,10 +407,20 @@ var settings_maker = {
             text: gettext("Filter"),
         }).appendTo($div);
 
+        var $filter_select = this.filter_select();
+
+        $filter_select.appendTo($div);
+
+        return $div
+    },
+    filter_select: function() {
+        var filter_input_id = element_ids.filter_input_id,
+            filter_input_name = element_ids.filter_input_name;
+
         var $input_group = $("<div>",{
            "class": "input-group-btn",
         });
-        
+
         var $input = $("<input>", {
             id: filter_input_id,
             "class": "form-control form-control-sm col-sm-5",
@@ -442,9 +452,7 @@ var settings_maker = {
             text: gettext("Item Description"),
         }).appendTo($filter_option_select);
 
-        $input_group.appendTo($div);
-
-        return $div
+        return $input_group;
     },
     loc_select: function(all_status) {
         /**
