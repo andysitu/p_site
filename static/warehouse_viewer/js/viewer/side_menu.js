@@ -413,6 +413,26 @@ var settings_maker = {
 
         return $div
     },
+    adv_filter_div: function() {
+        var filter_input_id = element_ids.filter_input_id,
+            filter_input_name = element_ids.filter_input_name,
+            $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": filter_input_id,
+            text: gettext("Filter"),
+        }).appendTo($div);
+
+        var $filter_select = this.filter_select();
+
+        $filter_select.appendTo($div);
+
+        $("<button>", {
+            "class": "btn btn-secondary btn-sm",
+        }).append($("<i class='fa fa-plus'></i>")).appendTo($div);
+
+        return $div
+    },
     filter_select: function() {
         var filter_input_id = element_ids.filter_input_id,
             filter_input_name = element_ids.filter_input_name;
