@@ -9,11 +9,17 @@ $( document ).ready(function(){
 var formObj = {
     submit: function() {
         // Submit function for the search form.
+        var $form = this.get_$form(),
+            form_data = {};
+        console.log($form.serializeArray());
     },
     create_form: function() {
         this.add_filter_div();
         this.add_date_input();
         this.add_loc_level_select();
+    },
+    get_$form: function() {
+        return $("#search-form");
     },
     get_$form_container: function() {
         return $("#form-container");
