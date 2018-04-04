@@ -16,9 +16,9 @@
 {% endblock %}
 
 {% block content %}
-<form id="form_div" class="form-group" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
+<form id="search-form" class="form-horizontal" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
     {% csrf_token %}
-    <div id="form-container"></div>
+    <div id="form-container" class="fluid-container"></div>
     <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>
 </form>
 <div id="display-container"></div>
