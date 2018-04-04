@@ -423,13 +423,21 @@ var settings_maker = {
             text: gettext("Filter"),
         }).appendTo($div);
 
+        var $filters_div = $("<div>");
+
         var $filter_select = this.filter_select();
 
-        $filter_select.appendTo($div);
+        $filter_select.appendTo($filters_div);
+        ($div).append($filters_div);
 
-        $("<button>", {
+        var $add_button = $("<button>", {
             "class": "btn btn-secondary btn-sm",
-        }).append($("<i class='fa fa-plus'></i>")).appendTo($div);
+        }).append($("<i class='fa fa-plus'></i>"))
+            .click(function() {
+                $filters_div.append(settings_maker.filter_select());
+            });
+
+        $add_button.appendTo($div);
 
         return $div
     },
