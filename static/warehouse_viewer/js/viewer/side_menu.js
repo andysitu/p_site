@@ -430,14 +430,31 @@ var settings_maker = {
         $filter_select.appendTo($filters_div);
         ($div).append($filters_div);
 
-        var $add_button = $("<button>", {
+        $("<button>", {
             "class": "btn btn-secondary btn-sm",
-        }).append($("<i class='fa fa-plus'></i>"))
-            .click(function() {
-                $filters_div.append(settings_maker.filter_select());
-            });
+        })
+            .append("<i class='fa fa-minus'></i>")
+            .click(function(e) {
+                e.preventDefault();
+                var $filters_children = $filters_div.children(),
+                    filters_len = $filters_children.length;
 
-        $add_button.appendTo($div);
+                if (filters_len > 1) {
+                    $filters_children.last().remove();
+                }
+            })
+            .appendTo($div);
+
+        $("<button>", {
+            "class": "btn btn-dark btn-sm",
+        })
+            .append($("<i class='fa fa-plus'></i>"))
+            .click(function(e) {
+                e.preventDefault();
+                $filters_div.append(settings_maker.filter_select());
+            })
+            .appendTo($div);
+
 
         return $div
     },
