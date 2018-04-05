@@ -16,7 +16,7 @@ var formObj = {
     create_form: function() {
         this.add_filter_div();
         this.add_date_input();
-        this.add_loc_level_select();
+        this.add_level_select();
     },
     get_$form: function() {
         return $("#search-form");
@@ -38,21 +38,12 @@ var formObj = {
 
         $form_container.append($form_group);
     },
-    add_loc_level_select: function() {
-        var $loc_and_level_dic = settings_maker.loc_and_level_container(),
-            $form_container = this.get_$form_container();
+    add_level_select: function() {
+        var $form_container = this.get_$form_container(),
+            $level_div = settings_maker.level_select();
 
-        var $loc_div = $loc_and_level_dic["$loc_div"],
-            $level_container = $loc_and_level_dic["$level_container"];
-        $loc_div.addClass("col-md-2");
-        $level_container.addClass("col-md-3");
+        $level_div.addClass("col-md-3");
 
-        var $div = $("<div></div>", {
-            "class": "form-group",
-        });
-        $div.append($loc_div);
-        $div.append($level_container);
-
-        $form_container.append($div);
+        $form_container.append($level_div);
     },
 };

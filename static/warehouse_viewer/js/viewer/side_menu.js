@@ -451,7 +451,7 @@ var settings_maker = {
             .append($("<i class='fa fa-plus'></i>"))
             .click(function(e) {
                 e.preventDefault();
-                $filters_div.append(settings_maker.filter_select());
+                $filters_div.append(settings_maker.adv_filter_select());
             })
             .appendTo($div);
 
@@ -459,6 +459,47 @@ var settings_maker = {
         return $div
     },
     filter_select: function() {
+        var filter_input_id = element_ids.filter_input_id,
+            filter_input_name = element_ids.filter_input_name;
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn",
+        });
+
+        var $input = $("<input>", {
+            id: filter_input_id,
+            "class": "form-control form-control-sm col-sm-5",
+            name: filter_input_name,
+        }).appendTo($input_group);
+
+        var $filter_option_select = $("<select>", {
+            "class": "form-control form-control-sm col-sm-7",
+            name: element_ids.filter_option_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "customer_code",
+            text: gettext("Customer"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "item_code",
+            text: gettext("SKU"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "rcv",
+            text: gettext("RCV"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "description",
+            text: gettext("Item Description"),
+        }).appendTo($filter_option_select);
+
+        return $input_group;
+    },
+    adv_filter_select: function() {
         var filter_input_id = element_ids.filter_input_id,
             filter_input_name = element_ids.filter_input_name;
 
