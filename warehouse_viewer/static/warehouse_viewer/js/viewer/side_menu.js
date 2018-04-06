@@ -505,9 +505,14 @@ var settings_maker = {
     adv_filter_select: function(n) {
         // n is added to the end of id to differentiate from other filter
         // selects.
+
+        if (n === undefined)
+            n = 0;
+
         var filter_input_id = element_ids.filter_input_id + parseInt(n),
-            filter_input_name = element_ids.filter_input_name,
-            contain_select_name = element_ids.adv_contain_name;
+            filter_input_name = element_ids.filter_input_name + parseInt(n),
+            contain_select_name = element_ids.adv_contain_name + parseInt(n),
+            filter_option_name = element_ids.filter_option_name + parseInt(n);
 
         var $input_group = $("<div>",{
            "class": "input-group-btn",
@@ -536,7 +541,7 @@ var settings_maker = {
 
         var $filter_option_select = $("<select>", {
             "class": "form-control form-control-sm col-sm-4",
-            name: element_ids.filter_option_name,
+            name: filter_option_name,
         }).appendTo($input_group);
 
         $("<option>", {
