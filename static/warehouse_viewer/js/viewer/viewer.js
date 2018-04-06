@@ -12,6 +12,7 @@ var element_ids = {
     menu_container_id: "mode-settings-div",
     display_container_id: "display-container",
 
+    adv_contain_name: "adv_contain_select",
     data_select_id: "data-type-select",
     data_select_name: "data-type",
     date_select_1_id: "date-select-1",

@@ -425,7 +425,7 @@ var settings_maker = {
 
         var $filters_div = $("<div>");
 
-        var $filter_select = this.filter_select();
+        var $filter_select = this.adv_filter_select();
 
         $filter_select.appendTo($filters_div);
         ($div).append($filters_div);
@@ -450,8 +450,11 @@ var settings_maker = {
         })
             .append($("<i class='fa fa-plus'></i>"))
             .click(function(e) {
+                var $filters_children = $filters_div.children(),
+                    filters_len = $filters_children.length;
+
                 e.preventDefault();
-                $filters_div.append(settings_maker.adv_filter_select());
+                $filters_div.append(settings_maker.adv_filter_select(filters_len));
             })
             .appendTo($div);
 
@@ -499,22 +502,40 @@ var settings_maker = {
 
         return $input_group;
     },
-    adv_filter_select: function() {
-        var filter_input_id = element_ids.filter_input_id,
-            filter_input_name = element_ids.filter_input_name;
+    adv_filter_select: function(n) {
+        // n is added to the end of id to differentiate from other filter
+        // selects.
+        var filter_input_id = element_ids.filter_input_id + parseInt(n),
+            filter_input_name = element_ids.filter_input_name,
+            contain_select_name = element_ids.adv_contain_name;
 
         var $input_group = $("<div>",{
            "class": "input-group-btn",
         });
 
+        var $contain_select = $("<select>", {
+            "class": "form-control form-control-sm col-4",
+            name: contain_select_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            value: "contain",
+            text: gettext("Contains"),
+        }).appendTo($contain_select);
+
+        $("<option>", {
+            value: "ncontain",
+            text: gettext("Does Not Contain"),
+        }).appendTo($contain_select);
+
         var $input = $("<input>", {
             id: filter_input_id,
-            "class": "form-control form-control-sm col-sm-5",
+            "class": "form-control form-control-sm col-sm-4",
             name: filter_input_name,
         }).appendTo($input_group);
 
         var $filter_option_select = $("<select>", {
-            "class": "form-control form-control-sm col-sm-7",
+            "class": "form-control form-control-sm col-sm-4",
             name: element_ids.filter_option_name,
         }).appendTo($input_group);
 

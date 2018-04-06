@@ -83,5 +83,11 @@ def search_ajax(request):
 
 def adv_search_ajax(request):
     response = {}
+    t = []
 
-    return JsonResponse(response)
+    keys = request.GET.keys()
+
+    for key in keys:
+        t.append(key)
+
+    return JsonResponse({"test": t }, safe=False)

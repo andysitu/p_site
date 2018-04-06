@@ -11,7 +11,16 @@ var formObj = {
         // Submit function for the search form.
         var $form = this.get_$form(),
             form_data = {};
-        console.log($form.serializeArray());
+
+        form_data = $form.serializeArray();
+
+        $.ajax({
+            url: adv_search_url,
+            data: form_data,
+            success: function(data) {
+                console.log(data);
+            },
+        });
     },
     create_form: function() {
         this.add_filter_div();
@@ -34,7 +43,7 @@ var formObj = {
     add_filter_div: function() {
         var $form_container = this.get_$form_container();
         var $form_group = settings_maker.adv_filter_div();
-        $form_group.addClass("col-md-3");
+        $form_group.addClass("col-md-4");
 
         $form_container.append($form_group);
     },

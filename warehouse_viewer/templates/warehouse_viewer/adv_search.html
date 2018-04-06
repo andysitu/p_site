@@ -11,12 +11,13 @@
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
 <script>
-    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}";
+    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}",
+        adv_search_url = "{% url 'warehouse_viewer:adv_search_ajax' %}";
 </script>
 {% endblock %}
 
 {% block content %}
-<form id="search-form" class="form-horizontal" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
+<form id="search-form" class="form-horizontal" method="get" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
     {% csrf_token %}
     <div id="form-container" class="fluid-container"></div>
     <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>
