@@ -82,12 +82,5 @@ def search_ajax(request):
     return JsonResponse(response)
 
 def adv_search_ajax(request):
-    response = {}
-    t = []
-
-    keys = request.GET.keys()
-
-    for key in keys:
-        t.append(key)
-
-    return JsonResponse({"test": t }, safe=False)
+    response = warehouse_data_views.adv_search(request)
+    return JsonResponse(response)

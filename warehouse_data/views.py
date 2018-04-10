@@ -11,6 +11,12 @@ from django.db import IntegrityError
 
 import operator
 
+def get_element_name(key):
+    if key == "multiple_dates" or key == "multiple_locs":
+        return elements_dictionary[key] + "[]"
+    else:
+        return elements_dictionary[key]
+
 elements_dictionary = {
     "single_date": "date-1",
     "multiple_dates": "dates",
@@ -500,6 +506,23 @@ def search(request):
             d[item_loc]["avail_quantity"] += avail_quantity
             d[item_loc]["ship_quantity"] += ship_quantity
     return data
+
+def adv_search(request):
+    response = {}
+
+    date_id = request.GET.get(get_element_name("single_date"))
+
+    locs = request.GET.getlist(get_element_name("multiple_locs"))
+
+    filter_value = request.GET.get(get_element_name("filter_value"))
+    filter_option = request.GET.get(get_element_name("filter_option"))
+
+    response["date_id"] = date_id
+    response["locs"] = locs
+    response["filter_value"] = filter_value
+    response["filter_option"] = filter_option
+
+    return response
 
 def get_added_items_over_time(request):
     data = {}

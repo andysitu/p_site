@@ -25,6 +25,7 @@ var formObj = {
     create_form: function() {
         this.add_filter_div();
         this.add_date_input();
+        this.add_multiple_loc();
         this.add_level_select();
     },
     get_$form: function() {
@@ -54,5 +55,13 @@ var formObj = {
         $level_div.addClass("col-md-3");
 
         $form_container.append($level_div);
+    },
+    add_multiple_loc: function() {
+        var $form_container = this.get_$form_container();
+
+        var $form_group = settings_maker.multiple_loc_select();
+        $form_group.addClass("col-md-2");
+
+        $form_container.append($form_group);
     },
 };
