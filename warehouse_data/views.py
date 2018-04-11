@@ -18,12 +18,19 @@ def get_element_name(key):
         return elements_dictionary[key]
 
 elements_dictionary = {
+# level is handled at JS level.
     "single_date": "date-1",
     "multiple_dates": "dates",
     "multiple_locs": "locs",
     "time_period": "time-period",
     "filter_value": "filter_value",
     "filter_option": "filter_option",
+
+    # adv_search. Has # added at end
+    "adv_contain": "adv_contain_select",
+    "adv_filter": "filter_value",
+    "adv_foption": "filter_option",
+
 }
 
 def loc_inst_to_jsloccode(loc_inst):
@@ -511,16 +518,43 @@ def adv_search(request):
     response = {}
 
     date_id = request.GET.get(get_element_name("single_date"))
-
     locs = request.GET.getlist(get_element_name("multiple_locs"))
-
-    filter_value = request.GET.get(get_element_name("filter_value"))
-    filter_option = request.GET.get(get_element_name("filter_option"))
 
     response["date_id"] = date_id
     response["locs"] = locs
-    response["filter_value"] = filter_value
-    response["filter_option"] = filter_option
+
+    filter_dic = {}
+
+    adv_contain_str = get_element_name("adv_contain")
+    adv_filter_str = get_element_name("adv_filter")
+    adv_foption_str = get_element_name("adv_foption")
+
+    for i in range(100):
+        adv_contain = request.GET.get(adv_contain_str + str(i))
+        adv_filter = request.GET.get(adv_filter_str + str(i))
+        adv_foption = request.GET.get(adv_foption_str + str(i))
+
+        if adv_contain == None:
+            break
+        if adv_filter == "":
+            continue
+
+        if adv_foption not in filter_dic:
+            filter_dic[adv_foption] = {}
+        if adv_contain not in filter_dic[adv_foption]:
+            filter_dic[adv_foption][adv_contain] = []
+
+        filter_dic[adv_foption][adv_contain].append(adv_filter)
+
+    data_date = DataDate.objects.get(id=date_id)
+
+    item_query = get_normal_item_query(data_date)
+
+    for filter_option in filter_dic:
+        for contains in filter_dic[filter_option]:
+            filter_value_list = filter_dic[filter_option][contains]
+
+    response["filter_dic"] = filter_dic
 
     return response
 
