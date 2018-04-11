@@ -529,7 +529,7 @@ var settings_maker = {
         }).appendTo($contain_select);
 
         $("<option>", {
-            value: "ncontain",
+            value: "nocontain",
             text: gettext("Does Not Contain"),
         }).appendTo($contain_select);
 
