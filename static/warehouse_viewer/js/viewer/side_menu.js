@@ -533,6 +533,11 @@ var settings_maker = {
             text: gettext("Does Not Contain"),
         }).appendTo($contain_select);
 
+        $("<option>", {
+            value: "exact",
+            text: gettext("Exactly Contains"),
+        }).appendTo($contain_select);
+
         var $input = $("<input>", {
             id: filter_input_id,
             "class": "form-control form-control-sm col-sm-4",

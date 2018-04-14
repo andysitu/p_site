@@ -10,6 +10,7 @@ import datetime, re
 from django.db import IntegrityError
 
 import operator
+from django.db.models import Q
 
 def get_element_name(key):
     if key == "multiple_dates" or key == "multiple_locs":
@@ -26,7 +27,7 @@ elements_dictionary = {
     "filter_value": "filter_value",
     "filter_option": "filter_option",
 
-    # adv_search. Has # added at end
+    # For adv search. Has # added at end
     "adv_contain": "adv_contain_select",
     "adv_filter": "filter_value",
     "adv_foption": "filter_option",
@@ -551,12 +552,69 @@ def adv_search(request):
     item_query = get_normal_item_query(data_date)
 
     for filter_option in filter_dic:
+
         for contains in filter_dic[filter_option]:
             filter_value_list = filter_dic[filter_option][contains]
 
-    response["filter_dic"] = filter_dic
+    response["filter_dic"] = run_adv_filter(filter_dic)
 
     return response
+
+def run_adv_filter(filter_dic):
+    """
+    Runs Q object query on Item models
+    :param filter_dic: dictionary containing
+    { [filter_option]:
+        { [contains_status]:
+            [filter_value_list...] } }
+    :return: Item Query
+    """
+    for option in filter_dic:
+        for contains in filter_dic[option]:
+            q_objects = Q()
+            filter_value_list = filter_dic[option][contains]
+            # if filter_option == "customer_code":
+            #     customer = int(filter_value)
+            #     item_query = item_query.filter(customer_code=customer)
+            # elif filter_option == "item_code":
+            #     item_query = item_query.filter(item_code__icontains=filter_value)
+            # elif filter_option == "rcv":
+            #     item_query = item_query.filter(rcv__icontains=filter_value)
+            # elif filter_option == "description":
+            #     item_query = item_query.filter(description__icontains=filter_value)
+            # elif filter_option == "item_code":
+            #     item_query = item_query.filter(item_code__icontains=filter_value)
+
+            for value in filter_value_list:
+                if option == "customer_code":
+                    if contains == "contain":
+                        q_objects |= Q(customer_code__contain=int(value))
+                    elif contains == "nocontain":
+                        q_objects |= ~Q(customer_code__contain=int(value))
+                    elif contains == "exact":
+                        q_objects |= Q(customer_code__exact=int(value))
+                elif option == "item_code":
+                    if contains == "contain":
+                        q_objects |= Q(item_code__contain=value)
+                    elif contains == "nocontain":
+                        pass
+                    elif contains == "exact":
+                        pass
+                elif option == "rcv":
+                    if contains == "contain":
+                        pass
+                    elif contains == "nocontain":
+                        pass
+                    elif contains == "exact":
+                        pass
+                elif optoin == "description":
+                    if contains == "contain":
+                        pass
+                    elif contains == "nocontain":
+                        pass
+                    elif contains == "exact":
+                        pass
+
 
 def get_added_items_over_time(request):
     data = {}
