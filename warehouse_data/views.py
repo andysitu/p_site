@@ -549,18 +549,16 @@ def adv_search(request):
 
     data_date = DataDate.objects.get(id=date_id)
 
-    item_query = get_normal_item_query(data_date)
-
     for filter_option in filter_dic:
 
         for contains in filter_dic[filter_option]:
             filter_value_list = filter_dic[filter_option][contains]
 
-    response["filter_dic"] = run_adv_filter(filter_dic)
+    response["filter_dic"] = run_adv_item_filter(data_date, filter_dic)
 
     return response
 
-def run_adv_filter(filter_dic):
+def run_adv_item_filter(data_date ,filter_dic):
     """
     Runs Q object query on Item models
     :param filter_dic: dictionary containing
@@ -569,52 +567,52 @@ def run_adv_filter(filter_dic):
             [filter_value_list...] } }
     :return: Item Query
     """
+    item_query = get_normal_item_query(data_date)
+
+    q_list = []
     for option in filter_dic:
         for contains in filter_dic[option]:
             q_objects = Q()
             filter_value_list = filter_dic[option][contains]
-            # if filter_option == "customer_code":
-            #     customer = int(filter_value)
-            #     item_query = item_query.filter(customer_code=customer)
-            # elif filter_option == "item_code":
-            #     item_query = item_query.filter(item_code__icontains=filter_value)
-            # elif filter_option == "rcv":
-            #     item_query = item_query.filter(rcv__icontains=filter_value)
-            # elif filter_option == "description":
-            #     item_query = item_query.filter(description__icontains=filter_value)
-            # elif filter_option == "item_code":
-            #     item_query = item_query.filter(item_code__icontains=filter_value)
-
             for value in filter_value_list:
-                if option == "customer_code":
-                    if contains == "contain":
-                        q_objects |= Q(customer_code__contain=int(value))
-                    elif contains == "nocontain":
-                        q_objects |= ~Q(customer_code__contain=int(value))
-                    elif contains == "exact":
-                        q_objects |= Q(customer_code__exact=int(value))
-                elif option == "item_code":
-                    if contains == "contain":
-                        q_objects |= Q(item_code__contain=value)
-                    elif contains == "nocontain":
-                        pass
-                    elif contains == "exact":
-                        pass
-                elif option == "rcv":
-                    if contains == "contain":
-                        pass
-                    elif contains == "nocontain":
-                        pass
-                    elif contains == "exact":
-                        pass
-                elif optoin == "description":
-                    if contains == "contain":
-                        pass
-                    elif contains == "nocontain":
-                        pass
-                    elif contains == "exact":
-                        pass
+                q_object = get_q_object(option, contains, value)
+                if q_object != None:
+                    q_objects.add(q_object, Q.OR)
 
+            q_list.append(q_objects)
+    return len(q_list)
+
+
+
+def get_q_object(option, contains, value):
+    if option == "customer_code":
+        if contains == "contain":
+            return Q(customer_code__contain=int(value))
+        elif contains == "nocontain":
+            return ~Q(customer_code__contain=int(value))
+        elif contains == "exact":
+            return Q(customer_code__exact=int(value))
+    elif option == "item_code":
+        if contains == "contain":
+            return Q(item_code__contain=value)
+        elif contains == "nocontain":
+            return ~Q(item_code__contain=value)
+        elif contains == "exact":
+            return Q(item_code__exact=value)
+    elif option == "rcv":
+        if contains == "contain":
+            return Q(rcv__contain=value)
+        elif contains == "nocontain":
+            return ~Q(rcv__contain=value)
+        elif contains == "exact":
+            return Q(rcv__exact=value)
+    elif option == "description":
+        if contains == "contain":
+            return Q(description__contain=value)
+        elif contains == "nocontain":
+            return ~Q(description__contain=value)
+        elif contains == "exact":
+            return Q(description__exact=value)
 
 def get_added_items_over_time(request):
     data = {}
