@@ -530,6 +530,7 @@ def adv_search(request):
     adv_filter_str = get_element_name("adv_filter")
     adv_foption_str = get_element_name("adv_foption")
 
+    # There shouldn't be more than 100 filter criteria
     for i in range(100):
         adv_contain = request.GET.get(adv_contain_str + str(i))
         adv_filter = request.GET.get(adv_filter_str + str(i))
@@ -554,11 +555,47 @@ def adv_search(request):
         for contains in filter_dic[filter_option]:
             filter_value_list = filter_dic[filter_option][contains]
 
-    response["filter_dic"] = run_adv_item_filter(data_date, filter_dic)
+    item_query = run_adv_item_filter(data_date, filter_dic)
+
+    data = {}
+
+    for item in item_query:
+        item_loc = str(item.rack_location)
+        rcv = item.rcv
+        item_code = item.item_code
+        description = item.description
+        avail_quantity = item.avail_quantity
+        ship_quantity = item.ship_quantity
+        customer_code = item.customer_code
+
+        total_items = item.avail_quantity + item.ship_quantity
+
+        # if all_status:
+        #     data["All"][date_str] += total_items
+        # if item_loc in data:
+        #     data[item_loc][date_str] += total_items
+        if item_code not in data:
+            data[item_code] = {}
+        d = data[item_code]
+        if item_loc not in d:
+            d[item_loc] = {
+                "avail_quantity" : avail_quantity,
+                "ship_quantity": ship_quantity,
+                "description": description,
+                "item_code": item_code,
+                "rcv": rcv,
+                "location": item_loc,
+                "customer_code": customer_code,
+            }
+        else:
+            d[item_loc]["avail_quantity"] += avail_quantity
+            d[item_loc]["ship_quantity"] += ship_quantity
+
+    response["data"] = data
 
     return response
 
-def run_adv_item_filter(data_date ,filter_dic):
+def run_adv_item_filter(data_date, filter_dic):
     """
     Runs Q object query on Item models
     :param filter_dic: dictionary containing
@@ -568,7 +605,6 @@ def run_adv_item_filter(data_date ,filter_dic):
     :return: Item Query
     """
     item_query = get_normal_item_query(data_date)
-
     q_list = []
     for option in filter_dic:
         for contains in filter_dic[option]:
@@ -580,18 +616,19 @@ def run_adv_item_filter(data_date ,filter_dic):
                     q_objects.add(q_object, Q.OR)
 
             q_list.append(q_objects)
-    return len(q_list)
 
+    item_query = item_query.filter(*q_list)
+    return item_query
 
 
 def get_q_object(option, contains, value):
     if option == "customer_code":
         if contains == "contain":
-            return Q(customer_code__contain=int(value))
+            return Q(customer_code=int(value))
         elif contains == "nocontain":
-            return ~Q(customer_code__contain=int(value))
+            return ~Q(customer_code=int(value))
         elif contains == "exact":
-            return Q(customer_code__exact=int(value))
+            return Q(customer_code=int(value))
     elif option == "item_code":
         if contains == "contain":
             return Q(item_code__contain=value)
