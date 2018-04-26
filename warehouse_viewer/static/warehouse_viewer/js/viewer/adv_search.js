@@ -6,6 +6,35 @@ $( document ).ready(function(){
     formObj.create_form()
 });
 
+var advsearch_viewer = {
+    get_display_container_id: function() {
+        return "display-container";
+    },
+    get_$display_container: function() {
+        return $("#display-container");
+    },
+    display_results: function(data_obj) {
+        /**
+         * receives results obj in format
+         *  { [item_SKU(string)]: {
+         *      [location(string)]: item_info_dictionary }}
+         */
+        var $disp_container = this.get_$display_container();
+
+        console.log($disp_container);
+        $disp_container.empty();
+
+        // Item_Search from viewer.js
+        var item_searcher = new Item_Searcher(data_obj),
+            proc_data = item_searcher.data,
+            dispDiv_id = this.get_display_container_id();
+
+        var $table = chart.make_data_table(item_searcher, proc_data, dispDiv_id);
+        console.log($table);
+        $disp_container.append($table);
+    },
+}
+
 var formObj = {
     submit: function() {
         // Submit function for the search form.
@@ -18,7 +47,7 @@ var formObj = {
             url: adv_search_url,
             data: form_data,
             success: function(data) {
-                console.log(data);
+                advsearch_viewer.display_results(data);
             },
         });
     },
