@@ -62,6 +62,7 @@ var viewer = {
         }
     },
     empty_page: function() {
+        var $display_container = viewer.get_$display_container();
         $display_container.empty();
     },
     get_$display_container: function() {
@@ -173,7 +174,9 @@ var chart = {
 
         return $elements;
     },
-    make_data_table: function(item_searcher_inst, proc_data) {
+    make_data_table: function(item_searcher_inst, proc_data, display_div_id) {
+        if (display_div_id === undefined)
+            display_div_id = "display-container";
         /**
          * Accepts a dictionary in the form of {[item_code] { [loc]: {item_data}}}
          * Makes table related to item_search.
@@ -254,8 +257,9 @@ var chart = {
                 console.log(sorted_data);
                 $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
                 viewer.empty_page();
-                $data_table.appendTo($display_container);
+                $data_table.appendTo(("#" + display_div_id));
             });
+
             $tr.append($th);
         }
 
