@@ -516,13 +516,10 @@ def search(request):
     return data
 
 def adv_search(request):
-    response = {}
 
     date_id = request.GET.get(get_element_name("single_date"))
     locs = request.GET.getlist(get_element_name("multiple_locs"))
 
-    response["date_id"] = date_id
-    response["locs"] = locs
 
     filter_dic = {}
 
@@ -591,9 +588,7 @@ def adv_search(request):
             d[item_loc]["avail_quantity"] += avail_quantity
             d[item_loc]["ship_quantity"] += ship_quantity
 
-    response["data"] = data
-
-    return response
+    return data
 
 def run_adv_item_filter(data_date, filter_dic):
     """
