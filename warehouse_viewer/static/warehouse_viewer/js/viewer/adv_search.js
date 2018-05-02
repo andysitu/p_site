@@ -1,7 +1,8 @@
 $( document ).ready(function(){
     $("#search-form").submit(function(e){
         e.preventDefault();
-        formObj.submit();
+        side_menu.make_submitButton_loading();
+        form_obj.submit();
     });
 
     // Add click event to print button
@@ -9,7 +10,7 @@ $( document ).ready(function(){
         advsearch_viewer.print_search_results();
     });
 
-    formObj.create_form()
+    form_obj.create_form()
 });
 
 var advsearch_viewer = {
@@ -53,7 +54,7 @@ var advsearch_viewer = {
     },
 }
 
-var formObj = {
+var form_obj = {
     submit: function() {
         // Submit function for the search form.
         var $form = this.get_$form(),
@@ -66,6 +67,7 @@ var formObj = {
             data: form_data,
             success: function(data) {
                 advsearch_viewer.display_results(data);
+                side_menu.renew_submitButton();
             },
         });
     },
