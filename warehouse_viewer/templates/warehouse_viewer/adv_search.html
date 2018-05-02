@@ -21,6 +21,8 @@
     {% csrf_token %}
     <div id="form-container" class="fluid-container"></div>
     <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>
+    <button type="button" class="btn btn-secondary" id="print-button">{% trans 'Print' %}</button>
+
 </form>
 <div id="display-container"></div>
 {% endblock %}

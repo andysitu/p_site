@@ -69,6 +69,8 @@ var viewer = {
         return $("#display-container");
     },
     get_display_content: function() {
+        // Gets HTML content from Canvas if present and converts it
+        //  image tags. Returns the HTML content in string form.
         var $canvas_search = $("#display-container > canvas"),
             content = "";
 
@@ -80,8 +82,6 @@ var viewer = {
                 i = "<img src='" + image_url + "'/>";
             var r = /\<canvas.*\/canvas\>/i;
             content = content.replace(r, i);
-            console.log(i.search(r));
-            console.log("canvas");
         }
         return content;
     },

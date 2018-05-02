@@ -2,7 +2,13 @@ $( document ).ready(function(){
     $("#search-form").submit(function(e){
         e.preventDefault();
         formObj.submit();
-    })
+    });
+
+    // Add click event to print button
+    $("#print-button").click(function(e){
+        advsearch_viewer.print_search_results();
+    });
+
     formObj.create_form()
 });
 
@@ -32,6 +38,18 @@ var advsearch_viewer = {
         var $table = chart.make_data_table(item_searcher, proc_data, dispDiv_id);
         console.log($table);
         $disp_container.append($table);
+    },
+    print_search_results: function() {
+        // Returns HTML from #display-container into string form
+        //  into a new tab/window.
+        var $disp_container = this.get_$display_container();
+
+        var content = $disp_container.html();
+
+        var windowObject = window.open("", "_blank");
+        windowObject.document.writeln(content);
+        windowObject.document.close();
+        windowObject.focus();
     },
 }
 
