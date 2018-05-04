@@ -914,6 +914,26 @@ var settings_maker = {
            "class": "input-group-btn",
         });
 
+        var $quantity_item_type_input = $("<select>", {
+            "class": "form-control form-control-sm col-5",
+            name: element_ids.quantity_item_type_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "avail_item",
+            text: gettext("Available Items"),
+        }).appendTo($quantity_item_type_input);
+
+        $("<option>", {
+            "value": "ship_item",
+            text: gettext("Shipped Items"),
+        }).appendTo($quantity_item_type_input);
+
+        $("<option>", {
+            "value": "total_item",
+            text: gettext("Total Items"),
+        }).appendTo($quantity_item_type_input);
+
         var $quantity_modifier_input = $("<select>", {
             "class": "form-control form-control-sm col-sm-4",
             name: element_ids.quantity_modifier_name,
@@ -937,7 +957,7 @@ var settings_maker = {
 
         var $input = $("<input>", {
             id: input_id,
-            "class": "form-control form-control-sm col-sm-4",
+            "class": "form-control form-control-sm col-sm-3",
             name: input_name,
         }).appendTo($input_group);
 

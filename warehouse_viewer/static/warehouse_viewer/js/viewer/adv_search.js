@@ -118,7 +118,7 @@ var form_obj = {
         var $form_container = this.get_$form_container(),
             $quantity_input = settings_maker.$quantity_input();
 
-        $quantity_input.addClass("col-md-3");
+        $quantity_input.addClass("col-md-4");
 
         $form_container.append($quantity_input);
 
