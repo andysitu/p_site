@@ -41,6 +41,9 @@ var element_ids = {
     single_date_select_name: "date",
     time_period_input_id: "time-period-input",
     time_period_input_name: "time-period",
+    quantity_input_id: "quantity-input",
+    quantity_input_name: "quantity",
+    quantity_modifier_name: "quantity-modifier",
 
     // For Chart.js
     total_item_over_time_chart: "item-over-time-chart",

@@ -899,6 +899,52 @@ var settings_maker = {
 
         return $div;
     },
+
+    $quantity_input: function(loc) {
+        var input_id = element_ids.quantity_input_id,
+            input_name = element_ids.quantity_input_name,
+            $div = $("<div class='form-group'>");
+
+        $("<label>", {
+            "for": input_id,
+            text: gettext("Quantity"),
+        }).appendTo($div);
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn",
+        });
+
+        var $quantity_modifier_input = $("<select>", {
+            "class": "form-control form-control-sm col-sm-4",
+            name: element_ids.quantity_modifier_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "gte",
+            text: gettext(">="),
+        }).appendTo($quantity_modifier_input);
+
+        $("<option>", {
+            "value": "lte",
+            text: gettext("<="),
+        }).appendTo($quantity_modifier_input);
+
+        $("<option>", {
+            "value": "eq",
+            text: gettext("="),
+        }).appendTo($quantity_modifier_input);
+
+
+        var $input = $("<input>", {
+            id: input_id,
+            "class": "form-control form-control-sm col-sm-4",
+            name: input_name,
+        }).appendTo($input_group);
+
+        $input_group.appendTo($div);
+
+        return $div
+    },
 };
 
 

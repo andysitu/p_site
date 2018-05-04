@@ -76,6 +76,7 @@ var form_obj = {
         this.add_date_input();
         this.add_multiple_loc();
         this.add_level_select();
+        this.add_quantity_input();
     },
     get_$form: function() {
         return $("#search-form");
@@ -112,5 +113,14 @@ var form_obj = {
         $form_group.addClass("col-md-2");
 
         $form_container.append($form_group);
+    },
+    add_quantity_input: function() {
+        var $form_container = this.get_$form_container(),
+            $quantity_input = settings_maker.$quantity_input();
+
+        $quantity_input.addClass("col-md-3");
+
+        $form_container.append($quantity_input);
+
     },
 };
