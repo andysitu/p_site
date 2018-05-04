@@ -31,6 +31,8 @@ elements_dictionary = {
     "adv_contain": "adv_contain_select",
     "adv_filter": "filter_value",
     "adv_foption": "filter_option",
+    "quantity": "quantity",
+    "quantity_modifier": "quantity_modifier",
 
 }
 
@@ -520,7 +522,6 @@ def adv_search(request):
     date_id = request.GET.get(get_element_name("single_date"))
     locs = request.GET.getlist(get_element_name("multiple_locs"))
 
-
     filter_dic = {}
 
     adv_contain_str = get_element_name("adv_contain")
@@ -548,11 +549,17 @@ def adv_search(request):
     data_date = DataDate.objects.get(id=date_id)
 
     for filter_option in filter_dic:
-
         for contains in filter_dic[filter_option]:
             filter_value_list = filter_dic[filter_option][contains]
 
     item_query = run_adv_item_filter(data_date, filter_dic)
+
+    # Filter for Item Quantity if present.
+    quantity = request.GET.get(get_element_name("quantity"))
+    quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
+    if quantity !== "":
+        pass
+
 
     data = {}
 
