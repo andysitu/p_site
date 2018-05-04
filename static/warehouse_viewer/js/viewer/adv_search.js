@@ -66,6 +66,7 @@ var form_obj = {
             url: adv_search_url,
             data: form_data,
             success: function(data) {
+                console.log(data);
                 advsearch_viewer.display_results(data);
                 side_menu.renew_submitButton();
             },

@@ -33,6 +33,7 @@ elements_dictionary = {
     "adv_foption": "filter_option",
     "quantity": "quantity",
     "quantity_modifier": "quantity_modifier",
+    "quantity_item_type": "item-type",
 
 }
 
@@ -557,11 +558,30 @@ def adv_search(request):
     # Filter for Item Quantity if present.
     quantity = request.GET.get(get_element_name("quantity"))
     quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
-    if quantity !== "":
-        pass
+    item_type = request.GET.get(get_element_name("quantity_item_type"))
 
+    if quantity != "" and item_type != "total_item":
+        if quantity_modfier == "lte":
+            if item_type == "avail_item":
+                item_query = item_query.filter(avail_quantity__lte=quantity)
+            elif item_type == "ship_item":
+                item_query = item_query.filter(ship_quantity__lte=quantity)
+            # if total_item, it'll be filtered in loop going thru query
+        elif quantity_modfier == "gte":
+            if item_type == "avail_item":
+                item_query = item_query.filter(avail_quantity__gte=quantity)
+            elif item_type == "ship_item":
+                item_query = item_query.filter(ship_quantity__gte=quantity)
+        elif quantity_modfier == "eq":
+            if item_type == "avail_item":
+                item_query = item_query.filter(avail_quantity=quantity)
+            elif item_type == "ship_item":
+                item_query = item_query.filter(ship_quantity=quantity)
 
     data = {}
+
+    # elif item_type == "total_item":
+    # item_query = item_query.filter(avail_quantity__lte=quantity)
 
     for item in item_query:
         item_loc = str(item.rack_location)
@@ -572,12 +592,18 @@ def adv_search(request):
         ship_quantity = item.ship_quantity
         customer_code = item.customer_code
 
-        total_items = item.avail_quantity + item.ship_quantity
+        if quantity != "" and item_type == "total_item":
+            total_items = item.avail_quantity + item.ship_quantity
+            if quantity_modfier == "lte":
+                if quantity > total_items:
+                    continue
+            elif quantity_modfier == "gte":
+                if quantity < total_items:
+                    continue
+            elif quantity_modfier == "eq":
+                if quantity != total_items:
+                    continue
 
-        # if all_status:
-        #     data["All"][date_str] += total_items
-        # if item_loc in data:
-        #     data[item_loc][date_str] += total_items
         if item_code not in data:
             data[item_code] = {}
         d = data[item_code]
