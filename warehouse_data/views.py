@@ -659,23 +659,23 @@ def get_q_object(option, contains, value):
             return Q(customer_code=int(value))
     elif option == "item_code":
         if contains == "contain":
-            return Q(item_code__contain=value)
+            return Q(item_code__contains=value)
         elif contains == "nocontain":
-            return ~Q(item_code__contain=value)
+            return ~Q(item_code__contains=value)
         elif contains == "exact":
             return Q(item_code__exact=value)
     elif option == "rcv":
         if contains == "contain":
-            return Q(rcv__contain=value)
+            return Q(rcv__contains=value)
         elif contains == "nocontain":
-            return ~Q(rcv__contain=value)
+            return ~Q(rcv__contains=value)
         elif contains == "exact":
             return Q(rcv__exact=value)
     elif option == "description":
         if contains == "contain":
-            return Q(description__contain=value)
+            return Q(description__contains=value)
         elif contains == "nocontain":
-            return ~Q(description__contain=value)
+            return ~Q(description__contains=value)
         elif contains == "exact":
             return Q(description__exact=value)
 
