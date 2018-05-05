@@ -32,7 +32,7 @@ elements_dictionary = {
     "adv_filter": "filter_value",
     "adv_foption": "filter_option",
     "quantity": "quantity",
-    "quantity_modifier": "quantity_modifier",
+    "quantity_modifier": "quantity-modifier",
     "quantity_item_type": "item-type",
 
 }
@@ -556,9 +556,10 @@ def adv_search(request):
     item_query = run_adv_item_filter(data_date, filter_dic)
 
     # Filter for Item Quantity if present.
-    quantity = request.GET.get(get_element_name("quantity"))
+    quantity = int(request.GET.get(get_element_name("quantity")))
     quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
     item_type = request.GET.get(get_element_name("quantity_item_type"))
+    print(item_type, quantity_modfier, quantity)
 
     if quantity != "" and item_type != "total_item":
         if quantity_modfier == "lte":
@@ -579,9 +580,6 @@ def adv_search(request):
                 item_query = item_query.filter(ship_quantity=quantity)
 
     data = {}
-
-    # elif item_type == "total_item":
-    # item_query = item_query.filter(avail_quantity__lte=quantity)
 
     for item in item_query:
         item_loc = str(item.rack_location)
