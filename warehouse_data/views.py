@@ -659,25 +659,25 @@ def get_q_object(option, contains, value):
             return Q(customer_code=int(value))
     elif option == "item_code":
         if contains == "contain":
-            return Q(item_code__contains=value)
+            return Q(item_code__icontains=value)
         elif contains == "nocontain":
-            return ~Q(item_code__contains=value)
+            return ~Q(item_code__icontains=value)
         elif contains == "exact":
-            return Q(item_code__exact=value)
+            return Q(item_code__iexact=value)
     elif option == "rcv":
         if contains == "contain":
-            return Q(rcv__contains=value)
+            return Q(rcv__icontains=value)
         elif contains == "nocontain":
-            return ~Q(rcv__contains=value)
+            return ~Q(rcv__icontains=value)
         elif contains == "exact":
-            return Q(rcv__exact=value)
+            return Q(rcv__iexact=value)
     elif option == "description":
         if contains == "contain":
-            return Q(description__contains=value)
+            return Q(description__icontains=value)
         elif contains == "nocontain":
-            return ~Q(description__contains=value)
+            return ~Q(description__icontains=value)
         elif contains == "exact":
-            return Q(description__exact=value)
+            return Q(description__iexact=value)
 
 def get_added_items_over_time(request):
     data = {}
