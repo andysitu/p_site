@@ -556,28 +556,31 @@ def adv_search(request):
     item_query = run_adv_item_filter(data_date, filter_dic)
 
     # Filter for Item Quantity if present.
-    quantity = int(request.GET.get(get_element_name("quantity")))
-    quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
-    item_type = request.GET.get(get_element_name("quantity_item_type"))
-    print(item_type, quantity_modfier, quantity)
+    try:
+        quantity = int(request.GET.get(get_element_name("quantity")))
+        quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
+        item_type = request.GET.get(get_element_name("quantity_item_type"))
+        print(item_type, quantity_modfier, quantity)
 
-    if quantity != "" and item_type != "total_item":
-        if quantity_modfier == "lte":
-            if item_type == "avail_item":
-                item_query = item_query.filter(avail_quantity__lte=quantity)
-            elif item_type == "ship_item":
-                item_query = item_query.filter(ship_quantity__lte=quantity)
-            # if total_item, it'll be filtered in loop going thru query
-        elif quantity_modfier == "gte":
-            if item_type == "avail_item":
-                item_query = item_query.filter(avail_quantity__gte=quantity)
-            elif item_type == "ship_item":
-                item_query = item_query.filter(ship_quantity__gte=quantity)
-        elif quantity_modfier == "eq":
-            if item_type == "avail_item":
-                item_query = item_query.filter(avail_quantity=quantity)
-            elif item_type == "ship_item":
-                item_query = item_query.filter(ship_quantity=quantity)
+        if quantity != "" and item_type != "total_item":
+            if quantity_modfier == "lte":
+                if item_type == "avail_item":
+                    item_query = item_query.filter(avail_quantity__lte=quantity)
+                elif item_type == "ship_item":
+                    item_query = item_query.filter(ship_quantity__lte=quantity)
+                # if total_item, it'll be filtered in loop going thru query
+            elif quantity_modfier == "gte":
+                if item_type == "avail_item":
+                    item_query = item_query.filter(avail_quantity__gte=quantity)
+                elif item_type == "ship_item":
+                    item_query = item_query.filter(ship_quantity__gte=quantity)
+            elif quantity_modfier == "eq":
+                if item_type == "avail_item":
+                    item_query = item_query.filter(avail_quantity=quantity)
+                elif item_type == "ship_item":
+                    item_query = item_query.filter(ship_quantity=quantity)
+    except ValueError:
+        quantity = ""
 
     data = {}
 
