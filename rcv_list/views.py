@@ -125,7 +125,7 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, 
 
     rcv_query = RCV.objects.filter(rcv_number=rcv_number)
     if len(rcv_query) == 0:
-        if year!=None:
+        try:
             d = datetime.date(year, month, day)
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename=filename,
@@ -134,7 +134,7 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, 
                                original_filename=original_filename,
                                input_date=input_date,
                                )
-        else:
+        except ValueError:
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename =filename,
                                original_filename=original_filename,
