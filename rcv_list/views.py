@@ -134,7 +134,7 @@ def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, 
                                original_filename=original_filename,
                                input_date=input_date,
                                )
-        except (ValueError, TypeError as e):
+        except (ValueError, TypeError) as e:
             rcv_instance = RCV(rcv_number=rcv_number,
                                filename =filename,
                                original_filename=original_filename,

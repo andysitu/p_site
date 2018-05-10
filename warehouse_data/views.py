@@ -566,6 +566,7 @@ def adv_search(request):
             if quantity_modfier == "lte":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)
+                    print("TEST")
                 elif item_type == "ship_item":
                     item_query = item_query.filter(ship_quantity__lte=quantity)
                 # if total_item, it'll be filtered in loop going thru query
