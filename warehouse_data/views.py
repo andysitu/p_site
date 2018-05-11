@@ -560,16 +560,14 @@ def adv_search(request):
         quantity = int(request.GET.get(get_element_name("quantity")))
         quantity_modfier = request.GET.get(get_element_name("quantity_modifier"))
         item_type = request.GET.get(get_element_name("quantity_item_type"))
-        print(item_type, quantity_modfier, quantity)
 
+        # Filter total_items & multiple lines RCV in
         if quantity != "" and item_type != "total_item":
             if quantity_modfier == "lte":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)
-                    print("TEST")
                 elif item_type == "ship_item":
                     item_query = item_query.filter(ship_quantity__lte=quantity)
-                # if total_item, it'll be filtered in loop going thru query
             elif quantity_modfier == "gte":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__gte=quantity)
@@ -593,18 +591,6 @@ def adv_search(request):
         avail_quantity = item.avail_quantity
         ship_quantity = item.ship_quantity
         customer_code = item.customer_code
-
-        if quantity != "" and item_type == "total_item":
-            total_items = item.avail_quantity + item.ship_quantity
-            if quantity_modfier == "lte":
-                if quantity > total_items:
-                    continue
-            elif quantity_modfier == "gte":
-                if quantity < total_items:
-                    continue
-            elif quantity_modfier == "eq":
-                if quantity != total_items:
-                    continue
 
         if item_code not in data:
             data[item_code] = {}
