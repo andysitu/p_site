@@ -563,23 +563,26 @@ def adv_search(request):
 
         # Filter total_items & multiple lines RCV in
         if quantity != "" and item_type != "total_item":
-            if quantity_modfier == "lte":
+            # multiple items with same item_sku can add up, so need to take
+            #   that into account.
+            if quantity_modfier == "lte" or quantity_modfier == "total_item":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)
                 elif item_type == "ship_item":
+                    item_query = item_query.filter(ship_quantity__lte=quantity)
+                elif item_type == "total_item":
+                    item_query = item_query.filter(avail_quantity__lte=quantity)
                     item_query = item_query.filter(ship_quantity__lte=quantity)
             elif quantity_modfier == "gte":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__gte=quantity)
                 elif item_type == "ship_item":
                     item_query = item_query.filter(ship_quantity__gte=quantity)
-            elif quantity_modfier == "eq":
-                if item_type == "avail_item":
-                    item_query = item_query.filter(avail_quantity=quantity)
-                elif item_type == "ship_item":
-                    item_query = item_query.filter(ship_quantity=quantity)
+                elif item_type == "total_item":
+                    item_query = item_query.filter(avail_quantity__gte=quantity)
+                    item_query = item_query.filter(ship_quantity__gte=quantity)
     except ValueError:
-        quantity = ""
+        pass
 
     data = {}
 
