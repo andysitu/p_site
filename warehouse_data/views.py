@@ -573,14 +573,6 @@ def adv_search(request):
                 elif item_type == "total_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)
                     item_query = item_query.filter(ship_quantity__lte=quantity)
-            elif quantity_modfier == "gte":
-                if item_type == "avail_item":
-                    item_query = item_query.filter(avail_quantity__gte=quantity)
-                elif item_type == "ship_item":
-                    item_query = item_query.filter(ship_quantity__gte=quantity)
-                elif item_type == "total_item":
-                    item_query = item_query.filter(avail_quantity__gte=quantity)
-                    item_query = item_query.filter(ship_quantity__gte=quantity)
     except ValueError:
         pass
 
