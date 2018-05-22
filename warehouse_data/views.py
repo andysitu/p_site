@@ -33,7 +33,7 @@ elements_dictionary = {
     "adv_foption": "filter_option",
     "quantity": "quantity",
     "quantity_modifier": "quantity-modifier",
-    "quantity_item_type": "item-type",
+    "quantity_item_type": "quantity-item-type",
 
 }
 
@@ -565,6 +565,7 @@ def adv_search(request):
         if quantity != "" and item_type != "total_item":
             # multiple items with same item_sku can add up, so need to take
             #   that into account.
+            #   Needs to be filtered at the end, but will just client to do that.
             if quantity_modfier == "lte" or quantity_modfier == "total_item":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)

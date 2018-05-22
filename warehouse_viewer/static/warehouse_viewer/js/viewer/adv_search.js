@@ -20,6 +20,52 @@ var advsearch_viewer = {
     get_$display_container: function() {
         return $("#display-container");
     },
+    filter_results: function(form_data, data) {
+        console.log(form_data);
+        var i, form_length = form_data.length,
+            search_quantity, qModifier, search_item_type,
+            quantity, item_obj;
+
+        for (i = 0; i < form_length; i++) {
+            if (form_data[i].name == element_ids["quantity_input_name"]) {
+                search_quantity = parseInt(form_data[i].value);
+            } else if (form_data[i].name == element_ids["quantity_modifier_name"]) {
+                qModifier = form_data[i].value;
+            } else if (form_data[i].name == element_ids["quantity_item_type_name"]) {
+                search_item_type = form_data[i].value;
+            }
+        }
+
+        if (search_quantity != "") {
+            var item_sku, loc;
+
+            for (item_sku in data) {
+                for (loc in data[item_sku] ) {
+                    item_obj = data[item_sku][loc];
+
+                    if (search_item_type == "avail_item") {
+                        quantity = parseInt(item_obj["avail_quantity"]);
+                    } else if (search_item_type == "ship_item") {
+                        quantity = parseInt(item_obj["ship_quantity"]);
+                    } else if (search_item_type == "total_item") {
+                        quantity = parseInt(item_obj["avail_quantity"]) + parseInt(item_obj["ship_quantity"]);
+                    }
+
+                    if (qModifier == "eq") {
+                        if (quantity != search_quantity)
+                            delete data[item_sku][loc]
+                    } else if (qModifier == "gte") {
+                        if (!(quantity >= search_quantity))
+                            delete data[item_sku][loc];
+                    } else if (qModifier == "lte" ) {
+                        if (!(quantity <= search_quantity))
+                            delete data[item_sku][loc];
+                    }
+                }
+            }
+        }
+        return data;
+    },
     display_results: function(data_obj) {
         /**
          * receives results obj in format
@@ -28,7 +74,6 @@ var advsearch_viewer = {
          */
         var $disp_container = this.get_$display_container();
 
-        console.log($disp_container);
         $disp_container.empty();
 
         // Item_Search from viewer.js
@@ -37,7 +82,6 @@ var advsearch_viewer = {
             dispDiv_id = this.get_display_container_id();
 
         var $table = chart.make_data_table(item_searcher, proc_data, dispDiv_id);
-        console.log($table);
         $disp_container.append($table);
     },
     print_search_results: function() {
@@ -52,7 +96,7 @@ var advsearch_viewer = {
         windowObject.document.close();
         windowObject.focus();
     },
-}
+};
 
 var form_obj = {
     submit: function() {
@@ -67,7 +111,8 @@ var form_obj = {
             data: form_data,
             success: function(data) {
                 console.log(data);
-                advsearch_viewer.display_results(data);
+                var filtered_data = advsearch_viewer.filter_results(form_data, data);
+                advsearch_viewer.display_results(filtered_data);
                 side_menu.renew_submitButton();
             },
         });
