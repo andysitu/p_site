@@ -121,7 +121,6 @@ var form_obj = {
         this.add_filter_div();
         this.add_date_input();
         this.add_multiple_loc();
-        this.add_level_select();
         this.add_quantity_input();
     },
     get_$form: function() {

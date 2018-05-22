@@ -209,7 +209,7 @@ var chart_mode_settings = {
             data_type_dic = {
                 "search": gettext("Search"),
                 "total_item_info": gettext("Total Item Info"),
-                "item_type_filter": gettext("Item Type Filter"),
+                "item_type_filter": gettext("Item Type By Location"),
                 "total_item_over_time": gettext("Total Item Over Time"),
                 "added_item_over_time": gettext("Items Added Over Time"),
                 "item_type_over_time": gettext("Item Types Over Time"),

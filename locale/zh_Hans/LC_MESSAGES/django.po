@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-08 17:22-0800\n"
+"POT-Creation-Date: 2018-05-22 12:54-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,8 @@ msgstr "沒有 CUSTOMS DECLARATION PDF"
 msgid ""
 "Before removing the charger connector from the battery, turn off the charger "
 "first or else it may harm the battery or charger."
-msgstr "从电池中取出充电器连接器之前，请先关闭充电器，否则可能会损坏电池或充电器。"
+msgstr ""
+"从电池中取出充电器连接器之前，请先关闭充电器，否则可能会损坏电池或充电器。"
 
 #: help/templates/help/forklift.html:10
 msgid ""
@@ -209,7 +210,7 @@ msgstr "上载RCV"
 msgid "Using the ScanSnap Scanner"
 msgstr "使用ScanSnap扫描仪"
 
-#: help/templates/help/help_main.html:11 p_site/templates/p_site/index.html:16
+#: help/templates/help/help_main.html:11 p_site/templates/p_site/index.html:15
 msgid "Warehouse Viewer"
 msgstr "仓库查看器"
 
@@ -226,7 +227,7 @@ msgid "Click on the Upload RCV link on the side."
 msgstr "点击侧面的上传RCV链接。"
 
 #: help/templates/help/rcv_upload.html:15
-msgid "Select the RC file by clicking on the \"Chose Files\" button."
+msgid "Select the RC file by clicking on the \"Choose Files\" button."
 msgstr ""
 
 #: help/templates/help/rcv_upload.html:16
@@ -469,7 +470,8 @@ msgid ""
 "The filename should have the filename given from the WMS. It should be in "
 "the format of yyyymmddhhmmss.xlsx (year,month,date,hour,minute,seconds)."
 msgstr ""
-"文件名应该有WMS给出的文件名。它应该采用yyyymmddhhmmss.xlsx（年，月，日，时，分，秒）的格式。"
+"文件名应该有WMS给出的文件名。它应该采用yyyymmddhhmmss.xlsx（年，月，日，时，"
+"分，秒）的格式。"
 
 #: help/templates/help/warehouse_viewer_upload.html:79
 msgid "Upload the .xlsx file by select the 'Upload' button."
@@ -510,22 +512,22 @@ msgstr "登录"
 msgid "Home"
 msgstr "家"
 
-#: p_site/templates/p_site/index.html:18
+#: p_site/templates/p_site/index.html:17
 #: rcv_list/templates/rcv_list/view_dates.html:7
 #: rcv_list/templates/rcv_list/view_files.html:11
 #: uploader/templates/uploader/view_files.html:13
 msgid "RCV List"
 msgstr "RCV 列表"
 
-#: p_site/templates/p_site/index.html:20
+#: p_site/templates/p_site/index.html:19
 msgid "Warehouse Map (Outdated)"
 msgstr "仓库地图（过时）"
 
-#: p_site/templates/p_site/index.html:22
+#: p_site/templates/p_site/index.html:21
 msgid "File Uploader"
 msgstr "文件上传器"
 
-#: p_site/templates/p_site/index.html:24
+#: p_site/templates/p_site/index.html:23
 msgid "Customs Declaration List"
 msgstr "选择CUSTOMS DECLARATION PDF文件"
 
@@ -568,6 +570,7 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
+#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:23
 #: warehouse_viewer/templates/warehouse_viewer/viewer.html:39
 msgid "Submit"
 msgstr "提交"
@@ -666,9 +669,14 @@ msgid "Map Home"
 msgstr "家"
 
 #: warehouse_map/templates/warehouse_map/warehouse_map_base.html:16
-#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:13
+#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:15
 msgid "Upload Excel"
 msgstr "上传日期"
+
+#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:24
+#: warehouse_viewer/templates/warehouse_viewer/viewer.html:40
+msgid "Print"
+msgstr ""
 
 #: warehouse_viewer/templates/warehouse_viewer/upload.html:21
 msgid "Select an excel file from the WMS"
@@ -685,3 +693,7 @@ msgstr "地图"
 #: warehouse_viewer/templates/warehouse_viewer/viewer.html:34
 msgid "Chart"
 msgstr "图表"
+
+#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:13
+msgid "Adv. Search"
+msgstr "高级搜索"
