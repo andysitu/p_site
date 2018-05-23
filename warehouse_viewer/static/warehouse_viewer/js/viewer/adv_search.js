@@ -21,14 +21,13 @@ var advsearch_viewer = {
         return $("#display-container");
     },
     filter_results: function(form_data, data) {
-        console.log(form_data);
         var i, form_length = form_data.length,
             search_quantity, qModifier, search_item_type,
             quantity, item_obj;
 
         for (i = 0; i < form_length; i++) {
             if (form_data[i].name == element_ids["quantity_input_name"]) {
-                search_quantity = parseInt(form_data[i].value);
+                search_quantity = form_data[i].value;
             } else if (form_data[i].name == element_ids["quantity_modifier_name"]) {
                 qModifier = form_data[i].value;
             } else if (form_data[i].name == element_ids["quantity_item_type_name"]) {
@@ -36,7 +35,9 @@ var advsearch_viewer = {
             }
         }
 
-        if (search_quantity != "") {
+        if (search_quantity != "" ) {
+            search_quantity = parseInt(search_quantity);
+
             var item_sku, loc;
 
             for (item_sku in data) {

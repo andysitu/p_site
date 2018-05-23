@@ -286,5 +286,17 @@ var helper_functions = {
 
         }
         return form_data;
-    }
+    },
+
+    create_$rcv_ahtml: function(rcv_search_url, rcv_num) {
+        function replace_link(link, replacing_name) {
+            return link.replace(/BLANK/, replacing_name);
+        }
+
+        return $("<a>", {
+            text: rcv_num,
+            title: rcv_num,
+            href: replace_link(rcv_search_url, rcv_num),
+        });
+    },
 }

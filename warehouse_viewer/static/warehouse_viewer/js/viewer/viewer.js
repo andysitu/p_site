@@ -268,8 +268,9 @@ var chart = {
             $tr.append($th);
         }
 
-        var  header, hkey;
+        var  header, hkey, rcv_len, a;
 
+        // Display info
         var $tbody = $("<tbody>").appendTo($table);
         for (var itemsearch_id in proc_data) {
             $tr = $("<tr>").appendTo($tbody);
@@ -278,12 +279,25 @@ var chart = {
             for (i = 0; i < hlen; i++) {
                 header = header_arr[i];
                 hkey = header_map[header];
-                $tr.append($("<td>", {
+                if (hkey != "rcv") {
+                    $tr.append($("<td>", {
                     text: item_data[hkey],
                 }));
+                } else {
+                    rcv_len = item_data[hkey].length;
+                    if (rcv_len > 1) {
+                        $tr.append($("<td>", {
+                            text: gettext("Multiple RCV"),
+                        }));
+                    } else {
+                        a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
+                        $tr.append($("<td>", ).append(a));
+                    }
+                }
             }
         }
 
+        // Tallying totals at end of table
         $tr = $("<tr>").appendTo($tbody);
         for (i = 0; i < hlen; i++) {
             header = header_arr[i];

@@ -519,7 +519,6 @@ def search(request):
     return data
 
 def adv_search(request):
-
     date_id = request.GET.get(get_element_name("single_date"))
     locs = request.GET.getlist(get_element_name("multiple_locs"))
 
@@ -597,13 +596,14 @@ def adv_search(request):
                 "ship_quantity": ship_quantity,
                 "description": description,
                 "item_code": item_code,
-                "rcv": rcv,
+                "rcv": [rcv,],
                 "location": item_loc,
                 "customer_code": customer_code,
             }
         else:
             d[item_loc]["avail_quantity"] += avail_quantity
             d[item_loc]["ship_quantity"] += ship_quantity
+            d[item_loc]["rcv"].append(rcv)
 
     return data
 
