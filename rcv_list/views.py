@@ -22,10 +22,12 @@ from .models import get_rcv_filepath
 def get_foldername():
     return 'rcv'
 
-def search_rcv(request):
-    if request.method == "GET":
+def search_rcv(request, rcv=None):
+    if rcv==None and request.method == "GET":
         search_query = request.GET.get('search_box', None)
         rcv_list = RCV.objects.filter(rcv_number__contains=search_query)
+    elif rcv != None:
+        rcv_list = RCV.objects.filter(rcv_number__contains=rcv)
     return render(
         request,
         'rcv_list/view_files.html',

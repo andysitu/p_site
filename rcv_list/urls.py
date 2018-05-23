@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^edit_list/$', views.view_edit_list, name="edit_list"),
     url(r'^search_rcv/?$', views.search_rcv, name="search_rcv"),
+    url(r'^search_rcv/(?P<rcv>.+)$', views.search_rcv, name="searching_rcv"),
 
     url(r'^edit_file_ajax/$', views.edit_file_ajax, name="edit_file_ajax"),
 ]
