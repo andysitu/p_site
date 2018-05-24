@@ -207,7 +207,6 @@ var chart_mode_settings = {
             data_select_id = element_ids.data_select_id,
 
             data_type_dic = {
-                "search": gettext("Search"),
                 "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type By Location"),
                 "total_item_over_time": gettext("Total Item Over Time"),
@@ -235,11 +234,6 @@ var chart_mode_settings = {
         menu_functions.empty_options_container();
 
         switch(data_type) {
-            case "search":
-                menu_functions.add_filter_div();
-                menu_functions.add_multiple_loc_select();
-                menu_functions.add_date1();
-                break;
             case "total_item_info":
                 menu_functions.add_date1();
                 break;
