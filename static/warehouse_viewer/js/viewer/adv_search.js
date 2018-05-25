@@ -21,6 +21,7 @@ var advsearch_viewer = {
         return $("#display-container");
     },
     filter_results: function(form_data, data) {
+        console.log(data);
         var i, form_length = form_data.length,
             search_quantity, qModifier, search_item_type,
             quantity, item_obj;
@@ -110,12 +111,16 @@ var form_obj = {
         $.ajax({
             url: adv_search_url,
             data: form_data,
-            success: function(data) {
-                console.log(data);
-                var filtered_data = advsearch_viewer.filter_results(form_data, data);
+            success: function(response_data) {
+                var filtered_data = advsearch_viewer.filter_results(form_data, response_data);
+                console.log(filtered_data);
                 advsearch_viewer.display_results(filtered_data);
                 side_menu.renew_submitButton();
             },
+            error: function(req, status, err) {
+                console.log("Ajax Error - Search:");
+                console.log(status, err);
+            }
         });
     },
     create_form: function() {

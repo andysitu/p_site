@@ -55,3 +55,7 @@ ul.section-nav {
 #data-table > thead  {
     cursor: pointer;
  }
+
+.multiple-rcv-div {
+    display: none;
+}

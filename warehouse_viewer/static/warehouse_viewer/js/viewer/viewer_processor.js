@@ -297,6 +297,7 @@ var helper_functions = {
             text: rcv_num,
             title: rcv_num,
             href: replace_link(rcv_search_url, rcv_num),
+            target: "_blank",
         });
     },
 }

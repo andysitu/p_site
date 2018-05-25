@@ -447,77 +447,6 @@ def get_total_item_info(request, num_top=20):
 
     return info_dic
 
-def search(request):
-    data = {}
-
-    date_id = request.GET.get(elements_dictionary["single_date"])
-    locs = request.GET.getlist(elements_dictionary["multiple_locs"] + "[]")
-
-    filter_value = request.GET.get(elements_dictionary["filter_value"])
-    filter_option = request.GET.get(elements_dictionary["filter_option"])
-
-    if len(locs) == 0:
-        locs = ["All", ]
-
-    if "All" in locs:
-        all_status = True
-    else:
-        all_status = False
-
-    data_date = DataDate.objects.get(id=date_id)
-
-    date_str = data_date.date.timestamp() * 1000
-
-    item_query = get_normal_item_query(data_date)
-
-    if filter_value != "":
-        if filter_option == "customer_code":
-            customer = int(filter_value)
-            item_query = item_query.filter(customer_code=customer)
-        elif filter_option == "item_code":
-            item_query = item_query.filter(item_code__icontains=filter_value)
-        elif filter_option == "rcv":
-            item_query = item_query.filter(rcv__icontains=filter_value)
-        elif filter_option == "description":
-            item_query = item_query.filter(description__icontains=filter_value)
-        elif filter_option == "item_code":
-            item_query = item_query.filter(item_code__icontains=filter_value)
-
-    item_query = item_query.iterator()
-
-    for item in item_query:
-        item_loc = str(item.rack_location)
-        rcv = item.rcv
-        item_code = item.item_code
-        description = item.description
-        avail_quantity = item.avail_quantity
-        ship_quantity = item.ship_quantity
-        customer_code = item.customer_code
-
-        total_items = item.avail_quantity + item.ship_quantity
-
-        # if all_status:
-        #     data["All"][date_str] += total_items
-        # if item_loc in data:
-        #     data[item_loc][date_str] += total_items
-        if item_code not in data:
-            data[item_code] = {}
-        d = data[item_code]
-        if item_loc not in d:
-            d[item_loc] = {
-                "avail_quantity" : avail_quantity,
-                "ship_quantity": ship_quantity,
-                "description": description,
-                "item_code": item_code,
-                "rcv": rcv,
-                "location": item_loc,
-                "customer_code": customer_code,
-            }
-        else:
-            d[item_loc]["avail_quantity"] += avail_quantity
-            d[item_loc]["ship_quantity"] += ship_quantity
-    return data
-
 def adv_search(request):
     date_id = request.GET.get(get_element_name("single_date"))
     locs = request.GET.getlist(get_element_name("multiple_locs"))
@@ -565,7 +494,7 @@ def adv_search(request):
             # multiple items with same item_sku can add up, so need to take
             #   that into account.
             #   Needs to be filtered at the end, but will just client to do that.
-            if quantity_modfier == "lte" or quantity_modfier == "total_item":
+            if quantity_modfier == "lte":
                 if item_type == "avail_item":
                     item_query = item_query.filter(avail_quantity__lte=quantity)
                 elif item_type == "ship_item":
@@ -590,6 +519,7 @@ def adv_search(request):
         if item_code not in data:
             data[item_code] = {}
         d = data[item_code]
+
         if item_loc not in d:
             d[item_loc] = {
                 "avail_quantity" : avail_quantity,

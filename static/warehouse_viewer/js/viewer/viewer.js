@@ -268,7 +268,7 @@ var chart = {
             $tr.append($th);
         }
 
-        var  header, hkey, rcv_len, a;
+        var  header, hkey, rcv_len, $a, $td, index, $div;
 
         // Display info
         var $tbody = $("<tbody>").appendTo($table);
@@ -281,17 +281,33 @@ var chart = {
                 hkey = header_map[header];
                 if (hkey != "rcv") {
                     $tr.append($("<td>", {
-                    text: item_data[hkey],
-                }));
+                        text: item_data[hkey],
+                }   ));
                 } else {
                     rcv_len = item_data[hkey].length;
                     if (rcv_len > 1) {
-                        $tr.append($("<td>", {
-                            text: gettext("Multiple RCV"),
-                        }));
+                        $div = $("<div>", {
+                            "class": "multiple-rcv-div",
+                            });
+
+                        for (index = 0; index < rcv_len; index++) {
+                            // console.log(item_data[hkey][index])
+                            $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey][index]);
+                            $div.append($a);
+                        }
+
+                        $td = $("<td>", {
+                            text: gettext("Multiple RCVs"),
+                        });
+                        $td.append($div);
+                        $tr.append($td);
+
+                        $td.hover(function(e) {
+                            console.log(e)
+                        })
                     } else {
-                        a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
-                        $tr.append($("<td>", ).append(a));
+                        $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
+                        $tr.append($("<td>", ).append($a));
                     }
                 }
             }
