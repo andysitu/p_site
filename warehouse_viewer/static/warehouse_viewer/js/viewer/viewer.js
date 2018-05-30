@@ -268,11 +268,16 @@ var chart = {
             $tr.append($th);
         }
 
-        var  header, hkey, rcv_len, $a, $td, index, $div;
+        var  header, hkey, rcv_len, $a, index,
+            $div, $td,
+            rcv_arr,
+            itemsearch_id;
+
+        var rcv_re = /rcv-(\d+)/
 
         // Display info
         var $tbody = $("<tbody>").appendTo($table);
-        for (var itemsearch_id in proc_data) {
+        for (itemsearch_id in proc_data) {
             $tr = $("<tr>").appendTo($tbody);
             item_data = proc_data[itemsearch_id];
             add_to_total(item_data);
@@ -291,20 +296,25 @@ var chart = {
                             });
 
                         for (index = 0; index < rcv_len; index++) {
-                            // console.log(item_data[hkey][index])
                             $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey][index]);
                             $div.append($a);
                         }
 
                         $td = $("<td>", {
                             text: gettext("Multiple RCVs"),
+                            id:"rcv-" + itemsearch_id,
                         });
                         $td.append($div);
                         $tr.append($td);
 
-                        $td.hover(function(e) {
-                            console.log(e)
-                        })
+                        function click_multRCV(e) {
+                            var rcv_td_id = e.target.id;
+                            var td_num = rcv_td_id.match(rcv_re)[1];
+
+                            console.log(proc_data[td_num][hkey]);
+                        }
+
+                        $td.click(click_multRCV);
                     } else {
                         $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
                         $tr.append($("<td>", ).append($a));
