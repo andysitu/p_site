@@ -59,3 +59,7 @@ ul.section-nav {
 .multiple-rcv-div {
     display: none;
 }
+
+.mousePoint {
+    cursor: pointer;
+}

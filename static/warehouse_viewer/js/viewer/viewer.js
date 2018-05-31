@@ -273,7 +273,7 @@ var chart = {
             rcv_arr,
             itemsearch_id;
 
-        var rcv_re = /rcv-(\d+)/
+        var rowNum_regex = /\w+-(\d+)/
 
         // Display info
         var $tbody = $("<tbody>").appendTo($table);
@@ -300,21 +300,28 @@ var chart = {
                             $div.append($a);
                         }
 
+                        function click_multRCV(e) {
+                            var rcv_td_id = e.target.id;
+                            var numRe_results = rcv_td_id.match(rowNum_regex);
+
+                            if (numRe_results != null) {
+                                var td_num = numRe_results[1];
+                                var rcv_list = proc_data[td_num][hkey];
+                                console.log(rcv_list);
+                            }
+                        }
+
                         $td = $("<td>", {
-                            text: gettext("Multiple RCVs"),
                             id:"rcv-" + itemsearch_id,
-                        });
+                            "class": "mousePoint"
+                        }).append($("<i>", {
+                            "class": "fa fa-plus",
+                            id: "i-" + itemsearch_id,
+                            }));
                         $td.append($div);
                         $tr.append($td);
 
-                        function click_multRCV(e) {
-                            var rcv_td_id = e.target.id;
-                            var td_num = rcv_td_id.match(rcv_re)[1];
-
-                            console.log(proc_data[td_num][hkey]);
-                        }
-
-                        $td.click(click_multRCV);
+                        $tr.on("click", click_multRCV);
                     } else {
                         $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
                         $tr.append($("<td>", ).append($a));

@@ -425,7 +425,7 @@ var settings_maker = {
         ($div).append($filters_div);
 
         $("<button>", {
-            "class": "btn btn-secondary btn-sm",
+            "class": "btn btn-secondary btn-sm mousePoint",
         })
             .append("<i class='fa fa-minus'></i>")
             .click(function(e) {
@@ -440,7 +440,7 @@ var settings_maker = {
             .appendTo($div);
 
         $("<button>", {
-            "class": "btn btn-dark btn-sm",
+            "class": "btn btn-dark btn-sm mousePoint",
         })
             .append($("<i class='fa fa-plus'></i>"))
             .click(function(e) {
