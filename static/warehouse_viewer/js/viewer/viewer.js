@@ -250,26 +250,29 @@ var chart = {
 
         hlen = header_arr.length
 
+        var rcv_header_class = "rcv-header";
+
         for (i = 0; i < hlen; i++) {
             $th = $("<th>", {
                 text: header_arr[i],
             });
             if (header_arr[i] == "RCV") {
                 $th.append($("<i>", {
-                    "class": "fa fa-plus",
+                    "class": "fa fa-plus " + rcv_header_class,
                 }));
+                $th.addClass(rcv_header_class);
             }
 
             $th.click(function(e) {
                 var th_name = e.target.textContent;
                 var header = header_map[th_name];
-                if (header != "rcv") {
+                if (!$( this ).hasClass(rcv_header_class)) {
                     var sorted_data = item_searcher_inst.sort_data(header_map[th_name]);
                     $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
                     viewer.empty_page();
                     $data_table.appendTo(("#" + display_div_id));
                 } else {
-                    console.log(this);
+                    chart.show_all_multRCV();
                 }
             });
             $tr.append($th);
@@ -314,6 +317,7 @@ var chart = {
                         });
                         $td.addClass(hidden_rcv_class);
                         $td.on("click", click_multRCV);
+
                         function click_multRCV(e) {
                             var rcv_td_id = e.target.id;
 
@@ -352,7 +356,6 @@ var chart = {
                                     $td_clicked.addClass(hidden_rcv_class);
                                 }
                             }
-
                         }
 
                         $td.append($i);
@@ -377,7 +380,12 @@ var chart = {
         return $table;
     },
     show_all_multRCV: function() {
-        console.log("HI");
+        var hidden_rcv_class = "multiple-rcv-hide";
+        var td_list = $("td" + "." + hidden_rcv_class);
+        var i, td_len = td_list.length;
+        for (i = 0; i < td_len; i++) {
+            td_list[i].click();
+        }
     },
     make_table: function(header_arr, data_arrs, table_id) {
         var $table = $("<table>", {
