@@ -245,7 +245,6 @@ var chart = {
             }
         }
 
-
         var $thead = $("<thead>").appendTo($table);
         $tr = $("<tr>").appendTo($thead);
 
@@ -254,17 +253,25 @@ var chart = {
         for (i = 0; i < hlen; i++) {
             $th = $("<th>", {
                 text: header_arr[i],
-            })
+            });
+            if (header_arr[i] == "RCV") {
+                $th.append($("<i>", {
+                    "class": "fa fa-plus",
+                }));
+            }
 
             $th.click(function(e) {
                 var th_name = e.target.textContent;
-                var sorted_data = item_searcher_inst.sort_data(header_map[th_name]);
-                console.log(sorted_data);
-                $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
-                viewer.empty_page();
-                $data_table.appendTo(("#" + display_div_id));
+                var header = header_map[th_name];
+                if (header != "rcv") {
+                    var sorted_data = item_searcher_inst.sort_data(header_map[th_name]);
+                    $data_table = chart.make_data_table(item_searcher_inst, sorted_data);
+                    viewer.empty_page();
+                    $data_table.appendTo(("#" + display_div_id));
+                } else {
+                    console.log(this);
+                }
             });
-
             $tr.append($th);
         }
 
@@ -289,7 +296,7 @@ var chart = {
                 if (hkey != "rcv") {
                     $tr.append($("<td>", {
                         text: item_data[hkey],
-                }   ));
+                    }));
                 } else {
                     rcv_len = item_data[hkey].length;
 
@@ -311,39 +318,41 @@ var chart = {
                             var rcv_td_id = e.target.id;
 
                             var numRe_results = rcv_td_id.match(rowNum_regex);
-                            console.log(numRe_results);
-                            var td_num = numRe_results[1];
+                            if (numRe_results != null) {
+                                var td_num = numRe_results[1];
 
-                            var $td_clicked = $("#td-" + td_num);
+                                var $td_clicked = $("#td-" + td_num);
 
-                            if ($td_clicked.hasClass(hidden_rcv_class)) {
+                                if ($td_clicked.hasClass(hidden_rcv_class)) {
 
-                                var rcv_list = proc_data[td_num][hkey],
-                                    rcv_len = rcv_list.length;
+                                    var rcv_list = proc_data[td_num][hkey],
+                                        rcv_len = rcv_list.length;
 
-                                $div = $("<div>", {
-                                // "class": "multiple-rcv-div",
-                                });
-                                
-                                $td_clicked.html("");
-                                $td_clicked.append($("<i>", {
-                                    "class" : "fa fa-minus",
-                                    id: "i-" + td_num,
-                                }));
-                                for (var rcv_i = 0; rcv_i < rcv_len; rcv_i++) {
-                                    $td_clicked.append(document.createTextNode('\n'));
-                                    $a = helper_functions.create_$rcv_ahtml(rcv_search_url, rcv_list[rcv_i]);
-                                    $td_clicked.append($a);
+                                    $div = $("<div>", {
+                                    // "class": "multiple-rcv-div",
+                                    });
+
+                                    $td_clicked.html("");
+                                    $td_clicked.append($("<i>", {
+                                        "class" : "fa fa-minus",
+                                        id: "i-" + td_num,
+                                    }));
+                                    for (var rcv_i = 0; rcv_i < rcv_len; rcv_i++) {
+                                        $td_clicked.append(document.createTextNode('\n'));
+                                        $a = helper_functions.create_$rcv_ahtml(rcv_search_url, rcv_list[rcv_i]);
+                                        $td_clicked.append($a);
+                                    }
+                                    $td_clicked.removeClass(hidden_rcv_class);
+                                } else {
+                                    var $i_new = $("<i>", {
+                                        "class": "fa fa-plus " + hidden_rcv_class,
+                                        id: "i-" + numRe_results,
+                                    });
+                                    $td_clicked.html($i_new);
+                                    $td_clicked.addClass(hidden_rcv_class);
                                 }
-                                $td_clicked.removeClass(hidden_rcv_class);
-                            } else {
-                                var $i_new = $("<i>", {
-                                    "class": "fa fa-plus " + hidden_rcv_class,
-                                    id: "i-" + numRe_results,
-                                });
-                                $td_clicked.html($i_new);
-                                $td_clicked.addClass(hidden_rcv_class);
                             }
+
                         }
 
                         $td.append($i);
@@ -366,6 +375,9 @@ var chart = {
         }
 
         return $table;
+    },
+    show_all_multRCV: function() {
+        console.log("HI");
     },
     make_table: function(header_arr, data_arrs, table_id) {
         var $table = $("<table>", {
