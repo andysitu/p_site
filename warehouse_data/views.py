@@ -533,7 +533,8 @@ def adv_search(request):
         else:
             d[item_loc]["avail_quantity"] += avail_quantity
             d[item_loc]["ship_quantity"] += ship_quantity
-            d[item_loc]["rcv"].append(rcv)
+            if rcv not in d[item_loc]["rcv"]:
+                d[item_loc]["rcv"].append(rcv)
 
     return data
 
