@@ -63,3 +63,7 @@ ul.section-nav {
 .mousePoint {
     cursor: pointer;
 }
+
+td {
+    white-space:pre;
+}

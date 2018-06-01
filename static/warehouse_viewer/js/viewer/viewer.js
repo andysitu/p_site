@@ -269,9 +269,11 @@ var chart = {
         }
 
         var  header, hkey, rcv_len, $a, index,
-            $div, $td,
+            $div, $td, $i,
             rcv_arr,
             itemsearch_id;
+
+        var hidden_rcv_class = "multiple-rcv-hide";
 
         var rowNum_regex = /\w+-(\d+)/
 
@@ -290,41 +292,64 @@ var chart = {
                 }   ));
                 } else {
                     rcv_len = item_data[hkey].length;
+
+                    $td = $("<td>", {
+                        id:"td-" + itemsearch_id,
+                        "class": "mousePoint",
+                    });
+
+                    $tr.append($td);
+
                     if (rcv_len > 1) {
-                        $div = $("<div>", {
-                            "class": "multiple-rcv-div",
-                            });
-
-                        for (index = 0; index < rcv_len; index++) {
-                            $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey][index]);
-                            $div.append($a);
-                        }
-
+                        $i = $("<i>", {
+                            "class": "fa fa-plus " + hidden_rcv_class,
+                            id: "i-" + itemsearch_id,
+                        });
+                        $td.addClass(hidden_rcv_class);
+                        $td.on("click", click_multRCV);
                         function click_multRCV(e) {
                             var rcv_td_id = e.target.id;
-                            var numRe_results = rcv_td_id.match(rowNum_regex);
 
-                            if (numRe_results != null) {
-                                var td_num = numRe_results[1];
-                                var rcv_list = proc_data[td_num][hkey];
-                                console.log(rcv_list);
+                            var numRe_results = rcv_td_id.match(rowNum_regex);
+                            console.log(numRe_results);
+                            var td_num = numRe_results[1];
+
+                            var $td_clicked = $("#td-" + td_num);
+
+                            if ($td_clicked.hasClass(hidden_rcv_class)) {
+
+                                var rcv_list = proc_data[td_num][hkey],
+                                    rcv_len = rcv_list.length;
+
+                                $div = $("<div>", {
+                                // "class": "multiple-rcv-div",
+                                });
+                                
+                                $td_clicked.html("");
+                                $td_clicked.append($("<i>", {
+                                    "class" : "fa fa-minus",
+                                    id: "i-" + td_num,
+                                }));
+                                for (var rcv_i = 0; rcv_i < rcv_len; rcv_i++) {
+                                    $td_clicked.append(document.createTextNode('\n'));
+                                    $a = helper_functions.create_$rcv_ahtml(rcv_search_url, rcv_list[rcv_i]);
+                                    $td_clicked.append($a);
+                                }
+                                $td_clicked.removeClass(hidden_rcv_class);
+                            } else {
+                                var $i_new = $("<i>", {
+                                    "class": "fa fa-plus " + hidden_rcv_class,
+                                    id: "i-" + numRe_results,
+                                });
+                                $td_clicked.html($i_new);
+                                $td_clicked.addClass(hidden_rcv_class);
                             }
                         }
 
-                        $td = $("<td>", {
-                            id:"rcv-" + itemsearch_id,
-                            "class": "mousePoint"
-                        }).append($("<i>", {
-                            "class": "fa fa-plus",
-                            id: "i-" + itemsearch_id,
-                            }));
-                        $td.append($div);
-                        $tr.append($td);
-
-                        $tr.on("click", click_multRCV);
+                        $td.append($i);
                     } else {
                         $a = helper_functions.create_$rcv_ahtml(rcv_search_url, item_data[hkey]);
-                        $tr.append($("<td>", ).append($a));
+                        $td.append($a);
                     }
                 }
             }
