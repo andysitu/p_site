@@ -10,7 +10,7 @@ from .models import RCV
 
 import os, re, datetime, random
 from django.conf import settings
-import PyPDF2
+import PyPDF2, re
 
 from .forms import UploadRCV, XMLRequestForm, UploadRCVs, EditRCVName
 
@@ -23,18 +23,65 @@ def get_foldername():
     return 'rcv'
 
 def search_rcv(request, rcv=None):
+    context_dic = {}
+
     if rcv==None and request.method == "GET":
-        search_query = request.GET.get('search_box', None)
-        rcv_list = RCV.objects.filter(rcv_number__contains=search_query)
+        rcvs = search_rcv_ajax(request, False)
+        context_dic["rcvs"] = rcvs
     elif rcv != None:
         rcv_list = RCV.objects.filter(rcv_number__contains=rcv)
+        context_dic["rcv_list"] = rcv_list
     return render(
         request,
         'rcv_list/view_files.html',
-        context={
-            "rcv_list": rcv_list,
-        }
+        context=context_dic
     )
+
+def search_rcv_ajax(request, ajax=True):
+    """
+    Search multiple RCVs or 1.
+    Ajax or normal python call works.
+    :param request:
+    :return: {
+        search_parameters: [ rcvs: {
+         info_parameters...
+         }], ... }
+    """
+    search_text = request.GET.get('search_box', None)
+    search_list = re.split('[^A-Za-z0-9]+', search_text)
+
+    rcvs = {}
+    rcvs_len = len(search_list)
+
+    str_format = "%Y-%m-%d %I:%M:%S %p %Z"
+
+    for x in range(rcvs_len):
+        search_term = search_list[x]
+        if search_term == "":
+            continue
+
+        if search_term not in rcvs:
+            rcvs[search_term] = []
+
+        rcv_list = RCV.objects.filter(rcv_number__icontains=search_term)
+        if len(rcv_list) > 0:
+            rcv_len = len(rcv_list)
+            for y in range(rcv_len):
+                r = rcv_list[y]
+                rcvs[search_term].append({
+                    "rcv": r.rcv_number,
+                    "filename": r.filename,
+                    "original_filename": r.original_filename,
+                    "correct_name": r.correct_name,
+                    "id": r.pk,
+                    "rcv_date": r.rcv_date,
+                    "input_date": r.input_date,
+                    "upload_date": r.upload_date.strftime(str_format),
+                })
+    if ajax:
+        return JsonResponse(rcvs)
+    else:
+        return rcvs
 
 def get_date_from_rcvname(rcv_num):
     # Checks if RCV is in proper format and returns datetime if so
@@ -119,6 +166,25 @@ def download_rcv(request, rcv_filename, view_pdf=False):
 
 def view_rcv(request, rcv_filename):
     return download_rcv(request, rcv_filename, view_pdf=True)
+
+def download_rcv_by_id(request, rcv_id, view_pdf=False):
+    rcv_foldername = get_foldername()
+    r = RCV.objects.get(pk=rcv_id)
+
+    filename = r.filename
+
+    response = HttpResponse()
+    response['Content-Length'] = os.path.getsize(os.path.join(settings.MEDIA_ROOT, rcv_foldername, filename))
+    response['Content-Type'] = 'application/pdf'
+    if view_pdf:
+        response['Content-Disposition'] = 'inline; filename=%s' % filename
+    else:
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    response['X-Accel-Redirect'] = "/media/" + rcv_foldername + '/' + filename
+    return response
+
+def view_rcv_by_id(request, rcv_id):
+    return download_rcv_by_id(request, rcv_id, view_pdf=True)
 
 def add_get_rcv_instance(rcv_number, filename, year=None, month=None, day=None, original_filename="Unknown.pdf", input_date=None):
 # Saves the RCV to the model.

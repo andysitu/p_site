@@ -13,3 +13,7 @@
 .rcv-link:hover {
     color: red;
 }
+
+tr.search-tr:hover {
+    background-color: aliceblue;
+}

@@ -21,4 +21,8 @@ urlpatterns = [
     url(r'^search_rcv/(?P<rcv>.+)$', views.search_rcv, name="searching_rcv"),
 
     url(r'^edit_file_ajax/$', views.edit_file_ajax, name="edit_file_ajax"),
+    url(r'search_rcv_ajax', views.search_rcv_ajax, name="search_rcv_ajax"),
+
+    url(r'^download_rcv_by_id/(?P<rcv_id>\d+)$', views.download_rcv_by_id, name="download_rcv_by_id"),
+    url(r'^view_rcv_by_id/(?P<rcv_id>\d+)$', views.view_rcv_by_id, name="view_rcv_by_id"),
 ]

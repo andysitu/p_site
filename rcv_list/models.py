@@ -16,6 +16,7 @@ class RCV(models.Model):
     rcv_number = models.CharField(max_length=50, default='')
     filename = models.CharField(max_length=50, default="")
     original_filename = models.CharField(max_length=50, default='Unknown.pdf')
+    # Date that the RCVs were received & put on shelves
     input_date = models.DateField(null=True, blank=True)
 
     correct_name = models.BooleanField(default=False)
