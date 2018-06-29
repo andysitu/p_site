@@ -7,13 +7,16 @@
     <script>
         var rcv_search_ajax_url = "{% url 'rcv_list:search_rcv_ajax' %}",
             rcv_view_by_id_url = "{% url 'rcv_list:view_rcv_by_id' '0000' %}",
-            rcv_dl_by_id_url = "{% url 'rcv_list:download_rcv_by_id' '0000' %}";
+            rcv_dl_by_id_url = "{% url 'rcv_list:download_rcv_by_id' '0000' %}",
+            edit_url = "{% url 'rcv_list:edit' '0000' %}";
 
         var len_a = rcv_view_by_id_url.length,
-            len_b = rcv_dl_by_id_url.length;
+            len_b = rcv_dl_by_id_url.length,
+            len_c = edit_url.length;
 
         rcv_view_by_id_url = rcv_view_by_id_url.substring(0, len_a - 4);
         rcv_dl_by_id_url = rcv_dl_by_id_url.substring(0, len_b - 4);
+        edit_url = edit_url.substring(0, len_c - 4);
     </script>
 
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>

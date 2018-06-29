@@ -31,7 +31,7 @@
     <li id="{{rcv.rcv_number}}-li" class="rcv-li">
         <a href="{% url 'rcv_list:view_rcv' rcv.filename %}" id="{{ rcv.rcv_number }}-view-link" target="_new" class="rcv-link">{{ rcv.rcv_number }}</a>
         <div class=add-link-hide id="{{ rcv.rcv_number }}-add-links-div">
-            <a href="{% url 'rcv_list:download_rcv' rcv.filename %}" target="blank" id="{{ rcv.filename }}-download-link">{% trans 'download' %}</a>
+            <a href="{% url 'rcv_list:download_rcv' rcv.filename %}" target="_blank" id="{{ rcv.filename }}-download-link">{% trans 'download' %}</a>
             <a href="{% url 'rcv_list:edit' rcv.filename %}">{% trans 'edit' %}</a>
             <a href="" id="{{ rcv.rcv_number }}-delete" class="add-link-delete">{% trans 'delete' %}</a>
         </div>

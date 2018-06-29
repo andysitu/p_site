@@ -74,7 +74,25 @@ var searcher = {
 
         var $thead = $("<thead>");
         $tr = $("<tr>");
+
         $tr.append("<th scope='col'>RCV</th>");
+
+        $tr.append(
+            $("<th>", {
+                scope: "col",
+            }).append($("<i>", {
+                "class": "fa fa-pencil",
+            }))
+        );
+
+        $tr.append(
+            $("<th>", {
+                scope: "col",
+            }).append($("<i>", {
+                "class": "fa fa-download",
+            }))
+        );
+
         $tr.append($("<th></th>", {
             scope: "col",
             text: gettext("Upload Date"),
@@ -112,9 +130,28 @@ var searcher = {
                 $("<a>", {
                     href: rcv_view_by_id_url + rcv_dic["id"],
                     text: rcv_dic["rcv"],
-                    target: "blank"
+                    target: "_blank"
                 })
             );
+            $tr.append($td);
+
+            $td = $("<td>");
+            $td.append(
+                $("<a>", {
+                    href: edit_url + rcv_dic["filename"],
+                    target: "_blank"
+            }).append($("<i>", {
+                "class": "fa fa-pencil",
+                })));
+            $tr.append($td);
+
+            $td = $("<td>");
+            $td.append(
+                $("<a>", {
+                    href: rcv_dl_by_id_url + rcv_dic["id"],
+            }).append($("<i>", {
+                "class": "fa fa-download",
+                })));
             $tr.append($td);
 
             $td = this.make_$td(rcv_dic["upload_date"]);

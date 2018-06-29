@@ -18,7 +18,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
 function click_add_link_response(e) {
     var rcv_regex = /^(.+)-\w+$/;
     ele_id = e.target.id;
