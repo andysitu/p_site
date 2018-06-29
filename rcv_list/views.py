@@ -48,7 +48,7 @@ def search_rcv_ajax(request, ajax=True):
          }], ... }
     """
     search_text = request.GET.get('search_box', None)
-    search_list = re.split('[^A-Za-z0-9]+', search_text)
+    search_list = re.split('[^\-A-Za-z0-9]+', search_text)
 
     rcvs = {}
     rcvs_len = len(search_list)

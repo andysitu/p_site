@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-22 12:54-0700\n"
+"POT-Creation-Date: 2018-06-29 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "上传日期"
 
 #: customs_list/templates/customs_list/customs_list_base.html:14
 #: customs_list/templates/customs_list/upload.html:22
-#: rcv_list/templates/rcv_list/rcv_list_base.html:18
+#: rcv_list/templates/rcv_list/rcv_list_base.html:35
 #: rcv_list/templates/rcv_list/upload.html:21
 #: uploader/templates/uploader/upload.html:17
 #: warehouse_map/templates/warehouse_map/upload.html:25
@@ -41,7 +41,7 @@ msgid "View All PDFS"
 msgstr "查看所有pdf"
 
 #: customs_list/templates/customs_list/customs_list_base.html:16
-#: rcv_list/templates/rcv_list/rcv_list_base.html:17
+#: rcv_list/templates/rcv_list/rcv_list_base.html:34
 msgid "View To-Edit Files"
 msgstr "文件名不正确"
 
@@ -76,17 +76,17 @@ msgid "Download All Pdf Files"
 msgstr "下载pdf文件"
 
 #: customs_list/templates/customs_list/view_files.html:30
-#: rcv_list/templates/rcv_list/view_files.html:32
+#: rcv_list/templates/rcv_list/view_files.html:34
 msgid "download"
 msgstr "下载"
 
 #: customs_list/templates/customs_list/view_files.html:31
-#: rcv_list/templates/rcv_list/view_files.html:33
+#: rcv_list/templates/rcv_list/view_files.html:35
 msgid "edit"
 msgstr "编辑"
 
 #: customs_list/templates/customs_list/view_files.html:32
-#: rcv_list/templates/rcv_list/view_files.html:34
+#: rcv_list/templates/rcv_list/view_files.html:36
 msgid "delete"
 msgstr "删除"
 
@@ -506,7 +506,7 @@ msgid "Login"
 msgstr "登录"
 
 #: p_site/templates/p_site/base_generic.html:86
-#: rcv_list/templates/rcv_list/rcv_list_base.html:13
+#: rcv_list/templates/rcv_list/rcv_list_base.html:30
 #: uploader/templates/uploader/uploader_base.html:11
 #: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:11
 msgid "Home"
@@ -570,20 +570,21 @@ msgid "Pages to edit (None selected mean all pages will be edited)"
 msgstr "要编辑的页面（无选择意味着所有页面都将被编辑）"
 
 #: rcv_list/templates/rcv_list/edit.html:34
-#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:23
+#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:27
 #: warehouse_viewer/templates/warehouse_viewer/viewer.html:39
 msgid "Submit"
 msgstr "提交"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:19
+#: rcv_list/templates/rcv_list/rcv_list_base.html:36
 msgid "All"
 msgstr "所有"
 
-#: rcv_list/templates/rcv_list/rcv_list_base.html:26
+#: rcv_list/templates/rcv_list/rcv_list_base.html:43
+#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:13
 msgid "Search"
 msgstr "搜索"
 
-#: rcv_list/templates/rcv_list/view_files.html:20
+#: rcv_list/templates/rcv_list/view_files.html:22
 #: uploader/templates/uploader/view_files.html:22
 msgid "Total Number of RCV:"
 msgstr "RCV文件总数:"
@@ -673,10 +674,10 @@ msgstr "家"
 msgid "Upload Excel"
 msgstr "上传日期"
 
-#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:24
+#: warehouse_viewer/templates/warehouse_viewer/adv_search.html:28
 #: warehouse_viewer/templates/warehouse_viewer/viewer.html:40
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #: warehouse_viewer/templates/warehouse_viewer/upload.html:21
 msgid "Select an excel file from the WMS"
@@ -694,6 +695,5 @@ msgstr "地图"
 msgid "Chart"
 msgstr "图表"
 
-#: warehouse_viewer/templates/warehouse_viewer/viewer_base.html:13
-msgid "Adv. Search"
-msgstr "高级搜索"
+#~ msgid "Adv. Search"
+#~ msgstr "高级搜索"

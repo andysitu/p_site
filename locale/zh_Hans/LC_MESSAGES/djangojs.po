@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-22 12:54-0700\n"
+"POT-Creation-Date: 2018-06-29 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,9 +30,37 @@ msgstr "你确定"
 msgid " is the correct rcv number?"
 msgstr "是正确的rcv号码吗？"
 
+#: rcv_list/static/rcv_list/js/search.js:80
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:489
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:558
+msgid "RCV"
+msgstr "RCV"
+
+#: rcv_list/static/rcv_list/js/search.js:101
+msgid "Upload Date"
+msgstr ""
+
+#: rcv_list/static/rcv_list/js/search.js:106
+#, fuzzy
+#| msgid "Date"
+msgid "RCV Date"
+msgstr "日期"
+
+#: rcv_list/static/rcv_list/js/search.js:111
+#, fuzzy
+#| msgid "Start Date"
+msgid "Input Date"
+msgstr "开始日期"
+
+#: rcv_list/static/rcv_list/js/search.js:116
+#, fuzzy
+#| msgid "File "
+msgid "Filename"
+msgstr "文件"
+
 #: warehouse_map/static/warehouse_map/js/page_functions.js:44
 #: warehouse_viewer/static/warehouse_viewer/js/map/map.js:288
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:592
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:586
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:130
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:136
 msgid "Location"
@@ -61,15 +89,15 @@ msgid "Previous Date"
 msgstr "上一个日期"
 
 #: warehouse_map/static/warehouse_map/js/page_functions.js:163
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:882
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:876
 msgid "Time Period"
 msgstr "时间段"
 
 #: warehouse_map/static/warehouse_map/js/page_functions.js:230
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:350
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:735
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:783
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:443
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:344
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:729
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:777
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:535
 msgid "Date"
 msgstr "日期"
 
@@ -127,132 +155,123 @@ msgid "Item Weight"
 msgstr "产品重量"
 
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:210
-msgid "Search"
-msgstr "搜索"
-
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:211
 msgid "Total Item Info"
 msgstr "总项目信息"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:212
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:211
 msgid "Item Type By Location"
 msgstr "项目类型按位置"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:213
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:212
 msgid "Total Item Over Time"
 msgstr "总项目时间"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:214
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:213
 msgid "Items Added Over Time"
 msgstr "随时间添加的项目"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:215
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:214
 msgid "Item Types Over Time"
 msgstr "项目类型随时间变化"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:216
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:215
 msgid "Number of Customers Over Time"
 msgstr "客户随着时间"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:217
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:216
 msgid "Items_Shipped Over Time"
 msgstr "物品随时间运送"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:295
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:289
 msgid "Data Type"
 msgstr "数据类型"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:395
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:389
 msgid "Start Date"
 msgstr "开始日期"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:407
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:423
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:401
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:417
 msgid "Filter"
 msgstr "过滤"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:485
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:554
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:479
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:548
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:143
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:149
 msgid "Customer"
 msgstr "顾客"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:490
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:559
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:484
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:553
 msgid "SKU"
 msgstr "项目SKU"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:495
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:564
-msgid "RCV"
-msgstr "RCV"
-
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:500
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:569
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:494
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:563
 msgid "Item Description"
 msgstr "商品描述"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:528
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:522
 msgid "Contains"
 msgstr "包含"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:533
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:527
 msgid "Does Not Contain"
 msgstr "不含"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:538
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:532
 msgid "Exactly Contains"
 msgstr "确切地包含"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:640
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:634
 msgid "Level"
 msgstr "水平"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:654
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:845
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:944
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:648
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:839
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:938
 msgid ">="
 msgstr "大于等于"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:659
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:850
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:949
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:653
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:844
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:943
 msgid "<="
 msgstr "小于等于"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:664
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:855
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:954
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:658
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:849
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:948
 msgid "="
 msgstr "等于"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:819
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:813
 msgid "Locations"
 msgstr "位置"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:831
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:825
 msgid "Item Types"
 msgstr "项目类型"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:910
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:904
 msgid "Quantity"
 msgstr "数量"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:924
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:918
 msgid "Available Items"
 msgstr "可用项目"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:929
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:923
 msgid "Shipped Items"
 msgstr "货物出货"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:934
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:928
 msgid "Total Items"
 msgstr "项目总数"
 
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:117
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:449
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:541
 msgid "Total Number of Items"
 msgstr "项目总数"
 
@@ -282,10 +301,13 @@ msgstr "商品SKU"
 msgid "# Items"
 msgstr "东西的个数"
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:355
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:447
 msgid "AREA: "
 msgstr "区: "
 
-#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:356
+#: warehouse_viewer/static/warehouse_viewer/js/viewer/viewer.js:448
 msgid "AISLE: "
 msgstr "走道: "
+
+#~ msgid "Search"
+#~ msgstr "搜索"

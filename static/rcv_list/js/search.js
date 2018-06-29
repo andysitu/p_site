@@ -75,7 +75,10 @@ var searcher = {
         var $thead = $("<thead>");
         $tr = $("<tr>");
 
-        $tr.append("<th scope='col'>RCV</th>");
+        $tr.append("<th>", {
+            scope: "col",
+            text: gettext("RCV"),
+        });
 
         $tr.append(
             $("<th>", {
@@ -97,22 +100,27 @@ var searcher = {
             scope: "col",
             text: gettext("Upload Date"),
         }));
+
         $tr.append($("<th></th>", {
             scope: "col",
             text: gettext("RCV Date"),
         }));
+
         $tr.append($("<th></th>", {
             scope: "col",
             text: gettext("Input Date"),
         }));
+
         $tr.append($("<th></th>", {
             scope: "col",
             text: gettext("Filename"),
         }));
+
         $tr.append($("<th></th>", {
             scope: "col",
         }).append($("<i class='fa fa-check'></i>")));
         $thead.append($tr);
+        
         $table.append($thead);
 
         var i,
