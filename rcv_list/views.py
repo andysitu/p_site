@@ -233,7 +233,7 @@ def upload_files(request):
 
                 for pageNum in range(0, total_pages):
                     pageObj = pdfReader.getPage(pageNum)
-                Q    text = pageObj.extractText()
+                    text = pageObj.extractText()
                     rcv_title = None
                     year = None
                     month = None
