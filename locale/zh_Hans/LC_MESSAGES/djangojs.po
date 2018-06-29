@@ -34,27 +34,21 @@ msgstr "是正确的rcv号码吗？"
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:489
 #: warehouse_viewer/static/warehouse_viewer/js/viewer/side_menu.js:558
 msgid "RCV"
-msgstr "RCV"
+msgstr ""
 
 #: rcv_list/static/rcv_list/js/search.js:101
 msgid "Upload Date"
-msgstr ""
+msgstr "上传日期"
 
 #: rcv_list/static/rcv_list/js/search.js:106
-#, fuzzy
-#| msgid "Date"
 msgid "RCV Date"
 msgstr "日期"
 
 #: rcv_list/static/rcv_list/js/search.js:111
-#, fuzzy
-#| msgid "Start Date"
 msgid "Input Date"
 msgstr "开始日期"
 
 #: rcv_list/static/rcv_list/js/search.js:116
-#, fuzzy
-#| msgid "File "
 msgid "Filename"
 msgstr "文件"
 

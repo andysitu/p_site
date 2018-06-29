@@ -73,12 +73,13 @@ var searcher = {
             rcv, original_filename;
 
         var $thead = $("<thead>");
+
         $tr = $("<tr>");
 
-        $tr.append("<th>", {
+        $tr.append($("<th>", {
             scope: "col",
             text: gettext("RCV"),
-        });
+        }));
 
         $tr.append(
             $("<th>", {
@@ -120,7 +121,7 @@ var searcher = {
             scope: "col",
         }).append($("<i class='fa fa-check'></i>")));
         $thead.append($tr);
-        
+
         $table.append($thead);
 
         var i,
