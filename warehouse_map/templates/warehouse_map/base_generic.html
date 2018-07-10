@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    {% load static %}
+  
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{% static 'p_site/js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="{% static 'p_site/js/bootstrap.min.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'p_site/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'p_site/css/font-awesome-4.7.0/css/font-awesome.min.css' %}"/>
+    <!-- Add additional CSS in static file -->
+
+    {% load i18n %}
+
+    <link rel="stylesheet" href="{% static 'p_site/css/styles.css' %}">
+
+    {% block generic_page_head %}{% endblock %}
+    {% block head %}{% endblock %}
+
+</head>
+
+<body>
+    <div class="pos-f-t">
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-white bg-white fixed-top" role="navigation">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img alt="4PX-logo" src="{% static 'p_site/img/mini-logo.png' %}" id="logo-img"></a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                {% block navbar_links %}{% endblock %}
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'logout' %}?next={{ request.path }}">
+                          {% trans "Logout" %}</a> ({% trans "User" %}: {{ user.get_username }})
+                    {% else %}
+                      <a href="{% url 'login' %}?next={{ request.path }}">
+                          {% trans "Login" %}</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <div id="set-lang-div">
+                        {% csrf_token %}
+
+                        {% if LANGUAGE_CODE == 'zh-hans' %}
+
+                        <form method="POST" action="{% url 'set_language'%}" class="navbar-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <input type="hidden" name="language" value="en">
+                            简体中文 <input class="change-lang-but" type="submit" value="Eng"/>
+                        </form>
+
+                        {% else %}
+
+                        <form method="POST" action="{% url 'set_language'%}" class="navbar-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <input type="hidden" name="language" value="zh-hans">
+                            <input class="change-lang-but" type="submit" value="简体中文" /> Eng
+                        </form>
+
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row" id="body-div-row">
+            <div class="col-sm-2 sidebar" id="sidebar-nav-div">
+                {% block nav_search %}{% endblock %}
+                <ul class="sidebar-nav">
+                    {% block home_link %}
+                    <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>{% endblock %}
+                    {% block sidebar_links %}
+                    <li><a href="{% url 'help:home' %}">Help</a></li>{% endblock %}
+                    {% block settings %}{% endblock %}
+                </ul>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-2 ml-auto" id="body-div">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    {% block outside_content %}{% endblock %}
+
+</body>
+
+</html>

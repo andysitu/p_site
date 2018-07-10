@@ -3,7 +3,7 @@ from django.core import serializers
 
 from django.http import HttpResponse, JsonResponse
 
-from .models import DataDate, Items, Location
+from .models import DataDate, Items, Location, filter_item_query_by_loc
 from .helper_functions import get_all_location_dic
 
 import datetime, re
@@ -115,7 +115,7 @@ def get_item_count(request):
 
     item_query = get_normal_item_query(data_date_inst)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = item_query.filter(rack_location__loc=loc)
+    item_query = filter_item_query_by_loc(item_query, loc)
 
     for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)

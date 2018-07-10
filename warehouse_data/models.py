@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 import datetime
 from django.dispatch import receiver
+from django.db.models import Q
 
 import re
 
@@ -34,7 +35,10 @@ def make_location(warehouse_location, area, aisle_letter, aisle_num, column, lev
     if area == "PH" or area == "PA":
         loc = "P"
     elif area == "S":
-        loc = "S"
+        if aisle_num == 60:
+            loc = "VC"
+        else:
+            loc = "S"
     elif area == "F":
         loc = "F"
     elif area == "VA" or area == "VB":
@@ -55,6 +59,29 @@ def make_location(warehouse_location, area, aisle_letter, aisle_num, column, lev
 
     location_inst.save()
     return location_inst
+
+def filter_item_query_by_loc(item_query, loc):
+    if loc == "P":
+        return item_query.filter( Q(rack_location__area="PH") | Q(rack_location__area="PA"))
+    elif loc == "VC":
+        q1 = Q(rack_location__area="VC")
+        q2 = Q(rack_location__area="VD")
+        q3 = (Q(rack_location__aisle_num=44) & Q(rack_location__area="VA"))
+        q4 = (Q(rack_location__aisle_num=44) & Q(rack_location__area="VB"))
+        q5 = (Q(rack_location__aisle_num=60) & Q(rack_location__area="S"))
+        q6 = (Q(rack_location__area="H") & Q(rack_location__aisle_num__lte=6) & ~Q(rack_location__aisle_letter="H") )
+        return item_query.filter(q1 | q2 | q3 | q4 | q5 | q6)
+    elif loc == "S":
+        q1 = (~Q(rack_location__aisle_num=60) & Q(rack_location__area="S"))
+        q2 = (Q(rack_location__area="H" ) & Q(rack_location__aisle_letter="H"))
+        q3 = (Q(rack_location__area="H") & Q(rack_location__aisle_num=8))
+        return item_query.filter(q1 | q2 | q3)
+    elif loc == "F":
+        q1 = Q(rack_location__area="F")
+        q2 = (~Q(rack_location__aisle_num=44) & Q(rack_location__area="VA"))
+        q3 = (~Q(rack_location__aisle_num=44) & Q(rack_location__area="VB"))
+        return item_query.filter(q1 | q2 | q3)
+    return item_query
 
 class DataDate(models.Model):
     date = models.DateTimeField()
