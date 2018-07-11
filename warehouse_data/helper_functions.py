@@ -38,7 +38,12 @@ def get_all_location_dic(loc):
                 for level in range(1, 5):
                     locations["USLA.P." + str(aisle) + "." + str(column) + "." + str(level)] = {}
     elif loc == "VC":
-        # S Racks
+        # Shelves under H Racks
+        for column in range(1, 41):
+            for level in range(1, 4):
+                locations["USLA.S.60." + str(column) + "." + str(level)] = {}
+
+        # Smaller Shelves
         for column in range(1, 61):
             for level in range(1, 5):
                 locations["USLA.H." + str(aisle) + "." + str(column) + "." + str(level)] = {}

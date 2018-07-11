@@ -161,7 +161,7 @@ def get_item_weight(request):
 
     item_query = get_normal_item_query(data_date)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = item_query.filter(rack_location__loc=loc).iterator()
+    item_query = filter_item_query_by_loc(item_query, loc).iterator()
 
     for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -219,7 +219,7 @@ def get_item_added(request):
 
     item_query = get_normal_item_query(data_date_inst)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = item_query.filter(rack_location__loc=loc).iterator()
+    item_query = filter_item_query_by_loc(item_query, loc).iterator()
 
 
     for item_inst in item_query:
@@ -285,7 +285,7 @@ def get_item_shipped(request):
 
     item_query_older = get_normal_item_query(older_datadate)
     item_query_older = get_item_query_filter(item_query_older, filter_option, filter_value)
-    item_query_older = item_query_older.filter(rack_location__loc=loc).iterator()
+    item_query_older = filter_item_query_by_loc(item_query, loc).iterator()
 
     item_query_newer = get_normal_item_query(newer_datadate)
     item_query_newer = get_item_query_filter(item_query_newer, filter_option, filter_value)
@@ -699,7 +699,8 @@ def item_type_filter(request):
     loc = request.GET.get("loc")
 
     data = {}
-    items_q = get_normal_item_query(data_date).filter(rack_location__loc=loc).iterator()
+    items_q = get_normal_item_query(data_date)
+    items_q = filter_item_query_by_loc(items_q, loc).iterator()
 
     # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
     locations_dic = get_all_location_dic(loc)
