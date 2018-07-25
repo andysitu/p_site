@@ -382,29 +382,9 @@ def loc_inst_to_jsloccode(loc_inst):
     aisle_code = str(loc_inst.aisle_num)
     column_code = str(loc_inst.column)
 
-    loc = loc_inst.loc
     area = loc_inst.area
     aisle_letter = loc_inst.aisle_letter
-    if loc == "P":
-        area_code = "P"
-    elif loc == "S":
-        if area == "H" and aisle_letter == "H" or area == "S":
-            area_code = "S"
-        else:
-            area_code = "H"
-    elif loc == "VC":
-        if area == "VC" or area == "VD":
-            area_code = "VC"
-        elif area == "VA" or area == "VB":
-            area_code = "VA"
-        else:
-            area_code = "H"
-    else:
-        if area == "F":
-            area_code = "F"
-        else:
-            area_code = "VA"
-    return warehouse_code + "." + area_code + "." + aisle_code + "." + column_code
+    return warehouse_code + "." + area + "." + aisle_letter + aisle_code + "." + column_code
 
 def delete_by_date(date_id):
     data_date = DataDate.objects.get(id=date_id)

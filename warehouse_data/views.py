@@ -356,7 +356,7 @@ def get_item_shipped(request):
 
 def get_normal_item_query(data_date):
     query = Items.objects.select_related('rack_location').filter(data_date=data_date, )
-    return query.exclude(rack_location__loc="").exclude(customer_code=900135)
+    return query.exclude(customer_code=900135)
 
 def get_item_query_filter(item_query, filter_option, filter_value):
     if filter_value == None or filter_value == "":
@@ -394,13 +394,16 @@ def get_total_item_info(request, num_top=20):
     item_types = 0
     item_query = get_normal_item_query(data_date).iterator()
     for item in item_query:
+        loc = item.rack_location.loc
+
+        if loc == "":
+            continue
+
         total_items = item.avail_quantity + item.ship_quantity
         total += total_items
         sku = item.item_code
         customer_code = item.customer_code
-
-        loc = item.rack_location.loc
-
+        
         if customer_code not in customers_item_dic:
             customers_item_dic[customer_code] = {}
             customers_item_count[customer_code] = 0

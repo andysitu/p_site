@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import Location, DataDate, Items
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('loc', 'warehouse_location', 'area', 'aisle_letter', 'aisle_num', 'level', 'column')
-    list_filter = ('loc', 'area', 'aisle_letter',)
+    list_display = ('warehouse_location', 'area', 'aisle_letter', 'aisle_num', 'level', 'column')
+    list_filter = ('area', 'aisle_letter',)
 
 admin.site.register(Location, LocationAdmin)
 

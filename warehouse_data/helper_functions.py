@@ -44,9 +44,10 @@ def get_all_location_dic(loc):
                 locations["USLA.S.60." + str(column) + "." + str(level)] = {}
 
         # Smaller Shelves
-        for column in range(1, 61):
-            for level in range(1, 5):
-                locations["USLA.H." + str(aisle) + "." + str(column) + "." + str(level)] = {}
+        for aisle in range(1, 50):
+            for column in range(1, 15):
+                for level in range(1, 5):
+                    locations["USLA.H." + str(aisle) + "." + str(column) + "." + str(level)] = {}
 
         # H Area
         for aisle in range(1, 7):

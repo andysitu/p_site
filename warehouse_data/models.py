@@ -8,8 +8,6 @@ from django.db.models import Q
 import re
 
 class Location(models.Model):
-    # loc is my own classification of location
-    loc = models.CharField(max_length=20)
     warehouse_location = models.CharField(max_length=10, default="USLA")
     area = models.CharField(max_length=2)
     aisle_letter = models.CharField(max_length=3, default="")
@@ -23,6 +21,40 @@ class Location(models.Model):
                    str(self.column) + "." + str(self.level)
         return loc_name
 
+    @property
+    def loc(self):
+        # VC
+        if self.area == "S" and self.aisle_num == 60:
+            return "VC"
+        if (self.area == "VA" or self.area=="VB") and self.aisle_num==44:
+            return "VC"
+        if self.area == "VC" or self.area == "VB":
+            return "VC"
+        if self.area == "H" and self.aisle_num == 6 and self.aisle_letter != "H":
+            return "VC"
+
+        # P
+        if self.area == "PH" or self.area == "PA":
+            return "P"
+
+        # S
+        if self.aisle_num != 60 and self.area == "S":
+            return "S"
+        if self.area == "H" and self.aisle_letter == "H":
+            return "S"
+        if self.area == "H" and self.aisle_num == 8:
+            return "S"
+
+        # F
+        if self.area == "F":
+            return "F"
+        if (self.area == "VB" or self.area == "VA") and self.aisle_num != 44:
+            return "F"
+
+        return ""
+
+
+
 def make_location(warehouse_location, area, aisle_letter, aisle_num, column, level):
     location_inst = Location(warehouse_location=warehouse_location,
                              area=area,
@@ -31,32 +63,6 @@ def make_location(warehouse_location, area, aisle_letter, aisle_num, column, lev
                              column=column,
                              level=level,
                              )
-    loc = ''
-    if area == "PH" or area == "PA":
-        loc = "P"
-    elif area == "S":
-        if aisle_num == 60:
-            loc = "VC"
-        else:
-            loc = "S"
-    elif area == "F":
-        loc = "F"
-    elif area == "VA" or area == "VB":
-        if aisle_num == 44:
-            loc = "VC"
-        else:
-            loc = "F"
-    elif area == "VC" or area == "VD":
-        loc = "VC"
-    elif area == "H":
-        if aisle_letter == "H":
-            loc = "S"
-        elif aisle_num == 8:
-            loc = "S"
-        elif aisle_num <= 6:
-            loc = "VC"
-    location_inst.loc = loc
-
     location_inst.save()
     return location_inst
 
