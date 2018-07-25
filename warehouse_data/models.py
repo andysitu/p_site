@@ -14,6 +14,8 @@ class Location(models.Model):
     aisle_num = models.IntegerField()
     level = models.IntegerField()
     column = models.IntegerField()
+    loc = models.CharField(max_length=5, default="")
+
 
     def __str__(self):
         loc_name = self.warehouse_location + "." + self.area + "." +\
@@ -21,38 +23,38 @@ class Location(models.Model):
                    str(self.column) + "." + str(self.level)
         return loc_name
 
-    @property
-    def loc(self):
+    def update_loc(self):
         # VC
         if self.area == "S" and self.aisle_num == 60:
-            return "VC"
-        if (self.area == "VA" or self.area=="VB") and self.aisle_num==44:
-            return "VC"
-        if self.area == "VC" or self.area == "VB":
-            return "VC"
-        if self.area == "H" and self.aisle_num == 6 and self.aisle_letter != "H":
-            return "VC"
+            self.loc = "VC"
+        elif (self.area == "VA" or self.area=="VB") and self.aisle_num==44:
+            self.loc = "VC"
+        elif self.area == "VC" or self.area == "VB":
+            self.loc = "VC"
+        elif self.area == "H" and self.aisle_num == 6 and self.aisle_letter != "H":
+            self.loc = "VC"
 
         # P
-        if self.area == "PH" or self.area == "PA":
-            return "P"
+        elif self.area == "PH" or self.area == "PA":
+            self.loc = "P"
 
         # S
-        if self.aisle_num != 60 and self.area == "S":
-            return "S"
-        if self.area == "H" and self.aisle_letter == "H":
-            return "S"
-        if self.area == "H" and self.aisle_num == 8:
-            return "S"
+        elif self.aisle_num != 60 and self.area == "S":
+            self.loc = "S"
+        elif self.area == "H" and self.aisle_letter == "H":
+            self.loc = "S"
+        elif self.area == "H" and self.aisle_num == 8:
+            self.loc = "S"
 
         # F
-        if self.area == "F":
-            return "F"
-        if (self.area == "VB" or self.area == "VA") and self.aisle_num != 44:
-            return "F"
+        elif self.area == "F":
+            self.loc = "F"
+        elif (self.area == "VB" or self.area == "VA") and self.aisle_num != 44:
+            self.loc = "F"
 
-        return ""
-
+        else:
+            self.loc =""
+        self.save()
 
 
 def make_location(warehouse_location, area, aisle_letter, aisle_num, column, level):

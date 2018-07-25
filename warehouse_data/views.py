@@ -3,7 +3,7 @@ from django.core import serializers
 
 from django.http import HttpResponse, JsonResponse
 
-from .models import DataDate, Items, Location, filter_item_query_by_loc
+from .models import DataDate, Items, Location
 from .helper_functions import get_all_location_dic
 
 import datetime, re
@@ -115,7 +115,7 @@ def get_item_count(request):
 
     item_query = get_normal_item_query(data_date_inst)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = filter_item_query_by_loc(item_query, loc)
+    item_query = item_query.filter(rack_location__loc=loc).iterator()
 
     for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -161,7 +161,7 @@ def get_item_weight(request):
 
     item_query = get_normal_item_query(data_date)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = filter_item_query_by_loc(item_query, loc).iterator()
+    item_query = item_query.filter(rack_location__loc=loc).iterator()
 
     for item_inst in item_query:
         js_loc_code = loc_inst_to_jsloccode(item_inst.rack_location)
@@ -219,7 +219,7 @@ def get_item_added(request):
 
     item_query = get_normal_item_query(data_date_inst)
     item_query = get_item_query_filter(item_query, filter_option, filter_value)
-    item_query = filter_item_query_by_loc(item_query, loc).iterator()
+    item_query = item_query.filter(rack_location__loc=loc).iterator()
 
 
     for item_inst in item_query:
@@ -285,11 +285,11 @@ def get_item_shipped(request):
 
     item_query_older = get_normal_item_query(older_datadate)
     item_query_older = get_item_query_filter(item_query_older, filter_option, filter_value)
-    item_query_older = filter_item_query_by_loc(item_query, loc).iterator()
+    item_query_older = item_query_older.filter(rack_location__loc=loc).iterator()
 
     item_query_newer = get_normal_item_query(newer_datadate)
     item_query_newer = get_item_query_filter(item_query_newer, filter_option, filter_value)
-    item_query_newer = item_query_newer.filter(fifo_date__lte=older_datadate.date).iterator()
+    item_query_newer = item_query_newer.filter(rack_location__loc=loc).iterator()
 
     labId_newerItem_dic = {}
     labId_olderItem_dic = {}
@@ -356,7 +356,7 @@ def get_item_shipped(request):
 
 def get_normal_item_query(data_date):
     query = Items.objects.select_related('rack_location').filter(data_date=data_date, )
-    return query.exclude(customer_code=900135)
+    return query.exclude(rack_location__loc="").exclude(customer_code=900135)
 
 def get_item_query_filter(item_query, filter_option, filter_value):
     if filter_value == None or filter_value == "":
@@ -403,7 +403,7 @@ def get_total_item_info(request, num_top=20):
         total += total_items
         sku = item.item_code
         customer_code = item.customer_code
-        
+
         if customer_code not in customers_item_dic:
             customers_item_dic[customer_code] = {}
             customers_item_count[customer_code] = 0
@@ -703,7 +703,7 @@ def item_type_filter(request):
 
     data = {}
     items_q = get_normal_item_query(data_date)
-    items_q = filter_item_query_by_loc(items_q, loc).iterator()
+    items_q = items_q.filter(rack_location__loc=loc).iterator()
 
     # locations = sorted(items_in_locations.items(), key=operator.itemgetter(1))[::-1]
     locations_dic = get_all_location_dic(loc)
