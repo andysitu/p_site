@@ -1,0 +1,47 @@
+{% extends 'rcv_list/base_generic.html' %}
+
+{% load i18n %}
+
+{% block head %}
+    {% load static %}
+    <script>
+        var rcv_search_ajax_url = "{% url 'rcv_list:search_rcv_ajax' %}",
+            rcv_view_by_id_url = "{% url 'rcv_list:view_rcv_by_id' '0000' %}",
+            rcv_dl_by_id_url = "{% url 'rcv_list:download_rcv_by_id' '0000' %}",
+            edit_url = "{% url 'rcv_list:edit' '0000' %}";
+
+        var len_a = rcv_view_by_id_url.length,
+            len_b = rcv_dl_by_id_url.length,
+            len_c = edit_url.length;
+
+        rcv_view_by_id_url = rcv_view_by_id_url.substring(0, len_a - 4);
+        rcv_dl_by_id_url = rcv_dl_by_id_url.substring(0, len_b - 4);
+        edit_url = edit_url.substring(0, len_c - 4);
+    </script>
+
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <link rel="stylesheet" href="{% static 'rcv_list/css/rcv_list_styles.css' %}">
+
+    <script src="{% static 'rcv_list/js/search.js' %}"></script>
+
+{% endblock %}
+
+{% block home_link %}
+<li><a href="{% url 'rcv_list:index' %}">RCV {% trans "Home" %}</a>
+{% endblock %}
+
+{% block sidebar_links %}
+<li><a href="{% url 'rcv_list:edit_list' %}">{% trans "View To-Edit Files" %}</a></li>
+<li><a href="{% url 'rcv_list:upload_files' %}">{% trans "Upload" %} RCV's</a></li>
+<li><a href="{% url 'rcv_list:all_index' %}">{% trans "All" %} RCV's</a></li>
+{% endblock %}
+
+{% block nav_search %}
+<form type="get" id="search-form" action="{% url 'rcv_list:search_rcv' %}" class="justify-content-end form-inline" role="search">
+    <div class="input-group">
+        <input id="search-input" type="text" class="form-control mr-sm-2" name="search_box" placehold="RCV">
+        <button id="search_submit" class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans "Search" %}</button>
+    </div>
+</form>
+<hr>
+{% endblock %}

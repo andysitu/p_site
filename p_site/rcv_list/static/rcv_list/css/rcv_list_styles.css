@@ -1,0 +1,19 @@
+.add-link-hide {
+    display: none;
+}
+
+.add-link-unhide {
+    display: inline-block;
+}
+
+.rcv-link {
+    display: inline-block;
+}
+
+.rcv-link:hover {
+    color: red;
+}
+
+tr.search-tr:hover {
+    background-color: aliceblue;
+}

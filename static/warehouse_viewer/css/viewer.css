@@ -67,3 +67,56 @@ ul.section-nav {
 td {
     white-space:pre;
 }
+
+.menubar-side {
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 4rem 0px 0px 0px;
+    list-style: none;
+    border-right: 2px solid #ccc;
+    background-color: #7B7B7C;
+    overflow-y: auto;
+    z-index: 1050;
+
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: 300ms ease;
+    transition: 300ms ease;
+}
+.menubar-side > li:first-child {
+    border-top: 1px #e5e5e5 solid;
+}
+.menubar-side-item {
+    padding: 1rem 0;
+    margin: 0;
+    height: 4rem;
+    border-bottom: 1px #e5e5e5 solid;
+}
+.menubar-side > li >a:hover, .menubar-side > li >a:focus {
+    color: #CCC;
+    text-decoration: none;
+}
+
+.reveal {
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    transform: translateX(0%);
+    -webkit-transition: 300ms ease;
+    transition: 300ms ease;
+}
+.overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    background-color: #ccc;
+    opacity: 0.6;
+    z-index: 1040;
+}

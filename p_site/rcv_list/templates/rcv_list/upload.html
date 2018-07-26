@@ -1,0 +1,24 @@
+{% extends 'rcv_list/rcv_list_base.html' %}
+
+{% load i18n %}
+
+{% block head %}
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'rcv_list:upload_files' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ rcvform.non_field_errors }}</p>
+    <p>{{ rcvform.rcvfile.label_tag }} {{ rcvform.rcvfile.help_text }}</p>
+    <p>
+        {{ rcvform.rcvfile.errors }}
+    </p>
+
+    {{ rcvform.as_p }}
+
+    <p><input type="submit" value="{% trans 'Upload' %}" /></p>
+</form>
+
+{% endblock %}
