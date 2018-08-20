@@ -1,0 +1,41 @@
+{% extends 'warehouse_viewer/viewer_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/upload.js' %}"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+<script type="text/javascript">
+    var msg = "{{ msg }}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="d-block bg-warning" id="upload-msg-div"></div>
+
+<form id="upload-form" action="{% url 'warehouse_viewer:upload' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="fileupload">{% trans "Select an excel file from the WMS" %}</label>
+        <input id="fileupload" type="file" name="excel_file" class="form-control-file"
+           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+    </div>
+    <button type="submit" class="btn btn-primary" id="upload-button">{% trans 'Upload' %}</button>
+</form>
+
+{% trans 'Dates Uploaded' %}:
+<table class="table">
+    <tr>
+        <th>{% trans "Excel dates uploaded" %}</th>
+    </tr>
+
+    {% for date in date_list %}
+    <tr>
+        <td>{{ date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

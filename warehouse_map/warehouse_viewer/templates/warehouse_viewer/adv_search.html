@@ -1,0 +1,32 @@
+{% extends 'warehouse_viewer/viewer_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'warehouse_viewer/css/viewer.css' %}" />
+
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/viewer_processor.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/adv_search.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/viewer.js' %}"></script>
+<script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/side_menu.js' %}"></script>
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+<script>
+    var dates_ajax_url = "{% url 'warehouse_data:get_dates' %}",
+        adv_search_url = "{% url 'warehouse_viewer:adv_search_ajax' %}",
+        rcv_search_url = "{% url 'rcv_list:searching_rcv' 'BLANK' %}";
+</script>
+{% endblock %}
+
+{% block content %}
+<form id="search-form" class="form-horizontal" method="get" action="{% url 'warehouse_viewer:adv_search_ajax' %}">
+    {% csrf_token %}
+    <div id="form-container" class="fluid-container"></div>
+    <button type="submit" class="btn btn-primary" id="submit-button">{% trans 'Submit' %}</button>
+    <button type="button" class="btn btn-secondary" id="print-button">{% trans 'Print' %}</button>
+
+</form>
+<div id="display-container"></div>
+{% endblock %}
