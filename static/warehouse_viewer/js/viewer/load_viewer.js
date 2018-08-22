@@ -17,6 +17,27 @@ $( document ).ready(function(){
         var disp_content = viewer.get_display_content();
         viewer.open_new_page(disp_content);
     });
+
+    // Menu Buttons
+    $('#menu-settingButton').on('click', function() {
+        $('#menu-setting').addClass('reveal');
+        $('.overlay').show();
+    });
+
+    $('.overlay').on('click', function() {
+        $('#menu-setting').removeClass('reveal');
+        $('#menu-screen-container').removeClass('reveal');
+        $('.overlay').hide();
+    });
+
+    // Click on Delete items by date link
+    $( '#date-del-link' ).click(function(e){
+        e.preventDefault();
+        page_functions.make_menuScreen("delete_date");
+        map_ajax.fill_delMenu_date();
+        $('#menu-setting').removeClass('reveal');
+        $('#menu-screen-container').addClass('reveal');
+    });
 });
 
 // Jquery to account for nav bar & HTML anchoring
