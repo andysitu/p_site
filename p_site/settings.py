@@ -159,6 +159,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "psite_base", "static"),
+    os.path.join(BASE_DIR, "p_site", "static"),
     # os.path.join(BASE_DIR, "customs_list/static"),
     # os.path.join(BASE_DIR, "rcv_list/static"),
     # os.path.join(BASE_DIR, "warehouse_map/static"),
