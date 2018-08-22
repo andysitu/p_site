@@ -1,4 +1,5 @@
 $( document ).ready(function(){
+    // Handler for search form submit
     $("#search-form").submit(function(e){
         e.preventDefault();
         side_menu.make_submitButton_loading();
@@ -17,16 +18,22 @@ var advsearch_viewer = {
     get_display_container_id: function() {
         return "display-container";
     },
+    //Returns jQuery Object of display container
     get_$display_container: function() {
         return $("#display-container");
     },
+
     filter_results: function(form_data, data) {
+        /**
+         * Filters data according to search criteria in form_data
+         *
+         */
+        console.log("form_data", form_data);
         console.log(data);
-        var i, form_length = form_data.length,
-            search_quantity, qModifier, search_item_type,
+        var search_quantity, qModifier, search_item_type,
             quantity, item_obj;
 
-        for (i = 0; i < form_length; i++) {
+        for (let i = 0; i < form_data.length; i++) {
             if (form_data[i].name == element_ids["quantity_input_name"]) {
                 search_quantity = form_data[i].value;
             } else if (form_data[i].name == element_ids["quantity_modifier_name"]) {

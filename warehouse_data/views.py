@@ -452,7 +452,6 @@ def get_total_item_info(request, num_top=20):
 
 def adv_search(request):
     date_id = request.GET.get(get_element_name("single_date"))
-    locs = request.GET.getlist(get_element_name("multiple_locs"))
 
     filter_dic = {}
 

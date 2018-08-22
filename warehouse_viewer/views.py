@@ -7,6 +7,7 @@ from warehouse_data import processor as processor
 from warehouse_data import views as warehouse_data_views
 
 def viewer(request):
+    # Load viewer.html page
     return render(
         request,
         'warehouse_viewer/viewer.html',
@@ -14,6 +15,7 @@ def viewer(request):
     )
 
 def adv_search(request):
+    # Load adv_search.html page
     return render(
         request,
         'warehouse_viewer/adv_search.html',
@@ -21,6 +23,8 @@ def adv_search(request):
     )
 
 def upload(request):
+    # Load upload.html form or if request method is "POST", send uploaded file to
+    # processor.process_excel_file
     uploadForm = UploadFile()
     msg = "none"
 
@@ -49,6 +53,7 @@ def upload(request):
     )
 
 def search_ajax(request):
+    # Handle all ajax requests made to viewer for map & chart options
     data_mode = request.GET.get("mode")
     data_type = request.GET.get("data-type")
     response = {}
@@ -80,5 +85,6 @@ def search_ajax(request):
     return JsonResponse(response)
 
 def adv_search_ajax(request):
+    # Handles search ajax requests for adv_search.html
     response = warehouse_data_views.adv_search(request)
     return JsonResponse(response)
