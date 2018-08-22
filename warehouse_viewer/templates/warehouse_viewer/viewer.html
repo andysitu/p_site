@@ -26,7 +26,7 @@
 <form action="{% url 'warehouse_viewer:search_ajax' %}" method="get" id="side-menu-form">
     {% csrf_token %}
     <div class="form-group">
-        <div class="btn-group" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-primary active">
                 <input type="radio" name="mode" autocomplete="off" value="map" checked> {% trans 'Map' %}
             </label>
