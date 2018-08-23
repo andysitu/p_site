@@ -6,7 +6,7 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'warehouse_viewer/css/viewer.css' %}" />
 
-<script type="text/javascript" src="{% static 'p_site/js/Chart.bundle.min.js' %}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 
 <script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/side_menu.js' %}"></script>
 <script type="text/javascript" src="{% static 'warehouse_viewer/js/viewer/viewer_processor.js' %}"></script>
@@ -60,6 +60,9 @@
     </li>
     <li class="menubar-side-item">
         <a id="date-del-link" class="side-link" href="">{% trans "Delete By Date" %}</a>
+    </li>
+    <li class="menubar-side-item">
+        <a id="update-loc-link" class="side-link" href="">{% trans "Update Locations" %}</a>
     </li>
 </ul>
 
