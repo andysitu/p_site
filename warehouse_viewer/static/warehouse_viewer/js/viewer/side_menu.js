@@ -460,7 +460,7 @@ var settings_maker = {
             filter_input_name = element_ids.filter_input_name;
 
         var $input_group = $("<div>",{
-           "class": "input-group-btn",
+           "class": "input-group-btn input-group",
         });
 
         var $input = $("<input>", {
@@ -509,7 +509,7 @@ var settings_maker = {
             filter_option_name = element_ids.filter_option_name + parseInt(n);
 
         var $input_group = $("<div>",{
-           "class": "input-group-btn",
+           "class": "input-group-btn input-group",
         });
 
         var $contain_select = $("<select>", {
@@ -635,7 +635,7 @@ var settings_maker = {
         }).appendTo($div);
 
         var $input_group = $("<div>",{
-           "class": "input-group-btn",
+           "class": "input-group-btn input-group",
         });
 
         var $level_modifier_select = $("<select>", {
@@ -826,7 +826,7 @@ var settings_maker = {
         }).appendTo($div);
 
         var $input_group = $("<div>",{
-           "class": "input-group-btn",
+           "class": "input-group-btn input-group",
         });
 
         var $item_type_modifier_select = $("<select>", {
@@ -905,7 +905,7 @@ var settings_maker = {
         }).appendTo($div);
 
         var $input_group = $("<div>",{
-           "class": "input-group-btn",
+           "class": "input-group-btn input-group",
         });
 
         var $quantity_item_type_input = $("<select>", {
