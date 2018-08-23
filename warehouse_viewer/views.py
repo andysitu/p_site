@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from .forms import UploadFile
 
@@ -88,3 +89,8 @@ def adv_search_ajax(request):
     # Handles search ajax requests for adv_search.html
     response = warehouse_data_views.adv_search(request)
     return JsonResponse(response)
+
+@login_required
+def update_locs(request):
+    warehouse_data_views.update_locs(request)
+    return redirect("warehouse_viewer:index")

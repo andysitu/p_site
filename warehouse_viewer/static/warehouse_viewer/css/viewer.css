@@ -79,7 +79,7 @@ td {
     border-right: 2px solid #ccc;
     background-color: #7B7B7C;
     overflow-y: auto;
-    z-index: 1020;
+    z-index: 1050;
 
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
@@ -100,8 +100,8 @@ td {
     color: #CCC;
     text-decoration: none;
 }
-.side-link {
-    font-color:white;
+a.side-link {
+    color:white;
 }
 
 .reveal {
@@ -121,5 +121,5 @@ td {
     cursor: pointer;
     background-color: #ccc;
     opacity: 0.6;
-    z-index: 1010;
+    z-index: 900;
 }

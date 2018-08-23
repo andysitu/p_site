@@ -871,3 +871,9 @@ def items_shipped_over_time(request):
             if item_loc in data:
                 data[item_loc][date_str] += total_items
     return data
+
+def update_locs(request):
+    locs_q = Location.objects.all()
+    for l in locs_q:
+        l.update_loc()
+    return 0

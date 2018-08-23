@@ -1,4 +1,5 @@
-from django.conf.urls import url, include
+from django.urls import include, path
+from django.conf.urls import url
 
 from . import views
 
@@ -12,6 +13,7 @@ urlpatterns = [
 
     url(r'^search_ajax/$', views.search_ajax, name="search_ajax"),
     url(r'^adv_search_ajax/$', views.adv_search_ajax, name="adv_search_ajax"),
+    path('update_loc/', views.update_locs, name="update_locs"),
     # url(r'^request_grid_map_ajax/$', ajax_func.get_grid_ajax, name="request_grid_map_ajax"),
     # url(r'^request_date_ajax/$', ajax_func.get_proc_dates, name="request_date_ajax"),
     # url(r'^request_map_search_info_ajax/$', ajax_func.get_map_search_info, name="request_map_search_info"),
