@@ -31,7 +31,7 @@ class Location(models.Model):
             self.loc = "VC"
         elif self.area == "VC" or self.area == "VB":
             self.loc = "VC"
-        elif self.area == "H" and self.aisle_num == 6 and self.aisle_letter != "H":
+        elif self.area == "H" and self.aisle_num <= 6 and self.aisle_letter != "H":
             self.loc = "VC"
 
         # P
