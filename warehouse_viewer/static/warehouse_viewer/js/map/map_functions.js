@@ -46,67 +46,6 @@ var map_functions = {
     },
 };
 
-var page_functions = {
-    div_underline_class: " underline",
-    display_msg: function(msg) {
-        $('#display-msg-text').html(msg);
-    },
-    make_underline_div: function(text) {
-        return "<div class='" + this.div_underline_class + "'>" + String(text) + "</div>";
-    },
-    make_msg: function(info_dict, location) {
-        /**
-         * Function can be used recursively.
-         * info_dict must be a dictionary.
-         * location can be undefined; if true, it means that
-         *   the keys of info_dict are location and will be
-         *   sorted accordingly.
-         * Returns a string in html format containing information
-         *   from info_dic.
-         */
-        var i, key_len, key_list,
-            msg = "";
-
-        if (location === true) {
-            key_list = Object.keys(info_dict).sort(function(a,b){
-                a = a[a.length-1];
-                b = b[b.length-1];
-
-                if (a < b)
-                    return -1;
-                if (a > b)
-                    return 1;
-                return 0;
-            });
-        } else {
-            key_list = Object.keys(info_dict).sort();
-        }
-        key_len = key_list.length;
-        for (i = 0; i < key_len; i++) {
-            key = key_list[i];
-            var value = info_dict[key];
-
-            if (typeof value == "object") {
-                msg += this.make_underline_div(key) + this.make_msg(value);
-            } else {
-                msg += key + ": " + info_dict[key] + "<br>";
-            }
-        }
-        return msg;
-    },
-    create_msg_div: function() {
-        var $msg_div = $("<div>", {
-            id: element_ids.msg_div,
-            "class": "container collapse show",
-        });
-
-        $msg_div.append($("<div>", {
-            id: element_ids.msg_text_div,
-        }));
-        return $msg_div;
-    }
-};
-
 var mouseHandlers = {
     mouse_move_handler: function(e) {
         var clicked_y = e.offsetY,

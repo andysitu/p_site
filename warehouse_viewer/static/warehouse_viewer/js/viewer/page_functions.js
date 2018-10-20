@@ -9,6 +9,9 @@ var page_functions = {
     make_underline_div: function(text) {
         return "<div class='" + this.div_underline_class + "'>" + String(text) + "</div>";
     },
+    display_msg: function(msg) {
+        $('#display-msg-text').html(msg);
+    },
     make_menuScreen: function(menu_type) {
         // Delete any existing menu screens
         menu_screen.empty();
@@ -92,6 +95,17 @@ var page_functions = {
         }
         return msg
     },
+    create_msg_div: function() {
+        var $msg_div = $("<div>", {
+            id: element_ids.msg_div,
+            "class": "container collapse show",
+        });
+
+        $msg_div.append($("<div>", {
+            id: element_ids.msg_text_div,
+        }));
+        return $msg_div;
+    }
 };
 
 // var side_menu = {
