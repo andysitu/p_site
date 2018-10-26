@@ -36,15 +36,13 @@ function check_file(file) {
     var filename = file.name,
         filetype = file.type,
         file_re = /(\d{14}).xlsx/;
-
+    
     re_result = file_re.exec(filename);
 
     if (file == undefined) {
         return gettext("No file was uploaded");
-    } else if (filetype != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-        return gettext("The file needs to be an excel file [.XLSX]");
     } else if (re_result == null || re_result[1].length != 14) {
-        return gettext("Incorrect file name. It needs to have 14 numbers for yyyymmddhhmmss[year, month, day, hour, minute, second].")
+        return gettext("Incorrect file name or type. It needs to have 14 numbers for yyyymmddhhmmss[year, month, day, hour, minute, second].")
     }
     return true;
 }
