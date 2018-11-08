@@ -203,9 +203,13 @@ var map_mode_settings = {
 
 var chart_mode_settings = {
     make_menu: function() {
+        /***
+         * Contains options for side menu for chart mode.
+         */
         var $container = menu_functions.get_menu_container(),
             data_select_id = element_ids.data_select_id,
 
+            // Iteratures thru obj & creates options in data type select.
             data_type_dic = {
                 "total_item_info": gettext("Total Item Info"),
                 "item_type_filter": gettext("Item Type By Location"),
@@ -230,6 +234,7 @@ var chart_mode_settings = {
         return $container;
     },
     set_menu_from_dataType: function(data_type) {
+        // Fills out side menu depending on which data type is selected.
         var data_type = menu_functions.get_data_type();
         menu_functions.empty_options_container();
 
@@ -392,6 +397,7 @@ var settings_maker = {
         return $div;
     },
     filter_div: function() {
+        // Filter input to filter by customer, sku, etc.
         var filter_input_id = element_ids.filter_input_id,
             filter_input_name = element_ids.filter_input_name,
             $div = $("<div class='form-group'>");
@@ -407,7 +413,51 @@ var settings_maker = {
 
         return $div
     },
+    filter_select: function() {
+        var filter_input_id = element_ids.filter_input_id,
+            filter_input_name = element_ids.filter_input_name;
+
+        var $input_group = $("<div>",{
+           "class": "input-group-btn input-group",
+        });
+
+        var $input = $("<input>", {
+            id: filter_input_id,
+            "class": "form-control form-control-sm col-sm-5",
+            name: filter_input_name,
+        }).appendTo($input_group);
+
+        var $filter_option_select = $("<select>", {
+            "class": "form-control form-control-sm col-sm-7",
+            name: element_ids.filter_option_name,
+        }).appendTo($input_group);
+
+        $("<option>", {
+            "value": "customer_code",
+            text: gettext("Customer"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "item_code",
+            text: gettext("SKU"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "rcv",
+            text: gettext("RCV"),
+        }).appendTo($filter_option_select);
+
+        $("<option>", {
+            "value": "description",
+            text: gettext("Item Description"),
+        }).appendTo($filter_option_select);
+
+        return $input_group;
+    },
     adv_filter_div: function() {
+        /**
+         * Filter inputs, used in adv_search.
+         */
         var filter_input_id = element_ids.filter_input_id,
             filter_input_name = element_ids.filter_input_name,
             $div = $("<div class='form-group'>");
@@ -455,51 +505,13 @@ var settings_maker = {
 
         return $div
     },
-    filter_select: function() {
-        var filter_input_id = element_ids.filter_input_id,
-            filter_input_name = element_ids.filter_input_name;
-
-        var $input_group = $("<div>",{
-           "class": "input-group-btn input-group",
-        });
-
-        var $input = $("<input>", {
-            id: filter_input_id,
-            "class": "form-control form-control-sm col-sm-5",
-            name: filter_input_name,
-        }).appendTo($input_group);
-
-        var $filter_option_select = $("<select>", {
-            "class": "form-control form-control-sm col-sm-7",
-            name: element_ids.filter_option_name,
-        }).appendTo($input_group);
-
-        $("<option>", {
-            "value": "customer_code",
-            text: gettext("Customer"),
-        }).appendTo($filter_option_select);
-
-        $("<option>", {
-            "value": "item_code",
-            text: gettext("SKU"),
-        }).appendTo($filter_option_select);
-
-        $("<option>", {
-            "value": "rcv",
-            text: gettext("RCV"),
-        }).appendTo($filter_option_select);
-
-        $("<option>", {
-            "value": "description",
-            text: gettext("Item Description"),
-        }).appendTo($filter_option_select);
-
-        return $input_group;
-    },
     adv_filter_select: function(n) {
-        // n is added to the end of id to differentiate from other filter
-        // selects.
-
+        /**
+         * Creates filter inputs/select for adv_filter used in adv_search.
+         */
+        
+        // n is added to the end of id to differentiate from other filter selects
+        //  in same page, since more can be added to filter for multiple things.
         if (n === undefined)
             n = 0;
 
@@ -603,6 +615,10 @@ var settings_maker = {
         return $div;
     },
     loc_and_level_container: function() {
+        /**
+         * Couple level & loc together since changing loc will result in
+         *  change of level (max level).
+         */
         var $loc_select_div = this.loc_select(),
             $loc_select = $loc_select_div.find("#" + element_ids.loc_select_id),
             $level_container = $("<div>", {
@@ -613,6 +629,7 @@ var settings_maker = {
 
         $level_container.append(settings_maker.level_select(loc_val));
 
+        // Changing location will lead to changes in level options
         $loc_select.on("change", function() {
             $level_container.empty();
             var loc = $(this).val();
@@ -816,6 +833,10 @@ var settings_maker = {
         return $div;
     },
     num_item_types: function() {
+        /**
+         * Creates item type input / select to filter by lte, gte, or eq
+         *  by # of item types.
+         */
         var input_id = element_ids.num_item_type_input_id,
             input_name = element_ids.num_item_type_input_name,
             $div = $("<div class='form-group'>");

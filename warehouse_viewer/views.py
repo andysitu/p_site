@@ -92,5 +92,6 @@ def adv_search_ajax(request):
 
 @login_required
 def update_locs(request):
+    # View for updating locations.
     warehouse_data_views.update_locs(request)
     return redirect("warehouse_viewer:index")

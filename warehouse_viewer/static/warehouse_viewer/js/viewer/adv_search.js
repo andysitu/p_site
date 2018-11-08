@@ -18,8 +18,8 @@ var advsearch_viewer = {
     get_display_container_id: function() {
         return "display-container";
     },
-    //Returns jQuery Object of display container
     get_$display_container: function() {
+        //Returns jQuery Object of display container
         return $("#display-container");
     },
 
@@ -131,18 +131,22 @@ var form_obj = {
         });
     },
     create_form: function() {
+    	// Runs functions to create components for search page.
         this.add_filter_div();
         this.add_date_input();
         this.add_multiple_loc();
         this.add_quantity_input();
     },
     get_$form: function() {
+    	// Returns ID for the form element.
         return $("#search-form");
     },
     get_$form_container: function() {
+    	// Returns ID for div container inside form element.
         return $("#form-container");
     },
     add_date_input: function() {
+    	// Adds date input directly .
         var $form_container = this.get_$form_container();
 
         var $form_group = settings_maker.date_input_1();
@@ -150,6 +154,7 @@ var form_obj = {
         $form_container.append( $form_group );
     },
     add_filter_div: function() {
+        // Adds filter select from settings_maker.
         var $form_container = this.get_$form_container();
         var $form_group = settings_maker.adv_filter_div();
         $form_group.addClass("col-md-4");
@@ -157,6 +162,7 @@ var form_obj = {
         $form_container.append($form_group);
     },
     add_level_select: function() {
+        // Adds level select from settings_maker directly to html.
         var $form_container = this.get_$form_container(),
             $level_div = settings_maker.level_select();
 
@@ -165,6 +171,7 @@ var form_obj = {
         $form_container.append($level_div);
     },
     add_multiple_loc: function() {
+        // Adds select for locations.
         var $form_container = this.get_$form_container();
 
         var $form_group = settings_maker.multiple_loc_select();
@@ -173,6 +180,8 @@ var form_obj = {
         $form_container.append($form_group);
     },
     add_quantity_input: function() {
+        // Inputs for comparing quantity.
+        //  Used in adv_search.
         var $form_container = this.get_$form_container(),
             $quantity_input = settings_maker.$quantity_input();
 

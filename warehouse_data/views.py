@@ -355,10 +355,17 @@ def get_item_shipped(request):
     return data_dic
 
 def get_normal_item_query(data_date):
+    """
+        Create an item query to search for items & include options
+           to exclude bad data.
+    """
     query = Items.objects.select_related('rack_location').filter(data_date=data_date, )
     return query.exclude(rack_location__loc="").exclude(customer_code=900135)
 
 def get_item_query_filter(item_query, filter_option, filter_value):
+    """
+        Adjust filters to item queries by filtering for the options.
+    """
     if filter_value == None or filter_value == "":
         return item_query
 
@@ -377,6 +384,10 @@ def get_item_query_filter(item_query, filter_option, filter_value):
     return item_query
 
 def get_total_item_info(request, num_top=20):
+    """
+        Function that returns dictionary with item info using get request.
+        Needs date given in 'date-1.'
+    """
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
 
@@ -451,12 +462,19 @@ def get_total_item_info(request, num_top=20):
     return info_dic
 
 def adv_search(request):
+    """
+        Searches for items based on filters in adv_contain, adv_filter, & adv_foptoin.
+    """
     date_id = request.GET.get(get_element_name("single_date"))
 
     filter_dic = {}
 
+    # Contains refers to whether the items should, should not, or exactly contain
+    #   the searched term.
     adv_contain_str = get_element_name("adv_contain")
+    # This is the search terms inputted by the user.
     adv_filter_str = get_element_name("adv_filter")
+    # foption refers to the criteria that the terms fit under, ie Customer, SKU, RCV, etc.
     adv_foption_str = get_element_name("adv_foption")
 
     # There shouldn't be more than 100 filter criteria
@@ -542,7 +560,8 @@ def adv_search(request):
 
 def run_adv_item_filter(data_date, filter_dic):
     """
-    Runs Q object query on Item models
+    Runs Q object query on Item models.
+    Used by adv_search for the actually filtering of item, using Q objects.
     :param filter_dic: dictionary containing
     { [filter_option]:
         { [contains_status]:
@@ -567,13 +586,16 @@ def run_adv_item_filter(data_date, filter_dic):
 
 
 def get_q_object(option, contains, value):
+    """
+        Creates the Q objects required for filtering items and their criterias in adv_search.
+    """
     if option == "customer_code":
         if contains == "contain":
             return Q(customer_code=int(value))
         elif contains == "nocontain":
             return ~Q(customer_code=int(value))
         elif contains == "exact":
-            return Q(customer_code=int(value))
+            return Q(customer_code=int(valsue))
     elif option == "item_code":
         if contains == "contain":
             return Q(item_code__icontains=value)
@@ -597,6 +619,10 @@ def get_q_object(option, contains, value):
             return Q(description__iexact=value)
 
 def get_added_items_over_time(request):
+    """
+        Returns data dictionary containing all items added based on
+           request get data.
+    """
     data = {}
 
     time_period = request.GET.get(elements_dictionary["time_period"])
@@ -652,6 +678,9 @@ def get_added_items_over_time(request):
     return data
 
 def number_items_over_time(request):
+    """
+        Returns data dictionary of number of items (SKU) over time.
+    """
     data = {}
 
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
@@ -691,7 +720,9 @@ def number_items_over_time(request):
     return data
 
 def item_type_filter(request):
-    # Counts the avail_quantity in each item
+    """
+        Counts the avail_quantity in each item
+    """
     date_id = request.GET.get("date-1")
     data_date = DataDate.objects.get(id=date_id)
 
@@ -745,6 +776,12 @@ def item_type_filter(request):
     return data
 
 def item_type_over_time(request):
+    """
+        Counts the item types.
+        Returns  {
+            [loc][date_str][# item types]
+        }
+    """
     item_sku_dic = {}
     data = {}
 
@@ -791,6 +828,12 @@ def item_type_over_time(request):
     return data
 
 def num_customers_over_time(request):
+    """
+    Gives # of customers over time.
+    Returns {
+        [loc][date_str][# of customers]
+    }
+    """
     item_sku_dic = {}
     data = {}
 
@@ -834,6 +877,12 @@ def num_customers_over_time(request):
     return data
 
 def items_shipped_over_time(request):
+    """
+        Gets items shipped over time, using shipped_item.
+        Returns {
+            [item_loc][date_str][# items]
+        }
+    """
     data = {}
 
     date_ids = request.GET.getlist(elements_dictionary["multiple_dates"] + "[]")
@@ -873,6 +922,10 @@ def items_shipped_over_time(request):
     return data
 
 def update_locs(request):
+    """
+        Updates all the locations by using the
+        update_loc function thru all locs.
+    """
     locs_q = Location.objects.all()
     for l in locs_q:
         l.update_loc()

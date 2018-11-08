@@ -36,6 +36,9 @@ var map_processor = {
         this.create_map(loc, level, level_modifier);
    },
     create_canvas: function() {
+        /***
+         * Creates html canvas for map & returns the element.
+         */
         var $canvas = $("<canvas>", {
                 id: this.map_canvas_id,
             }),
@@ -63,7 +66,11 @@ var map_processor = {
         this.canvas_height = this.map_canvas.height;
     },
     create_map: function(loc, level, level_modifier) {
-        // Get grid_map
+        /**
+         * Get grid_map, which 2D array of the color of each block.
+         * Subsequently draws and fills out map on html. 
+         */
+
         $.ajax({
             url: get_grid_ajax_url,
             datatype: "GET",
@@ -128,6 +135,9 @@ var map_processor = {
     },
 
     draw_box: function(x, y, width, height, map_key, color) {
+        /**
+         * Draws / colors a box on the map based on grid system
+         */
         var ctx = map_processor.ctx;
 
         ctx.strokeStyle = "black";
@@ -184,6 +194,9 @@ var map_processor = {
     },
 
     set_click_handler: function(e) {
+        /***
+         * Sets click event listeners/ handlers on the map.
+         */
         var $map_canvas = $("#" +this.map_canvas_id);
         $map_canvas.click(function(e){
             var location_map = map_processor.location_map,
@@ -216,6 +229,9 @@ var map_processor = {
         });
     },
     highlight_map: function(x, y) {
+        /**
+         * Highlights map where the user clicks.
+         */
         var locations_info_dic = this.get_similar_locations(x, y)
             image_map = map_processor.image_map,
             loc_info_arr = null,
@@ -244,6 +260,11 @@ var map_processor = {
     },
 
     get_similar_locations: function(x, y, location, loc_dic) {
+        /**
+         * Returns other locations based on grid map that 
+         *  is the same as the one that was selected. 
+         * Runs recursively to search the searched places.
+         */
         var location_map = this.location_map,
             cur_loc = location_map[y][x],
             key_loc = String(x) + "_" + String(y);
