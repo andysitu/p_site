@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rcv_list.apps.RcvListConfig',
     'warehouse_map.apps.WarehouseMapConfig',
     'warehouse_data.apps.WarehouseDataConfig',
+    'shipment_track.apps.ShipmentTrackConfig',
     'uploader.apps.UploaderConfig',
     'django.contrib.admin',
     'django.contrib.auth',

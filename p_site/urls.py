@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^rcv_list/', include('rcv_list.urls')),
     url(r'^warehouse_map/', include('warehouse_map.urls')),
     url(r'^uploader/', include('uploader.urls')),
+    url(r'^shipment_track/', include('shipment_track.urls')),
     url(r'^$', views.index),
     url(r'^index/$', views.index, name="index"),
     url(r'^accounts/login/', auth_views.LoginView.as_view(template_name='p_site/registration/login.html'), name="login"),
