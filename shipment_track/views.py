@@ -4,6 +4,6 @@ from django.http import HttpResponse
 def home(request):
     return render(
         request,
-        'shipment_track/home.html',
+        'shipment_track/input_page.html',
         context={},
     )
