@@ -4,10 +4,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script type="text/javascript" src="{% static 'shipment_track/js/input_viewer.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shipment_track/js/inputpage_io.js' %}"></script>
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="{% static 'shipment_track/css/input_page.css' %}" />
 
     <title>Tracking Shipments</title>
@@ -16,15 +17,17 @@
     <h1>
         {% trans "Tracking Input" %}
     </h1>
-    <form>
+    <form id="tracking-form" name="trackingForm">
         <div class="form-row">
-            <div class="form-group col-md-1">
-                <label for="typeSelect">{% trans "Type" %}</label>
-                <select class="form-control" id="typeSelect"></select>
+            <div id="type-div" class="form-group col-md-1">
+                <label for="typeSelect">{% trans "Type" %}</label> <img id="add-type-button" class="icon-button" src="{% static 'shipment_track/img/iconic-plus.svg' %}" alt="+">
+                <div id="type-input-div">
+                        <select class="form-control" name="type" id="typeSelect"></select>
+                </div>
             </div>
             <div class="form-group col-md-2">
                 <label for="trackingNumInput">{% trans "Tracking #" %}</label>
-                <input type="text" class="form-control" id="trackingNumInput" placeholder="{% trans 'Tracking #' %}">
+                <input type="text" class="form-control" name="trackingNumber" id="trackingNumInput" placeholder="{% trans 'Tracking #' %}">
             </div>
         </div>
         <div>
