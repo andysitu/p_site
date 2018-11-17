@@ -20,7 +20,10 @@
     <form id="tracking-form" name="trackingForm">
         <div class="form-row">
             <div id="type-div" class="form-group col-md-1">
-                <label for="typeSelect">{% trans "Type" %}</label> <img id="add-type-button" class="icon-button" src="{% static 'shipment_track/img/iconic-plus.svg' %}" alt="+">
+                <label for="typeSelect">{% trans "Type" %}</label> 
+                <span id="addTypeButton-span">
+                    <img id="add-type-button" class="icon-button" src="{% static 'shipment_track/img/iconic-plus.svg' %}" alt="+">
+                </span>
                 <div id="type-input-div">
                         <select class="form-control" name="type" id="typeSelect"></select>
                 </div>
