@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 def home(request):
     # Temp. View Function
@@ -8,3 +8,9 @@ def home(request):
         'shipment_track/input_page.html',
         context={},
     )
+
+def submit_tracking_ajax(request):
+    return JsonResponse({})
+
+def get_tracking_data_ajax(request):
+    return JsonResponse({})

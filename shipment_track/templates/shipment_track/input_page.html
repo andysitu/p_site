@@ -4,7 +4,16 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <script type="text/javascript">
+        var addButton_img_url = "{% static 'shipment_track/img/iconic-plus.svg' %}",
+            xButton_img_url = "{% static 'shipment_track/img/x.svg' %}";
+
+        var submit_url = "{% url 'shipment_track:submit_tracking_ajax' %}",
+            get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}";
+    </script>
+
     <script type="text/javascript" src="{% static 'shipment_track/js/inputpage_io.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shipment_track/js/controller.js' %}"></script>
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -17,13 +26,13 @@
     <h1>
         {% trans "Tracking Input" %}
     </h1>
+    {% csrf_token %}
     <form id="tracking-form" name="trackingForm">
+        
         <div class="form-row">
             <div id="type-div" class="form-group col-md-1">
                 <label for="typeSelect">{% trans "Type" %}</label> 
-                <span id="addTypeButton-span">
-                    <img id="add-type-button" class="icon-button" src="{% static 'shipment_track/img/iconic-plus.svg' %}" alt="+">
-                </span>
+                <span id="addTypeButton-span"></span>
                 <div id="type-input-div">
                         <select class="form-control" name="type" id="typeSelect"></select>
                 </div>
