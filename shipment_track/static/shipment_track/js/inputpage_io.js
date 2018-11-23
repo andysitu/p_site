@@ -1,11 +1,11 @@
-var form_data
-
 class TrackingForm {
-    constructor(form_id) {
+    constructor(form_id, tracking_submit_url, csrf_token) {
         this.form = document.getElementById("tracking-form");
         this.id = form_id;
         this.load();
         this.typeInput_obj = new TypeInput();
+        this.submit_url = tracking_submit_url;
+        this.csrf_token = csrf_token;
     }
 
     load() {
@@ -27,14 +27,12 @@ class TrackingForm {
         // Gets data from Form & returns it in obj.
         var form_data = new FormData(this.form);
         
-        var type = form_data.get("type"),
-            tracking_number = form_data.get("trackingNumber");
+        // var trackingType = form_data.get("trackingType"),
+        //     tracking_number = form_data.get("trackingNumber");
 
-        this.clear_form();
-        return {
-            "type": type,
-            "tracking_number": tracking_number,
-        };
+        // this.clear_form();
+        
+        return form_data;
     }
 
     clear_form() {
@@ -45,7 +43,8 @@ class TrackingForm {
         var tracking_form = document.getElementById("tracking-form");
 
         var data = this.getData();
-        console.log(data);
+
+        controller.submit_tracking_data(this.submit_url, this.csrf_token, data);
     }
 }
 
@@ -82,10 +81,10 @@ class TypeInput {
          */
         var input_container = this.get_input_container();
         if (this.addType_status) {
-            var domstring = '<input class="form-control" name="type" id="typeInput"></input>';
+            var domstring = '<input class="form-control" name="trackingType" id="typeInput"></input>';
             input_container.innerHTML = domstring;
         } else {
-            var domstring = '<select class="form-control" name="type" id="typeSelect"></select>';
+            var domstring = '<select class="form-control" name="trackingType" id="typeSelect"></select>';
             input_container.innerHTML = domstring;
         }
     }
@@ -126,27 +125,15 @@ var io = {
          * Create & use TrackingForm to handle submit listeners 
          *  & interactions with form
         */
-        var tracking_form = new TrackingForm("tracking-form");
-        controller.postAjax(submit_url, io.get_csrf(), {}).then(function(response) {
-            console.log(response);
-        }, function(error) {
-            console.log("FAILURE");
-            console.log(error);
-        });;
-        
-        controller.get(get_data_url).then(function(response) {
-            console.log(response);
-        }, function(error) {
-            console.log("FAILURE");
-        });
-        
+       var csrf = io.get_csrf();
+       var tracking_form = new TrackingForm("tracking-form", submit_url, csrf);
     },
     delete: function() {
     },
     get_csrf: function() {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];
         return csrf_input.value;
-    }
+    },
 };
 
 window.onload = io.load;
