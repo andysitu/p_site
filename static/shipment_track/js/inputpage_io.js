@@ -1,11 +1,13 @@
 class TrackingForm {
-    constructor(form_id, tracking_submit_url, csrf_token) {
+    constructor(form_id, tracking_submit_url, csrf_token, controller) {
         this.form = document.getElementById("tracking-form");
         this.id = form_id;
         this.load();
         this.typeInput_obj = new TypeInput();
         this.submit_url = tracking_submit_url;
         this.csrf_token = csrf_token;
+
+        this.controller_ref = controller;
     }
 
     load() {
@@ -30,21 +32,31 @@ class TrackingForm {
         // var trackingType = form_data.get("trackingType"),
         //     tracking_number = form_data.get("trackingNumber");
 
-        // this.clear_form();
+        this.clear_form();
         
         return form_data;
     }
+    checkFormData(form_data) {
+        if (form_data.get("trackingNumber")=="" || form_data.get("trackingType")=="")
+            return false;
+        return true;
+    }
 
     clear_form() {
-        this.form.reset();
+        // Clear Tracking Number Input element.
+        document.getElementById("trackingNumInput").value = "";
+        // this.form.reset();
     }
 
     submit(e) {
         var tracking_form = document.getElementById("tracking-form");
 
-        var data = this.getData();
-
-        controller.submit_tracking_data(this.submit_url, this.csrf_token, data);
+        var form_data = this.getData();
+        if (!this.checkFormData(form_data)) {
+            console.log("EMPTY TRACKING INPUT");
+        } else {
+            this.controller_ref.submit_tracking_data(this.submit_url, this.csrf_token, form_data);
+        }
     }
 }
 
@@ -118,6 +130,28 @@ class TypeInput {
         return document.getElementById(this.addButton_container_id); }
 }
 
+class TrackingList {
+    constructor(container_id, get_data_url, csrf_token, controller) {
+        this.container_id = container_id;
+        this.div_id = "tracking-list-div";
+        this.get_data_url = get_data_url;
+        this.csrf_token = csrf_token;
+
+        this.controller_ref = controller;
+
+        this.load();
+    }
+
+    load() {
+        this.get_tracking_data();
+    }
+
+    get_tracking_data() {
+        this.controller_ref.get_tracking_data(this.get_data_url);
+    }
+}
+
+
 var io = {
     // Handles input and output of data & EventListeners
     load: function() {
@@ -126,7 +160,8 @@ var io = {
          *  & interactions with form
         */
        var csrf = io.get_csrf();
-       var tracking_form = new TrackingForm("tracking-form", submit_url, csrf);
+       var tracking_form = new TrackingForm("tracking-form", submit_url, csrf, controller);
+       var tracking_list = new TrackingList("tracking-list-container", get_data_url, csrf, controller);
     },
     delete: function() {
     },

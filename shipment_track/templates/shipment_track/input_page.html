@@ -41,10 +41,24 @@
                 <label for="trackingNumInput">{% trans "Tracking #" %}</label>
                 <input type="text" class="form-control" name="trackingNumber" id="trackingNumInput" placeholder="{% trans 'Tracking #' %}">
             </div>
+            
+            <!-- Date Input Not Used by JS Yet-->
+            <div class="form-group col-md-2">
+                <label>{% trans "Date" %}</label>
+                <input type="date" class="form-control">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="noteTextarea">{% trans "Note" %}</label>
+                <textarea class="form-control" id="noteTextarea" cols="35" rows="2" name="note"></textarea>
+            </div>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+
+    <div id="tracking-list-container"></div>
 </body>
 </html>

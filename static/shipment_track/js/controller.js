@@ -11,10 +11,18 @@ var controller = {
             console.log(error);
         });
     },
+    get_tracking_data: function(get_tracking_url) {
+        this.get(get_tracking_url).then(function(response) {
+            console.log(response);
+        }, function(error) {
+            console.log("ERROR");
+            console.log(error);
+        });
+    },
     get: function(url) {
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest();
-            req.open('GET', url);
+            req.open('GET', url, true);
     
             req.onload = function() {
                 if (req.status == 200) {
@@ -23,20 +31,17 @@ var controller = {
                     reject(Error(req.statusText));
                 }
             }
-    
             req.onerror = function() {
                 reject(Error("Network Error"));
             }
-    
             req.send();
         });
     },
     postAjax: function(url, csrf, data){
         return new Promise(function(resolve, reject) {
-            var req = new XMLHttpRequest();
+            var req = new XMLHttpRequest(); 
             req.open('POST', url, true);
             req.setRequestHeader('X-CSRFToken', csrf);
-            // req.setRequestHeader("Content-Type", 'x-www-form-urlencoded');
     
             req.onload = function() {
                 if (req.status == 200) {

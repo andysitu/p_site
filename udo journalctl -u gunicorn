@@ -1,0 +1,16 @@
+[0;1;31m●[0m gunicorn.service - gunicorn daemon
+   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+   Active: [0;1;31mfailed[0m (Result: exit-code) since Mon 2018-11-26 16:55:59 PST; 3min 8s ago
+  Process: 3377 ExecStart=/home/a/Desktop/psite_venv/bin/gunicorn --timeout 3600 --access-logfile - --workers 4 --bind unix:/home/a/Desktop/p_site/p_site.sock p_site.wsgi:application [0;1;31m(code=exited, status=1/FAILURE)[0m
+ Main PID: 3377 (code=exited, status=1/FAILURE)
+
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:   File "/home/a/Desktop/psite_venv/lib/python3.5/site-packages/gunicorn/arbiter.py", line 393, in stop
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:     time.sleep(0.1)
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:   File "/home/a/Desktop/psite_venv/lib/python3.5/site-packages/gunicorn/arbiter.py", line 244, in handle_chld
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:     self.reap_workers()
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:   File "/home/a/Desktop/psite_venv/lib/python3.5/site-packages/gunicorn/arbiter.py", line 524, in reap_workers
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]:     raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+Nov 26 16:55:58 a-XUbuntu-VirtualBox gunicorn[3377]: gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+Nov 26 16:55:59 a-XUbuntu-VirtualBox systemd[1]: [0;1;39mgunicorn.service: Main process exited, code=exited, status=1/FAILURE[0m
+Nov 26 16:55:59 a-XUbuntu-VirtualBox systemd[1]: [0;1;39mgunicorn.service: Unit entered failed state.[0m
+Nov 26 16:55:59 a-XUbuntu-VirtualBox systemd[1]: [0;1;39mgunicorn.service: Failed with result 'exit-code'.[0m
