@@ -61,6 +61,8 @@ class TrackingForm {
 }
 
 class TypeInput {
+    // Class that handles that input for type.
+    // JS changes when additional types need to be added.
     constructor() {
         this.id = "trackingNumInput";
         this.input_container_id = "type-input-div";
@@ -131,6 +133,7 @@ class TypeInput {
 }
 
 class TrackingList {
+    // Class to display tracking numbers inputted.
     constructor(container_id, get_data_url, csrf_token, controller) {
         this.container_id = container_id;
         this.div_id = "tracking-list-div";
@@ -138,6 +141,12 @@ class TrackingList {
         this.csrf_token = csrf_token;
 
         this.controller_ref = controller;
+        this.JS2Django_heading_map = {
+            "Tracking Number": "tracking_number",
+            "Input Date": "input_date",
+            "Type": "type",
+        };
+
 
         this.load();
     }
@@ -146,8 +155,65 @@ class TrackingList {
         this.get_tracking_data();
     }
 
+    show_tracking_data(all_trackingInfo_dict) {
+        var that = this;
+
+        var container_element = that.container;
+
+        that.make_tracking_list(all_trackingInfo_dict);
+    }
+
+    get container() {
+        return document.getElementById(this.container_id); }
+
     get_tracking_data() {
-        this.controller_ref.get_tracking_data(this.get_data_url);
+        this.controller_ref.get_tracking_data(
+            this.get_data_url,
+            this.show_tracking_data.bind(this));
+    }
+
+    make_tracking_list(trackingInfo_dic) {
+        var containerEle = this.container;
+
+        var tableEle = document.createElement("table");
+        tableEle.classList.add("table");
+
+        var threadEle = document.createElement("thead"),
+            tbodyEle = document.createElement("tbody"),
+            tr,
+            th, td;
+
+        var JS2Django_heading_map = this.JS2Django_heading_map,
+            th_list = Object.keys(JS2Django_heading_map);
+
+        tr = document.createElement("tr");
+        for (let i = 0; i < th_list.length; i++) {
+            th = document.createElement("th");
+            th.setAttribute("scope", "col");
+            th.appendChild(document.createTextNode(th_list[i]));
+            tr.appendChild(th);
+        }
+        threadEle.appendChild(tr);
+
+        for (let track_num in trackingInfo_dic) {
+            let tracking_dic = trackingInfo_dic[track_num];
+            tr = document.createElement("tr");
+            for (let i = 0; i < th_list.length; i++) {
+                td = document.createElement("td");
+                
+                let heading_name = th_list[i];
+                let py_heading_name = JS2Django_heading_map[heading_name];
+                let value = tracking_dic[py_heading_name];
+                td.appendChild(document.createTextNode(value));
+                tr.appendChild(td);
+            }
+            tbodyEle.appendChild(tr);
+        }
+
+        tableEle.appendChild(threadEle);
+        tableEle.appendChild(tbodyEle);
+
+        containerEle.appendChild(tableEle);
     }
 }
 

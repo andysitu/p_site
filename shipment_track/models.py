@@ -1,8 +1,11 @@
 from django.db import models
+from datetime import datetime
+from pytz import timezone
 
 # Create your models here.
 class TrackingType(models.Model):
     name = models.CharField(max_length=50)
+
 
 class Tracking_Number(models.Model):
     number = models.CharField(max_length=25)
@@ -31,7 +34,11 @@ class Tracking_Number(models.Model):
     def get_data_obj(self):
         o = {}
         o["tracking_number"] = self.number
-        o["input_date"] = self.input_date
+        # d - Datetime field
+        d = self.input_date.astimezone(timezone('America/Los_Angeles'))
+        date_string = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+        o["input_date"] = date_string
+        o["type"] = self.tracking_type.name;
         return o
     
     @classmethod
@@ -39,5 +46,5 @@ class Tracking_Number(models.Model):
         data = {}
         tracking_objs = cls.objects.all()
         for obj in tracking_objs:
-            data[obj.number] = obj.get_data_obj()
+            data[obj.id] = obj.get_data_obj()
         return data
