@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-from .models import Tracking_Number
+from .models import Tracking_Number, TrackingType
 
 def home(request):
     # Temp. View Function
@@ -28,3 +28,7 @@ def get_tracking_data_ajax(request):
     tracking_data = Tracking_Number.get_data()
 
     return JsonResponse(tracking_data)
+
+def get_types_ajax(request):
+    types_dict = TrackingType.get_types()
+    return JsonResponse(types_dict, safe=False)

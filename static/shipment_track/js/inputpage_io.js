@@ -1,13 +1,16 @@
+var t;
 class TrackingForm {
     constructor(form_id, tracking_submit_url, csrf_token, controller) {
         this.form = document.getElementById("tracking-form");
         this.id = form_id;
-        this.load();
-        this.typeInput_obj = new TypeInput();
         this.submit_url = tracking_submit_url;
         this.csrf_token = csrf_token;
 
         this.controller_ref = controller;
+
+        this.typeInput_obj = new TypeInput(this);
+
+        this.load();
     }
 
     load() {
@@ -63,7 +66,7 @@ class TrackingForm {
 class TypeInput {
     // Class that handles that input for type.
     // JS changes when additional types need to be added.
-    constructor() {
+    constructor(trackingForm) {
         this.id = "trackingNumInput";
         this.input_container_id = "type-input-div";
         this.addButton_container_id = "addTypeButton-span";
@@ -72,13 +75,19 @@ class TypeInput {
         // If addType_status is true, then add_type needs to be an
         // input ele rather than select to add the type in.
         this.addType_status = false;
+
+        this.trackingForm = trackingForm;
+
         this.load();
-        
     }
 
     load(){
-        this.createAddTypeInput();
+        this.createInput();
         this.createAddButton();
+    }
+
+    get controller_ref() {
+        return this.trackingForm.controller_ref;
     }
 
     switch_addType_status() {
@@ -87,6 +96,15 @@ class TypeInput {
         else
             this.addType_status = true; 
     }
+
+    createInput() {
+        if (this.addType_status) {
+            this.createAddTypeInput();
+        } else {
+            this.createAddTypeSelect();
+        }
+    }
+    
     createAddTypeInput() {
         /**
          * Creates an input / select element for add type depending 
@@ -94,14 +112,35 @@ class TypeInput {
          *  input - > select, true - > input element
          */
         var input_container = this.get_input_container();
-        if (this.addType_status) {
-            var domstring = '<input class="form-control" name="trackingType" id="typeInput"></input>';
-            input_container.innerHTML = domstring;
-        } else {
+        
+        var domstring = '<input class="form-control" name="trackingType" id="typeInput"></input>';
+        input_container.innerHTML = domstring;
+    }
+
+    createAddTypeSelect() {
+        var that = this;
+        function create_select(types_dict) {
+            var input_container = that.get_input_container();
+
             var domstring = '<select class="form-control" name="trackingType" id="typeSelect"></select>';
             input_container.innerHTML = domstring;
+
+            var select_ele = input_container.firstChild
+
+            var type_name, option_ele;
+
+            for (type_name in types_dict) {
+                option_ele = document.createElement("option");
+                option_ele.appendChild(document.createTextNode(type_name));
+                option_ele.setAttribute("value", types_dict[type_name])
+                select_ele.appendChild(option_ele);
+            }
         }
+
+        this.get_tracking_types(create_select);
+        
     }
+
     createAddButton() {
         /**
          * Creates the add button, depending on addType status.
@@ -125,6 +164,10 @@ class TypeInput {
             that.createAddButton();
         });
     }
+
+    get_tracking_types(response_func) {
+        this.controller_ref.get_tracking_types(io.types_url, response_func);
+    }
     
     get_input_container() {
         return document.getElementById(this.input_container_id); }
@@ -146,7 +189,6 @@ class TrackingList {
             "Input Date": "input_date",
             "Type": "type",
         };
-
 
         this.load();
     }
@@ -227,6 +269,7 @@ var io = {
         */
        var csrf = io.get_csrf();
        var tracking_form = new TrackingForm("tracking-form", submit_url, csrf, controller);
+       t = tracking_form;
        var tracking_list = new TrackingList("tracking-list-container", get_data_url, csrf, controller);
     },
     delete: function() {
@@ -235,6 +278,9 @@ var io = {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];
         return csrf_input.value;
     },
+    get types_url() {
+        return get_types_url;
+    }
 };
 
 window.onload = io.load;

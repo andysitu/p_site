@@ -6,6 +6,15 @@ from pytz import timezone
 class TrackingType(models.Model):
     name = models.CharField(max_length=50)
 
+    @classmethod
+    def get_types(cls):
+        # Returns dictionary with k/v being string name of type / id.
+        types = {}
+        types_q = cls.objects.all()
+        for type_o in types_q:
+            types[type_o.name] = type_o.id
+        return types
+
 
 class Tracking_Number(models.Model):
     number = models.CharField(max_length=25)

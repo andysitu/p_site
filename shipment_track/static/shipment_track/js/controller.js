@@ -11,6 +11,26 @@ var controller = {
             console.log(error);
         });
     },
+    get_tracking_types: function(get_types_url, response_func, error_func) {
+        this.get(get_types_url).then(
+            function(response) {
+                let data = JSON.parse(response);
+                if (response_func == undefined) {
+                    console.log(data);
+                } else {
+                    response_func(data);
+                }
+            },
+            function(error) {
+                if (error_func==undefined) {
+                    console.log("ERROR");
+                    console.log(error);
+                } else {
+                    error_func(error);
+                }
+            }
+        );
+    },
     get_tracking_data: function(get_tracking_url, response_func, error_func) {
         // Gets Tracking Data thru get Ajax, and then runs response function
         //  given in parameter and passes parsed JSON data to it.

@@ -9,7 +9,8 @@
             xButton_img_url = "{% static 'shipment_track/img/x.svg' %}";
 
         var submit_url = "{% url 'shipment_track:submit_tracking_ajax' %}",
-            get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}";
+            get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}",
+            get_types_url = "{% url 'shipment_track:get_types_ajax' %}";
     </script>
 
     <script type="text/javascript" src="{% static 'shipment_track/js/inputpage_io.js' %}"></script>
@@ -23,6 +24,7 @@
     <title>Tracking Shipments</title>
 </head>
 <body>
+    <div class="container-fluid">
     <h1>
         {% trans "Tracking Input" %}
     </h1>
@@ -60,5 +62,6 @@
     </form>
 
     <div id="tracking-list-container"></div>
+    </div>
 </body>
 </html>
