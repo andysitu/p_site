@@ -1,11 +1,14 @@
 var controller = {
     // Handles Processing of data
     // Isolated from HTML Details & Elements. Uses io JS files for this.
-    submit_tracking_data: function(tracking_submit_url, csrf_token, data) {
+    submit_tracking_data: function(tracking_submit_url, csrf_token, data, response_func) {
         console.log(JSON.stringify(data));
         
         this.postAjax(tracking_submit_url, csrf_token, data).then(function(response) {
-            console.log(response);
+            if (typeof response_func == "function") {
+                response_func(response);
+            } else
+                console.log(response);
         }, function(error) {
             console.log("Error");
             console.log(error);

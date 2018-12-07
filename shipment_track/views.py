@@ -26,7 +26,6 @@ def submit_tracking_ajax(request):
 
 def get_tracking_data_ajax(request):
     tracking_data = Tracking_Number.get_data()
-
     return JsonResponse(tracking_data)
 
 def get_types_ajax(request):

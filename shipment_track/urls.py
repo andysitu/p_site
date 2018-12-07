@@ -11,4 +11,4 @@ urlpatterns = [
     url(r'^submit_tracking_ajax', views.submit_tracking_ajax, name="submit_tracking_ajax"),
     url(r'^get_tracking_data_ajax', views.get_tracking_data_ajax, name="get_tracking_data_ajax"),
     url(r'^get_types_ajax', views.get_types_ajax, name="get_types_ajax"),
-];
+]
