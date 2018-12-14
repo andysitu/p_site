@@ -5,9 +5,6 @@ class TrackingForm {
         
         this.tracking_input_id = "trackingNumInput";
 
-        console.log(this);
-        console.log(io_controller);
-
         this.io_controller_ref = io_controller;
 
         this.typeInput_obj = new TypeInput(this);
@@ -62,15 +59,11 @@ class TrackingForm {
     submit(e) {
         var tracking_form = document.getElementById("tracking-form");
 
-        function t(data) {
-            console.log(data);
-        }
-
         var form_data = this.getData();
         if (!this.checkFormData(form_data)) {
             console.log("EMPTY TRACKING INPUT");
         } else {
-            this.io_controller_ref.submit_tracking_data(form_data, t);
+            this.io_controller_ref.submit_tracking_data(form_data);
         }
     }
 }
@@ -195,11 +188,8 @@ class TrackingList {
         this.get_data_url = get_data_url;
         this.tbody_id = "tracking-tbody";
 
-        console.log(io_controller);
-
         this.io_controller_ref = io_controller;
 
-        console.log(this.io_controller_ref);
         this.JS2Django_heading_map = {
             "Tracking Number": "tracking_number",
             "Input Date": "input_date",
@@ -225,7 +215,6 @@ class TrackingList {
         return document.getElementById(this.container_id); }
 
     get_tracking_data() {
-        console.log(this);
         this.io_controller_ref.get_tracking_data(
             this.get_data_url,
             this.show_tracking_data.bind(this));
@@ -280,6 +269,10 @@ class TrackingList {
             
         var tr = document.createElement("tr"),
             td;
+
+        for (var a in tracking_dic) {
+            console.log(a, tracking_dic[a]);
+        }
         for (let i = 0; i < th_list.length; i++) {
             td = document.createElement("td");
             
@@ -320,8 +313,13 @@ var io = {
     get types_url() {
         return get_types_url;
     },
-    submit_tracking_data: function(form_data, t) {
-        controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, t);
+    submit_tracking_data: function(form_data) {
+        var that = this;
+        function response_func(data) {
+            console.log(data);
+            that.tracking_list.add_tracking_num(data);
+        }
+        controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);
     },
     get_tracking_types: function(response_func) {
         controller.get_tracking_types(this.types_url, response_func);
