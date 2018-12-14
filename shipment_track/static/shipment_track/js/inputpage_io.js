@@ -1,18 +1,23 @@
-var t;
 class TrackingForm {
-    constructor(form_id, tracking_submit_url, csrf_token, controller) {
+    constructor(form_id, io_controller) {
         this.form = document.getElementById("tracking-form");
         this.id = form_id;
-        this.submit_url = tracking_submit_url;
-        this.csrf_token = csrf_token;
+        
         this.tracking_input_id = "trackingNumInput";
 
-        this.controller_ref = controller;
+        console.log(this);
+        console.log(io_controller);
+
+        this.io_controller_ref = io_controller;
 
         this.typeInput_obj = new TypeInput(this);
 
         this.load();
     }
+
+    // get io_controller_ref() {
+    //     return this.io_controller_ref;
+    // }
 
     load() {
         /**
@@ -65,7 +70,7 @@ class TrackingForm {
         if (!this.checkFormData(form_data)) {
             console.log("EMPTY TRACKING INPUT");
         } else {
-            this.controller_ref.submit_tracking_data(this.submit_url, this.csrf_token, form_data, t);
+            this.io_controller_ref.submit_tracking_data(form_data, t);
         }
     }
 }
@@ -93,8 +98,8 @@ class TypeInput {
         this.createAddButton();
     }
 
-    get controller_ref() {
-        return this.trackingForm.controller_ref;
+    get io_controller_ref() {
+        return this.trackingForm.io_controller_ref;
     }
 
     switch_addType_status() {
@@ -173,7 +178,7 @@ class TypeInput {
     }
 
     get_tracking_types(response_func) {
-        this.controller_ref.get_tracking_types(io.types_url, response_func);
+        this.io_controller_ref.get_tracking_types(response_func);
     }
     
     get_input_container() {
@@ -184,14 +189,17 @@ class TypeInput {
 
 class TrackingList {
     // Class to display tracking numbers inputted.
-    constructor(container_id, get_data_url, csrf_token, controller) {
+    constructor(container_id, get_data_url, io_controller) {
         this.container_id = container_id;
         this.div_id = "tracking-list-div";
         this.get_data_url = get_data_url;
-        this.csrf_token = csrf_token;
         this.tbody_id = "tracking-tbody";
 
-        this.controller_ref = controller;
+        console.log(io_controller);
+
+        this.io_controller_ref = io_controller;
+
+        console.log(this.io_controller_ref);
         this.JS2Django_heading_map = {
             "Tracking Number": "tracking_number",
             "Input Date": "input_date",
@@ -217,7 +225,8 @@ class TrackingList {
         return document.getElementById(this.container_id); }
 
     get_tracking_data() {
-        this.controller_ref.get_tracking_data(
+        console.log(this);
+        this.io_controller_ref.get_tracking_data(
             this.get_data_url,
             this.show_tracking_data.bind(this));
     }
@@ -286,6 +295,10 @@ class TrackingList {
 
 
 var io = {
+    submit_url: submit_url,
+    csrf_token: null,
+    tracking_form: null,
+    tracking_list: null,
     // Handles input and output of data & EventListeners
     load: function() {
         /**
@@ -293,9 +306,10 @@ var io = {
          *  & interactions with form
         */
        var csrf = io.get_csrf();
-       var tracking_form = new TrackingForm("tracking-form", submit_url, csrf, controller);
-       t = tracking_form;
-       var tracking_list = new TrackingList("tracking-list-container", get_data_url, csrf, controller);
+       this.csrf_token = csrf;
+       
+       this.tracking_form = new TrackingForm("tracking-form", this);
+       this.tracking_list = new TrackingList("tracking-list-container", get_data_url, this);
     },
     delete: function() {
     },
@@ -305,7 +319,18 @@ var io = {
     },
     get types_url() {
         return get_types_url;
-    }
+    },
+    submit_tracking_data: function(form_data, t) {
+        controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, t);
+    },
+    get_tracking_types: function(response_func) {
+        controller.get_tracking_types(this.types_url, response_func);
+    },
+    get_tracking_data: function(get_data_url, response_func) {
+        controller.get_tracking_data(get_data_url, response_func);
+    },
 };
 
-window.onload = io.load;
+window.onload = function() {
+    io.load();
+};
