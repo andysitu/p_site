@@ -42,6 +42,8 @@ class Tracking_Number(models.Model):
 
     def get_data_obj(self):
         o = {}
+        o["id"] = self.pk
+
         o["tracking_number"] = self.number
         # d - Datetime field
         d = self.input_date.astimezone(timezone('America/Los_Angeles'))

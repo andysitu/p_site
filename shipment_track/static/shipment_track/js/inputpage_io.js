@@ -30,7 +30,7 @@ class TrackingForm {
             that.submit(e);
         });
     }
-
+    
     getData() {
         // Gets data from Form & returns it in obj.
         var form_data = new FormData(this.form);
@@ -192,6 +192,7 @@ class TrackingList {
 
         this.JS2Django_heading_map = {
             "Tracking Number": "tracking_number",
+            "Options": "",
             "Input Date": "input_date",
             "Type": "type",
         };
@@ -229,7 +230,7 @@ class TrackingList {
 
         var threadEle = document.createElement("thead"),
             tbodyEle = document.createElement("tbody"),
-            tr,
+            heading_tr,
             th, td;
 
         tbodyEle.setAttribute("id", this.tbody_id);
@@ -237,48 +238,66 @@ class TrackingList {
         var JS2Django_heading_map = this.JS2Django_heading_map,
             th_list = Object.keys(JS2Django_heading_map);
 
-        tr = document.createElement("tr");
-        for (let i = 0; i < th_list.length; i++) {
-            th = document.createElement("th");
-            th.setAttribute("scope", "col");
-            th.appendChild(document.createTextNode(th_list[i]));
-            tr.appendChild(th);
-        }
-        threadEle.appendChild(tr);
+        heading_tr = this.create_heading_tr();
+        threadEle.appendChild(heading_tr);
 
         tableEle.appendChild(threadEle);
         tableEle.appendChild(tbodyEle);
         containerEle.appendChild(tableEle);
 
-        for (let track_num in trackingInfo_dic) {
-            let tracking_dic = trackingInfo_dic[track_num];
-            this.add_tracking_num(tracking_dic);
+        for (let id in trackingInfo_dic) {
+            let tracking_dic = trackingInfo_dic[id];
+            this.add_tracking_num(id, tracking_dic);
         }
     }
 
-    add_tracking_num(tracking_dic) {
+    add_tracking_num(id, tracking_dic) {
         var tbody = document.getElementById(this.tbody_id),
-            tracking_tr = this.create_tracking_tr(tracking_dic);
+            tracking_tr = this.create_tracking_tr(id,tracking_dic);
 
         tbody.appendChild(tracking_tr);
     }
 
-    create_tracking_tr(tracking_dic) {
+    create_heading_tr() {
+        function create_th(text) {
+            let th = document.createElement("th");
+            th.setAttribute("scope", "col");
+            th.appendChild(document.createTextNode(text));
+            return th;
+        }
+
+        var JS2Django_heading_map = this.JS2Django_heading_map,
+            th_list = Object.keys(JS2Django_heading_map),
+            tr, th;
+
+        tr = document.createElement("tr");
+        for (let i = 0; i < th_list.length; i++) {
+
+            tr.appendChild( create_th(th_list[i]) );
+        }
+        return tr;
+    }
+    create_tracking_tr(id, tracking_dic) {
         var JS2Django_heading_map = this.JS2Django_heading_map,
             th_list = Object.keys(JS2Django_heading_map);
             
         var tr = document.createElement("tr"),
             td;
-
+            
         for (var a in tracking_dic) {
             console.log(a, tracking_dic[a]);
         }
         for (let i = 0; i < th_list.length; i++) {
+            var value;
             td = document.createElement("td");
             
             let heading_name = th_list[i];
             let py_heading_name = JS2Django_heading_map[heading_name];
-            let value = tracking_dic[py_heading_name];
+            if (heading_name != "Options") {
+                value = tracking_dic[py_heading_name];
+            } else {
+                value = "";
+            }
             td.appendChild(document.createTextNode(value));
             tr.appendChild(td);
         }
