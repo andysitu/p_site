@@ -59,3 +59,8 @@ class Tracking_Number(models.Model):
         for obj in tracking_objs:
             data[obj.id] = obj.get_data_obj()
         return data
+
+    @classmethod
+    def delete_by_id(cls, o_id):
+        cls.objects.get(id=o_id).delete()
+        return o_id

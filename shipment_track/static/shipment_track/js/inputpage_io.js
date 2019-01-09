@@ -183,6 +183,8 @@ class TypeInput {
 class TrackingList {
     // Class to display tracking numbers inputted.
     constructor(container_id, get_data_url, io_controller) {
+        this.trackingNum_htmlElements = {}
+
         this.container_id = container_id;
         this.div_id = "tracking-list-div";
         this.get_data_url = get_data_url;
@@ -255,6 +257,7 @@ class TrackingList {
         var tbody = document.getElementById(this.tbody_id),
             tracking_tr = this.create_tracking_tr(id,tracking_dic);
 
+        this.trackingNum_htmlElements[id] = tracking_tr;
         tbody.appendChild(tracking_tr);
     }
 
@@ -277,16 +280,13 @@ class TrackingList {
         }
         return tr;
     }
-    create_tracking_tr(id, tracking_dic) {
+    create_tracking_tr(tracking_num_id, tracking_dic) {
         var JS2Django_heading_map = this.JS2Django_heading_map,
             th_list = Object.keys(JS2Django_heading_map);
             
         var tr = document.createElement("tr"),
             td;
             
-        for (var a in tracking_dic) {
-            console.log(a, tracking_dic[a]);
-        }
         for (let i = 0; i < th_list.length; i++) {
             var value;
             td = document.createElement("td");
@@ -295,19 +295,37 @@ class TrackingList {
             let py_heading_name = JS2Django_heading_map[heading_name];
             if (heading_name != "Options") {
                 value = tracking_dic[py_heading_name];
+                td.appendChild(document.createTextNode(value));
             } else {
-                value = "";
+                var close_button = document.createElement("a");
+
+                close_button.href="";
+
+                close_button.innerHTML = "&#10006";
+
+                close_button.addEventListener("click", function(e) {
+                   e.preventDefault();
+                   io.delete(tracking_num_id);
+                });
+
+                td.appendChild(close_button);
             }
-            td.appendChild(document.createTextNode(value));
             tr.appendChild(td);
         }
         return tr;
     }
-}
 
+    remove_tracking_num(id) {
+        var trElement = this.trackingNum_htmlElements[id],
+            parentElement = trElement.parentElement;
+
+        parentElement.removeChild(trElement);
+    }
+}
 
 var io = {
     submit_url: submit_url,
+    ajax_command_url: ajax_command_url,
     csrf_token: null,
     tracking_form: null,
     tracking_list: null,
@@ -323,7 +341,19 @@ var io = {
        this.tracking_form = new TrackingForm("tracking-form", this);
        this.tracking_list = new TrackingList("tracking-list-container", get_data_url, this);
     },
-    delete: function() {
+    delete: function(id) {
+        var that = this;
+        var formData = new FormData();
+        formData.append("id", id);
+        formData.append("ajax_command", "delete_tracking_num");
+
+        controller.postAjax(
+            that.ajax_command_url, this.csrf_token, formData
+        ).then(function(response) {
+            that.tracking_list.remove_tracking_num(id);
+        }), function(error) {
+            console.log("Error with delete", error);
+        };
     },
     get_csrf: function() {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];

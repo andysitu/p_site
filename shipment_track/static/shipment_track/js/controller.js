@@ -1,6 +1,13 @@
 var controller = {
     // Handles Processing of data
-    // Isolated from HTML Details & Elements. Uses io JS files for this.
+    // Isolated from HTML Details & Elements, which io JS files handle.
+    ajax_command: function(url, csrf_token, data_obj) {
+        if (command=="del_tracking_num") {
+            data_obj["command"] = "delete";
+            this.postAjax(url, csrf_token, data_obj);
+        }
+    },
+
     submit_tracking_data: function(tracking_submit_url, csrf_token, data, response_func) {
         this.postAjax(tracking_submit_url, csrf_token, data).then(function(response) {
             if (typeof response_func == "function") {
@@ -73,7 +80,7 @@ var controller = {
             req.send();
         });
     },
-    postAjax: function(url, csrf, data){
+    postAjax: function(url, csrf, data){  
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest(); 
             req.open('POST', url, true);

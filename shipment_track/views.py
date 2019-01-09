@@ -31,3 +31,13 @@ def get_tracking_data_ajax(request):
 def get_types_ajax(request):
     types_dict = TrackingType.get_types()
     return JsonResponse(types_dict, safe=False)
+
+def ajax_command(request):
+    ajax_command = request.POST.get('ajax_command')
+    print(ajax_command)
+
+    if ajax_command == "delete_tracking_num":
+        tracking_id = request.POST.get("id")
+        Tracking_Number.delete_by_id(tracking_id)
+
+    return JsonResponse({})
