@@ -365,8 +365,7 @@ var io = {
     submit_tracking_data: function(form_data) {
         var that = this;
         function response_func(data) {
-            console.log(data);
-            that.tracking_list.add_tracking_num(data);
+            that.tracking_list.add_tracking_num(data.id, data);
         }
         controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);
     },
