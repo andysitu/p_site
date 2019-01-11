@@ -228,7 +228,8 @@ class TrackingList {
 
         var tableEle = document.createElement("table");
         
-        tableEle.classList.add("table");
+        // tableEle.classList.add("table");
+        tableEle.classList.add("table-hover");
 
         var threadEle = document.createElement("thead"),
             tbodyEle = document.createElement("tbody"),
@@ -248,7 +249,6 @@ class TrackingList {
         containerEle.appendChild(tableEle);
 
         for (let id in trackingInfo_dic) {
-            
             let tracking_dic = trackingInfo_dic[id];
             this.add_tracking_num(id, tracking_dic, true);
         }
@@ -261,9 +261,9 @@ class TrackingList {
         this.trackingNum_htmlElements[id] = tracking_tr;
 
         if (addToTop) {
-            tbody.appendChild(tracking_tr);
-        } else {
             tbody.insertBefore(tracking_tr, tbody.firstChild);
+        } else {
+            tbody.appendChild(tracking_tr);
         }
         
     }
@@ -372,7 +372,7 @@ var io = {
     submit_tracking_data: function(form_data) {
         var that = this;
         function response_func(data) {
-            that.tracking_list.add_tracking_num(data.id, data, addToTop=true);
+            that.tracking_list.add_tracking_num(data.id, data, true);
         }
         controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);
     },

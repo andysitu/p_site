@@ -3,3 +3,29 @@ img.icon-button {
     width: 8%;
     /* height: 5%; */
 }
+
+table {
+    /* width: 50% */
+    font-size: 14pt;
+}
+
+table tbody, table thead
+{
+    display: block;
+}
+
+table thead 
+{
+   padding-right: 15px;
+}
+
+table tbody 
+{
+   overflow-y: auto;
+   height: 600px;
+}
+
+thead th, tbody td {
+    width: 240px;
+    text-align: left;
+}
