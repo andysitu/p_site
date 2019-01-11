@@ -14,6 +14,7 @@
             ajax_command_url = "{% url 'shipment_track:ajax_command' %}";
     </script>
 
+    <script type="text/javascript" src="{% static 'shipment_track/js/tablejs.js' %}"></script>
     <script type="text/javascript" src="{% static 'shipment_track/js/inputpage_io.js' %}"></script>
     <script type="text/javascript" src="{% static 'shipment_track/js/controller.js' %}"></script>
 
@@ -45,7 +46,11 @@
                 <input type="text" class="form-control" name="trackingNumber" id="trackingNumInput" placeholder="{% trans 'Tracking #' %}">
             </div>
 
-            
+            <div class="form-group">
+                <label for="noteTextarea">{% trans "Note" %}</label>
+                <textarea class="form-control" id="noteTextarea" cols="35" rows="1" name="note"></textarea>
+            </div>
+
             <!-- Date Input Not Used by JS Yet
             <div class="form-group col-md-2">
                 <label>{% trans "Date" %}</label>
@@ -53,17 +58,13 @@
             </div> -->
         </div>
         <div class="form-row">
-            <div class="form-group">
-                <label for="noteTextarea">{% trans "Note" %}</label>
-                <textarea class="form-control" id="noteTextarea" cols="35" rows="2" name="note"></textarea>
-            </div>
+            
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
-    </div>
-
     <div id="tracking-list-container"></div>
+    </div>
 </body>
 </html>
