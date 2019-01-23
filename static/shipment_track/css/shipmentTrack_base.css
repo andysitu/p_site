@@ -1,0 +1,7 @@
+.change-lang-but {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    color: blue;
+    cursor: pointer;
+  }

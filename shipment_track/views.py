@@ -11,6 +11,13 @@ def home(request):
         context={},
     )
 
+def search_page(request):
+    return render(
+        request,
+        'shipment_track/search_tracking.html',
+        {}
+    )
+
 def submit_tracking_ajax(request):
     tracking_type = request.POST.get('trackingType')
     tracking_num = request.POST.get('trackingNumber')

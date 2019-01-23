@@ -7,6 +7,7 @@ app_name = "shipment_track"
 urlpatterns = [
     url(r'^index/$', views.home, name="index"),
     url(r'^$', views.home, name="index-blank"),
+    url(r'^search/$', views.search_page, name="search_page"),
 
     url(r'^submit_tracking_ajax', views.submit_tracking_ajax, name="submit_tracking_ajax"),
     url(r'^get_tracking_data_ajax', views.get_tracking_data_ajax, name="get_tracking_data_ajax"),

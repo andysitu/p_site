@@ -1,0 +1,27 @@
+{% extends 'shipment_track/shipment_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<title>{% trans "Search Tracking #'s'" %}</title>
+
+<script type="text/javascript">
+    var get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}";
+</script>
+
+<script type="text/javascript" src="{% static 'shipment_track/js/tablejs.js' %}"></script>
+<script type="text/javascript" src="{% static 'shipment_track/js/controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'shipment_track/js/search_io.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>
+            {% trans 'Search' %}
+        </h1>
+        <form id="search-form" name="searchForm"></form>
+    </div>
+
+    <div id="tracking-list-container"></div>
+{% endblock %}
