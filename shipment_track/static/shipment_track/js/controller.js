@@ -10,6 +10,7 @@ var controller = {
 
     submit_tracking_data: function(tracking_submit_url, csrf_token, data, response_func) {
         this.postAjax(tracking_submit_url, csrf_token, data).then(function(response) {
+            console.log("submit", data);
             if (typeof response_func == "function") {
                 let data = JSON.parse(response);
                 response_func(data);

@@ -26,13 +26,14 @@ class Tracking_Number(models.Model):
     @classmethod
     def create(cls, tracking_info_dic):
         tracking_num = tracking_info_dic["tracking_number"]
-        tracking_type = tracking_info_dic["tracking_type"]
+        tracking_type_id = tracking_info_dic["tracking_type_id"]
+        typeName = tracking_info_dic["typeName"]
         note = tracking_info_dic["note"]
 
         try:
-            tracking_type = TrackingType.objects.get(name = tracking_type)
+            tracking_type = TrackingType.objects.get(id = tracking_type_id)
         except TrackingType.DoesNotExist as e:
-            tracking_type = TrackingType(name = tracking_type)
+            tracking_type = TrackingType(name = typeName)
             tracking_type.save()
         
         tracking_num_obj = cls(number=tracking_num, tracking_type=tracking_type,
@@ -49,7 +50,8 @@ class Tracking_Number(models.Model):
         d = self.input_date.astimezone(timezone('America/Los_Angeles'))
         date_string = d.strftime("%Y-%m-%d %H:%M:%S %Z")
         o["input_date"] = date_string
-        o["type"] = self.tracking_type.name;
+        o["typeName"] = self.tracking_type.name
+        o["typeId"] = self.tracking_type.pk
         return o
     
     @classmethod

@@ -1,3 +1,5 @@
+var t;
+
 class TrackingForm {
     constructor(form_id, io_controller) {
         this.form = document.getElementById("tracking-form");
@@ -7,7 +9,7 @@ class TrackingForm {
 
         this.io_controller_ref = io_controller;
 
-        this.typeInput_obj = new TypeInput(this);
+        this.typeInput_obj = t = new TypeInput(this);
 
         this.load();
     }
@@ -34,9 +36,9 @@ class TrackingForm {
     getData() {
         // Gets data from Form & returns it in obj.
         var form_data = new FormData(this.form);
-        
-        // var trackingType = form_data.get("trackingType"),
-        //     tracking_number = form_data.get("trackingNumber");
+        console.log(this.form);
+        console.log(form_data);
+        console.log(this.typeInput_obj.get_type());
 
         this.clear_form();
         
@@ -72,14 +74,15 @@ class TypeInput {
     // Class that handles that input for type.
     // JS changes when additional types need to be added.
     constructor(trackingForm) {
-        this.id = "typeInput";
+        this.selectId = "typeSelect";
+        this.inputId = "typeInput";
         this.input_container_id = "type-input-div";
         this.addButton_container_id = "addTypeButton-span";
         this.addButton_img_url = addButton_img_url;
         this.xButton_img_url = xButton_img_url;
-        // If addType_status is true, then add_type needs to be an
-        // input ele rather than select to add the type in.
-        this.addType_status = false;
+
+        this._typesDict = {
+        };
 
         this.trackingForm = trackingForm;
 
@@ -87,39 +90,17 @@ class TypeInput {
     }
 
     load(){
-        this.createInput();
+        this.createAddTypeSelect();
         this.createAddButton();
-    }
+    }   
 
     get io_controller_ref() {
         return this.trackingForm.io_controller_ref;
     }
 
-    switch_addType_status() {
-        if (this.addType_status)
-            this.addType_status = false;
-        else
-            this.addType_status = true; 
-    }
-
-    createInput() {
-        if (this.addType_status) {
-            this.createAddTypeInput();
-        } else {
-            this.createAddTypeSelect();
-        }
-    }
-    
-    createAddTypeInput() {
-        /**
-         * Creates an input / select element for add type depending 
-         *  on addType_status. 
-         *  input - > select, true - > input element
-         */
-        var input_container = this.get_input_container();
-        
-        var domstring = '<input class="form-control" name="trackingType" id="' + this.id +'"></input>';
-        input_container.innerHTML = domstring;
+    addTypeWindow() {
+        var typeName = window.prompt(gettext("What type name would you like?"));
+        return typeName;
     }
 
     createAddTypeSelect() {
@@ -127,21 +108,20 @@ class TypeInput {
         function create_select(types_dict) {
             var input_container = that.get_input_container();
 
-            var domstring = '<select class="form-control" name="trackingType" id="' + that.id +'"></select>';
+            var domstring = '<select class="form-control" name="trackingType" id="' + that.selectId +'"></select>';
             input_container.innerHTML = domstring;
 
             var select_ele = input_container.firstChild
 
-            var type_name, option_ele;
+            var type_name, option_ele, typeId;
 
             for (type_name in types_dict) {
-                option_ele = document.createElement("option");
-                option_ele.appendChild(document.createTextNode(type_name));
-                option_ele.setAttribute("value", types_dict[type_name])
-                select_ele.appendChild(option_ele);
+                typeId = types_dict[type_name];
+                that.addTypeElement(typeId, type_name);
             }
         }
 
+        // get_tracking_types uses create_select for a response function in ajax.
         this.get_tracking_types(create_select);
         
     }
@@ -164,9 +144,7 @@ class TypeInput {
         var add_button = document.getElementById("add-type-button");
         var that = this;
         add_button.addEventListener("click", function(e){
-            that.switch_addType_status();
-            that.createAddTypeInput();
-            that.createAddButton();
+            that.makeType();
         });
     }
 
@@ -178,6 +156,70 @@ class TypeInput {
         return document.getElementById(this.input_container_id); }
     get_addButton_container() {
         return document.getElementById(this.addButton_container_id); }
+
+    get_type() {
+        var input_container = this.input_container_id,  
+            input = input_container.firstChild;
+        console.log(input);
+    }
+
+    makeType() {
+        var typeName = this.addTypeWindow(),
+            that = this;
+        if (this.checkTypeName(typeName)) {
+            io.createType(typeName, function(responseDict) {
+                var infoDict = JSON.parse(responseDict);
+                var typeName = infoDict["typeName"],
+                    typeId = infoDict["typeId"];
+
+                that.addTypeElement(typeId, typeName);
+            });
+            
+        }
+    }   
+    checkTypeName(typeName) {
+    // Check if Tracking Type exists and if the name is valid.
+        // Check if  type name exists; if so, select it.
+        if (typeName in this._typesDict) {
+            this.selectType(this._typesDict[typeName], typeName);
+            return false;
+        }   
+
+        // Check if typeName is valid
+        if (typeName != null && typeName != "")
+            return true;
+    }
+
+    selectType(typeId, typeName) {
+        var selectElement = document.getElementById(this.selectId),
+            option, value;
+        
+        for (var i=0; i < selectElement.length; i++) {
+            option = selectElement[i];
+            value = option.value;
+            if (value == typeId) {
+                selectElement.selectedIndex = i;
+                return true;
+            }
+        }
+    }
+
+    addTypeElement(typeId, typeName, selectedStatus = true) {
+        // Add type to the html select. Also adds selected attribute
+        //  unless noted otherwise. Also, adds type to typesDict
+        var selectElement = document.getElementById(this.selectId);
+
+        this._typesDict[typeName] = typeId;
+
+        var optionElement = document.createElement("option");
+        optionElement.appendChild(document.createTextNode(typeName));
+        optionElement.setAttribute("value", typeId);
+        optionElement.setAttribute("selected", true);
+
+        selectElement.appendChild(optionElement);
+
+        selectElement.focus(optionElement);
+    }
 }
 
 var io = {
@@ -212,6 +254,21 @@ var io = {
             console.log("Error with delete", error);
         };
     },
+    createType: function(typeName, responseFunction) {
+        var that = this;
+
+        var formData = new FormData();
+        formData.append("typeName", typeName);
+        formData.append("ajax_command", "createTrackingType");
+
+        controller.postAjax(
+            that.ajax_command_url, this.csrf_token, formData
+        ).then(function(response){
+            responseFunction(response);
+        }, function(error) {
+            console.log("error with createType", error);
+        });
+    },
     get_csrf: function() {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];
         return csrf_input.value;
@@ -222,6 +279,7 @@ var io = {
     submit_tracking_data: function(form_data) {
         var that = this;
         function response_func(data) {
+            console.log(data);
             that.tracking_list.add_tracking_num(data.id, data, true);
         }
         controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);

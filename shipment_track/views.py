@@ -19,13 +19,10 @@ def search_page(request):
     )
 
 def submit_tracking_ajax(request):
-    tracking_type = request.POST.get('trackingType')
-    tracking_num = request.POST.get('trackingNumber')
-    note = request.POST.get('note')
-
     tracking_dic = {
-        "tracking_type": request.POST.get('trackingType'),
+        "tracking_type_id": request.POST.get('trackingType'),
         "tracking_number": request.POST.get('trackingNumber'),
+        "typeName": request.POST.get("typeName"),
         "note": request.POST.get('note')
     }
     tracking_data_obj = Tracking_Number.create(tracking_dic)
@@ -46,5 +43,14 @@ def ajax_command(request):
     if ajax_command == "delete_tracking_num":
         tracking_id = request.POST.get("id")
         Tracking_Number.delete_by_id(tracking_id)
+    elif ajax_command == "createTrackingType":
+        typeName = request.POST.get("typeName")
+        t = TrackingType(name=typeName)
+        t.save()
+
+        return JsonResponse({
+            "typeName": typeName,
+            "typeId": t.pk,
+        })
 
     return JsonResponse({})

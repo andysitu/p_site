@@ -14,7 +14,7 @@ class TrackingList {
             "Tracking Number": "tracking_number",
             "Options": "",
             "Input Date": "input_date",
-            "Type": "type",
+            "Type": "typeName",
         };
 
         this.load();
