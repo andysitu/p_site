@@ -42,6 +42,7 @@ class Tracking_Number(models.Model):
         return tracking_num_obj.get_data_obj()
 
     def get_data_obj(self):
+        # Creates dict of the data.
         o = {}
         o["id"] = self.pk
 
@@ -64,5 +65,6 @@ class Tracking_Number(models.Model):
 
     @classmethod
     def delete_by_id(cls, o_id):
-        cls.objects.get(id=o_id).delete()
+        trackNumObj = cls.objects.get(id=o_id)        
+        trackNumObj.delete()
         return o_id

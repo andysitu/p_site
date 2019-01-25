@@ -7,8 +7,9 @@
 <title>{% trans "Search Tracking #'s'" %}</title>
 
 <script type="text/javascript">
-    var
-     get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}";
+    var get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}",
+        get_types_url = "{% url 'shipment_track:get_types_ajax' %}",
+        postAjax_url = "{% url 'shipment_track:postAjaxCommand' %}";
 </script>
 
 <script type="text/javascript" src="{% static 'shipment_track/js/tablejs.js' %}"></script>
@@ -21,7 +22,31 @@
         <h1>
             {% trans 'Search' %}
         </h1>
-        <form id="search-form" name="searchForm"></form>
+        {% csrf_token %}
+        <form id="search-form" name="searchForm">
+            <div class="form-row">
+                <div id="type-div" class="form-group col-md-2">
+                    <label for="typeSelect">{% trans "Type" %}</label> 
+                    <span id="addTypeButton-span"></span>
+                    <div id="type-input-div">
+                        <select class="form-control" name="trackingType" id="typeSelect"></select>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="startDate">Start date:</label>
+                    <input class="form-control" type="date" id="startDate" name="startDate">
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Start date:</label>
+                    <input class="form-control" type="date" id="endDate" name="endDate">
+                </div>
+            </div>
+    
+            <div>
+                <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+            </div>
+        </form>
     </div>
 
     <div id="tracking-list-container"></div>

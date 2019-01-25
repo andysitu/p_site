@@ -21,27 +21,10 @@ class TrackingList {
     }
 
     load() {
-        this.get_tracking_data();
+        this.make_tracking_list();
     }
 
-    show_tracking_data(all_trackingInfo_dict) {
-        var that = this;
-
-        var container_element = that.container;
-
-        that.make_tracking_list(all_trackingInfo_dict);
-    }
-
-    get container() {
-        return document.getElementById(this.container_id); }
-
-    get_tracking_data() {
-        this.io_controller_ref.get_tracking_data(
-            this.get_data_url,
-            this.show_tracking_data.bind(this));
-    }
-
-    make_tracking_list(trackingInfo_dic) {
+    make_tracking_list(trackingInfoDic) {
         var containerEle = this.container;
 
         var tableEle = document.createElement("table");
@@ -66,11 +49,32 @@ class TrackingList {
         tableEle.appendChild(tbodyEle);
         containerEle.appendChild(tableEle);
 
-        for (let id in trackingInfo_dic) {
-            let tracking_dic = trackingInfo_dic[id];
-            this.add_tracking_num(id, tracking_dic, true);
+        if (trackingInfoDic) {
+            for (let id in trackingInfoDic) {
+                let tracking_dic = trackingInfoDic[id];
+                this.add_tracking_num(id, tracking_dic, true);
+            }
         }
     }
+
+    get_tracking_data() {
+        this.io_controller_ref.get_tracking_data(
+            this.get_data_url,
+            this.show_tracking_data.bind(this));
+    }
+
+    show_tracking_data(trackingInfoDic) {
+        var that = this;
+
+        var container_element = that.container;
+        for (let id in trackingInfoDic) {
+            let tracking_dic = trackingInfoDic[id];
+            that.add_tracking_num(id, tracking_dic, true);
+        }
+    }
+
+    get container() {
+        return document.getElementById(this.container_id); }
 
     add_tracking_num(id, tracking_dic, addToTop = true) {
         var tbody = document.getElementById(this.tbody_id),
@@ -83,7 +87,6 @@ class TrackingList {
         } else {
             tbody.appendChild(tracking_tr);
         }
-        
     }
 
     create_heading_tr() {
@@ -139,11 +142,168 @@ class TrackingList {
         }
         return tr;
     }
-
+    
     remove_tracking_num(id) {
         var trElement = this.trackingNum_htmlElements[id],
             parentElement = trElement.parentElement;
 
         parentElement.removeChild(trElement);
+    }
+
+    clearList() {
+        var tbodyNode = document.getElementById(this.tbody_id);
+        while (tbodyNode.firstChild)
+            tbodyNode.removeChild(tbodyNode.firstChild);
+    }
+}
+
+class TypeInput {
+    // Class that handles that input for type.
+    // JS changes when additional types need to be added.
+    constructor(form, createAddButton = true, allStatus=false) {
+        this.selectId = "typeSelect";
+        this.input_container_id = "type-input-div";
+        this.addButton_container_id = "addTypeButton-span";
+
+        if (createAddButton)
+            this.addButton_img_url = addButton_img_url;
+
+        this._typesDict = {};
+        this.form = form;
+        this.allStatus = allStatus;
+
+        this.load(createAddButton);
+    }
+
+    load(createAddButton){
+        this.createAddTypeSelect();
+        
+        if (createAddButton) 
+            this.createAddButton();
+    }   
+
+    get io() {
+        return this.form.io;
+    }
+
+    addTypeWindow() {
+        var typeName = window.prompt(gettext("What type name would you like?"));
+        return typeName;
+    }
+
+    createAddTypeSelect() {
+        var that = this;
+        function create_select(types_dict) {
+            var input_container = that.get_input_container();
+
+            var domstring = '<select class="form-control" name="trackingType" id="' + that.selectId +'"></select>';
+            input_container.innerHTML = domstring;
+
+            var select_ele = input_container.firstChild
+
+            var type_name, option_ele, typeId;
+
+            for (type_name in types_dict) {
+                typeId = types_dict[type_name];
+                that.addTypeElement(typeId, type_name);
+            }
+
+            if (that.allStatus) {
+                that.addTypeElement("all", "All");
+            }
+        }
+
+        // get_tracking_types uses create_select for a response function in ajax.
+        this.get_tracking_types(create_select);
+        
+    }
+
+    createAddButton() {
+        /**
+         * Creates the add button, depending on addType status.
+         */
+        var addButton_container = this.get_addButton_container();
+        if (this.addType_status) {
+            var domstring = '<img id="add-type-button" class="icon-button" src="' + this.xButton_img_url + '" alt="x">';
+        } else {
+            var domstring = '<img id="add-type-button" class="icon-button" src="' + this.addButton_img_url + '" alt="+">';
+        }
+        addButton_container.innerHTML = domstring;
+        this.typeAddButtonHandler();
+    }
+
+    typeAddButtonHandler() {
+        var add_button = document.getElementById("add-type-button");
+        var that = this;
+        add_button.addEventListener("click", function(e){
+            that.makeType();
+        });
+    }
+
+    get_tracking_types(response_func) {
+        this.io.get_tracking_types(response_func);
+    }
+    
+    get_input_container() {
+        return document.getElementById(this.input_container_id); }
+    get_addButton_container() {
+        return document.getElementById(this.addButton_container_id); }
+
+    makeType() {
+        var typeName = this.addTypeWindow(),
+            that = this;
+        if (this.checkTypeName(typeName)) {
+            io.createType(typeName, function(responseDict) {
+                var infoDict = JSON.parse(responseDict);
+                var typeName = infoDict["typeName"],
+                    typeId = infoDict["typeId"];
+
+                that.addTypeElement(typeId, typeName);
+            });
+            
+        }
+    }   
+    checkTypeName(typeName) {
+    // Check if Tracking Type exists and if the name is valid.
+        // Check if  type name exists; if so, select it.
+        if (typeName in this._typesDict) {
+            this.selectType(this._typesDict[typeName], typeName);
+            return false;
+        }   
+
+        // Check if typeName is valid
+        if (typeName != null && typeName != "")
+            return true;
+    }
+
+    selectType(typeId, typeName) {
+        var selectElement = document.getElementById(this.selectId),
+            option, value;
+        
+        for (var i=0; i < selectElement.length; i++) {
+            option = selectElement[i];
+            value = option.value;
+            if (value == typeId) {
+                selectElement.selectedIndex = i;
+                return true;
+            }
+        }
+    }
+
+    addTypeElement(typeId, typeName, selectedStatus = true) {
+        // Add type to the html select. Also adds selected attribute
+        //  unless noted otherwise. Also, adds type to typesDict
+        var selectElement = document.getElementById(this.selectId);
+
+        this._typesDict[typeName] = typeId;
+
+        var optionElement = document.createElement("option");
+        optionElement.appendChild(document.createTextNode(typeName));
+        optionElement.setAttribute("value", typeId);
+        optionElement.setAttribute("selected", true);
+
+        selectElement.appendChild(optionElement);
+
+        selectElement.focus(optionElement);
     }
 }

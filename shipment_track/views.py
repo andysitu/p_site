@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
 from .models import Tracking_Number, TrackingType
+from django.db.models import Q
 
 def home(request):
     # Temp. View Function
@@ -36,15 +37,15 @@ def get_types_ajax(request):
     types_dict = TrackingType.get_types()
     return JsonResponse(types_dict, safe=False)
 
-def ajax_command(request):
+def postAjaxCommand(request):
     ajax_command = request.POST.get('ajax_command')
-    print(ajax_command)
 
     if ajax_command == "delete_tracking_num":
         tracking_id = request.POST.get("id")
         Tracking_Number.delete_by_id(tracking_id)
     elif ajax_command == "createTrackingType":
         typeName = request.POST.get("typeName")
+        
         t = TrackingType(name=typeName)
         t.save()
 
@@ -52,5 +53,27 @@ def ajax_command(request):
             "typeName": typeName,
             "typeId": t.pk,
         })
+    elif ajax_command == "getTrackingData":
+        data = searchData(request)
+        return data
 
     return JsonResponse({})
+
+def searchData(request):
+    dataObj = {}
+    filterStatus = False
+
+    trackingQuery = Tracking_Number.objects.get_queryset()
+
+    trackingTypeId = request.POST.get("trackingType")
+    if (trackingTypeId != "all"):
+        trackingQuery = trackingQuery.filter(tracking_type__id=trackingTypeId)
+        filterStatus = True
+
+    if (not filterStatus):
+        trackingQuery = trackingQuery.all()
+
+    for t in trackingQuery:
+        dataObj[t.id] = t.get_data_obj()
+
+    return JsonResponse(dataObj)

@@ -5,13 +5,12 @@
 
 {% block head %}
     <script type="text/javascript">
-        var addButton_img_url = "{% static 'shipment_track/img/iconic-plus.svg' %}",
-            xButton_img_url = "{% static 'shipment_track/img/x.svg' %}";
+        var addButton_img_url = "{% static 'shipment_track/img/iconic-plus.svg' %}";
 
         var submit_url = "{% url 'shipment_track:submit_tracking_ajax' %}",
             get_data_url = "{% url 'shipment_track:get_tracking_data_ajax' %}",
             get_types_url = "{% url 'shipment_track:get_types_ajax' %}",
-            ajax_command_url = "{% url 'shipment_track:ajax_command' %}";
+            postAjax_url = "{% url 'shipment_track:postAjaxCommand' %}";
     </script>
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
@@ -31,7 +30,6 @@
     </h1>
     {% csrf_token %}
     <form id="tracking-form" name="trackingForm">
-        
         <div class="form-row">
             <div id="type-div" class="form-group col-md-1">
                 <label for="typeSelect">{% trans "Type" %}</label> 
@@ -56,11 +54,9 @@
                 <input type="date" class="form-control">
             </div> -->
         </div>
-        <div class="form-row">
-            
-        </div>
+        
         <div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
         </div>
     </form>
     <div id="tracking-list-container"></div>
