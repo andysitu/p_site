@@ -10,11 +10,13 @@ class TrackingList {
 
         this.io_controller_ref = io_controller;
 
+        this.data = {};
         this.JS2Django_heading_map = {
             "Tracking Number": "tracking_number",
             "Options": "",
             "Input Date": "input_date",
             "Type": "typeName",
+            "Receive Date": "receive_date",  
         };
 
         this.load();
@@ -79,6 +81,8 @@ class TrackingList {
     add_tracking_num(id, tracking_dic, addToTop = true) {
         var tbody = document.getElementById(this.tbody_id),
             tracking_tr = this.create_tracking_tr(id,tracking_dic);
+        
+        this.data[id] = tracking_dic
 
         this.trackingNum_htmlElements[id] = tracking_tr;
 
@@ -151,9 +155,15 @@ class TrackingList {
     }
 
     clearList() {
+        this.data = {};
         var tbodyNode = document.getElementById(this.tbody_id);
         while (tbodyNode.firstChild)
             tbodyNode.removeChild(tbodyNode.firstChild);
+    }
+
+    createCSV(trackingInfoDic) {
+        var headerArr = Object.keys(this.JS2Django_heading_map);
+        console.log(headerArr);
     }
 }
 

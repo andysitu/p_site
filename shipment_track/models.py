@@ -46,13 +46,16 @@ class Tracking_Number(models.Model):
         o = {}
         o["id"] = self.pk
 
+        input_date = self.input_date.astimezone(timezone('America/Los_Angeles'))
+        inputDate_string = input_date.strftime("%Y-%m-%d %H:%M:%S %Z")
+        receive_date = self.receive_date.astimezone(timezone('America/Los_Angeles'))
+        receiveDate_string = receive_date.strftime("%Y-%m-%d %H:%M:%S %Z")
+
         o["tracking_number"] = self.number
-        # d - Datetime field
-        d = self.input_date.astimezone(timezone('America/Los_Angeles'))
-        date_string = d.strftime("%Y-%m-%d %H:%M:%S %Z")
-        o["input_date"] = date_string
         o["typeName"] = self.tracking_type.name
         o["typeId"] = self.tracking_type.pk
+        o["receive_date"] = receiveDate_string
+        o["input_date"] = inputDate_string
         return o
     
     @classmethod

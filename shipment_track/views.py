@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
 from .models import Tracking_Number, TrackingType
-from django.db.models import Q
+import datetime
 
 def home(request):
     # Temp. View Function
@@ -66,9 +66,30 @@ def searchData(request):
     trackingQuery = Tracking_Number.objects.get_queryset()
 
     trackingTypeId = request.POST.get("trackingType")
+
+    # Process dates, if they exist
+    startDate = request.POST.get("startDate")
+    if startDate:
+        parsed_stateDate = datetime.datetime.strptime(startDate, "%Y-%m-%d")
+
+    endDate = request.POST.get("endDate")
+    if endDate:
+        parsed_endDate = datetime.datetime.strptime(endDate, "%Y-%m-%d")
+
+    # Compare which date is later
+    if (startDate and endDate ) and parsed_stateDate > parsed_endDate:
+        tempDate = parsed_stateDate
+        parsed_stateDate = parsed_endDate
+        parsed_endDate = tempDate
+
     if (trackingTypeId != "all"):
         trackingQuery = trackingQuery.filter(tracking_type__id=trackingTypeId)
         filterStatus = True
+
+    if startDate:
+        trackingQuery = trackingQuery.filter(receive_date__gte=parsed_stateDate)
+    if endDate:
+        trackingQuery = trackingQuery.filter(receive_date__lte=parsed_endDate)
 
     if (not filterStatus):
         trackingQuery = trackingQuery.all()

@@ -20,10 +20,10 @@ class TrackingForm {
         /**
          * loads eventlistners, handlers
          */
-        this.addSubmitHandler();
+        this.addButtonHandlers();
     }
 
-    addSubmitHandler() {
+    addButtonHandlers() {
         let that = this;
         this.form.addEventListener("submit", function(e) {
             e.preventDefault();
@@ -82,6 +82,13 @@ var io = {
        
        this.tracking_form = new TrackingForm("tracking-form", this);
        this.tracking_list = new TrackingList("tracking-list-container", get_data_url, this);
+
+       var that = this;
+       var csvButton = document.getElementById("exportCSVButton");
+       csvButton.addEventListener("click", function(e) {
+           e.preventDefault();
+           that.tracking_list.createCSV();
+       });
     },
     delete: function(id) {
         var that = this;

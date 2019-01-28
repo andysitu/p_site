@@ -9,6 +9,13 @@ var io = {
         this.csrf_token = io.get_csrf();
         this.searchForm = new SearchForm("search-form", this);
         this.trackingList = new TrackingList("tracking-list-container", get_data_url, this);
+
+        var that = this;
+        var csvButton = document.getElementById("exportCSVButton");
+        csvButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            that.trackingList.createCSV();
+        });
     },
     get_csrf: function() {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];
@@ -31,6 +38,8 @@ var io = {
             var trackingNumId,
                 dataObj,
                 trackingNum_obj = JSON.parse(trackingNum_json);
+            
+            console.log(trackingNum_json);
 
             that.trackingList.clearList();
             for (trackingNumId in trackingNum_obj) {
@@ -52,6 +61,14 @@ class SearchForm {
         this.load();
     }
 
+    addButtonHandlers() {
+        var that = this;
+        this.form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            that.submitHandler(e);
+        });
+    }
+
     submitHandler(e) {
         e.preventDefault();
         var formData = this.getData();
@@ -59,12 +76,7 @@ class SearchForm {
     }
 
     load() {
-        //Add Submit Handler
-        var that = this;
-        this.form.addEventListener("submit", function(e) {
-            e.preventDefault();
-            that.submitHandler(e);
-        });
+        this.addButtonHandlers();
     }
 
     get io() {

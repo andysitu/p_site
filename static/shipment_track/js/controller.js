@@ -82,10 +82,6 @@ var controller = {
         });
     },
     postAjax: function(url, csrf, data){
-        for (var f of data.keys()) {
-            console.log(data.get(f));
-            console.log(f);
-        }
 
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest(); 
@@ -107,4 +103,7 @@ var controller = {
             req.send(data);
         });
     },
+    create_csv_file: function() {
+        
+    }
 };
