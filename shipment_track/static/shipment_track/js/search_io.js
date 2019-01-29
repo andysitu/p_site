@@ -51,6 +51,20 @@ var io = {
             console.log("error with submitting search form");
         });
     },
+    delete: function(id) {
+        var that = this;
+        var formData = new FormData();
+        formData.append("id", id);
+        formData.append("ajax_command", "delete_tracking_num");
+
+        controller.postAjax(
+            that.postAjax_url, this.csrf_token, formData
+        ).then(function(response) {
+            that.trackingList.remove_tracking_num(id);
+        }), function(error) {
+            console.log("Error with delete", error);
+        };
+    },
 };
 
 class SearchForm {

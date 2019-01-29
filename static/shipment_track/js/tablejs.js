@@ -10,7 +10,7 @@ class TrackingList {
 
         this.io_controller_ref = io_controller;
 
-        this.data = {};
+        this.trackingNumArr = [];
         this.JS2Django_heading_map = {
             "Tracking Number": "tracking_number",
             "Options": "",
@@ -20,6 +20,16 @@ class TrackingList {
         };
 
         this.load();
+    }
+
+    getHeaderMap(includeOptions=true) {
+        var o = {}
+        Object.assign(o, this.JS2Django_heading_map);
+        if (!includeOptions)
+            delete o["Options"];
+        console.log(o);
+
+        return o;
     }
 
     load() {
@@ -41,8 +51,8 @@ class TrackingList {
 
         tbodyEle.setAttribute("id", this.tbody_id);
 
-        var JS2Django_heading_map = this.JS2Django_heading_map,
-            th_list = Object.keys(JS2Django_heading_map);
+        var headerMap = this.getHeaderMap(),
+            th_list = Object.keys(headerMap);
 
         heading_tr = this.create_heading_tr();
         threadEle.appendChild(heading_tr);
@@ -82,7 +92,7 @@ class TrackingList {
         var tbody = document.getElementById(this.tbody_id),
             tracking_tr = this.create_tracking_tr(id,tracking_dic);
         
-        this.data[id] = tracking_dic
+        this.trackingNumArr.push(tracking_dic);
 
         this.trackingNum_htmlElements[id] = tracking_tr;
 
@@ -101,8 +111,8 @@ class TrackingList {
             return th;
         }
 
-        var JS2Django_heading_map = this.JS2Django_heading_map,
-            th_list = Object.keys(JS2Django_heading_map),
+        var headerMap = this.getHeaderMap(),
+            th_list = Object.keys(headerMap),
             tr, th;
 
         tr = document.createElement("tr");
@@ -113,8 +123,8 @@ class TrackingList {
         return tr;
     }
     create_tracking_tr(tracking_num_id, tracking_dic) {
-        var JS2Django_heading_map = this.JS2Django_heading_map,
-            th_list = Object.keys(JS2Django_heading_map);
+        var headerMap = this.getHeaderMap(),
+            th_list = Object.keys(headerMap);
             
         var tr = document.createElement("tr"),
             td;
@@ -124,13 +134,12 @@ class TrackingList {
             td = document.createElement("td");
             
             let heading_name = th_list[i];
-            let py_heading_name = JS2Django_heading_map[heading_name];
+            let py_heading_name = headerMap[heading_name];
             if (heading_name != "Options") {
                 value = tracking_dic[py_heading_name];
                 td.appendChild(document.createTextNode(value));
-            } else {
+            } else { // Add delete button
                 var close_button = document.createElement("a");
-
                 close_button.href="";
 
                 close_button.innerHTML = "&#10006";
@@ -155,15 +164,79 @@ class TrackingList {
     }
 
     clearList() {
-        this.data = {};
+        this.trackingNumArr = [];
         var tbodyNode = document.getElementById(this.tbody_id);
         while (tbodyNode.firstChild)
             tbodyNode.removeChild(tbodyNode.firstChild);
     }
 
     createCSV(trackingInfoDic) {
-        var headerArr = Object.keys(this.JS2Django_heading_map);
-        console.log(headerArr);
+        var fileName = window.prompt(gettext("What should the name of the CSV file be?"));
+        var headerMap = this.getHeaderMap(false),
+            headerMapValues = Object.values(headerMap),
+            headerArr = Object.keys(headerMap);
+        
+        var dataArr =[],
+            rowArr,
+            dataDict, headerKey;
+
+        // Convert tracking into array
+        for(var i=0; i<this.trackingNumArr.length; i++) {
+            rowArr = [];
+            dataDict = this.trackingNumArr[i];
+            for (var j =0; j < headerMapValues.length; j++) {
+                headerKey= headerMapValues[j];
+                rowArr.push(dataDict[headerKey]);
+            }
+            dataArr.push(rowArr);
+        }
+
+        function processRow(dataRow) {
+            var finalValue = '';
+            for (var i=0; i < dataRow.length; i++) {
+                var innerValue = dataRow[i]===null ? '' : dataRow[i].toString();
+                if (dataRow[i] instanceof Date) {
+                    innerValue = dataRow[i].toString();
+                }
+                var result = innerValue.replace(/"/g, '""'); // /g replaces entire string, not just first
+                if (result.search(/("|,|\n)/g) >=0)
+                    result = '"' + result + '"';
+                if (i > 0)
+                    finalValue += ",";
+                console.log(result);
+                finalValue += result;
+            }
+            console.log(finalValue);
+            return finalValue + '\n';
+        }
+        
+
+        var csvContent = '';
+        csvContent += processRow(headerArr);
+        for (var i = 0; i < dataArr.length; i++) {
+            csvContent += processRow(dataArr[i]);
+        }
+        var BOM = "\uFEFF";
+        csvContent += BOM;
+
+        console.log(csvContent);
+
+        var blob = new Blob([csvContent], { type:"text/csv;charset=utf-8" });
+        if (navigator.msSaveBlob) { // IO 10+
+            navigator.msSaveBlob(blob, fileName);
+        } else {
+            var link = document.createElement("a");
+            if (link.download != undefined) {
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", fileName + ".csv");
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
     }
 }
 
