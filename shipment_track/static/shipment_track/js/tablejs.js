@@ -27,8 +27,6 @@ class TrackingList {
         Object.assign(o, this.JS2Django_heading_map);
         if (!includeOptions)
             delete o["Options"];
-        console.log(o);
-
         return o;
     }
 
@@ -203,10 +201,8 @@ class TrackingList {
                     result = '"' + result + '"';
                 if (i > 0)
                     finalValue += ",";
-                console.log(result);
                 finalValue += result;
             }
-            console.log(finalValue);
             return finalValue + '\n';
         }
         
@@ -218,8 +214,6 @@ class TrackingList {
         }
         var BOM = "\uFEFF";
         csvContent += BOM;
-
-        console.log(csvContent);
 
         var blob = new Blob([csvContent], { type:"text/csv;charset=utf-8" });
         if (navigator.msSaveBlob) { // IO 10+

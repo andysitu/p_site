@@ -38,8 +38,6 @@ var io = {
             var trackingNumId,
                 dataObj,
                 trackingNum_obj = JSON.parse(trackingNum_json);
-            
-            console.log(trackingNum_json);
 
             that.trackingList.clearList();
             for (trackingNumId in trackingNum_obj) {

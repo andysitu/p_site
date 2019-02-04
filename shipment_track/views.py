@@ -56,8 +56,26 @@ def postAjaxCommand(request):
     elif ajax_command == "getTrackingData":
         data = searchData(request)
         return data
+    elif ajax_command == "getTodaysTrackingData":
+        data = todayAllData()
+        return data
 
     return JsonResponse({})
+
+def todayAllData():
+    dataObj = {}
+    trackingQuery = Tracking_Number.objects.get_queryset()
+    parsed_stateDate = datetime.datetime.utcnow().date()
+    parsed_endDate = datetime.datetime.utcnow().date()
+    parsed_endDate += datetime.timedelta(days=1)
+    
+    trackingQuery = trackingQuery.filter(receive_date__gte=parsed_stateDate)
+    trackingQuery = trackingQuery.filter(receive_date__lte=parsed_endDate)
+
+    for t in trackingQuery:
+        dataObj[t.id] = t.get_data_obj()
+
+    return JsonResponse(dataObj)
 
 def searchData(request):
     dataObj = {}
@@ -66,6 +84,10 @@ def searchData(request):
     trackingQuery = Tracking_Number.objects.get_queryset()
 
     trackingTypeId = request.POST.get("trackingType")
+    trackingNumber = request.POST.get("trackingNumber")
+
+    if (trackingNumber) and trackingNumber != "":
+        trackingQuery = trackingQuery.filter(number__icontains=trackingNumber)
 
     # Process dates, if they exist
     startDate = request.POST.get("startDate")
@@ -77,10 +99,15 @@ def searchData(request):
         parsed_endDate = datetime.datetime.strptime(endDate, "%Y-%m-%d")
 
     # Compare which date is later
-    if (startDate and endDate ) and parsed_stateDate > parsed_endDate:
-        tempDate = parsed_stateDate
-        parsed_stateDate = parsed_endDate
-        parsed_endDate = tempDate
+    if (startDate and endDate ):
+        if parsed_stateDate > parsed_endDate:
+            tempDate = parsed_stateDate
+            parsed_stateDate = parsed_endDate
+            parsed_endDate = tempDate
+        elif parsed_stateDate == parsed_endDate:
+            # If user wants to get just 1 day
+            parsed_endDate += datetime.timedelta(days=1)
+
 
     if (trackingTypeId != "all"):
         trackingQuery = trackingQuery.filter(tracking_type__id=trackingTypeId)

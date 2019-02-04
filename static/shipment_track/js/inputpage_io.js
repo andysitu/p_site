@@ -83,7 +83,8 @@ var io = {
        this.tracking_form = new TrackingForm("tracking-form", this);
        this.tracking_list = new TrackingList("tracking-list-container", get_data_url, this);
 
-       var that = this;
+       this.showTodayData();
+
        var csvButton = document.getElementById("exportCSVButton");
        csvButton.addEventListener("click", function(e) {
            e.preventDefault();
@@ -136,6 +137,28 @@ var io = {
     },
     get_tracking_data: function(get_data_url, response_func) {
         controller.get_tracking_data(get_data_url, response_func);
+    },
+    showTodayData: function() {
+        formData = new FormData();
+        formData.append("ajax_command", "getTodaysTrackingData");
+        var that = this;
+
+        controller.postAjax(
+            this.postAjax_url, this.csrf_token, formData
+        ).then(function(trackingNum_json) {
+            var trackingNumId,
+                dataObj,
+                trackingNum_obj = JSON.parse(trackingNum_json);
+
+            that.tracking_list.clearList();
+            for (trackingNumId in trackingNum_obj) {
+                dataObj = trackingNum_obj[trackingNumId]
+                that.trackingList.add_tracking_num(trackingNumId, dataObj, true);
+            }
+            
+        }, function(error) {
+            console.log("error with submitting search form");
+        });
     },
 };
 
