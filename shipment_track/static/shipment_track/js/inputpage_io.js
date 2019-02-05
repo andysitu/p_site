@@ -149,11 +149,12 @@ var io = {
             var trackingNumId,
                 dataObj,
                 trackingNum_obj = JSON.parse(trackingNum_json);
+            
 
             that.tracking_list.clearList();
             for (trackingNumId in trackingNum_obj) {
                 dataObj = trackingNum_obj[trackingNumId]
-                that.trackingList.add_tracking_num(trackingNumId, dataObj, true);
+                that.tracking_list.add_tracking_num(trackingNumId, dataObj, true);
             }
             
         }, function(error) {
