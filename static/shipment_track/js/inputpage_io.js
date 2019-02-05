@@ -146,7 +146,7 @@ var io = {
         function response_func(data) {
             console.log(data);
             that.tracking_list.add_tracking_num(data.id, data, true);
-            that.beep(75, 500, 200);
+            that.beep(100, 500, 200);
 
         }
         controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);
