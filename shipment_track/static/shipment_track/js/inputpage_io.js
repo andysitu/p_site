@@ -72,6 +72,9 @@ var io = {
     csrf_token: null,
     tracking_form: null,
     tracking_list: null,
+
+    audioContext: null,
+
     // Handles input and output of data & EventListeners
     load: function() {
         /**
@@ -79,6 +82,7 @@ var io = {
          *  & interactions with form    
         */
        this.csrf_token = io.get_csrf();
+       this.audioContext = new AudioContext();
        
        this.tracking_form = new TrackingForm("tracking-form", this);
        this.tracking_list = new TrackingList("tracking-list-container", get_data_url, this);
@@ -120,6 +124,19 @@ var io = {
             console.log("error with createType", error);
         });
     },
+    beep: function(vol, freq, duration) {
+        var audioContext = this.audioContext;
+        var oscillator = audioContext.createOscillator(),
+            gain = audioContext.createGain();
+        
+        oscillator.connect(gain);
+        oscillator.frequency.value = freq;
+        oscillator.type = "square";
+        gain.connect(audioContext.destination);
+        gain.gain.value = vol*0.01;
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime+duration*0.001);
+    },
     get_csrf: function() {
         var csrf_input = document.getElementsByName('csrfmiddlewaretoken')[0];
         return csrf_input.value;
@@ -129,6 +146,8 @@ var io = {
         function response_func(data) {
             console.log(data);
             that.tracking_list.add_tracking_num(data.id, data, true);
+            that.beep(75, 500, 200);
+
         }
         controller.submit_tracking_data(this.submit_url, this.csrf_token, form_data, response_func);
     },
