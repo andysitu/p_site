@@ -17,7 +17,7 @@ class TrackingType(models.Model):
 
 
 class Tracking_Number(models.Model):
-    number = models.CharField(max_length=25)
+    number = models.CharField(max_length=50)
     input_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     receive_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     tracking_type =  models.ForeignKey(TrackingType, on_delete=models.CASCADE, blank=True, null=True)
