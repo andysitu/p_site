@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 
 from .models import Tracking_Number, TrackingType
 import datetime
+import json
 
 def home(request):
     # Temp. View Function
@@ -16,6 +17,13 @@ def search_page(request):
     return render(
         request,
         'shipment_track/search_tracking.html',
+        {}
+    )
+
+def upload_page(request):
+    return render(
+        request,
+        "shipment_track/upload.html",
         {}
     )
 
@@ -48,7 +56,6 @@ def postAjaxCommand(request):
         
         t = TrackingType(name=typeName)
         t.save()
-
         return JsonResponse({
             "typeName": typeName,
             "typeId": t.pk,
@@ -59,6 +66,8 @@ def postAjaxCommand(request):
     elif ajax_command == "getTodaysTrackingData":
         data = todayAllData()
         return data
+    elif ajax_command == "uploadEntries":
+        uploadEntries(request)
 
     return JsonResponse({})
 
@@ -76,6 +85,30 @@ def todayAllData():
         dataObj[t.id] = t.get_data_obj()
 
     return JsonResponse(dataObj)
+
+def uploadEntries(request):
+    entriesJsonArr = request.POST.get("entriesJsonArr")
+    entriesArr = json.loads(entriesJsonArr)
+    for i in range(0, len(entriesArr)):
+        entryObj = entriesArr[i]
+        
+        trackingTypeID = entryObj["trackingTypeID"]
+
+        trackingNum = entryObj["trackingNum"]
+        receiveDateObj = entryObj["receiveDateObj"]
+        year = int(receiveDateObj["year"])
+        day = int(receiveDateObj["day"])
+        month = int(receiveDateObj["month"])
+        receive_date = datetime.datetime(year, month, day, 9, 0)
+
+        tracking_type = TrackingType.objects.get(id = trackingTypeID)
+        t = Tracking_Number(
+            number = trackingNum,
+            receive_date = receive_date,
+            tracking_type = tracking_type,
+        )
+        t.save()
+
 
 def searchData(request):
     dataObj = {}

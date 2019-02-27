@@ -19,7 +19,7 @@ class TrackingType(models.Model):
 class Tracking_Number(models.Model):
     number = models.CharField(max_length=50)
     input_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    receive_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    receive_date = models.DateTimeField(default=datetime.now, blank=True, )
     tracking_type =  models.ForeignKey(TrackingType, on_delete=models.CASCADE, blank=True, null=True)
     note = models.TextField()
 
@@ -29,6 +29,8 @@ class Tracking_Number(models.Model):
         tracking_type_id = tracking_info_dic["tracking_type_id"]
         typeName = tracking_info_dic["typeName"]
         note = tracking_info_dic["note"]
+
+        print(tracking_type_id)
 
         try:
             tracking_type = TrackingType.objects.get(id = tracking_type_id)
@@ -48,7 +50,7 @@ class Tracking_Number(models.Model):
 
         input_date = self.input_date.astimezone(timezone('America/Los_Angeles'))
         inputDate_string = input_date.strftime("%Y-%m-%d %H:%M:%S %Z")
-        receive_date = self.receive_date.astimezone(timezone('America/Los_Angeles'))
+        receive_date = self.receive_date
         receiveDate_string = receive_date.strftime("%Y-%m-%d %H:%M:%S %Z")
 
         o["tracking_number"] = self.number

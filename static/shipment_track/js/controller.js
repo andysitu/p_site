@@ -103,7 +103,4 @@ var controller = {
             req.send(data);
         });
     },
-    create_csv_file: function() {
-        
-    }
 };

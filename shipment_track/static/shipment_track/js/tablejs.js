@@ -39,7 +39,7 @@ class TrackingList {
 
         var tableEle = document.createElement("table");
         
-        // tableEle.classList.add("table");
+        tableEle.classList.add("table");
         tableEle.classList.add("table-hover");
 
         var threadEle = document.createElement("thead"),
@@ -106,17 +106,21 @@ class TrackingList {
             let th = document.createElement("th");
             th.setAttribute("scope", "col");
             th.appendChild(document.createTextNode(text));
+
             return th;
         }
 
         var headerMap = this.getHeaderMap(),
             th_list = Object.keys(headerMap),
-            tr, th;
+            tr, th,
+            headerName;
 
         tr = document.createElement("tr");
         for (let i = 0; i < th_list.length; i++) {
+            headerName = th_list[i];
+            th = create_th(th_list[i]);
+            tr.appendChild(th);
 
-            tr.appendChild( create_th(th_list[i]) );
         }
         return tr;
     }
@@ -199,6 +203,7 @@ class TrackingList {
                 var result = innerValue.replace(/"/g, '""'); // /g replaces entire string, not just first
                 if (result.search(/("|,|\n)/g) >=0)
                     result = '"' + result + '"';
+                // finalValue += String.fromCharCode(9);
                 if (i > 0)
                     finalValue += ",";
                 finalValue += result;

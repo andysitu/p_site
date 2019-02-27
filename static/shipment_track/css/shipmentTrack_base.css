@@ -33,7 +33,12 @@ table tbody
    height: 600px;
 }
 
+thead tr:first-child, tbody tr:first-child {
+    width: 400px;
+}
+
 thead th, tbody td {
     width: 240px;
     text-align: left;
 }
+

@@ -1,0 +1,38 @@
+{% extends 'shipment_track/shipment_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript">
+    var postAjax_url = "{% url 'shipment_track:postAjaxCommand' %}",
+        get_types_url = "{% url 'shipment_track:get_types_ajax' %}";
+</script>
+<script type="text/javascript" src="{% static 'shipment_track/js/controller.js' %}"></script>
+<script type="text/javascript" src="{% static 'shipment_track/js/uploadpage_io.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'shipment_track/js/tablejs.js' %}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1>
+        {% trans "Upload File" %}
+    </h1>
+    <form id="uploadForm">
+        <div class="form-group">
+            <label for="">{% trans "Upload File" %}</label>
+            <input type="file" id="fileInput" accept=".csv" multiple>
+        </div>
+        <div id="type-div" class="form-group col-md-2">
+            <label for="typeSelect">{% trans "Type" %}</label> 
+            <span id="addTypeButton-span"></span>
+            <div id="type-input-div">
+                <select class="form-control" name="trackingType" id="typeSelect"></select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+    </form>
+</div>
+{% endblock %}

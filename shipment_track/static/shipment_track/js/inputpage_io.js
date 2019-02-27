@@ -143,6 +143,7 @@ var io = {
     },
     submit_tracking_data: function(form_data) {
         var that = this;
+        console.log(form_data.get("trackingNumber"), form_data.get("trackingType"));
         function response_func(data) {
             console.log(data);
             that.tracking_list.add_tracking_num(data.id, data, true);
