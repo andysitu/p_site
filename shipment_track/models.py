@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
-from pytz import timezone
+import pytz
+from django.utils import timezone
 
 # Create your models here.
 class TrackingType(models.Model):
@@ -19,7 +20,7 @@ class TrackingType(models.Model):
 class Tracking_Number(models.Model):
     number = models.CharField(max_length=50)
     input_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    receive_date = models.DateTimeField(default=datetime.now, blank=True, )
+    receive_date = models.DateTimeField(default=timezone.now, blank=True, )
     tracking_type =  models.ForeignKey(TrackingType, on_delete=models.CASCADE, blank=True, null=True)
     note = models.TextField()
 
@@ -48,9 +49,9 @@ class Tracking_Number(models.Model):
         o = {}
         o["id"] = self.pk
 
-        input_date = self.input_date.astimezone(timezone('America/Los_Angeles'))
+        input_date = self.input_date.astimezone(pytz.timezone('America/Los_Angeles'))
         inputDate_string = input_date.strftime("%Y-%m-%d %H:%M:%S %Z")
-        receive_date = self.receive_date
+        receive_date = self.receive_date.astimezone(pytz.timezone('America/Los_Angeles'))
         receiveDate_string = receive_date.strftime("%Y-%m-%d %H:%M:%S %Z")
 
         o["tracking_number"] = self.number
