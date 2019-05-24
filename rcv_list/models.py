@@ -41,10 +41,19 @@ class RCV(models.Model):
 
         re_results = re.search(rcv_re, rcv_number)
         print(re_results)
-        if re_results != None:
-            year = int('20' + re_results.group(2))
-            month = int(re_results.group(3))
-            day = int(re_results.group(4))
+
+        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{3,})')
+
+        ic_results = re.search(ic_re,rcv_number)
+        if re_results != None or ic_results != None:
+            if re_results != None:
+                year = int('20' + re_results.group(2))
+                month = int(re_results.group(3))
+                day = int(re_results.group(4))
+            if ic_results != None:
+                year = int('20' +ic_results.group(3))
+                month = int(ic_results.group(4))
+                day = int(ic_results.group(5))
 
             d = datetime.date(year, month, day)
 

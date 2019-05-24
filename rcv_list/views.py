@@ -95,7 +95,21 @@ def get_date_from_rcvname(rcv_num):
         d = datetime.date(year, month, day)
         return d
     else:
-        return None
+        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{3,})')
+
+        ic_results = re.search(ic_re,text)
+        if ic_results != None:
+            rcv_number = ic_results.group(0)
+            rcv_title = ic_results.group(1)
+            customer_code = ic_results.group(2)
+            year = int('20' +ic_results.group(3))
+            month = int(ic_results.group(4))
+            day = int(ic_results.group(5))
+            number = int(ic_results.group(6))
+            d = datetime.date(year, month, day)
+            return d
+        else:
+            return None
 
 def view_dates(request):
     year_dic = {}
@@ -223,6 +237,7 @@ def upload_files(request):
 
         if rcv_batchform.is_valid():
             folder_name = get_foldername()
+
             rcv_re = re.compile('(RCV|RECV)(\d{2})(\d{2})(\d{2})-\d{4}')
 
             for file in request.FILES.getlist('rcv_batchfile'):
@@ -238,7 +253,11 @@ def upload_files(request):
                     year = None
                     month = None
                     day = None
+                    rcv_number = None
+                    filename = None
 
+                    
+                    # search for RCV
                     re_results = re.search(rcv_re, text)
                     # print(re_results)
                     if re_results != None:
@@ -248,15 +267,29 @@ def upload_files(request):
                         month = int(re_results.group(3))
                         day = int(re_results.group(4))
                     else:
-                        d = datetime.datetime.now()
-                        d_year = str(d.year)
-                        d_month = str(d.month)
-                        d_day = str(d.day)
-                        d_hour = str(d.hour)
-                        d_min = str(d.minute)
-                        d_sec = str(d.second)
-                        d_microsec = str(d.microsecond)
-                        rcv_number = '00' + d_year + d_month + d_day + d_hour + d_min + d_sec + d_microsec
+                        # Search for IC
+                        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{3,})')
+
+                        ic_results = re.search(ic_re,text)
+
+                        if ic_results != None:
+                            rcv_number = ic_results.group(0)
+                            rcv_title = ic_results.group(1)
+                            customer_code = ic_results.group(2)
+                            year = int('20' +ic_results.group(3))
+                            month = int(ic_results.group(4))
+                            day = int(ic_results.group(5))
+                            number = int(ic_results.group(6))
+                        else:
+                            d = datetime.datetime.now()
+                            d_year = str(d.year)
+                            d_month = str(d.month)
+                            d_day = str(d.day)
+                            d_hour = str(d.hour)
+                            d_min = str(d.minute)
+                            d_sec = str(d.second)
+                            d_microsec = str(d.microsecond)
+                            rcv_number = '00' + d_year + d_month + d_day + d_hour + d_min + d_sec + d_microsec
 
                     if request.POST.get("input_date_status") == "on":
                         input_date = request.POST.get("input_date")
