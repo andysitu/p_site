@@ -42,7 +42,7 @@ class RCV(models.Model):
         re_results = re.search(rcv_re, rcv_number)
         print(re_results)
 
-        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{3,})')
+        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{2,})')
 
         ic_results = re.search(ic_re,rcv_number)
         if re_results != None or ic_results != None:
