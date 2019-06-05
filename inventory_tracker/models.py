@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 
-
 # Vendors that items were purchased from
 class Vendor(models.Model):
     name = models.CharField(max_length=50)
@@ -10,7 +9,6 @@ class Vendor(models.Model):
 # Item type category for the items
 class ItemType(models.Model):
     name = models.CharField(max_length=20)
-
 
 # Item that make up a purchase.
 # Ctaonsin Vendor and ItemType

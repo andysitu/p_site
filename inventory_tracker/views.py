@@ -20,3 +20,31 @@ def create_inv(request):
         'inventory_tracker/create_inv.html',
         context={},
     )
+
+def view_payment(request):
+    return render(
+        request,
+        'inventory_tracker/create_inv.html',
+        context={},
+    )
+
+def view_vendor(request):
+    return render(
+        request,
+        'inventory_tracker/create_inv.html',
+        context={},
+    )
+
+def view_itemtype(request):
+    return render(
+        request,
+        'inventory_tracker/create_inv.html',
+        context={},
+    )
+
+def view_dept(request):
+    return render(
+        request,
+        'inventory_tracker/create_inv.html',
+        context={},
+    )
