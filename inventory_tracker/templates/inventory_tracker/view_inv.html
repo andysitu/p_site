@@ -1,0 +1,19 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+
+
+<div id='inventory-container'>
+    {% if purchases %}
+
+    {% for purchase in purchases %}
+    <div>{{ purchase.order_num }}</div>
+    {% endfor %}
+
+    {% endif %}
+</div>
+
+{% endblock %}

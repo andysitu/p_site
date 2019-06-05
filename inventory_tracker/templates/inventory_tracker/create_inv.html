@@ -1,0 +1,60 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src={% static 'inventory_tracker/js/create_inv.js' %}></script> 
+{% endblock %}
+
+{% block body %}
+<form id="create-inv-form">
+    <div class="form-group row">
+        <label for="order-num-input" class="col-sm-2 col-lg-1 col-form-label">Order Number</label>
+        <div class="col-sm-4 col-lg-2">
+            <input type="text" class="form-control" id="order-num-input" name="orderNum">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="total-input" class="col-sm-2 col-lg-1 col-form-label">Total</label>
+        <div class="col-sm-4 col-lg-2 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend">$</span>
+            </div>
+            <input type="number" class="form-control" id="total-input" name="total">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="purchase-date-input" class="col-sm-2 col-lg-1 col-form-label">Order Number</label>
+        <div class="col-sm-4 col-lg-2">
+            <input type="date" class="form-control" id="purchase-date-input" name="purchaseDate">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="invoice-input" class="col-sm-2 col-lg-1 col-form-label">Invoice</label>
+        <div class="col-sm-5 col-lg-3">
+            <input type="file" class="custom-fil-input" id="invoice-input">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="payment-select" class="col-sm-2 col-lg-1 col-form-label">Payment</label>
+        <div class="col-sm-4 col-lg-2">
+            <select class="custom-select" id="payment-select" name="payment"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="vendor-select" class="col-sm-2 col-lg-1 col-form-label">Vendor</label>
+        <div class="col-sm-4 col-lg-2">
+            <select class="custom-select" id="vendor-select" name="vendor"></select>
+        </div>
+    </div>
+    
+    <button type="button" class="btn btn-secondary" id="add-item-button">Add Item</button>
+
+    <div id="items-container"></div>
+</form>
+{% endblock %}
