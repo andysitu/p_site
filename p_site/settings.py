@@ -39,6 +39,7 @@ ALLOWED_HOSTS = [   '127.0.0.1',
 # Application definition
 
 INSTALLED_APPS = [
+    'inventory_tracker.apps.InventoryTrackerConfig',
     'help.apps.HelpConfig',
     'customs_list.apps.CustomsListConfig',
     'warehouse_viewer.apps.WarehouseViewerConfig',
