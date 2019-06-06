@@ -1,0 +1,28 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src={% static 'inventory_tracker/js/inv_vendor.js' %}></script>
+<script type="text/javascript">
+    var get_vendor_url = "{% url 'inventory_tracker:get_vendor_ajax' %}",
+        submit_vendor_url = "{% url 'inventory_tracker:submit_vendor_ajax' %}";
+</script>
+{% endblock %}
+
+{% block body %}
+{% csrf_token %}
+<button type="button" class="btn btn-secondary" id="addVendor-button">Add Vendor</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Vendor Name</th>
+            <th scope="col">Vendor URL</th>
+        </tr>
+    </thead>
+    <tbody id="vendor-tbody"></tbody>
+</table>
+{% endblock %}

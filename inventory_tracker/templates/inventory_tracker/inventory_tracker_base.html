@@ -11,6 +11,8 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+    <script type="text/javascript" src={% static 'inventory_tracker/js/inv_ajax.js' %}></script>
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -26,7 +28,6 @@
                 <a class="nav-link" href="{% url 'inventory_tracker:create-inv' %}">Create</a>
                 <a class="nav-link" href="{% url 'inventory_tracker:view-payment' %}">Payment</a>
                 <a class="nav-link" href="{% url 'inventory_tracker:view-vendor' %}">Vendors</a>
-                <a class="nav-link" href="{% url 'inventory_tracker:view-itemtype' %}">Item Type</a>
                 <a class="nav-link" href="{% url 'inventory_tracker:view-dept' %}">Departments</a>
             </div>
         </div>

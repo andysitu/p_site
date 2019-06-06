@@ -1,0 +1,27 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src={% static 'inventory_tracker/js/inv_payment.js' %}></script>
+<script type="text/javascript">
+    var get_payment_url = "{% url 'inventory_tracker:get-payment-ajax' %}",
+        submit_payment_url = "{% url 'inventory_tracker:submit-payment-ajax' %}";
+</script>
+{% endblock %}
+
+{% block body %}
+{% csrf_token %}
+<button type="button" class="btn btn-secondary" id="addPayment-button">Add Payment</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Payment Name</th>
+        </tr>
+    </thead>
+    <tbody id="payment-tbody"></tbody>
+</table>
+{% endblock %}

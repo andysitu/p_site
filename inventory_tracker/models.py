@@ -4,11 +4,7 @@ from datetime import datetime
 # Vendors that items were purchased from
 class Vendor(models.Model):
     name = models.CharField(max_length=50)
-    website = models.TextField()
-
-# Item type category for the items
-class ItemType(models.Model):
-    name = models.CharField(max_length=20)
+    url = models.TextField()
 
 # Item that make up a purchase.
 # Ctaonsin Vendor and ItemType
@@ -17,8 +13,7 @@ class Item(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=11)
     quantity = models.IntegerField()
     note = models.TextField()
-
-    item_type = models.ForeignKey(ItemType, on_delete=models.CASCADE)
+    itemType = models.TextField(blank=True, null=True)
 
 # Payment for each purchase. Might be changed later for actual payment types
 class Payment(models.Model):

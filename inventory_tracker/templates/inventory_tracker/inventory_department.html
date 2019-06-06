@@ -1,0 +1,28 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+<script type="text/javascript" src={% static 'inventory_tracker/js/inv_department.js' %}></script>
+<script type="text/javascript">
+    var get_department_url = "{% url 'inventory_tracker:get_department_ajax' %}",
+        submit_department_url = "{% url 'inventory_tracker:submit_department_ajax' %}";
+</script>
+{% endblock %}
+
+{% block body %}
+{% csrf_token %}
+<button type="button" class="btn btn-secondary" id="addDept-button">Add Department</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Department Name</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+    <tbody id="department-tbody"></tbody>
+</table>
+{% endblock %}

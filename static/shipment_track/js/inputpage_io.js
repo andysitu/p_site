@@ -159,7 +159,7 @@ var io = {
         controller.get_tracking_data(get_data_url, response_func);
     },
     showTodayData: function() {
-        formData = new FormData();
+        var formData = new FormData();
         formData.append("ajax_command", "getTodaysTrackingData");
         var that = this;
 

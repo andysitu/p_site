@@ -1,3 +1,21 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+admin.site.register(Payment, PaymentAdmin)
+    
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name','itemType',)
+
+admin.site.register(Item, ItemAdmin)
+
+class VendorAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+admin.site.register(Vendor, VendorAdmin)
+
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'location')
+
+admin.site.register(Department, DepartmentAdmin)
