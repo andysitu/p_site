@@ -7,20 +7,24 @@
 <script type="text/javascript" src={% static 'inventory_tracker/js/create_inv.js' %}></script> 
 <link rel="stylesheet" type="text/css" href="{% static 'inventory_tracker/css/create_inv.css' %}">
 
+<script type="text/javascript" src={% static 'inventory_tracker/js/inv_ajax.js' %}></script> 
+
 <script>
     var get_payment_url = "{% url 'inventory_tracker:get-payment-ajax' %}",
         get_vendor_url = "{% url 'inventory_tracker:get_vendor_ajax' %}",
-        get_department_url = "{% url 'inventory_tracker:get_department_ajax' %}";
+        get_department_url = "{% url 'inventory_tracker:get_department_ajax' %}",
+        create_item_url = "{% url 'inventory_tracker:create_item_ajax' %}";
 </script>
 {% endblock %}
 
 {% block body %}
-{% csrf_token %}
-<form id="create-inv-form">
+
+<form id="create-inv-form" method="POST" action="{% url 'inventory_tracker:create_item_ajax' %}" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-2">
             <label for="order-num-input">Order Number</label>
-            <input type="text" class="form-control" id="order-num-input" name="orderNum">
+            <input type="text" class="form-control" id="order-num-input" name="orderNum" required>
         </div>
 
         <div class="form-group col-md-2">
@@ -29,30 +33,30 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend">$</span>
                 </div>
-                <input type="number" class="form-control" id="total-input" name="total">
+                <input type="number" class="form-control" id="total-input" name="total" required>
             </div>
         </div>
 
         <div class="form-group col-md-2">
             <label for="purchase-date-input" class="">Purchase Date</label>
-            <input type="date" class="form-control" id="purchase-date-input" name="purchaseDate">
+            <input type="date" class="form-control" id="purchase-date-input" name="purchaseDate" required>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="form-group col-md-2">
             <label for="payment-select" class="col-sm-2 col-lg-1 col-form-label">Payment</label>
-            <select class="custom-select" id="payment-select" name="payment"></select>
+            <select class="custom-select" id="payment-select" name="payment" required></select>
         </div>
         
         <div class="form-group col-md-2">
             <label for="vendor-select" class="col-sm-2 col-lg-1 col-form-label">Vendor</label>
-            <select class="custom-select" id="vendor-select" name="vendor"></select>
+            <select class="custom-select" id="vendor-select" name="vendor" required></select>
         </div>
 
         <div class="form-group col-md-2">
                 <label for="department-select" class="col-sm-2 col-lg-1 col-form-label">Department</label>
-                <select class="custom-select" id="department-select" name="vendor"></select>
+                <select class="custom-select" id="department-select" name="department" required></select>
             </div>
         
     </div>
@@ -60,13 +64,16 @@
     <div class="form-group row">
         <label for="invoice-input" class="col-sm-2 col-lg-1 col-form-label">Invoice</label>
         <div class="col-sm-5 col-lg-3">
-            <input type="file" class="custom-fil-input" id="invoice-input">
+            <input type="file" class="custom-fil-input" id="invoice-input" name="invoiceFile">
         </div>
     </div>
+
+    <input id="num-items-input" name="numItems" hidden value=0>
 
     <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
     <br><br>
     <button type="button" class="btn btn-secondary" id="add-item-button">Add Item</button>
+    <button type="button" class="btn btn-secondary" id="del-item-button">Remove Item</button>
 
     <table id="items-table" class="table">
         <thead>

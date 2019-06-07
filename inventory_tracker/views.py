@@ -3,6 +3,10 @@ from django.http import HttpResponse, JsonResponse
 
 from .models import *
 
+from decimal import Decimal
+from datetime import date
+from .forms import UploadFileForm
+
 def index(request):
     purchase_q = Purchase.objects.all()
     return render(
@@ -103,3 +107,55 @@ def submit_department_ajax(request):
     d.save()
 
     return JsonResponse({})
+
+def create_item_ajax(request):
+    order_num = request.POST.get("orderNum")
+    total = Decimal(request.POST.get("total"))
+    purchase_date_str = request.POST.get("purchaseDate")
+    payment_id = int(request.POST.get("payment"))
+    vendor_id = int(request.POST.get("vendor"))
+    department_id = int(request.POST.get("department"))
+
+    numItems = int(request.POST.get("numItems"))
+
+    
+
+    purchase_date = purchase_date_str.split("-")
+    year = int(purchase_date[0])
+    month = int(purchase_date[1])
+    day = int(purchase_date[2])
+
+    d = date(year=year, month=month, day=day)
+
+    payment = Payment.objects.get(id=payment_id)
+    vendor = Vendor.objects.get(id=vendor_id)
+    department = Department.objects.get(id=department_id)
+    
+    p = Purchase()
+    p.purchase_date = d
+    p.order_num = order_num
+    p.total = total
+    p.vendor = vendor
+    p.department = department
+    p.payment = payment
+    if (request.FILES.get("invoiceFile", False)):
+        p.invoice = request.FILES["invoiceFile"]
+    p.save()
+    
+    for x in range(1, numItems+1):
+        item_name = request.POST.get("itemName-" + str(x))
+        amount = Decimal(request.POST.get("itemAmount-" + str(x)))
+        quantity = int(request.POST.get("itemQuantity-" + str(x)))
+        item_type = request.POST.get("itemType-" + str(x))
+        item_note = request.POST.get("itemNote-" + str(x))
+
+        i = Item(name=item_name, amount = amount, 
+            quantity=quantity, note = item_note, itemType=item_type)
+        i.save()
+        print(i.pk)
+        i_id = i.pk
+        p.items.add(i_id)
+        p.save()
+    
+
+    return create_inv(request)

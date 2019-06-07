@@ -19,3 +19,8 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'location')
 
 admin.site.register(Department, DepartmentAdmin)
+
+class PurchaseAdmin(admin.ModelAdmin):
+    list_display = ('order_num', 'invoice')
+
+admin.site.register(Purchase, PurchaseAdmin)
