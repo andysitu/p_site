@@ -9,6 +9,7 @@ from .forms import UploadFileForm
 
 def index(request):
     purchase_q = Purchase.objects.all()
+
     return render(
         request,
         'inventory_tracker/view_inv.html',
@@ -154,8 +155,49 @@ def create_item_ajax(request):
         i.save()
         print(i.pk)
         i_id = i.pk
-        p.items.add(i_id)
+        p.item_set.add(i)
         p.save()
-    
 
     return create_inv(request)
+
+def search_inv_ajax(request):
+    start_date = request.POST.get("start_date")
+    end_date = request.POST.get("end_date")
+
+    purchase_q = Purchase.objects.filter(purchase_date__range=[start_date, end_date])
+
+    purchase_objs = {}
+    for p in purchase_q:
+        purchase_obj = {}
+        purchase_obj["id"] = p.pk
+        purchase_obj["order_num"] = p.order_num
+        purchase_obj["purchase_date"] = p.purchase_date
+        purchase_obj["total"] = p.total
+        purchase_obj["payment"] = p.payment.name
+        purchase_obj["vendor"] = p.vendor.name
+        purchase_obj["department"] = p.department.name
+        purchase_obj["location"] = p.department.location
+        
+        if p.invoice:
+            purchase_obj["invoice"] = p.invoice.path
+        purchase_obj["items"] = {}
+        
+        for i in p.item_set.all():
+            item_obj = {}
+            item_obj["name"] = i.name
+            item_obj["amount"] = i.amount
+            item_obj["quantity"] = i.quantity
+            item_obj["note"] = i.note
+            item_obj["item_type"] = i.itemType
+            purchase_obj["items"][i.pk] = item_obj
+        purchase_objs[p.pk] = purchase_obj
+    return JsonResponse(purchase_objs)
+
+def download_invoice_ajax(request):
+    purchase_id = request.POST.get("purchase_id")
+    purchase = Purchase.objects.get(id=purchase_id)
+    filename = purchase.invoice.name.split('/')[-1]
+    print(filename)
+    response = HttpResponse(purchase.invoice, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response

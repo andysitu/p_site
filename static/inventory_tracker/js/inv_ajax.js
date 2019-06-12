@@ -17,11 +17,14 @@ var inv_ajax = {
             req.send();
         });
     },
-    postAjax: function(url, csrf, data){
+    postAjax: function(url, csrf, data, set_arraybuffer=false){
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest(); 
             req.open('POST', url, true);
             req.setRequestHeader('X-CSRFToken', csrf);
+
+            if (set_arraybuffer)
+                req.responseType = 'arraybuffer';
     
             req.onload = function() {
                 if (req.status == 200) {

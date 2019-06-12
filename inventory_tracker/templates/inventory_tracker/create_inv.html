@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block head %}
-<script type="text/javascript" src={% static 'inventory_tracker/js/create_inv.js' %}></script> 
+<script type="text/javascript" src={% static 'inventory_tracker/js/create_inv.js' %}></script>
 <link rel="stylesheet" type="text/css" href="{% static 'inventory_tracker/css/create_inv.css' %}">
 
 <script type="text/javascript" src={% static 'inventory_tracker/js/inv_ajax.js' %}></script> 
@@ -33,7 +33,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend">$</span>
                 </div>
-                <input type="number" class="form-control" id="total-input" name="total" required>
+                <input type="number" class="form-control" id="total-input" name="total" step ="0.01" required>
             </div>
         </div>
 

@@ -2,18 +2,52 @@
 
 {% load i18n %}
 {% load static %}
+{% block head %}
+<script type="text/javascript" src={% static 'inventory_tracker/js/search_inv.js' %}></script>
+<script type="text/javascript">
+    var search_inv_url = "{% url 'inventory_tracker:search_inv_ajax' %}",
+        download_invoice_url = "{% url 'inventory_tracker:download_invoice_ajax' %}";
+</script>
+{% endblock %}
 
 {% block body %}
 
+<h2>Search</h2>
+<form id="search-form">
+    {% csrf_token %}
+    <div class="form-group row">
+        <div class="form-group col-md-2">
+            <label for="start-date-input" class="">Start Date</label>
+            <input type="date" id="start-date-input" class="form-control">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="start-date-input" class="">End Date</label>
+            <input type="date" id="end-date-input" class="form-control">
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-secondary" id="add-search-item-btn">+</button>
+    <button type="submit" class="btn btn-primary" id="search-button">Search</button>
+</form>
+
 
 <div id='inventory-container'>
-    {% if purchases %}
-
-    {% for purchase in purchases %}
-    <div>{{ purchase.order_num }}</div>
-    {% endfor %}
-
-    {% endif %}
+    <table id="view-purchases-table" class="table">
+        <thead>
+            <tr>
+                <th scope ="col">Order Number</th>
+                <th scope ="col">Total</th>
+                <th scope ="col">Purchase Date</th>
+                <th scope ="col">Payment</th>
+                <th scope ="col">Vendor</th>
+                <th scope ="col">Department</th>
+                <th scope ="col">File</th>
+            </tr>
+        </thead>
+        <tbody id="view-inv-tbody">
+        </tbody>
+    </table>
+    
 </div>
 
 {% endblock %}

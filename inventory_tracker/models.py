@@ -6,15 +6,6 @@ class Vendor(models.Model):
     name = models.CharField(max_length=50)
     url = models.TextField()
 
-# Item that make up a purchase.
-# Ctaonsin Vendor and ItemType
-class Item(models.Model):
-    name = models.CharField(max_length=50)
-    amount = models.DecimalField(decimal_places=2, max_digits=11)
-    quantity = models.IntegerField()
-    note = models.TextField()
-    itemType = models.TextField(blank=True, null=True)
-
 # Payment for each purchase. Might be changed later for actual payment types
 class Payment(models.Model):
     name = models.CharField(max_length=30)
@@ -40,5 +31,14 @@ class Purchase(models.Model):
 
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Item)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
+
+# Item that make up a purchase.
+# Ctaonsin Vendor and ItemType
+class Item(models.Model):
+    name = models.CharField(max_length=50)
+    amount = models.DecimalField(decimal_places=2, max_digits=11)
+    quantity = models.IntegerField()
+    note = models.TextField()
+    itemType = models.TextField(blank=True, null=True)
+    purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, blank=True, null=True)
