@@ -5,16 +5,28 @@ window.addEventListener("load", function(e){
         addVendor_button.addEventListener("click", function(){
             var formData = new FormData();
 
-            var vendor_name =window.prompt("Please enter a vendor name");
-            formData.append("vendor_name", vendor_name);
-            var vendor_url = window.prompt("Please enter a vendor URL");
-            formData.append("vendor_url", vendor_url);
+            var valid_vendor_name = false,
+                valid_vendor_url = false;
 
-            inv_ajax.postAjax(
-                submit_vendor_url, inv_ajax.get_csrf(), formData
-            ).then(function(json){
-                inv_vendor.build_vendors();
-            });
+            var vendor_name =window.prompt("Please enter a vendor name");
+            if (vendor_name) {
+                valid_vendor_name = true;
+                formData.append("vendor_name", vendor_name);
+            }
+
+            var vendor_url = window.prompt("Please enter a vendor URL");
+            if (vendor_url) {
+                valid_vendor_url = true;
+                formData.append("vendor_url", vendor_url);
+            }
+            
+            if (valid_vendor_name && valid_vendor_url) {
+                inv_ajax.postAjax(
+                    submit_vendor_url, inv_ajax.get_csrf(), formData
+                ).then(function(json){
+                    inv_vendor.build_vendors();
+                });
+            }
         });
 
         // Fills payments into table
