@@ -1,11 +1,6 @@
 from django.db import models
 from datetime import datetime
 
-# Vendors that items were purchased from
-class Vendor(models.Model):
-    name = models.CharField(max_length=50)
-    url = models.TextField()
-
 # Payment for each purchase. Might be changed later for actual payment types
 class Payment(models.Model):
     name = models.CharField(max_length=30)
@@ -29,7 +24,6 @@ class Purchase(models.Model):
 
     invoice = models.FileField(upload_to='inventory_invoices/%Y/%m/%d/')
 
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
 

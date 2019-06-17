@@ -73,33 +73,33 @@ var inv_create = {
         });
     },
     load_vendors: function() {
-        inv_ajax.getAjax(
-            get_vendor_url, inv_ajax.get_csrf()
-        ).then(function(vendors_json){
-            var vendors_obj = JSON.parse(vendors_json);
+        // inv_ajax.getAjax(
+        //     get_vendor_url, inv_ajax.get_csrf()
+        // ).then(function(vendors_json){
+        //     var vendors_obj = JSON.parse(vendors_json);
             
-            var vendor_select = document.getElementById("vendor-select");
+        //     var vendor_select = document.getElementById("vendor-select");
 
-            // Remove all the options in select
-            while (vendor_select.firstChild) {
-                vendor_select.removeChild(vendor_select.firstChild);
-            }
+        //     // Remove all the options in select
+        //     while (vendor_select.firstChild) {
+        //         vendor_select.removeChild(vendor_select.firstChild);
+        //     }
 
-            var name, id;
-            var vendor_obj;
-            var option;
-            for (var id in vendors_obj) {
-                var option = document.createElement("option");
-                vendor_obj = vendors_obj[id];
+        //     var name, id;
+        //     var vendor_obj;
+        //     var option;
+        //     for (var id in vendors_obj) {
+        //         var option = document.createElement("option");
+        //         vendor_obj = vendors_obj[id];
 
-                name = vendor_obj["name"];
+        //         name = vendor_obj["name"];
                 
-                option.setAttribute("value", id);
-                option.appendChild(document.createTextNode(name));
+        //         option.setAttribute("value", id);
+        //         option.appendChild(document.createTextNode(name));
 
-                vendor_select.append(option);
-            }
-        });
+        //         vendor_select.append(option);
+        //     }
+        // });
     },
     load_departments: function() {
         inv_ajax.getAjax(

@@ -10,11 +10,6 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
-class VendorAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-admin.site.register(Vendor, VendorAdmin)
-
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'location')
 
