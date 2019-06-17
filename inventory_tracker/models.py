@@ -22,6 +22,8 @@ class Purchase(models.Model):
     total = models.DecimalField(decimal_places=2, max_digits=11)
     note = models.TextField()
 
+    vendor = models.CharField(max_length=50,blank=True, null=True)
+
     invoice = models.FileField(upload_to='inventory_invoices/%Y/%m/%d/')
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)

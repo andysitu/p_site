@@ -67,25 +67,6 @@ def submit_payment_ajax(request):
 
     return JsonResponse({})
 
-def get_vendor_ajax(request):
-#     vendors_q = Vendor.objects.all()
-#     vendors_obj = {}
-
-#     for v in vendors_q:
-#         vendor_obj = {}
-#         vendor_obj["id"] = v.pk
-#         vendor_obj["name"] = v.name
-#         vendor_obj["url"] = v.url
-#         vendors_obj[v.pk] = vendor_obj
-    
-    return JsonResponse(vendors_obj)
-
-def submit_vendor_ajax(request):
-#     vendor_name = request.POST.get('vendor_name')
-#     vendor_url = request.POST.get("vendor_url")
-#     v = Vendor(name=vendor_name, url=vendor_url)
-#     v.save()
-
     return JsonResponse({})
 
 def get_department_ajax(request):
@@ -114,7 +95,7 @@ def create_item_ajax(request):
     total = Decimal(request.POST.get("total"))
     purchase_date_str = request.POST.get("purchaseDate")
     payment_id = int(request.POST.get("payment"))
-    # vendor_id = int(request.POST.get("vendor"))
+    vendor = request.POST.get("vendor")
     department_id = int(request.POST.get("department"))
 
     numItems = int(request.POST.get("numItems"))
@@ -129,14 +110,13 @@ def create_item_ajax(request):
     d = date(year=year, month=month, day=day)
 
     payment = Payment.objects.get(id=payment_id)
-    # vendor = Vendor.objects.get(id=vendor_id)
     department = Department.objects.get(id=department_id)
     
     p = Purchase()
     p.purchase_date = d
     p.order_number = order_number
     p.total = total
-    # p.vendor = vendor
+    p.vendor = vendor
     p.department = department
     p.payment = payment
     if (request.FILES.get("invoiceFile", False)):
@@ -169,9 +149,9 @@ def search_inv_ajax(request):
     if request.POST.get("payment"):
         payment = request.POST.get("payment")
         purchase_q = purchase_q.filter(payment=payment)
-    # if request.POST.get("vendor"):
-        # vendor = request.POST.get("vendor")
-        # purchase_q = purchase_q.filter(vendor=vendor)
+    if request.POST.get("vendor"):
+        vendor = request.POST.get("vendor")
+        purchase_q = purchase_q.filter(vendor__icontains=vendor)
     if request.POST.get("department"):
         department = request.POST.get("department")
         purchase_q = purchase_q.filter(department=department)
@@ -203,7 +183,7 @@ def search_inv_ajax(request):
         purchase_obj["purchase_date"] = p.purchase_date
         purchase_obj["total"] = p.total
         purchase_obj["payment"] = p.payment.name
-        # purchase_obj["vendor"] = p.vendor.name
+        purchase_obj["vendor"] = p.vendor
         purchase_obj["department"] = p.department.name
         purchase_obj["location"] = p.department.location
         

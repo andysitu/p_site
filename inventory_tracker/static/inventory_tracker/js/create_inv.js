@@ -40,7 +40,6 @@ var inv_create = {
     num_items: 0,
     load_form_data: function() {
         this.load_payments();
-        this.load_vendors();
         this.load_departments();
     },
     load_payments: function() {
@@ -72,35 +71,6 @@ var inv_create = {
             }
         });
     },
-    load_vendors: function() {
-        // inv_ajax.getAjax(
-        //     get_vendor_url, inv_ajax.get_csrf()
-        // ).then(function(vendors_json){
-        //     var vendors_obj = JSON.parse(vendors_json);
-            
-        //     var vendor_select = document.getElementById("vendor-select");
-
-        //     // Remove all the options in select
-        //     while (vendor_select.firstChild) {
-        //         vendor_select.removeChild(vendor_select.firstChild);
-        //     }
-
-        //     var name, id;
-        //     var vendor_obj;
-        //     var option;
-        //     for (var id in vendors_obj) {
-        //         var option = document.createElement("option");
-        //         vendor_obj = vendors_obj[id];
-
-        //         name = vendor_obj["name"];
-                
-        //         option.setAttribute("value", id);
-        //         option.appendChild(document.createTextNode(name));
-
-        //         vendor_select.append(option);
-        //     }
-        // });
-    },
     load_departments: function() {
         inv_ajax.getAjax(
             get_department_url, inv_ajax.get_csrf()
@@ -115,7 +85,6 @@ var inv_create = {
             }
 
             var name, id;
-            var vendor_obj;
             var option;
             for (var id in depts_obj) {
                 var option = document.createElement("option");

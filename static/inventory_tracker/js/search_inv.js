@@ -90,7 +90,7 @@ var search_inv = {
                     var value = document.getElementById("payment-select").value;
                     fd.append("payment", value);
                 } else if (filter_type == "vendor") {
-                    var value = document.getElementById("vendor-select").value;
+                    var value = document.getElementById("vendor-input").value;
                     fd.append("vendor", value);
                 } else if (filter_type == "department") {
                     var value = document.getElementById("department-select").value;
@@ -284,17 +284,17 @@ var search_inv = {
             // Label for Vendor Select
             var label = document.createElement("label");
             label.append(document.createTextNode("Vendor"));
-            label.setAttribute("for", "vendor-select");
+            label.setAttribute("for", "vendor-input");
             container.append(label);
 
             // Vendor Select
-            var vendor_select = document.createElement("select");
-            vendor_select.setAttribute("id", "vendor-select");
-            vendor_select.classList.add("custom-select");
-            vendor_select.setAttribute("name", "vendor");
-            ele_creator.load_vendors();
+            var vendor_input = document.createElement("input");
+            vendor_input.setAttribute("type", "text");
+            vendor_input.setAttribute("id", "vendor-input");
+            vendor_input.classList.add("form-control");
+            vendor_input.setAttribute("name", "vendor");
             
-            container.append(vendor_select);
+            container.append(vendor_input);
         } else if (search_type == "department") {
             // Label for Department Select
             var label = document.createElement("label");
@@ -611,35 +611,6 @@ var ele_creator = {
             }
         });
     },
-    load_vendors: function() {
-        inv_ajax.getAjax(
-            get_vendor_url, inv_ajax.get_csrf()
-        ).then(function(vendors_json){
-            var vendors_obj = JSON.parse(vendors_json);
-            
-            var vendor_select = document.getElementById("vendor-select");
-
-            // Remove all the options in select
-            while (vendor_select.firstChild) {
-                vendor_select.removeChild(vendor_select.firstChild);
-            }
-
-            var name, id;
-            var vendor_obj;
-            var option;
-            for (var id in vendors_obj) {
-                var option = document.createElement("option");
-                vendor_obj = vendors_obj[id];
-
-                name = vendor_obj["name"];
-                
-                option.setAttribute("value", id);
-                option.appendChild(document.createTextNode(name));
-
-                vendor_select.append(option);
-            }
-        });
-    },
     load_departments: function() {
         inv_ajax.getAjax(
             get_department_url, inv_ajax.get_csrf()
@@ -654,7 +625,6 @@ var ele_creator = {
             }
 
             var name, id;
-            var vendor_obj;
             var option;
             for (var id in depts_obj) {
                 var option = document.createElement("option");
