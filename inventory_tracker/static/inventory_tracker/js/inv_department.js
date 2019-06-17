@@ -5,16 +5,30 @@ window.addEventListener("load", function(e){
         addDept_button.addEventListener("click", function(){
             var formData = new FormData();
 
+            var correct_name = false,
+                correct_location = false;
             var department_name =window.prompt("Please enter a department name");
-            formData.append("department_name", department_name);
+            if (department_name) {
+                formData.append("department_name", department_name);
+                correct_name = true;
+            }
+            
             var department_location = window.prompt("Please enter a department location");
-            formData.append("department_location", department_location);
-
-            inv_ajax.postAjax(
-                submit_department_url, inv_ajax.get_csrf(), formData
-            ).then(function(json){
-                inv_department.build_departments();
-            });
+            if (department_location) {
+                formData.append("department_location", department_location);
+                correct_location = true;
+            }
+            
+            if (correct_name && correct_location) {
+                inv_ajax.postAjax(
+                    submit_department_url, inv_ajax.get_csrf(), formData
+                ).then(function(json){
+                    inv_department.build_departments();
+                });
+            } else {
+                window.alert("Name and/or location was inputted incorrectly.");
+            }
+            
         });
 
         // Fills payments into table

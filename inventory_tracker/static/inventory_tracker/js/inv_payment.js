@@ -3,15 +3,21 @@ window.addEventListener("load", function(e){
     (function (){
         var addPayment_button = document.getElementById("addPayment-button");
         addPayment_button.addEventListener("click", function(){
+
             var payment_name =window.prompt("Please enter a payment");
             var formData = new FormData();
 
-            formData.append("payment_name", payment_name);
-            inv_ajax.postAjax(
-                submit_payment_url, inv_ajax.get_csrf(), formData
-            ).then(function(json){
-                inv_payment.build_payments();
-            });
+            if (payment_name) {
+                formData.append("payment_name", payment_name);
+                inv_ajax.postAjax(
+                    submit_payment_url, inv_ajax.get_csrf(), formData
+                ).then(function(json){
+                    inv_payment.build_payments();
+                });
+            } else {
+                window.alert("Payment was blank.");
+            }
+            
         });
 
         // Fills payments into table
