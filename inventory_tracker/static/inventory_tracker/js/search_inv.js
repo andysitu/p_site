@@ -7,6 +7,8 @@ window.addEventListener("load", function() {
     search_inv.search_ajax();
 });
 
+var f;
+
 var search_inv = {
     purchases_obj: null,
     num_add_items_filter:0,
@@ -59,7 +61,9 @@ var search_inv = {
             }
         });
     },
-    search_ajax() {
+    // Gets the filter parameters & returns a form data containing it
+    // Returns null if there are multiple filters of one type
+    get_form_search_data() {
         var start_date_select = document.getElementById("start-date-input"),
             end_date_select = document.getElementById("end-date-input");
 
@@ -67,115 +71,152 @@ var search_inv = {
         fd.append("start_date", start_date_select.value);
         fd.append("end_date", end_date_select.value);
 
-        inv_ajax.postAjax(
-            search_inv_url, inv_ajax.get_csrf(), fd
-        ).then(function(purchases_json) {
-            var purchases_obj = JSON.parse(purchases_json);
+        // Check if there are multiple filter types
+        var filter_count = {};
 
-            search_inv.purchases_obj = purchases_obj;
+        var filter_type_prefix = "add-search-select-";
+        var select;
+        // Iterate thru the types of filters
+        for (var i = 1; i <= this.num_add_items_filter; i++) {
+            select = document.getElementById(filter_type_prefix + i);
+            var filter_type = select.value;
+            // Returns null since there are multiple
+            if (filter_count[filter_type])
+                return null;
+            else {
+                filter_count[filter_type] = 1;
 
-            console.log(purchases_obj);
+                if (filter_type == "payment") {
+                    var value = document.getElementById("payment-select").value;
+                    fd.append("payment", value);
+                } else if (filter_type == "vendor") {
+                    var value = document.getElementById("vendor-select").value;
+                    fd.append("vendor", value);
+                } else if (filter_type == "department") {
+                    var value = document.getElementById("department-select").value;
+                    fd.append("department", value);
+                } else if (filter_type == "total") {
+                    var value = document.getElementById("total-modifier-select").value;
+                    fd.append("total_modifier", value);
 
-            var purchase_tbody = document.getElementById("view-inv-tbody");
-            
-            var tr, td, p, item_container;
-
-            // Add Purchases to the table
-            for (var p_id in purchases_obj) {
-                p = purchases_obj[p_id];
-                tr = document.createElement("tr");
-                tr.setAttribute("id", "tr-" + p_id);
-
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.order_num));
-                tr.append(td);
-
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.total));
-                tr.append(td);
-
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.purchase_date));
-                tr.append(td);
-
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.payment));
-                tr.append(td);
-                
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.vendor));
-                tr.append(td);
-
-                td = document.createElement("td");
-                td.appendChild(document.createTextNode(p.department));
-                tr.append(td);
-
-                td = document.createElement("td");
-
-                // add EventListener for the Items
-                if (Object.keys(p.items).length > 0) {
-                    var view_items_btn = document.createElement("button");
-                    view_items_btn.classList.add("btn");
-                    view_items_btn.classList.add("btn-secondary");
-                    view_items_btn.append(document.createTextNode("View Items"));
-
-                    view_items_btn.setAttribute("id", "items-btn-" + p_id);
-
-                    td.append(view_items_btn);
-
-                    view_items_btn.addEventListener("click", function(e){
-                        // Regedx to get id
-                        var re = /-(\d+)$/;
-                        // Save first captured string as ID
-                        var purchase_id = re.exec(e.target.id)[1];
-                        var purchase_obj = search_inv.purchases_obj[purchase_id];
-                        
-                        // Get items container
-                        var items_container = document.getElementById(
-                            "items-container-" + purchase_id);
-                        // If there isn't items already there
-                        // Then append items
-                        if (items_container.childElementCount <= 0) {
-                            // Item Header
-                            var tr = ele_creator.create_item_header();
-                            items_container.append(tr);
-
-                            var items = purchase_obj.items;
-
-                            // Add Item Row
-                            for (var item_id in items) {
-                                var item_tr = ele_creator.create_item_row(items[item_id]);
-                                items_container.append(item_tr);
-                            }
-
-                        } else { // Remove the Items
-                            while(items_container.firstChild) {
-                                items_container.removeChild(items_container.firstChild);
-                            }
-                        }
-                    });
+                    value = document.getElementById("total-input").value;
+                    fd.append("total", value);
+                } else if (filter_type == "order_number") {
+                    var value = document.getElementById("order-number-input").value;
+                    fd.append("order_number", value);
+                } else if (filter_type == "item_name") {
+                    var value = document.getElementById("item-name-input").value;
+                    fd.append("item_name", value);
+                } else if (filter_type == "item_type") {
+                    var value = document.getElementById("item-type-input").value;
+                    fd.append("item_type", value);
                 }
-
-                if (p.invoice) {
-                    var file_but = document.createElement("button");
-                    file_but.classList.add("btn");
-                    file_but.classList.add("btn-secondary");
-                    file_but.append(document.createTextNode("Download"));
-                    td.append(file_but);
-
-                    file_but.addEventListener("click", function(e){
-                        search_inv.download_file(p.id);
-                    });
-                }
-                tr.append(td);
-
-                purchase_tbody.append(tr);
-
-                item_container = document.createElement("div");
-                item_container.setAttribute("id", "items-container-" + p_id);
-                purchase_tbody.append(item_container);
             }
-        });
+        }
+
+        f = fd;
+        return fd;
+    },
+    search_ajax() {
+        var fd = this.get_form_search_data();
+
+        if (fd) {
+            // Search for the Results & then write to HTML Table
+            inv_ajax.postAjax(
+                search_inv_url, inv_ajax.get_csrf(), fd
+            ).then(function(purchases_json) {
+                var purchases_obj = JSON.parse(purchases_json);
+
+                search_inv.purchases_obj = purchases_obj;
+
+                console.log(purchases_obj);
+
+                var purchase_tbody = document.getElementById("view-inv-tbody");
+                
+                var tr, td, p, item_container;
+
+                // Add Purchases to the table
+                for (var p_id in purchases_obj) {
+                    p = purchases_obj[p_id];
+                    tr = document.createElement("tr");
+                    tr.setAttribute("id", "tr-" + p_id);
+                    tr.classList.add("table-active");
+
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.order_number));
+                    tr.append(td);
+
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.total));
+                    tr.append(td);
+
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.purchase_date));
+                    tr.append(td);
+
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.payment));
+                    tr.append(td);
+                    
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.vendor));
+                    tr.append(td);
+
+                    td = document.createElement("td");
+                    td.appendChild(document.createTextNode(p.department));
+                    tr.append(td);
+
+                    td = document.createElement("td");
+
+                    // add EventListener for the Items
+                    if (Object.keys(p.items).length > 0) {
+                        // Create Buttons
+                        var view_items_btn = document.createElement("button");
+                        view_items_btn.classList.add("btn");
+                        view_items_btn.classList.add("btn-secondary");
+                        view_items_btn.append(document.createTextNode("View Items"));
+
+                        view_items_btn.setAttribute("id", "items-btn-" + p_id);
+
+                        td.append(view_items_btn);
+
+                        view_items_btn.addEventListener("click", function(e){
+                            // Regedx to get id
+                            var re = /-(\d+)$/;
+                            // Save first captured string as ID
+                            var purchase_id = re.exec(e.target.id)[1];
+                            search_inv.show_items(purchase_id);
+                        });
+                    }
+
+                    if (p.invoice) {
+                        var file_but = document.createElement("button");
+                        file_but.classList.add("btn");
+                        file_but.classList.add("btn-secondary");
+                        file_but.append(document.createTextNode("Download"));
+                        td.append(file_but);
+
+                        file_but.addEventListener("click", function(e){
+                            search_inv.download_file(p.id);
+                        });
+                    }
+                    tr.append(td);
+
+                    purchase_tbody.append(tr);
+
+                    item_container = document.createElement("div");
+                    item_container.setAttribute("id", "items-container-" + p_id);
+                    purchase_tbody.append(item_container);
+
+                    // Show items by default if there are any
+                    if (Object.keys(p.items).length > 0) {
+                        search_inv.show_items(p_id);
+                    }
+                }
+            });
+        } else {
+            window.alert("There are multiple search filter of one type. It needs to be removed.");
+        }
     },
     download_file(purchase_id, filename) {
         var fd = new FormData();
@@ -229,12 +270,12 @@ var search_inv = {
             // Label for Order Number Input
             var label = document.createElement("label");
             label.append(document.createTextNode("Order Number"));
-            label.setAttribute("for", "order-num-input");
+            label.setAttribute("for", "order-number-input");
             container.append(label);
 
             // Order Number Input
             var order_input = document.createElement("input");
-            order_input.setAttribute("id", "order-num-input");
+            order_input.setAttribute("id", "order-number-input");
             order_input.classList.add("form-control");
             order_input.setAttribute("name", "order_number");
             
@@ -286,6 +327,7 @@ var search_inv = {
             modifier_select.classList.add("form-control");
             modifier_select.classList.add("col-sm-4");
             modifier_select.setAttribute("name", "total_modifier");
+            modifier_select.setAttribute("id", "total-modifier-select");
 
             var option = document.createElement("option");
             option.append(document.createTextNode(">="));
@@ -314,6 +356,8 @@ var search_inv = {
             // Total Input
             var total_input = document.createElement("input");
             total_input.setAttribute("id", "total-input");
+            total_input.setAttribute("type", "number");
+            total_input.setAttribute("step", "0.01");
             total_input.classList.add("form-control");
             total_input.setAttribute("name", "total");
 
@@ -322,6 +366,61 @@ var search_inv = {
             input_div.appendChild(total_input);
 
             container.append(input_div);
+        } else if (search_type == "item_name") {
+            // Label for Order Number Input
+            var label = document.createElement("label");
+            label.append(document.createTextNode("Item Name"));
+            label.setAttribute("for", "item-name-input");
+            container.append(label);
+
+            // Order Number Input
+            var order_input = document.createElement("input");
+            order_input.setAttribute("id", "item-name-input");
+            order_input.classList.add("form-control");
+            order_input.setAttribute("name", "item_name");
+            
+            container.append(order_input);
+        } else if (search_type == "item_type") {
+            // Label for Order Number Input
+            var label = document.createElement("label");
+            label.append(document.createTextNode("Item Type"));
+            label.setAttribute("for", "item-type-input");
+            container.append(label);
+
+            // Order Number Input
+            var order_input = document.createElement("input");
+            order_input.setAttribute("id", "item-type-input");
+            order_input.classList.add("form-control");
+            order_input.setAttribute("name", "item_type");
+            
+            container.append(order_input);
+        }
+    },
+    show_items(purchase_id) {
+        var purchase_obj = search_inv.purchases_obj[purchase_id];
+        
+        // Get items container
+        var items_container = document.getElementById(
+            "items-container-" + purchase_id);
+        // If there isn't items already there
+        // Then append items
+        if (items_container.childElementCount <= 0) {
+            // Item Header
+            var tr = ele_creator.create_item_header();
+            items_container.append(tr);
+
+            var items = purchase_obj.items;
+
+            // Add Item Row
+            for (var item_id in items) {
+                var item_tr = ele_creator.create_item_row(items[item_id]);
+                items_container.append(item_tr);
+            }
+
+        } else { // Remove the Items
+            while(items_container.firstChild) {
+                items_container.removeChild(items_container.firstChild);
+            }
         }
     }
 };
@@ -330,7 +429,7 @@ var ele_creator = {
     // Creates the tr header row for the items. Returns the TR Element
     create_item_header() {
         var tr = document.createElement("tr");
-        tr.classList.add("table-primary");
+        tr.classList.add("table-light");
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode("Name"));
@@ -356,7 +455,7 @@ var ele_creator = {
     // Creates the tr row for an item. Returns the TR element
     create_item_row(item_obj) {
         var tr = document.createElement("tr");
-        tr.classList.add("table-secondary");
+        tr.classList.add("table-light");
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode(item_obj.name));
@@ -435,6 +534,16 @@ var ele_creator = {
         option.setAttribute("value", "total");
         add_type_select.append(option);
 
+        option = document.createElement("option");
+        option.append(document.createTextNode("Item Name"));
+        option.setAttribute("value", "item_name");
+        add_type_select.append(option);
+
+        option = document.createElement("option");
+        option.append(document.createTextNode("Item Type"));
+        option.setAttribute("value", "item_type");
+        add_type_select.append(option);
+
         add_type_div.append(add_type_select);
         div.append(add_type_div);
 
@@ -444,6 +553,8 @@ var ele_creator = {
             "vendor": 0,
             "department": 0,
             "total": 0,
+            "item_type": 0,
+            "item_name": 0,
         };
 
         // Check if there are any other selects already created

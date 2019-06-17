@@ -110,7 +110,7 @@ def submit_department_ajax(request):
     return JsonResponse({})
 
 def create_item_ajax(request):
-    order_num = request.POST.get("orderNum")
+    order_number = request.POST.get("orderNumber")
     total = Decimal(request.POST.get("total"))
     purchase_date_str = request.POST.get("purchaseDate")
     payment_id = int(request.POST.get("payment"))
@@ -134,7 +134,7 @@ def create_item_ajax(request):
     
     p = Purchase()
     p.purchase_date = d
-    p.order_num = order_num
+    p.order_number = order_number
     p.total = total
     p.vendor = vendor
     p.department = department
@@ -166,11 +166,40 @@ def search_inv_ajax(request):
 
     purchase_q = Purchase.objects.filter(purchase_date__range=[start_date, end_date])
 
+    if request.POST.get("payment"):
+        payment = request.POST.get("payment")
+        purchase_q = purchase_q.filter(payment=payment)
+    if request.POST.get("vendor"):
+        vendor = request.POST.get("vendor")
+        purchase_q = purchase_q.filter(vendor=vendor)
+    if request.POST.get("department"):
+        department = request.POST.get("department")
+        purchase_q = purchase_q.filter(department=department)
+    if request.POST.get("order_number"):
+        order_number = request.POST.get("order_number")
+        purchase_q = purchase_q.filter(order_number=order_number)
+    if request.POST.get("total"):
+        total = request.POST.get("total")
+        total_modifier = request.POST.get("total_modifier")
+
+        if total_modifier == "gte":
+            purchase_q = purchase_q.filter(total__gte=total)
+        elif total_modifier == "lte":
+            purchase_q = purchase_q.filter(total__lte=total)
+        elif total_modifier == "eq":
+            purchase_q = purchase_q.filter(total=total)
+    if request.POST.get("item_name"):
+        item_name = request.POST.get("item_name")
+        purchase_q = purchase_q.filter(item__name__icontains=item_name)
+    if request.POST.get("item_type"):
+        item_type = request.POST.get("item_type")
+        purchase_q = purchase_q.filter(item__itemType__icontains=item_type)
+
     purchase_objs = {}
     for p in purchase_q:
         purchase_obj = {}
         purchase_obj["id"] = p.pk
-        purchase_obj["order_num"] = p.order_num
+        purchase_obj["order_number"] = p.order_number
         purchase_obj["purchase_date"] = p.purchase_date
         purchase_obj["total"] = p.total
         purchase_obj["payment"] = p.payment.name

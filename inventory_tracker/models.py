@@ -22,7 +22,7 @@ class Purchase(models.Model):
     input_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     purchase_date = models.DateField()
 
-    order_num = models.CharField(max_length=50)
+    order_number = models.CharField(max_length=50)
 
     total = models.DecimalField(decimal_places=2, max_digits=11)
     note = models.TextField()
