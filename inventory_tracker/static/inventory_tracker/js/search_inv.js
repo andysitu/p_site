@@ -141,29 +141,36 @@ var search_inv = {
                     tr = document.createElement("tr");
                     tr.setAttribute("id", "tr-" + p_id);
                     tr.classList.add("table-active");
+                    tr.setAttribute("id", "tr-" + p_id);
 
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.order_number));
+                    td.setAttribute("id", "order-number-" + p_id);
                     tr.append(td);
 
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.total));
+                    td.setAttribute("id", "total-" + p_id);
                     tr.append(td);
 
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.purchase_date));
+                    td.setAttribute("id", "purchase-date-" + p_id);
                     tr.append(td);
 
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.payment));
+                    td.setAttribute("id", "payment-" + p_id);
                     tr.append(td);
                     
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.vendor));
+                    td.setAttribute("id", "vendor-" + p_id);
                     tr.append(td);
 
                     td = document.createElement("td");
                     td.appendChild(document.createTextNode(p.department));
+                    td.setAttribute("id", "department-" + p_id);
                     tr.append(td);
 
                     td = document.createElement("td");
@@ -193,11 +200,16 @@ var search_inv = {
                         var file_but = document.createElement("button");
                         file_but.classList.add("btn");
                         file_but.classList.add("btn-secondary");
-                        file_but.append(document.createTextNode("Download"));
+                        file_but.append(document.createTextNode("Download Invoice"));
+                        file_but.setAttribute("id", "download-btn-" + p_id);
                         td.append(file_but);
 
                         file_but.addEventListener("click", function(e){
-                            search_inv.download_file(p.id);
+                            var re = /-(\d+)$/;
+                            // Save first captured string as ID
+                            var purchase_id = re.exec(e.target.id)[1];
+
+                            search_inv.download_file(purchase_id, e);
                         });
                     }
                     tr.append(td);
@@ -218,20 +230,44 @@ var search_inv = {
             window.alert("There are multiple search filter of one type. It needs to be removed.");
         }
     },
-    download_file(purchase_id, filename) {
+    download_file(purchase_id, e) {
         var fd = new FormData();
         fd.append("purchase_id", purchase_id);
         inv_ajax.postAjax(
             download_invoice_url, inv_ajax.get_csrf(), fd, true
         ).then(function(response){
+            var order_number = document.getElementById(
+                    "order-number-" + purchase_id).innerHTML,
+                purchase_date = document.getElementById(
+                    "purchase-date-" + purchase_id).innerHTML,
+                vendor = document.getElementById(
+                    "vendor-" + purchase_id).innerHTML;
+
+            purchase_date = purchase_date.split("-").join("_");
+            
+            var filename = purchase_date + "_" + vendor + "_" + order_number + ".pdf";
+
             var blob = new Blob([response], {type: 'application/pdf' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute("target", "_blank");
-            link.download = "test.pdf";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            var fr = new FileReader();
+            fr.addEventListener("load", function(e) {
+                var link = document.createElement('a');
+                link.href = fr.result;
+                link.setAttribute("target", "_blank");
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            fr.readAsDataURL(blob);
+            console.log(filename);
+            console.log(fr);
+            // var link = document.createElement('a');
+            // link.href = window.URL.createObjectURL(blob);
+            // link.setAttribute("target", "_blank");
+            // link.download = "test.pdf";
+            // document.body.appendChild(link);
+            // link.click();
+            // document.body.removeChild(link);
         });
     },
     clear_table() {
