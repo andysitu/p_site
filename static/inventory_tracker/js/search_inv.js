@@ -245,7 +245,7 @@ var search_inv = {
 
             td = document.createElement("td");
 
-            // add EventListener for the Items
+            // add btn & EventListener for the Items
             if (Object.keys(p.items).length > 0) {
                 // Create Buttons
                 var view_items_btn = document.createElement("button");
@@ -266,6 +266,7 @@ var search_inv = {
                 });
             }
 
+            // If pdf filt was submitted with purchase, show btn
             if (p.invoice) {
                 var file_but = document.createElement("button");
                 file_but.classList.add("btn");
@@ -282,6 +283,37 @@ var search_inv = {
                     search_inv.download_file(purchase_id, e);
                 });
             }
+
+            // Add delete btn
+            var del_btn = document.createElement("button");
+            del_btn.classList.add("btn");
+            del_btn.classList.add("btn-danger");
+            del_btn.append(document.createTextNode("Delete"));
+            del_btn.setAttribute("id", "delete-btn-" + p_id);
+            td.append(del_btn);
+
+            del_btn.addEventListener("click", function(e){
+                e.preventDefault();
+                var re = /-(\d+)$/;
+                // Save first captured string as ID
+                var purchase_id = re.exec(e.target.id)[1];
+
+                var answer = window.confirm("Are you sure you want to delete ID#" + purchase_id + "?");
+
+                if (answer) {
+                    var fd = new FormData();
+                    fd.append("command", "delete");
+                    fd.append("id", purchase_id);
+                    
+                    inv_ajax.postAjax(
+                        search_inv_url, inv_ajax.get_csrf(), fd
+                    ).then(function(json){
+                        window.location.reload();
+                    });    
+                }
+                
+            });
+
             tr.append(td);
 
             purchase_tbody.append(tr);

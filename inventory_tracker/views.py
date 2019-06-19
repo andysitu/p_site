@@ -170,66 +170,75 @@ def create_item_ajax(request):
     return create_inv(request)
 
 def search_inv_ajax(request):
-    start_date = request.POST.get("start_date")
-    end_date = request.POST.get("end_date")
+    command = request.POST.get('command')
 
-    purchase_q = Purchase.objects.filter(purchase_date__range=[start_date, end_date])
+    if command == "delete":
+        id = request.POST.get("id")
+        p = Purchase.objects.get(id = id)
+        p.delete()
 
-    if request.POST.get("payment"):
-        payment = request.POST.get("payment")
-        purchase_q = purchase_q.filter(payment=payment)
-    if request.POST.get("vendor"):
-        vendor = request.POST.get("vendor")
-        purchase_q = purchase_q.filter(vendor__icontains=vendor)
-    if request.POST.get("department"):
-        department = request.POST.get("department")
-        purchase_q = purchase_q.filter(department=department)
-    if request.POST.get("order_number"):
-        order_number = request.POST.get("order_number")
-        purchase_q = purchase_q.filter(order_number=order_number)
-    if request.POST.get("total"):
-        total = request.POST.get("total")
-        total_modifier = request.POST.get("total_modifier")
+        return JsonResponse({})
+    else:
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
 
-        if total_modifier == "gte":
-            purchase_q = purchase_q.filter(total__gte=total)
-        elif total_modifier == "lte":
-            purchase_q = purchase_q.filter(total__lte=total)
-        elif total_modifier == "eq":
-            purchase_q = purchase_q.filter(total=total)
-    if request.POST.get("item_name"):
-        item_name = request.POST.get("item_name")
-        purchase_q = purchase_q.filter(item__name__icontains=item_name)
-    if request.POST.get("item_type"):
-        item_type = request.POST.get("item_type")
-        purchase_q = purchase_q.filter(item__itemType__icontains=item_type)
+        purchase_q = Purchase.objects.filter(purchase_date__range=[start_date, end_date])
 
-    purchase_objs = {}
-    for p in purchase_q:
-        purchase_obj = {}
-        purchase_obj["id"] = p.pk
-        purchase_obj["order_number"] = p.order_number
-        purchase_obj["purchase_date"] = p.purchase_date
-        purchase_obj["total"] = p.total
-        purchase_obj["payment"] = p.payment.name
-        purchase_obj["vendor"] = p.vendor
-        purchase_obj["department"] = p.department.name
-        purchase_obj["location"] = p.department.location
-        
-        if p.invoice:
-            purchase_obj["invoice"] = p.invoice.path
-        purchase_obj["items"] = {}
-        
-        for i in p.item_set.all():
-            item_obj = {}
-            item_obj["name"] = i.name
-            item_obj["amount"] = i.amount
-            item_obj["quantity"] = i.quantity
-            item_obj["note"] = i.note
-            item_obj["item_type"] = i.itemType
-            purchase_obj["items"][i.pk] = item_obj
-        purchase_objs[p.pk] = purchase_obj
-    return JsonResponse(purchase_objs)
+        if request.POST.get("payment"):
+            payment = request.POST.get("payment")
+            purchase_q = purchase_q.filter(payment=payment)
+        if request.POST.get("vendor"):
+            vendor = request.POST.get("vendor")
+            purchase_q = purchase_q.filter(vendor__icontains=vendor)
+        if request.POST.get("department"):
+            department = request.POST.get("department")
+            purchase_q = purchase_q.filter(department=department)
+        if request.POST.get("order_number"):
+            order_number = request.POST.get("order_number")
+            purchase_q = purchase_q.filter(order_number=order_number)
+        if request.POST.get("total"):
+            total = request.POST.get("total")
+            total_modifier = request.POST.get("total_modifier")
+
+            if total_modifier == "gte":
+                purchase_q = purchase_q.filter(total__gte=total)
+            elif total_modifier == "lte":
+                purchase_q = purchase_q.filter(total__lte=total)
+            elif total_modifier == "eq":
+                purchase_q = purchase_q.filter(total=total)
+        if request.POST.get("item_name"):
+            item_name = request.POST.get("item_name")
+            purchase_q = purchase_q.filter(item__name__icontains=item_name)
+        if request.POST.get("item_type"):
+            item_type = request.POST.get("item_type")
+            purchase_q = purchase_q.filter(item__itemType__icontains=item_type)
+
+        purchase_objs = {}
+        for p in purchase_q:
+            purchase_obj = {}
+            purchase_obj["id"] = p.pk
+            purchase_obj["order_number"] = p.order_number
+            purchase_obj["purchase_date"] = p.purchase_date
+            purchase_obj["total"] = p.total
+            purchase_obj["payment"] = p.payment.name
+            purchase_obj["vendor"] = p.vendor
+            purchase_obj["department"] = p.department.name
+            purchase_obj["location"] = p.department.location
+            
+            if p.invoice:
+                purchase_obj["invoice"] = p.invoice.path
+            purchase_obj["items"] = {}
+            
+            for i in p.item_set.all():
+                item_obj = {}
+                item_obj["name"] = i.name
+                item_obj["amount"] = i.amount
+                item_obj["quantity"] = i.quantity
+                item_obj["note"] = i.note
+                item_obj["item_type"] = i.itemType
+                purchase_obj["items"][i.pk] = item_obj
+            purchase_objs[p.pk] = purchase_obj
+        return JsonResponse(purchase_objs)
 
 def download_invoice_ajax(request):
     purchase_id = request.POST.get("purchase_id")

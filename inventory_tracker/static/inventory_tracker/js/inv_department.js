@@ -23,7 +23,7 @@ window.addEventListener("load", function(e){
             
             if (correct_name && correct_location) {
                 inv_ajax.postAjax(
-                    submit_department_url, inv_ajax.get_csrf(), formData
+                    search_inv_url, inv_ajax.get_csrf(), formData
                 ).then(function(json){
                     inv_department.build_departments();
                 });
