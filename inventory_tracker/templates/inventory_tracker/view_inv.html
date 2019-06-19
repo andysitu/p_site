@@ -33,6 +33,9 @@
 
     <button type="button" class="btn btn-secondary" id="add-search-item-btn">+</button>
     <button type="button" class="btn btn-secondary" id="del-search-item-btn">-</button>
+    <button type="button" class="btn btn-success" id="create-button">
+        <a href="{% url 'inventory_tracker:create-inv' %}">Create</a>
+    </button>
     <button type="submit" class="btn btn-primary" id="search-button">Search</button>
 
     <div id="add-search-container"></div>

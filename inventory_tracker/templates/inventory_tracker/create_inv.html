@@ -12,13 +12,15 @@
 <script>
     var get_payment_url = "{% url 'inventory_tracker:get-payment-ajax' %}",
         get_department_url = "{% url 'inventory_tracker:get_department_ajax' %}",
-        create_item_url = "{% url 'inventory_tracker:create_item_ajax' %}";
+        create_purchase_url = "{% url 'inventory_tracker:create_purchase_ajax' %}",
+        view_payments_url = "{% url 'inventory_tracker:index-blank' %}";
 </script>
 {% endblock %}
 
 {% block body %}
 
-<form id="create-inv-form" method="POST" action="{% url 'inventory_tracker:create_item_ajax' %}" enctype="multipart/form-data">
+<form id="create-inv-form" method="POST" action="{% url 'inventory_tracker:create_purchase_ajax' %}" 
+    enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-2">

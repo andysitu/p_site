@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 
 from .models import *
 
@@ -119,7 +120,7 @@ def submit_department_ajax(request):
 
     return JsonResponse({})
 
-def create_item_ajax(request):
+def create_purchase_ajax(request):
     order_number = request.POST.get("orderNumber")
     total = Decimal(request.POST.get("total"))
     purchase_date_str = request.POST.get("purchaseDate")
@@ -167,7 +168,7 @@ def create_item_ajax(request):
         p.item_set.add(i)
         p.save()
 
-    return create_inv(request)
+    return HttpResponseRedirect(reverse('inventory_tracker:index-blank'))
 
 def search_inv_ajax(request):
     command = request.POST.get('command')

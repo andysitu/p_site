@@ -25,13 +25,10 @@ window.addEventListener('load',
             inv_create.remove_item();
         }, false);
 
-        /* Use default HTML Submit
+        /*
         var submit_button = document.querySelector("#submit-button");
         submit_button.addEventListener("submit", function(e){
-            var formData = new FormData(document.querySelector('#create-inv-form'));
-            fd = formData;
-            fd.append("number_items", this.num_items);
-            console.log(formData);
+            window.location.href = search_payment_url;
         });
         */
 }, false);

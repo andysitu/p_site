@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^get_department_ajax/$', views.get_department_ajax, name="get_department_ajax"),
     url(r'^submit_department_ajax/$', views.submit_department_ajax, name="submit_department_ajax"),
 
-    url(r'^create_item_ajax/$', views.create_item_ajax, name="create_item_ajax"),
+    url(r'^create_purchase_ajax/$', views.create_purchase_ajax, name="create_purchase_ajax"),
     url(r'^search_inv_ajax/$', views.search_inv_ajax, name="search_inv_ajax"),
 
     url(r'^download_invoice_ajax/$', views.download_invoice_ajax, name="download_invoice_ajax"),
