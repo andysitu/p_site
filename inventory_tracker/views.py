@@ -61,11 +61,21 @@ def get_payment_ajax(request):
     return JsonResponse(payments_obj)
 
 def submit_payment_ajax(request):
-    payment_name = request.POST.get('payment_name')
-    p = Payment(name = payment_name)
-    p.save()
-
-    return JsonResponse({})
+    command = request.POST.get("command")
+    if command == "create":
+        payment_name = request.POST.get('payment_name')
+        p = Payment(name = payment_name)
+        p.save()
+    elif command == "edit":
+        payment_name = request.POST.get('payment_name')
+        payment_id = request.POST.get("id")
+        p = Payment.objects.get(id=payment_id)
+        p.name = payment_name
+        p.save()
+    elif command == "delete":
+        payment_id = request.POST.get("id")
+        p = Payment.objects.get(id=payment_id)
+        p.delete()
 
     return JsonResponse({})
 
@@ -83,10 +93,29 @@ def get_department_ajax(request):
     return JsonResponse(departments_obj)
 
 def submit_department_ajax(request):
-    department_name = request.POST.get('department_name')
-    department_location = request.POST.get("department_location")
-    d = Department(name=department_name, location=department_location)
-    d.save()
+    command = request.POST.get('command')
+    if command == "create":
+        department_name = request.POST.get('department_name')
+        department_location = request.POST.get("department_location")
+        d = Department(name=department_name, location=department_location)
+        d.save()
+    elif command == "delete":
+        dept_id = request.POST.get("id")
+        d = Department.objects.get(id=dept_id)
+        d.delete()
+    elif command == "edit":
+        dept_id = request.POST.get("id")
+        department = request.POST.get("department")
+        location = request.POST.get("location")
+        
+        #only implement if this was specified
+        if department or location:
+            d = Department.objects.get(id=dept_id)
+            if department:
+                d.name = department
+            if location:
+                d.location = location
+            d.save()
 
     return JsonResponse({})
 

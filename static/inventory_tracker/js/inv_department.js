@@ -18,6 +18,8 @@ window.addEventListener("load", function(e){
                 formData.append("department_location", department_location);
                 correct_location = true;
             }
+
+            formData.append("command", "create");
             
             if (correct_name && correct_location) {
                 inv_ajax.postAjax(
@@ -65,36 +67,110 @@ var inv_department = {
                 tr = document.createElement("tr");
 
                 // Dept Num TD
-                th = document.createElement("td");
-                th_text = document.createTextNode(++deptnum);
-                th.appendChild(th_text);
+                td = document.createElement("td");
+                td_text = document.createTextNode(++deptnum);
+                td.appendChild(td_text);
 
-                tr.appendChild(th);
+                tr.appendChild(td);
 
                 // Dept  ID
-                th = document.createElement("td");
-                th_text = document.createTextNode(id);
-                th.appendChild(th_text);
+                td = document.createElement("td");
+                td_text = document.createTextNode(id);
+                td.appendChild(td_text);
 
-                tr.appendChild(th);
+                tr.appendChild(td);
 
                 // Dept name TD
-                th = document.createElement("td");
-                th_text = document.createTextNode(department_name);
-                th.appendChild(th_text);
+                td = document.createElement("td");
+                td_text = document.createTextNode(department_name);
+                td.appendChild(td_text);
 
-                tr.appendChild(th);
+                tr.appendChild(td);
 
                 // Dept URL TD
-                th = document.createElement("td");
-                th_text = document.createTextNode(department_location);
-                th.appendChild(th_text);
+                td = document.createElement("td");
+                td_text = document.createTextNode(department_location);
+                td.appendChild(td_text);
 
-                tr.appendChild(th);
+                tr.appendChild(td);
+
+                // Delete & Edit Button
+                td = document.createElement("td");
+
+                var edit_btn = document.createElement("button");
+                edit_btn.classList.add("btn");
+                edit_btn.classList.add("btn-secondary");
+                edit_btn.append(document.createTextNode("Edit"));
+
+                edit_btn.addEventListener("click", inv_department.edit_listener);
+
+                edit_btn.setAttribute("id", "edit-btn-" + id);
+
+                td.append(edit_btn);
+
+                var del_btn = document.createElement("button");
+                del_btn.classList.add("btn");
+                del_btn.classList.add("btn-danger");
+                del_btn.append(document.createTextNode("Delete"));
+
+                del_btn.addEventListener("click", inv_department.delete_listener);
+
+                del_btn.setAttribute("id", "del-btn-" + id);
+
+                td.append(del_btn);
+
+                tr.appendChild(td);
 
                 dept_tbody.appendChild(tr);
             }
             
         });
-    }
+    },
+    delete_listener(e) {
+        // Regedx to get id
+        var re = /-(\d+)$/;
+        // Save first captured string as ID
+        var dept_id = re.exec(e.target.id)[1];
+
+        var answer = window.confirm("Are you sure you want to delete ID#" + dept_id + "?");
+        
+        if (answer) {
+            var fd = new FormData();
+            fd.append("command", "delete");
+            fd.append("id", dept_id);
+            
+            inv_ajax.postAjax(
+                submit_department_url, inv_ajax.get_csrf(), fd
+            ).then(function(json){
+                window.location.reload();
+            });
+        }
+    },
+    edit_listener(e) {
+        // Regedx to get id
+        var re = /-(\d+)$/;
+        // Save first captured string as ID
+        var dept_id = re.exec(e.target.id)[1];
+
+        var department = window.prompt("Department name? Leave blank for unchanged"),
+            location = window.prompt("Location? Leave blank for Unchaged");
+
+        var fd = new FormData();
+
+        if (department)
+            fd.append("department", department);
+        if (location)
+            fd.append("location", location);
+        
+        if (department || location) {
+            fd.append("command", "edit");
+            fd.append("id", dept_id);
+            
+            inv_ajax.postAjax(
+                submit_department_url, inv_ajax.get_csrf(), fd
+            ).then(function(json){
+                window.location.reload();
+            });
+        }
+    },
 };
