@@ -1,6 +1,7 @@
 window.addEventListener("load", function() {
     search_inv.set_default_dates();
 
+    search_inv.set_sort_table_listener();
     search_inv.add_search_btn_listener();
     search_inv.remove_search_item_listen();
     search_inv.search_btn_listener();
@@ -12,6 +13,32 @@ var f;
 var search_inv = {
     purchases_obj: null,
     num_add_items_filter:0,
+    // Event Listener to sort tables by column clicked
+    set_sort_table_listener() {
+        var headers = document.querySelectorAll(".purchase-header-th");
+
+        for (var i = 0; i < headers.length; i++) {
+            headers[i].addEventListener("click", function(e) {
+                var sort_category = e.target.getAttribute("value");
+
+                // If it's been sorted before by this category
+                if (search_inv.sort_category == sort_category) {
+                    if (search_inv.ascending)
+                        search_inv.ascending = false;
+                    else
+                        search_inv.ascending = true;
+                } else {
+                    search_inv.sort_category = sort_category
+                    search_inv.ascending = true;
+                }
+                search_inv.display_purchase(
+                    search_inv.sort_category, search_inv.ascending
+                );
+            })
+        }
+    },
+    sort_category: null,
+    ascending: false,
 
     set_default_dates() {
         var d = new Date();
@@ -117,6 +144,158 @@ var search_inv = {
         f = fd;
         return fd;
     },
+    remove_purchases() {
+        var purchase_tbody = document.getElementById("view-inv-tbody");
+        while (purchase_tbody.firstChild) {
+            purchase_tbody.removeChild(purchase_tbody.firstChild);
+        }
+    },
+    display_purchase(sort_category, ascending) {
+        var purchases_obj = search_inv.purchases_obj;
+
+        search_inv.remove_purchases();
+
+        if (sort_category) {
+            var sorted_key;
+
+            var id_value_obj = {};
+            for (var id in purchases_obj) {
+                id_value_obj[id] = purchases_obj[id][sort_category];
+            }
+            var values_sorted = Object.values(id_value_obj).sort(function(a_str,b_str) {
+                var a = a_str.toLowerCase(),
+                    b = b_str.toLowerCase();
+                if (ascending) {
+                    if (a < b)
+                        return -1;
+                    else if (a > b)
+                        return 1;
+                    else
+                        return 0;
+                } else {
+                    if (a > b)
+                        return -1;
+                    else if (a < b)
+                        return 1;
+                    else
+                        return 0;
+                }
+            });
+
+            var id, value;
+
+            for (var i = 0; i < values_sorted.length; i++) {
+                value = values_sorted[i];
+                for (var id_str in id_value_obj) {
+                    if (id_value_obj[id_str] == value) {
+                        id = parseInt(id_str);
+                        add_row(purchases_obj, id);
+                        delete id_value_obj[id];
+                    }
+                }
+            }
+        } else {
+            
+            // Add Purchases to the table)
+            for (var purchase_id in purchases_obj) {
+                add_row(purchases_obj, purchase_id);
+            }
+        }
+        console.log(purchases_obj);
+
+        function add_row(purchases_obj, p_id) {
+            var tr, td, p, item_container;
+            var purchase_tbody = document.getElementById("view-inv-tbody");
+
+            p = purchases_obj[p_id];
+            tr = document.createElement("tr");
+            tr.setAttribute("id", "tr-" + p_id);
+            tr.classList.add("table-active");
+            tr.setAttribute("id", "tr-" + p_id);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.order_number));
+            td.setAttribute("id", "order-number-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.total));
+            td.setAttribute("id", "total-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.purchase_date));
+            td.setAttribute("id", "purchase-date-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.payment));
+            td.setAttribute("id", "payment-" + p_id);
+            tr.append(td);
+            
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.vendor));
+            td.setAttribute("id", "vendor-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.department));
+            td.setAttribute("id", "department-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
+
+            // add EventListener for the Items
+            if (Object.keys(p.items).length > 0) {
+                // Create Buttons
+                var view_items_btn = document.createElement("button");
+                view_items_btn.classList.add("btn");
+                view_items_btn.classList.add("btn-secondary");
+                view_items_btn.append(document.createTextNode("View Items"));
+
+                view_items_btn.setAttribute("id", "items-btn-" + p_id);
+
+                td.append(view_items_btn);
+
+                view_items_btn.addEventListener("click", function(e){
+                    // Regedx to get id
+                    var re = /-(\d+)$/;
+                    // Save first captured string as ID
+                    var purchase_id = re.exec(e.target.id)[1];
+                    search_inv.show_items(purchase_id);
+                });
+            }
+
+            if (p.invoice) {
+                var file_but = document.createElement("button");
+                file_but.classList.add("btn");
+                file_but.classList.add("btn-secondary");
+                file_but.append(document.createTextNode("Download Invoice"));
+                file_but.setAttribute("id", "download-btn-" + p_id);
+                td.append(file_but);
+
+                file_but.addEventListener("click", function(e){
+                    var re = /-(\d+)$/;
+                    // Save first captured string as ID
+                    var purchase_id = re.exec(e.target.id)[1];
+
+                    search_inv.download_file(purchase_id, e);
+                });
+            }
+            tr.append(td);
+
+            purchase_tbody.append(tr);
+
+            item_container = document.createElement("div");
+            item_container.setAttribute("id", "items-container-" + p_id);
+            purchase_tbody.append(item_container);
+
+            // Show items by default if there are any
+            if (Object.keys(p.items).length > 0) {
+                search_inv.show_items(p_id);
+            }
+        }
+    },
     search_ajax() {
         var fd = this.get_form_search_data();
 
@@ -126,105 +305,8 @@ var search_inv = {
                 search_inv_url, inv_ajax.get_csrf(), fd
             ).then(function(purchases_json) {
                 var purchases_obj = JSON.parse(purchases_json);
-
                 search_inv.purchases_obj = purchases_obj;
-
-                console.log(purchases_obj);
-
-                var purchase_tbody = document.getElementById("view-inv-tbody");
-                
-                var tr, td, p, item_container;
-
-                // Add Purchases to the table
-                for (var p_id in purchases_obj) {
-                    p = purchases_obj[p_id];
-                    tr = document.createElement("tr");
-                    tr.setAttribute("id", "tr-" + p_id);
-                    tr.classList.add("table-active");
-                    tr.setAttribute("id", "tr-" + p_id);
-
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.order_number));
-                    td.setAttribute("id", "order-number-" + p_id);
-                    tr.append(td);
-
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.total));
-                    td.setAttribute("id", "total-" + p_id);
-                    tr.append(td);
-
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.purchase_date));
-                    td.setAttribute("id", "purchase-date-" + p_id);
-                    tr.append(td);
-
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.payment));
-                    td.setAttribute("id", "payment-" + p_id);
-                    tr.append(td);
-                    
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.vendor));
-                    td.setAttribute("id", "vendor-" + p_id);
-                    tr.append(td);
-
-                    td = document.createElement("td");
-                    td.appendChild(document.createTextNode(p.department));
-                    td.setAttribute("id", "department-" + p_id);
-                    tr.append(td);
-
-                    td = document.createElement("td");
-
-                    // add EventListener for the Items
-                    if (Object.keys(p.items).length > 0) {
-                        // Create Buttons
-                        var view_items_btn = document.createElement("button");
-                        view_items_btn.classList.add("btn");
-                        view_items_btn.classList.add("btn-secondary");
-                        view_items_btn.append(document.createTextNode("View Items"));
-
-                        view_items_btn.setAttribute("id", "items-btn-" + p_id);
-
-                        td.append(view_items_btn);
-
-                        view_items_btn.addEventListener("click", function(e){
-                            // Regedx to get id
-                            var re = /-(\d+)$/;
-                            // Save first captured string as ID
-                            var purchase_id = re.exec(e.target.id)[1];
-                            search_inv.show_items(purchase_id);
-                        });
-                    }
-
-                    if (p.invoice) {
-                        var file_but = document.createElement("button");
-                        file_but.classList.add("btn");
-                        file_but.classList.add("btn-secondary");
-                        file_but.append(document.createTextNode("Download Invoice"));
-                        file_but.setAttribute("id", "download-btn-" + p_id);
-                        td.append(file_but);
-
-                        file_but.addEventListener("click", function(e){
-                            var re = /-(\d+)$/;
-                            // Save first captured string as ID
-                            var purchase_id = re.exec(e.target.id)[1];
-
-                            search_inv.download_file(purchase_id, e);
-                        });
-                    }
-                    tr.append(td);
-
-                    purchase_tbody.append(tr);
-
-                    item_container = document.createElement("div");
-                    item_container.setAttribute("id", "items-container-" + p_id);
-                    purchase_tbody.append(item_container);
-
-                    // Show items by default if there are any
-                    if (Object.keys(p.items).length > 0) {
-                        search_inv.show_items(p_id);
-                    }
-                }
+                search_inv.display_purchase();                
             });
         } else {
             window.alert("There are multiple search filter of one type. It needs to be removed.");
@@ -259,15 +341,6 @@ var search_inv = {
                 document.body.removeChild(link);
             });
             fr.readAsDataURL(blob);
-            console.log(filename);
-            console.log(fr);
-            // var link = document.createElement('a');
-            // link.href = window.URL.createObjectURL(blob);
-            // link.setAttribute("target", "_blank");
-            // link.download = "test.pdf";
-            // document.body.appendChild(link);
-            // link.click();
-            // document.body.removeChild(link);
         });
     },
     clear_table() {
