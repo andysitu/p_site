@@ -570,7 +570,7 @@ var ele_creator = {
     // Creates the tr header row for the items. Returns the TR Element
     create_item_header() {
         var tr = document.createElement("tr");
-        tr.classList.add("table-light");
+        tr.classList.add("table-primary");
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode("Name"));
