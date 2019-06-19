@@ -245,45 +245,6 @@ var search_inv = {
 
             td = document.createElement("td");
 
-            // add btn & EventListener for the Items
-            if (Object.keys(p.items).length > 0) {
-                // Create Buttons
-                var view_items_btn = document.createElement("button");
-                view_items_btn.classList.add("btn");
-                view_items_btn.classList.add("btn-secondary");
-                view_items_btn.append(document.createTextNode("View Items"));
-
-                view_items_btn.setAttribute("id", "items-btn-" + p_id);
-
-                td.append(view_items_btn);
-
-                view_items_btn.addEventListener("click", function(e){
-                    // Regedx to get id
-                    var re = /-(\d+)$/;
-                    // Save first captured string as ID
-                    var purchase_id = re.exec(e.target.id)[1];
-                    search_inv.show_items(purchase_id);
-                });
-            }
-
-            // If pdf filt was submitted with purchase, show btn
-            if (p.invoice) {
-                var file_but = document.createElement("button");
-                file_but.classList.add("btn");
-                file_but.classList.add("btn-secondary");
-                file_but.append(document.createTextNode("Download Invoice"));
-                file_but.setAttribute("id", "download-btn-" + p_id);
-                td.append(file_but);
-
-                file_but.addEventListener("click", function(e){
-                    var re = /-(\d+)$/;
-                    // Save first captured string as ID
-                    var purchase_id = re.exec(e.target.id)[1];
-
-                    search_inv.download_file(purchase_id, e);
-                });
-            }
-
             // Add delete btn
             var del_btn = document.createElement("button");
             del_btn.classList.add("btn");
@@ -311,9 +272,47 @@ var search_inv = {
                         window.location.reload();
                     });    
                 }
-                
             });
 
+            // add btn & EventListener for the Items
+            if (Object.keys(p.items).length > 0) {
+                // Create Buttons
+                var view_items_btn = document.createElement("button");
+                view_items_btn.classList.add("btn");
+                view_items_btn.classList.add("btn-dark");
+                view_items_btn.append(document.createTextNode("Items"));
+
+                view_items_btn.setAttribute("id", "items-btn-" + p_id);
+
+                td.append(view_items_btn);
+
+                view_items_btn.addEventListener("click", function(e){
+                    // Regedx to get id
+                    var re = /-(\d+)$/;
+                    // Save first captured string as ID
+                    var purchase_id = re.exec(e.target.id)[1];
+                    search_inv.show_items(purchase_id);
+                });
+            }
+
+            // If pdf filt was submitted with purchase, show btn
+            if (p.invoice) {
+                var file_but = document.createElement("button");
+                file_but.classList.add("btn");
+                file_but.classList.add("btn-secondary");
+                file_but.append(document.createTextNode("Invoice"));
+                file_but.setAttribute("id", "download-btn-" + p_id);
+                td.append(file_but);
+
+                file_but.addEventListener("click", function(e){
+                    var re = /-(\d+)$/;
+                    // Save first captured string as ID
+                    var purchase_id = re.exec(e.target.id)[1];
+
+                    search_inv.download_file(purchase_id, e);
+                });
+            }
+            
             tr.append(td);
 
             purchase_tbody.append(tr);
