@@ -205,6 +205,11 @@ var search_inv = {
             tr.setAttribute("id", "tr-" + p_id);
 
             td = document.createElement("td");
+            td.appendChild(document.createTextNode(p.vendor));
+            td.setAttribute("id", "vendor-" + p_id);
+            tr.append(td);
+
+            td = document.createElement("td");
             td.appendChild(document.createTextNode(p.order_number));
             td.setAttribute("id", "order-number-" + p_id);
             tr.append(td);
@@ -222,11 +227,6 @@ var search_inv = {
             td = document.createElement("td");
             td.appendChild(document.createTextNode(p.payment));
             td.setAttribute("id", "payment-" + p_id);
-            tr.append(td);
-            
-            td = document.createElement("td");
-            td.appendChild(document.createTextNode(p.vendor));
-            td.setAttribute("id", "vendor-" + p_id);
             tr.append(td);
 
             td = document.createElement("td");
