@@ -1,5 +1,3 @@
-var fd;
-
 window.addEventListener('load',
     function(){
         // Set purchase date in the purchase date input to today by default

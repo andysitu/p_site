@@ -11,6 +11,7 @@ urlpatterns = [
 
     url(r'^view_vendor/$', views.view_vendor, name="view-vendor"),
     url(r'^view_dept/$', views.view_dept, name="view-dept"),
+    url(r'^view_items/$', views.view_items, name="view_items"),
 
     # Ajax urls
     url(r'^get_payment_ajax/$', views.get_payment_ajax, name="get-payment-ajax"),
@@ -23,4 +24,6 @@ urlpatterns = [
     url(r'^search_inv_ajax/$', views.search_inv_ajax, name="search_inv_ajax"),
 
     url(r'^download_invoice_ajax/$', views.download_invoice_ajax, name="download_invoice_ajax"),
+
+    url(r'^search_items_ajax/$', views.search_items_ajax, name="search_items_ajax"),
 ]

@@ -1,0 +1,63 @@
+{% extends 'inventory_tracker/inventory_tracker_base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'inventory_tracker/css/view_inv.css' %}">
+
+<script type="text/javascript" src={% static 'inventory_tracker/js/inv_ajax.js' %}></script> 
+<script type="text/javascript" src={% static 'inventory_tracker/js/search_items.js' %}></script>
+<script type="text/javascript">
+    var search_items_url = "{% url 'inventory_tracker:search_items_ajax' %}";
+</script>
+{% endblock %}
+
+{% block body %}
+
+<h2>Search</h2>
+<form id="search-form">
+    {% csrf_token %}
+    <div class="form-group row">
+        <div class="form-group col-md-2">
+            <label for="item-name-input">Item Name</label>
+            <input type="text" class="form-control" id="item-name-input">
+        </div> 
+        <div class="form-group col-md-2">
+            <label for="item-type-input">Item Type</label>
+            <input type="text" class="form-control" id="item-type-input">
+        </div>
+        <!--
+        <div class="form-group col-md-2">
+            <label for="amount-input">Amount</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control" id="amount-input"
+                    step="0.01">
+            </div>
+        </div>
+        -->
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="search-button">Search</button>
+</form>
+<br>
+<div id='inventory-container'>
+    <table id="view-purchases-table" class="table table-sm">
+        <thead>
+            <tr>
+                <th scope ="col" value="name">Name</th>
+                <th scope ="col" value="amount">Amount</th>
+                <th scope ="col" value="quantity">Quantity</th>
+                <th scope ="col" value="type">Type</th>
+                <th scope ="col" value="note">Note</th>
+            </tr>
+        </thead>
+        <tbody id="view-inv-tbody">
+        </tbody>
+    </table>
+    
+</div>
+
+{% endblock %}

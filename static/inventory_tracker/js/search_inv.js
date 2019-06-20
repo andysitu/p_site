@@ -8,8 +8,6 @@ window.addEventListener("load", function() {
     search_inv.search_ajax();
 });
 
-var f;
-
 var search_inv = {
     purchases_obj: null,
     num_add_items_filter:0,

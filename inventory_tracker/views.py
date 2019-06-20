@@ -18,6 +18,13 @@ def index(request):
             'purchases': purchase_q,
         },
     )
+
+def view_items(request):
+    return render(
+        request,
+        "inventory_tracker/inventory_search_items.html",
+        context={}
+    )
     
 def create_inv(request):
     return render(
@@ -249,3 +256,20 @@ def download_invoice_ajax(request):
     response = HttpResponse(purchase.invoice, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
+
+def search_items_ajax(request):
+    item_name = request.POST.get("item_name")
+    item_type = request.POST.get("item_type")
+
+    items_q = Item.objects.all()
+
+    if item_name:
+        items_q = items_q.filter(name__icontains=item_name)
+    if item_type:
+        items_q = items_q.filter(itemType__icontains=item_type)
+
+    items = {}
+    for i in items_q:
+        items[i.id] = i.get_info()
+
+    return JsonResponse(items)

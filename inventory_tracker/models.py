@@ -38,3 +38,14 @@ class Item(models.Model):
     note = models.TextField()
     itemType = models.TextField(blank=True, null=True)
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, blank=True, null=True)
+
+    def get_info(self):
+        o = {}
+        o["name"] = self.name
+        o["amount"] = self.name
+        o["quantity"] = self.quantity
+        o["note"] = self.note
+        o["item_type"] = self.itemType
+        o["purchase_date"] = self.purchase.purchase_date
+
+        return o
