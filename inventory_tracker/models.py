@@ -20,7 +20,7 @@ class Purchase(models.Model):
     order_number = models.CharField(max_length=50)
 
     total = models.DecimalField(decimal_places=2, max_digits=11)
-    note = models.TextField()
+    note = models.TextField(blank=True, null=True)
 
     vendor = models.CharField(max_length=50,blank=True, null=True)
 
