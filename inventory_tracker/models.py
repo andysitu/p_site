@@ -35,7 +35,7 @@ class Item(models.Model):
     name = models.CharField(max_length=50)
     amount = models.DecimalField(decimal_places=2, max_digits=11)
     quantity = models.IntegerField()
-    note = models.TextField()
+    note = models.TextField(blank=True, null=True)
     itemType = models.TextField(blank=True, null=True)
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, blank=True, null=True)
 
