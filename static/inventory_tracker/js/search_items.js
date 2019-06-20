@@ -39,6 +39,7 @@ var search_items = {
             items_container.removeChild(items_container.firstChild);
         }
 
+        console.log(items);
         var tr, item_obj;
         for (var item_id in items) {
             item_obj = items[item_id];
@@ -46,6 +47,7 @@ var search_items = {
 
             td = document.createElement("td");
             td.appendChild(document.createTextNode(item_obj.name));
+            td.setAttribute("scope", "row");
             tr.append(td);
 
             td = document.createElement("td");
@@ -54,6 +56,12 @@ var search_items = {
 
             td = document.createElement("td");
             td.appendChild(document.createTextNode(item_obj.quantity));
+            tr.append(td);
+
+            var total = parseFloat(item_obj.amount) * parseInt(item_obj.quantity);
+            
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(total.toFixed(2)));
             tr.append(td);
 
             td = document.createElement("td");

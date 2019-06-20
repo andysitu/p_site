@@ -564,6 +564,7 @@ var ele_creator = {
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode("Name"));
+        td.setAttribute("scope", "row");
         tr.append(td);
 
         td = document.createElement("td");
@@ -572,6 +573,10 @@ var ele_creator = {
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode("Quantity"));
+        tr.append(td);
+
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Total"));
         tr.append(td);
 
         td = document.createElement("td");
@@ -590,6 +595,7 @@ var ele_creator = {
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode(item_obj.name));
+        td.setAttribute("scope", "row");
         tr.append(td);
 
         td = document.createElement("td");
@@ -598,6 +604,12 @@ var ele_creator = {
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode(item_obj.quantity));
+        tr.append(td);
+
+        var total = parseFloat(item_obj.amount) * parseInt(item_obj.quantity);
+            
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(total.toFixed(2)));
         tr.append(td);
 
         td = document.createElement("td");

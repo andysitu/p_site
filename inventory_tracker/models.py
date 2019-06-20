@@ -42,7 +42,7 @@ class Item(models.Model):
     def get_info(self):
         o = {}
         o["name"] = self.name
-        o["amount"] = self.name
+        o["amount"] = self.amount
         o["quantity"] = self.quantity
         o["note"] = self.note
         o["item_type"] = self.itemType
