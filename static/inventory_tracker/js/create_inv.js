@@ -137,6 +137,7 @@ var inv_create = {
         input_elem = document.createElement("input");
         input_elem.setAttribute("required", "");
         input_elem.setAttribute("id", "amount-input-" + item_num);
+        input_elem.setAttribute("step", "0.01");
         input_elem.setAttribute("type", "number");
         input_elem.classList.add("form-control");
         input_elem.setAttribute("name", "itemAmount-" + item_num);
