@@ -148,57 +148,50 @@ var search_inv = {
             purchase_tbody.removeChild(purchase_tbody.firstChild);
         }
     },
-    display_purchase(sort_category, ascending) {
+    display_purchase(sort_category="purchase_date", ascending=false) {
         var purchases_obj = search_inv.purchases_obj;
 
         search_inv.remove_purchases();
 
-        if (sort_category) {
-            var sorted_key;
+        var sorted_key;
 
-            var id_value_obj = {};
-            for (var id in purchases_obj) {
-                id_value_obj[id] = purchases_obj[id][sort_category];
+        var id_value_obj = {};
+        for (var id in purchases_obj) {
+            id_value_obj[id] = purchases_obj[id][sort_category];
+        }
+        var values_sorted = Object.values(id_value_obj).sort(function(a_str,b_str) {
+            var a = a_str.toLowerCase(),
+                b = b_str.toLowerCase();
+            if (ascending) {
+                if (a < b)
+                    return -1;
+                else if (a > b)
+                    return 1;
+                else
+                    return 0;
+            } else {
+                if (a > b)
+                    return -1;
+                else if (a < b)
+                    return 1;
+                else
+                    return 0;
             }
-            var values_sorted = Object.values(id_value_obj).sort(function(a_str,b_str) {
-                var a = a_str.toLowerCase(),
-                    b = b_str.toLowerCase();
-                if (ascending) {
-                    if (a < b)
-                        return -1;
-                    else if (a > b)
-                        return 1;
-                    else
-                        return 0;
-                } else {
-                    if (a > b)
-                        return -1;
-                    else if (a < b)
-                        return 1;
-                    else
-                        return 0;
-                }
-            });
+        });
 
-            var id, value;
+        var id, value;
 
-            for (var i = 0; i < values_sorted.length; i++) {
-                value = values_sorted[i];
-                for (var id_str in id_value_obj) {
-                    if (id_value_obj[id_str] == value) {
-                        id = parseInt(id_str);
-                        add_row(purchases_obj, id);
-                        delete id_value_obj[id];
-                    }
+        for (var i = 0; i < values_sorted.length; i++) {
+            value = values_sorted[i];
+            for (var id_str in id_value_obj) {
+                if (id_value_obj[id_str] == value) {
+                    id = parseInt(id_str);
+                    add_row(purchases_obj, id);
+                    delete id_value_obj[id];
                 }
-            }
-        } else {
-            
-            // Add Purchases to the table)
-            for (var purchase_id in purchases_obj) {
-                add_row(purchases_obj, purchase_id);
             }
         }
+
         console.log(purchases_obj);
 
         function add_row(purchases_obj, p_id) {
