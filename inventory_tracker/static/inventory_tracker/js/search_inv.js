@@ -196,7 +196,7 @@ var search_inv = {
 
         function add_row(purchases_obj, p_id) {
             var tr, td, p, item_container;
-            var purchase_tbody = document.getElementById("view-inv-tbody");
+            var purchase_tbody = document.getElementById("view-purchases-table");
 
             p = purchases_obj[p_id];
             tr = document.createElement("tr");
@@ -308,7 +308,7 @@ var search_inv = {
 
             purchase_tbody.append(tr);
 
-            item_container = document.createElement("div");
+            item_container = document.createElement("tbody");
             item_container.setAttribute("id", "items-container-" + p_id);
             purchase_tbody.append(item_container);
 
