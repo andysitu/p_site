@@ -1,6 +1,6 @@
 window.addEventListener("load", function() {
     search_inv.set_default_dates();
-
+    search_inv.set_hide_item_listener();
     search_inv.set_sort_table_listener();
     search_inv.add_search_btn_listener();
     search_inv.remove_search_item_listen();
@@ -9,6 +9,7 @@ window.addEventListener("load", function() {
 });
 
 var search_inv = {
+    hide_all_items:false, 
     purchases_obj: null,
     num_add_items_filter:0,
     // Event Listener to sort tables by column clicked
@@ -310,6 +311,7 @@ var search_inv = {
 
             item_container = document.createElement("tbody");
             item_container.setAttribute("id", "items-container-" + p_id);
+            item_container.classList.add("items-container");
             purchase_tbody.append(item_container);
 
             // Show items by default if there are any
@@ -533,6 +535,7 @@ var search_inv = {
         // Get items container
         var items_container = document.getElementById(
             "items-container-" + purchase_id);
+
         // If there isn't items already there
         // Then append items
         if (items_container.childElementCount <= 0) {
@@ -553,7 +556,48 @@ var search_inv = {
                 items_container.removeChild(items_container.firstChild);
             }
         }
-    }
+    },
+    show_all_items() {
+        var obj;
+        for (var id in search_inv.purchases_obj) {
+            obj = search_inv.purchases_obj[id].items;
+            if (Object.keys(obj).length > 0 ) {
+                search_inv.show_items(id);
+            }
+            
+        }
+    },
+    // Hides all the items by getting elements w/ classname "items-container"
+    set_hide_item_listener() {
+        var item_btn = document.getElementById("hide-item-btn");
+        item_btn.addEventListener("click", function(e) {
+            (function() {
+                var items_containers = document.getElementsByClassName("items-container");
+
+                if (!search_inv.hide_all_items) {
+                    search_inv.hide_all_items = true;
+
+                    var items_c;
+                    for (var i = 0; i < items_containers.length; i++) {
+                        items_c = items_containers[i];
+
+                        while (items_c.firstChild) {
+                            items_c.removeChild(items_c.firstChild);
+                        }
+                    }
+                    item_btn.innerHTML = "Show Items";
+                } else {
+                    search_inv.hide_all_items = false;
+
+                    search_inv.show_all_items();
+
+                    item_btn.innerHTML = "Hide Items";
+                }
+
+                
+            })();
+        });
+    },
 };
 
 var ele_creator = {
