@@ -529,7 +529,7 @@ var search_inv = {
             container.append(order_input);
         }
     },
-    show_items(purchase_id) {
+    show_items(purchase_id, force_show = false) {
         var purchase_obj = search_inv.purchases_obj[purchase_id];
         
         // Get items container
@@ -538,7 +538,12 @@ var search_inv = {
 
         // If there isn't items already there
         // Then append items
-        if (items_container.childElementCount <= 0) {
+        if (items_container.childElementCount <= 0 || force_show) {
+            // remove any items there, if force_show is used
+            while (items_container.firstChild) {
+                items_container.removeChild(items_container.firstChild);
+            }
+
             // Item Header
             var tr = ele_creator.create_item_header();
             items_container.append(tr);
@@ -562,7 +567,7 @@ var search_inv = {
         for (var id in search_inv.purchases_obj) {
             obj = search_inv.purchases_obj[id].items;
             if (Object.keys(obj).length > 0 ) {
-                search_inv.show_items(id);
+                search_inv.show_items(id, true);
             }
             
         }
