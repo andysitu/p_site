@@ -640,7 +640,7 @@ var ele_creator = {
     // Creates the tr row for an item. Returns the TR element
     create_item_row(item_obj) {
         var tr = document.createElement("tr");
-        tr.classList.add("table-light");
+        // tr.classList.add("table-light");
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode(item_obj.name));
