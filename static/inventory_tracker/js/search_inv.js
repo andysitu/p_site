@@ -213,7 +213,7 @@ var search_inv = {
             p = purchases_obj[p_id];
             tr = document.createElement("tr");
             tr.setAttribute("id", "tr-" + p_id);
-            tr.classList.add("table-active");
+            tr.classList.add("table-primary");
             tr.setAttribute("id", "tr-" + p_id);
 
             
@@ -670,7 +670,7 @@ var ele_creator = {
     // Creates the tr header row for the items. Returns the TR Element
     create_item_header() {
         var tr = document.createElement("tr");
-        tr.classList.add("table-primary");
+        tr.classList.add("table-active");
 
         td = document.createElement("td");
         td.appendChild(document.createTextNode("Name"));
