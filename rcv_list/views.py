@@ -95,7 +95,7 @@ def get_date_from_rcvname(rcv_num):
         d = datetime.date(year, month, day)
         return d
     else:
-        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{2,})')
+        ic_re = re.compile('(IC|TC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{2,})')
 
         ic_results = re.search(ic_re,text)
         if ic_results != None:
@@ -268,7 +268,7 @@ def upload_files(request):
                         day = int(re_results.group(4))
                     else:
                         # Search for IC
-                        ic_re = re.compile('(IC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{2,})')
+                        ic_re = re.compile('(IC|TC)(\d{6})(\d{2})(\d{2})(\d{2})(\d{2,})')
 
                         ic_results = re.search(ic_re,text)
 
