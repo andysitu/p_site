@@ -623,46 +623,46 @@ var ele_creator = {
         var tr = document.createElement("tr");
 
         // Vendor Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Vendor"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Vendor"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Order Number Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Order Number"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Order Number"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Total Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Total"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Total"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Purchase Date Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Purchase Date"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Purchase Date"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Payment Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Payment"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Payment"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Department Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Department"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Department"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         // Options Column
-        td = document.createElement("td");
-        td.appendChild(document.createTextNode("Options"));
-        td.setAttribute("scope", "col");
-        tr.append(td);
+        th = document.createElement("th");
+        th.appendChild(document.createTextNode("Options"));
+        th.setAttribute("scope", "col");
+        tr.append(th);
 
         container.append(tr);
         return container;
