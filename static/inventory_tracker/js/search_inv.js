@@ -56,7 +56,7 @@ var search_inv = {
     search_btn_listener() {
         var search_button = document.getElementById("search-button");
         search_button.addEventListener("click", function(e){
-            search_inv.clear_table();
+            search_inv.clear_purchase_table();
             e.preventDefault();
             search_inv.search_ajax();
 
@@ -65,7 +65,7 @@ var search_inv = {
     add_search_btn_listener() {
         var btn = document.getElementById("add-search-item-btn");
         btn.addEventListener("click", function(e) {
-            if (search_inv.num_add_items_filter < 5) {
+            if (search_inv.num_add_items_filter < 7) {
                 var div = ele_creator.create_add_search(
                     search_inv.fill_add_search, ++search_inv.num_add_items_filter);
                 document.getElementById("add-search-container").append(div);
@@ -140,19 +140,26 @@ var search_inv = {
             }
         }
 
-        f = fd;
         return fd;
     },
-    remove_purchases() {
-        var purchase_tbody = document.getElementById("view-inv-tbody");
-        while (purchase_tbody.firstChild) {
-            purchase_tbody.removeChild(purchase_tbody.firstChild);
+    // Clear the table
+    clear_purchase_table() {
+        var table = document.getElementById("view-purchases-table");
+        while(table.firstChild) {
+            table.removeChild(table.firstChild);
         }
     },
     display_purchase(sort_category="purchase_date", ascending=false) {
         var purchases_obj = search_inv.purchases_obj;
 
-        search_inv.remove_purchases();
+        search_inv.clear_purchase_table();
+
+        // Attach headers
+        var thead = ele_creator.create_purchase_header();
+
+        var table = document.getElementById("view-purchases-table");
+
+        table.append(thead);
 
         var sorted_key;
 
@@ -197,7 +204,11 @@ var search_inv = {
 
         function add_row(purchases_obj, p_id) {
             var tr, td, p, item_container;
-            var purchase_tbody = document.getElementById("view-purchases-table");
+            var table = document.getElementById("view-purchases-table");
+            var purchase_tbody = document.createElement("tbody");
+            purchase_tbody.setAttribute("id", "purchase-container-" + p_id);
+
+            // var purchase_tbody = document.getElementById("view-inv-tbody");
 
             p = purchases_obj[p_id];
             tr = document.createElement("tr");
@@ -205,6 +216,7 @@ var search_inv = {
             tr.classList.add("table-active");
             tr.setAttribute("id", "tr-" + p_id);
 
+            
             td = document.createElement("td");
             td.appendChild(document.createTextNode(p.vendor));
             td.setAttribute("id", "vendor-" + p_id);
@@ -308,13 +320,16 @@ var search_inv = {
             tr.append(td);
 
             purchase_tbody.append(tr);
+            table.append(purchase_tbody);
 
+            // Container for items, not purchase
             item_container = document.createElement("tbody");
             item_container.setAttribute("id", "items-container-" + p_id);
             item_container.classList.add("items-container");
-            purchase_tbody.append(item_container);
 
-            // Show items by default if there are any
+            table.append(item_container);
+
+            // Show items if there are any
             if (Object.keys(p.items).length > 0) {
                 search_inv.show_items(p_id);
             }
@@ -322,6 +337,7 @@ var search_inv = {
     },
     search_ajax() {
         var fd = this.get_form_search_data();
+        f = fd;
 
         if (fd) {
             // Search for the Results & then write to HTML Table
@@ -366,12 +382,6 @@ var search_inv = {
             });
             fr.readAsDataURL(blob);
         });
-    },
-    clear_table() {
-        var tbody = document.getElementById("view-inv-tbody");
-        while (tbody.firstChild) {
-            tbody.removeChild(tbody.firstChild);
-        }
     },
     // Create the additional search options depending on what is selected
     fill_add_search(select_id, num_add_selects) {
@@ -606,6 +616,57 @@ var search_inv = {
 };
 
 var ele_creator = {
+    // Returns thead
+    create_purchase_header() {
+        var container = document.createElement("thead");
+
+        var tr = document.createElement("tr");
+
+        // Vendor Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Vendor"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Order Number Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Order Number"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Total Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Total"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Purchase Date Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Purchase Date"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Payment Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Payment"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Department Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Department"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        // Options Column
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode("Options"));
+        td.setAttribute("scope", "col");
+        tr.append(td);
+
+        container.append(tr);
+        return container;
+    },
     // Creates the tr header row for the items. Returns the TR Element
     create_item_header() {
         var tr = document.createElement("tr");
@@ -701,11 +762,6 @@ var ele_creator = {
         }
 
         // Add the options
-        var option = document.createElement("option");
-        option.append(document.createTextNode("Payment"));
-        option.setAttribute("value", "payment");
-        add_type_select.append(option);
-
         option = document.createElement("option");
         option.append(document.createTextNode("Order Number"));
         option.setAttribute("value", "order_number");
@@ -714,6 +770,11 @@ var ele_creator = {
         option = document.createElement("option");
         option.append(document.createTextNode("Vendor"));
         option.setAttribute("value", "vendor");
+        add_type_select.append(option);
+
+        var option = document.createElement("option");
+        option.append(document.createTextNode("Payment"));
+        option.setAttribute("value", "payment");
         add_type_select.append(option);
 
         option = document.createElement("option");
