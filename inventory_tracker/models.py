@@ -3,13 +3,13 @@ from datetime import datetime
 
 # Payment for each purchase. Might be changed later for actual payment types
 class Payment(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
 
 # Department that the purchases were for
 # Location refers to city / warehouse
 class Department(models.Model):
-    name = models.CharField(max_length=20)
-    location = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+    location = models.CharField(max_length=50)
 
 # Purchase to be saved by user
 # Contains Items, Department, Payment
@@ -32,7 +32,7 @@ class Purchase(models.Model):
 # Item that make up a purchase.
 # Ctaonsin Vendor and ItemType
 class Item(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     amount = models.DecimalField(decimal_places=2, max_digits=11)
     quantity = models.IntegerField()
     note = models.TextField(blank=True, null=True)

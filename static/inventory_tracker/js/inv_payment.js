@@ -110,7 +110,7 @@ var inv_payment = {
 
         var payment = window.prompt("Payment name? Leave blank for unchanged");
 
-        if (payment) {
+        if (payment && payment.length <= 50) {
             var fd = new FormData();
             fd.append("command", "edit");
             fd.append("id", payment_id);

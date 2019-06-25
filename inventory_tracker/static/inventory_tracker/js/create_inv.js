@@ -114,6 +114,8 @@ var inv_create = {
         var name_container = document.createElement("td");
 
         input_elem = document.createElement("input");
+        input_elem.setAttribute("maxlength", "150");
+        input_elem.setAttribute("minlength", "3");
         input_elem.setAttribute("required", "");
         input_elem.setAttribute("id", "name-input-" + item_num);
         input_elem.setAttribute("type", "text");
@@ -139,6 +141,7 @@ var inv_create = {
         input_elem.setAttribute("id", "amount-input-" + item_num);
         input_elem.setAttribute("step", "0.01");
         input_elem.setAttribute("type", "number");
+        input_elem.setAttribute("max", 999999999.99);
         input_elem.classList.add("form-control");
         input_elem.setAttribute("name", "itemAmount-" + item_num);
 

@@ -8,13 +8,13 @@ window.addEventListener("load", function(e){
             var correct_name = false,
                 correct_location = false;
             var department_name =window.prompt("Please enter a department name");
-            if (department_name) {
+            if (department_name && department_name.length <= 30) {
                 formData.append("department_name", department_name);
                 correct_name = true;
             }
             
             var department_location = window.prompt("Please enter a department location");
-            if (department_location) {
+            if (department_location && department_location.length <= 50) {
                 formData.append("department_location", department_location);
                 correct_location = true;
             }
@@ -28,7 +28,7 @@ window.addEventListener("load", function(e){
                     inv_department.build_departments();
                 });
             } else {
-                window.alert("Name and/or location was inputted incorrectly.");
+                window.alert("Name and/or location was inputted incorrectly. Max length of 30/50.");
             }
             
         });
