@@ -203,7 +203,7 @@ def search_inv_ajax(request):
             purchase_q = purchase_q.filter(department=department)
         if request.POST.get("order_number"):
             order_number = request.POST.get("order_number")
-            purchase_q = purchase_q.filter(order_number=order_number)
+            purchase_q = purchase_q.filter(order_number__icontains=order_number)
         if request.POST.get("total"):
             total = request.POST.get("total")
             total_modifier = request.POST.get("total_modifier")
