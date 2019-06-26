@@ -16,6 +16,6 @@ class DepartmentAdmin(admin.ModelAdmin):
 admin.site.register(Department, DepartmentAdmin)
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('order_number', 'invoice')
+    list_display = ('order_number', 'purchase_date', 'vendor')
 
 admin.site.register(Purchase, PurchaseAdmin)
