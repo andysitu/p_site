@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^download_invoice_ajax/$', views.download_invoice_ajax, name="download_invoice_ajax"),
 
     url(r'^search_items_ajax/$', views.search_items_ajax, name="search_items_ajax"),
+    url(r'^purchases_ajax/$', views.purchases_ajax, name="purchases_ajax"),
 ]

@@ -8,6 +8,7 @@
 <script type="text/javascript" src={% static 'inventory_tracker/js/search_inv.js' %}></script>
 <script type="text/javascript">
     var search_inv_url = "{% url 'inventory_tracker:search_inv_ajax' %}",
+        purchases_ajax_url = "{% url 'inventory_tracker:purchases_ajax' %}",
         download_invoice_url = "{% url 'inventory_tracker:download_invoice_ajax' %}",
         
         get_payment_url = "{% url 'inventory_tracker:get-payment-ajax' %}",

@@ -271,7 +271,7 @@ var search_inv = {
                     fd.append("id", purchase_id);
                     
                     inv_ajax.postAjax(
-                        search_inv_url, inv_ajax.get_csrf(), fd
+                        purchases_ajax_url, inv_ajax.get_csrf(), fd
                     ).then(function(json){
                         window.location.reload();
                     });    
